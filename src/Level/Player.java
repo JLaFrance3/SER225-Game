@@ -225,6 +225,7 @@ public abstract class Player extends GameObject {
         facingDirection = direction;
         if (direction == Direction.RIGHT) {
             this.currentAnimationName = "STAND_RIGHT";
+            System.out.println("Standing");
         }
         else if (direction == Direction.LEFT) {
             this.currentAnimationName = "STAND_LEFT";
@@ -237,6 +238,7 @@ public abstract class Player extends GameObject {
         facingDirection = direction;
         if (direction == Direction.RIGHT) {
             this.currentAnimationName = "WALK_RIGHT";
+            System.out.println("Walking");
         }
         else if (direction == Direction.LEFT) {
             this.currentAnimationName = "WALK_LEFT";
