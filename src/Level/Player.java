@@ -43,7 +43,7 @@ public abstract class Player extends GameObject {
 
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
-        facingDirection = Direction.RIGHT;
+        facingDirection = Direction.DOWN;
         playerState = PlayerState.STANDING;
         previousPlayerState = playerState;
         this.affectedByTriggers = true;
@@ -106,12 +106,28 @@ public abstract class Player extends GameObject {
             map.entityInteract(this);
         }
 
+        // if walk up key is pressed, move player up
+        if (Keyboard.isKeyDown(MOVE_UP_KEY)) {
+            moveAmountY -= walkSpeed;
+            facingDirection = Direction.UP;
+            currentWalkingYDirection = Direction.UP;
+            lastWalkingYDirection = Direction.UP;
+        }
+
         // if walk left key is pressed, move player to the left
-        if (Keyboard.isKeyDown(MOVE_LEFT_KEY)) {
+        else if (Keyboard.isKeyDown(MOVE_LEFT_KEY)) {
             moveAmountX -= walkSpeed;
             facingDirection = Direction.LEFT;
             currentWalkingXDirection = Direction.LEFT;
             lastWalkingXDirection = Direction.LEFT;
+        }
+
+        // if walk down key is pressed, move player down
+        else if (Keyboard.isKeyDown(MOVE_DOWN_KEY)) {
+            moveAmountY += walkSpeed;
+            facingDirection = Direction.DOWN;
+            currentWalkingYDirection = Direction.DOWN;
+            lastWalkingYDirection = Direction.DOWN;
         }
 
         // if walk right key is pressed, move player to the right
@@ -123,20 +139,6 @@ public abstract class Player extends GameObject {
         }
         else {
             currentWalkingXDirection = Direction.NONE;
-        }
-
-        if (Keyboard.isKeyDown(MOVE_UP_KEY)) {
-            moveAmountY -= walkSpeed;
-            currentWalkingYDirection = Direction.UP;
-            lastWalkingYDirection = Direction.UP;
-        }
-        else if (Keyboard.isKeyDown(MOVE_DOWN_KEY)) {
-            moveAmountY += walkSpeed;
-            currentWalkingYDirection = Direction.DOWN;
-            lastWalkingYDirection = Direction.DOWN;
-        }
-        else {
-            currentWalkingYDirection = Direction.NONE;
         }
 
         if ((currentWalkingXDirection == Direction.RIGHT || currentWalkingXDirection == Direction.LEFT) && currentWalkingYDirection == Direction.NONE) {
@@ -162,11 +164,21 @@ public abstract class Player extends GameObject {
     protected void handlePlayerAnimation() {
         if (playerState == PlayerState.STANDING) {
             // sets animation to a STAND animation based on which way player is facing
-            this.currentAnimationName = facingDirection == Direction.RIGHT ? "STAND_RIGHT" : "STAND_LEFT";
+            switch (this.facingDirection) {
+                case UP -> currentAnimationName = "STAND_UP";
+                case LEFT -> currentAnimationName = "STAND_LEFT";
+                case DOWN -> currentAnimationName = "STAND_DOWN";
+                case RIGHT -> currentAnimationName = "STAND_RIGHT";
+            }
         }
         else if (playerState == PlayerState.WALKING) {
             // sets animation to a WALK animation based on which way player is facing
-            this.currentAnimationName = facingDirection == Direction.RIGHT ? "WALK_RIGHT" : "WALK_LEFT";
+            switch (this.facingDirection) {
+                case UP -> currentAnimationName = "WALK_UP";
+                case LEFT -> currentAnimationName = "WALK_LEFT";
+                case DOWN -> currentAnimationName = "WALK_DOWN";
+                case RIGHT -> currentAnimationName = "WALK_RIGHT";
+            }
         }
     }
 
@@ -210,24 +222,34 @@ public abstract class Player extends GameObject {
     public void lock() {
         isLocked = true;
         playerState = PlayerState.STANDING;
-        this.currentAnimationName = facingDirection == Direction.RIGHT ? "STAND_RIGHT" : "STAND_LEFT";
+        switch (this.facingDirection) {
+            case UP -> currentAnimationName = "STAND_UP";
+            case LEFT -> currentAnimationName = "STAND_LEFT";
+            case DOWN -> currentAnimationName = "STAND_DOWN";
+            case RIGHT -> currentAnimationName = "STAND_RIGHT";
+        }
     }
 
     public void unlock() {
         isLocked = false;
         playerState = PlayerState.STANDING;
-        this.currentAnimationName = facingDirection == Direction.RIGHT ? "STAND_RIGHT" : "STAND_LEFT";
+        switch (this.facingDirection) {
+            case UP -> currentAnimationName = "STAND_UP";
+            case LEFT -> currentAnimationName = "STAND_LEFT";
+            case DOWN -> currentAnimationName = "STAND_DOWN";
+            case RIGHT -> currentAnimationName = "STAND_RIGHT";
+        }
     }
 
     // used by other files or scripts to force player to stand
     public void stand(Direction direction) {
         playerState = PlayerState.STANDING;
         facingDirection = direction;
-        if (direction == Direction.RIGHT) {
-            this.currentAnimationName = "STAND_RIGHT";
-        }
-        else if (direction == Direction.LEFT) {
-            this.currentAnimationName = "STAND_LEFT";
+        switch (this.facingDirection) {
+            case UP -> currentAnimationName = "STAND_UP";
+            case LEFT -> currentAnimationName = "STAND_LEFT";
+            case DOWN -> currentAnimationName = "STAND_DOWN";
+            case RIGHT -> currentAnimationName = "STAND_RIGHT";
         }
     }
 
@@ -235,23 +257,23 @@ public abstract class Player extends GameObject {
     public void walk(Direction direction, float speed) {
         playerState = PlayerState.WALKING;
         facingDirection = direction;
-        if (direction == Direction.RIGHT) {
-            this.currentAnimationName = "WALK_RIGHT";
-        }
-        else if (direction == Direction.LEFT) {
-            this.currentAnimationName = "WALK_LEFT";
-        }
-        if (direction == Direction.UP) {
-            moveY(-speed);
-        }
-        else if (direction == Direction.DOWN) {
-            moveY(speed);
-        }
-        else if (direction == Direction.LEFT) {
-            moveX(-speed);
-        }
-        else if (direction == Direction.RIGHT) {
-            moveX(speed);
+        switch (this.facingDirection) {
+            case UP:
+                currentAnimationName = "WALK_UP";
+                moveY(-speed);
+                break;
+            case LEFT:
+                currentAnimationName = "WALK_LEFT";
+                moveX(-speed);
+                break;
+            case DOWN:
+                currentAnimationName = "WALK_DOWN";
+                moveY(speed);
+                break;
+            case RIGHT:
+                currentAnimationName = "WALK_RIGHT";
+                moveX(speed);
+                break;
         }
     }
 
