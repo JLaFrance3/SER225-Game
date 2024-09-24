@@ -21,7 +21,6 @@ public class FarmlandTileset extends Tileset {
     @Override
     public ArrayList<MapTileBuilder> defineTiles() {
         ArrayList<MapTileBuilder> mapTiles = new ArrayList<>();
-
         int tileIndex = 0;
 
         // Dirt
@@ -30,11 +29,10 @@ public class FarmlandTileset extends Tileset {
                 dirtFrames[i] = new FrameBuilder(getSubImage(i / 3, i % 3 + (tileIndex / 18) * 3, false))
                                 .build();
 
-                MapTileBuilder dirtTiles = new MapTileBuilder(dirtFrames[i])
-                                .withTileIndex(tileIndex);
+                MapTileBuilder dirtTiles = new MapTileBuilder(dirtFrames[i]);
 
-                tileIndex++;
                 mapTiles.add(dirtTiles);
+                tileIndex++;
         }
 
 
@@ -44,11 +42,10 @@ public class FarmlandTileset extends Tileset {
                 grassFrames[i] = new FrameBuilder(getSubImage(i / 3, i % 3 + (tileIndex / 18) * 3, false))
                                 .build();
 
-                MapTileBuilder grassTile = new MapTileBuilder(grassFrames[i])
-                                .withTileIndex(tileIndex);
+                MapTileBuilder grassTile = new MapTileBuilder(grassFrames[i]);
 
-                tileIndex++;
                 mapTiles.add(grassTile);
+                tileIndex++;
         };
 
         // Water tiles with animation
@@ -60,11 +57,10 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder waterTile = new MapTileBuilder(waterFrames[i])
-                                .withTileIndex(tileIndex)
                                 .withTileType(TileType.NOT_PASSABLE);
 
-                tileIndex++;
                 mapTiles.add(waterTile);
+                tileIndex++;
         };
 
         // Chasm tiles
@@ -74,11 +70,10 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder chasmTile = new MapTileBuilder(chasmFrames[i])
-                                .withTileIndex(tileIndex)
                                 .withTileType(TileType.NOT_PASSABLE);
 
-                tileIndex++;
                 mapTiles.add(chasmTile);
+                tileIndex++;
         };
 
         // Tall Grass
@@ -87,11 +82,10 @@ public class FarmlandTileset extends Tileset {
                 tallGrassFrames[i] = new FrameBuilder(getSubImage(i / 3, i % 3 + 3 + ((tileIndex + 3) / 18) * 3, false))
                                 .build();
 
-                MapTileBuilder tallGrassTile = new MapTileBuilder(tallGrassFrames[i])
-                                .withTileIndex(tileIndex);
+                MapTileBuilder tallGrassTile = new MapTileBuilder(tallGrassFrames[i]);
 
-                tileIndex++;
                 mapTiles.add(tallGrassTile);
+                tileIndex++;
         };
 
         // Taller Grass
@@ -101,11 +95,10 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder tallerGrassTile = new MapTileBuilder(tallerGrassFrames[i])
-                                .withTileIndex(tileIndex)
                                 .withTileType(TileType.NOT_PASSABLE);
 
-                tileIndex++;
                 mapTiles.add(tallerGrassTile);
+                tileIndex++;
         };
 
         // Wheat Tiles
@@ -115,11 +108,10 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder wheatTile = new MapTileBuilder(wheatFrames[i])
-                                .withTileIndex(tileIndex)
                                 .withTileType(TileType.NOT_PASSABLE);
 
-                tileIndex++;
                 mapTiles.add(wheatTile);
+                tileIndex++;
         };
 
         // Field Tiles
@@ -128,11 +120,10 @@ public class FarmlandTileset extends Tileset {
                 fieldFrames[i] = new FrameBuilder(getSubImage(i / 3, i % 3 + 3 + ((tileIndex + 3) / 18) * 3, false))
                                 .build();
 
-                MapTileBuilder fieldTile = new MapTileBuilder(fieldFrames[i])
-                                .withTileIndex(tileIndex);
+                MapTileBuilder fieldTile = new MapTileBuilder(fieldFrames[i]);
 
-                tileIndex++;
                 mapTiles.add(fieldTile);
+                tileIndex++;
         };
 
         // Fence tiles
@@ -142,11 +133,10 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder fenceTile = new MapTileBuilder(fenceFrames[i])
-                                .withTileIndex(tileIndex)
                                 .withTileType(TileType.NOT_PASSABLE);
 
-                tileIndex++;
                 mapTiles.add(fenceTile);
+                tileIndex++;
         };
 
         // Reeds
@@ -156,10 +146,8 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder reedTile = new MapTileBuilder(reedFrames[i])
-                                .withTileIndex(tileIndex)
                                 .withTileType(TileType.NOT_PASSABLE);
 
-                tileIndex++;
                 mapTiles.add(reedTile);
         };
 
@@ -169,10 +157,8 @@ public class FarmlandTileset extends Tileset {
                 strawFrames[i] = new FrameBuilder(getSubImage(i / 2 + 6, i % 2 + 4, false))
                                 .build();
 
-                MapTileBuilder strawTile = new MapTileBuilder(strawFrames[i])
-                                .withTileIndex(tileIndex);
+                MapTileBuilder strawTile = new MapTileBuilder(strawFrames[i]);
 
-                tileIndex++;
                 mapTiles.add(strawTile);
         };
 
@@ -183,10 +169,8 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder barrelTile = new MapTileBuilder(barrelFrames[i])
-                                .withTileIndex(tileIndex)
                                 .withTileType(TileType.NOT_PASSABLE);
 
-                tileIndex++;
                 mapTiles.add(barrelTile);
         };
 
@@ -197,10 +181,9 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder signTile = new MapTileBuilder(signFrames[i])
-                                .withTileIndex(tileIndex)
                                 .withTileType(TileType.NOT_PASSABLE);
 
-                tileIndex++;
+
                 mapTiles.add(signTile);
         };
 
@@ -211,10 +194,8 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder barrowTile = new MapTileBuilder(barrowFrames[i])
-                                .withTileIndex(tileIndex)
                                 .withTileType(TileType.NOT_PASSABLE);
 
-                tileIndex++;
                 mapTiles.add(barrowTile);
         };
 
@@ -225,10 +206,8 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder chestTile = new MapTileBuilder(chestFrames[i])
-                                .withTileIndex(tileIndex)
                                 .withTileType(TileType.NOT_PASSABLE);
 
-                tileIndex++;
                 mapTiles.add(chestTile);
         };
 
@@ -239,10 +218,8 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder logTile = new MapTileBuilder(logFrames[i])
-                                .withTileIndex(tileIndex)
                                 .withTileType(TileType.NOT_PASSABLE);
 
-                tileIndex++;
                 mapTiles.add(logTile);
         };
 
@@ -253,10 +230,8 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder bagTile = new MapTileBuilder(bagFrames[i])
-                                .withTileIndex(tileIndex)
                                 .withTileType(TileType.NOT_PASSABLE);
 
-                tileIndex++;
                 mapTiles.add(bagTile);
         };
         for(int i = 20; i < bagFrames.length; i++) {
@@ -264,10 +239,8 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder bagTile = new MapTileBuilder(bagFrames[i])
-                                .withTileIndex(tileIndex)
                                 .withTileType(TileType.NOT_PASSABLE);
 
-                tileIndex++;
                 mapTiles.add(bagTile);
         };
 
@@ -278,10 +251,8 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder cropTile = new MapTileBuilder(cropFrames[i])
-                                .withTileIndex(tileIndex)
                                 .withTileType(TileType.NOT_PASSABLE);
 
-                tileIndex++;
                 mapTiles.add(cropTile);
         };
 
@@ -289,8 +260,7 @@ public class FarmlandTileset extends Tileset {
         Frame WIPFrame = new FrameBuilder(getSubImage(5, 26, false))
                         .build();
         
-        MapTileBuilder WIPTile = new MapTileBuilder(WIPFrame)
-                        .withTileIndex(tileIndex);
+        MapTileBuilder WIPTile = new MapTileBuilder(WIPFrame);
 
         mapTiles.add(WIPTile);
 
@@ -301,10 +271,8 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder treeTile = new MapTileBuilder(WIPFrame)
-                                .withTileIndex(tileIndex)
                                 .withTopLayer(treeFrames[i]);
 
-                tileIndex++;
                 mapTiles.add(treeTile);
         };
 
@@ -312,9 +280,7 @@ public class FarmlandTileset extends Tileset {
                         .build();
 
         MapTileBuilder tipTile = new MapTileBuilder(WIPFrame)
-                        .withTileIndex(tileIndex)
                         .withTopLayer(tipFrame);
-        tileIndex++;
         mapTiles.add(tipTile);
 
         Frame[] firFrames = new Frame[18];
@@ -323,10 +289,8 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder firTile = new MapTileBuilder(WIPFrame)
-                                .withTileIndex(tileIndex)
                                 .withTopLayer(firFrames[i]);
 
-                tileIndex++;
                 mapTiles.add(firTile);
         };
 
@@ -337,10 +301,8 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder trunkTile = new MapTileBuilder(trunkFrames[i])
-                                .withTileIndex(tileIndex)
                                 .withTileType(TileType.NOT_PASSABLE);
 
-                tileIndex++;
                 mapTiles.add(trunkTile);
         };
 
