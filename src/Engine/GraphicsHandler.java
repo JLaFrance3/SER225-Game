@@ -22,6 +22,8 @@ public class GraphicsHandler {
     public void drawImage(BufferedImage image, int x, int y) {
         g.drawImage(image, x, y, null);
     }
+    
+
 
     public void drawImage(BufferedImage image, int x, int y, int width, int height) {
         g.drawImage(image, x, y, width, height, null);
@@ -103,4 +105,6 @@ public class GraphicsHandler {
         g.setStroke(originalStroke);
         g.setRenderingHints(originalHints);
     }
+
+    
 }

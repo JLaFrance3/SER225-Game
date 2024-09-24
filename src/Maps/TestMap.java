@@ -1,6 +1,7 @@
 package Maps;
 
 import EnhancedMapTiles.PushableRock;
+import EnhancedMapTiles.Gate;
 import Level.*;
 import NPCs.Bug;
 import NPCs.Dinosaur;
@@ -10,6 +11,8 @@ import Scripts.TestMap.*;
 import Tilesets.CommonTileset;
 
 import java.util.ArrayList;
+
+import Engine.ImageLoader;
 
 // Represents a test map to be used in a level
 public class TestMap extends Map {
@@ -26,8 +29,16 @@ public class TestMap extends Map {
         PushableRock pushableRock = new PushableRock(getMapTile(2, 7).getLocation());
         enhancedMapTiles.add(pushableRock);
 
+        Gate gate = new Gate(getMapTile(5, 5).getLocation());
+        enhancedMapTiles.add(gate);
+        //Frame gateFrame = new Frame(ImageLoader.load("Gate.png"));
+        //GameObject gate = new GameObject(getMapTile(2, 7).getLocation().x,getMapTile(2, 7).getLocation().y, gateFrame);
+        
+
         return enhancedMapTiles;
     }
+
+    
 
     @Override
     public ArrayList<NPC> loadNPCs() {
@@ -57,6 +68,9 @@ public class TestMap extends Map {
         triggers.add(new Trigger(890, 960, 10, 80, new LostBallScript(), "hasLostBall"));
         return triggers;
     }
+
+   
+    
 
     @Override
     public void loadScripts() {

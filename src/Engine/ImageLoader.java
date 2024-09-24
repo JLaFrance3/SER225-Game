@@ -11,6 +11,7 @@ import java.io.IOException;
 // contains a bunch of helpful methods for loading images file into the game
 public class ImageLoader {
 
+
     // loads an image and sets its transparent color to the one defined in the Config class
     public static BufferedImage load(String imageFileName) {
         return ImageLoader.load(imageFileName, Config.TRANSPARENT_COLOR);
