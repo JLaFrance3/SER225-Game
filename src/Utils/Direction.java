@@ -15,5 +15,26 @@ public enum Direction {
 		return velocity;
 	}
 
+	public Direction random(){
+		int rand = (int)(Math.random()*4);
+		if (rand == velocity){
+			return random();
+		}
+		else{
+			switch (rand) {
+				case 0:
+					return UP;
+				case 1:
+					return DOWN;
+				case 2:
+					return LEFT;
+				case 3:
+					return RIGHT;
+				default:
+					return NONE;
+			}
+		}
+	}
+
 
 }
