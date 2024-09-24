@@ -17,7 +17,7 @@ public class TestScript extends Script {
     @Override
     public ArrayList<ScriptAction> loadScriptActions() {
         ArrayList<ScriptAction> scriptActions = new ArrayList<>();
-        // scriptActions.add(new LockPlayerScriptAction());
+        scriptActions.add(new LockPlayerScriptAction());
 
         scriptActions.add(new TextboxScriptAction() {{
             addText("These flowers look nice.");
@@ -55,7 +55,7 @@ public class TestScript extends Script {
         }});
 
         scriptActions.add(new ChangeFlagScriptAction("flowerBed", true));
-        // scriptActions.add(new UnlockPlayerScriptAction());
+        scriptActions.add(new UnlockPlayerScriptAction());
 
         return scriptActions;
     }
