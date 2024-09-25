@@ -9,6 +9,7 @@ import NPCs.Walrus;
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.*;
 import Tilesets.CommonTileset;
+import Utils.Point;
 
 import java.util.ArrayList;
 
@@ -29,10 +30,9 @@ public class TestMap extends Map {
         PushableRock pushableRock = new PushableRock(getMapTile(2, 7).getLocation());
         enhancedMapTiles.add(pushableRock);
 
-        Gate gate = new Gate(getMapTile(5, 5).getLocation());
+        Gate gate = new Gate(getMapTile(2, 5).getLocation());
         enhancedMapTiles.add(gate);
-        //Frame gateFrame = new Frame(ImageLoader.load("Gate.png"));
-        //GameObject gate = new GameObject(getMapTile(2, 7).getLocation().x,getMapTile(2, 7).getLocation().y, gateFrame);
+        
         
 
         return enhancedMapTiles;
@@ -63,9 +63,11 @@ public class TestMap extends Map {
     @Override
     public ArrayList<Trigger> loadTriggers() {
         ArrayList<Trigger> triggers = new ArrayList<>();
+        Point tileLocation1 = getMapTile(6, 10).getLocation();
         triggers.add(new Trigger(790, 1030, 100, 10, new LostBallScript(), "hasLostBall"));
         triggers.add(new Trigger(790, 960, 10, 80, new LostBallScript(), "hasLostBall"));
         triggers.add(new Trigger(890, 960, 10, 80, new LostBallScript(), "hasLostBall"));
+        triggers.add(new Trigger(tileLocation1.x, tileLocation1.y, width, height, new GateScript()));
         return triggers;
     }
 
@@ -79,6 +81,8 @@ public class TestMap extends Map {
         getMapTile(7, 26).setInteractScript(new SimpleTextScript("Walrus's house"));
 
         getMapTile(20, 4).setInteractScript(new SimpleTextScript("Dino's house"));
+
+       // getMapTile(22, 19).setInteractScript(new SimpleTextScript("A Mysterious Gate. Wonder where it leads?"));
 
         getMapTile(2, 6).setInteractScript(new TreeScript());
     }
