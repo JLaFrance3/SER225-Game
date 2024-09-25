@@ -55,6 +55,7 @@ public class TestMap extends Map {
         triggers.add(new Trigger(790, 1030, 100, 10, new LostBallScript(), "hasLostBall"));
         triggers.add(new Trigger(790, 960, 10, 80, new LostBallScript(), "hasLostBall"));
         triggers.add(new Trigger(890, 960, 10, 80, new LostBallScript(), "hasLostBall"));
+        triggers.add(new Trigger(820, 1200, 150, 10, new TestScript(), "flowerBed"));
         return triggers;
     }
 
