@@ -20,7 +20,7 @@ public class BugScript extends Script {
 
         scriptActions.add(new TextboxScriptAction() {{
             addText("Hello!");
-            addText("Do you like bugs?", new String[] { "Yes", "No" });
+            addText("Do you like bugs?", new String[] { "Yes", "No"});
         }});
 
         scriptActions.add(new ConditionalScriptAction() {{
