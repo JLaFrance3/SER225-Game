@@ -5,6 +5,8 @@ import Tilesets.CommonTileset;
 import Tilesets.DungeonTileSet;
 import Utils.Point;
 
+//this class represents the Dungeon map I am building
+
 public class DungeonMap extends Map {
     
     public DungeonMap() {

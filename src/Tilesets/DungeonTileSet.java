@@ -9,6 +9,8 @@ import Level.TileType;
 import Level.Tileset;
 
 import java.util.ArrayList;
+
+// this class represents the tilesets i used to build the dungeon area
 public class DungeonTileSet extends Tileset{
 
     public DungeonTileSet() {
@@ -24,8 +26,8 @@ public class DungeonTileSet extends Tileset{
                 .withScale(tileScale)
                 .build();
 
-        MapTileBuilder whiteBrick = new MapTileBuilder(whiteBrickFrame);
-        .withTileType(TileType.NOT_PASSABLE);
+        MapTileBuilder whiteBrick = new MapTileBuilder(whiteBrickFrame); //why is  .withTileType(TileType.NOT_PASSABLE) not working?
+        
        
         mapTiles.add(whiteBrick);
 
