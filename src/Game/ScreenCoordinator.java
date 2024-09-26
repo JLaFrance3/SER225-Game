@@ -3,7 +3,9 @@ package Game;
 import Engine.DefaultScreen;
 import Engine.GraphicsHandler;
 import Engine.Screen;
+import Maps.DungeonMap;
 import Screens.CreditsScreen;
+import Screens.DungeonScreen;
 import Screens.MenuScreen;
 import Screens.PlayLevelScreen;
 
@@ -50,6 +52,8 @@ public class ScreenCoordinator extends Screen {
 					case CREDITS:
 						currentScreen = new CreditsScreen(this);
 						break;
+					case DUNGEON: 
+						currentScreen =  new DungeonScreen(this);
 				}
 				currentScreen.initialize();
 			}

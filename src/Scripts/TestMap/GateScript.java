@@ -2,6 +2,7 @@ package Scripts.TestMap;
 
 import java.util.ArrayList;
 
+import Game.GameState;
 import Level.Script;
 import ScriptActions.*;
 
@@ -15,9 +16,12 @@ public class GateScript extends Script {
         scriptActions.add(new TextboxScriptAction() {{
             addText("A large Gate?");
             addText("Wonder where it leads?");
+            
         }});
         scriptActions.add(new ChangeFlagScriptAction("gateInteract", true));
-        
+       
+       // screenCoordinator.setGameState(GameState.DUNGEON);
+       
         scriptActions.add(new UnlockPlayerScriptAction());
 
         return scriptActions;
@@ -27,4 +31,4 @@ public class GateScript extends Script {
   
 
    
- //     this.playerStartPosition = getMapTile(17, 20).getLocation();
+
