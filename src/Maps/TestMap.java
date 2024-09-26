@@ -9,6 +9,7 @@ import NPCs.Walrus;
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.*;
 import Tilesets.CommonTileset;
+import Utils.Direction;
 
 import java.util.ArrayList;
 
@@ -49,7 +50,7 @@ public class TestMap extends Map {
         bug.setInteractScript(new BugScript());
         npcs.add(bug);
 
-        TestDummy dummy = new TestDummy(4, getMapTile(5, 5).getLocation().subtractX(20));
+        TestDummy dummy = new TestDummy(4, getMapTile(5, 5).getLocation().subtractX(20),Direction.UP, getMapTile(5, 7).getLocation());
         dummy.setInteractScript(new BugScript());
         npcs.add(dummy);
 
