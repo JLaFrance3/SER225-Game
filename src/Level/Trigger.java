@@ -2,6 +2,7 @@ package Level;
 
 import Engine.GraphicsHandler;
 import GameObject.Rectangle;
+import Utils.Point;
 
 import java.awt.*;
 
@@ -26,6 +27,7 @@ public class Trigger extends MapEntity {
         this.setBounds(new Rectangle(0, 0, width, height));
         this.existenceFlag = existenceFlag;
     }
+
 
     protected Script loadTriggerScript() { return null; }
 
