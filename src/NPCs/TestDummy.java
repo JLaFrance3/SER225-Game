@@ -40,13 +40,19 @@ public class TestDummy extends NPC {
         // this code makes the bug npc walk back and forth (left to right)
     @Override
     public void performAction(Player player) {
-        this.move((int)(max.y-inital.y), (int)inital.y);
-    }
+        // if bug has not yet moved 135 pixels in one direction, move bug forward
+        if (totalAmountMoved < 135 && totalAmountMoved < random) {
 
-    public void move(int maxDist, int minDist){
-        // if bug has not yet moved 90 pixels in one direction, move bug forward
-        if (totalAmountMoved < maxDist) {
-            float amountMoved = moveYHandleCollision(speed * direction.getVelocity());
+            float amountMoved;
+            //moves either up or down
+            if (direction == Direction.UP || direction == Direction.DOWN){
+                amountMoved = moveYHandleCollision(speed * direction.getVelocity());
+            }
+            //moves either left or right
+            else{
+                amountMoved = moveXHandleCollision(speed * direction.getVelocity());
+            }
+
             totalAmountMoved += Math.abs(amountMoved);
         }
 
