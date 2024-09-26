@@ -68,6 +68,7 @@ public class TestMap extends Map {
         triggers.add(new Trigger(790, 960, 10, 80, new LostBallScript(), "hasLostBall"));
         triggers.add(new Trigger(890, 960, 10, 80, new LostBallScript(), "hasLostBall"));
         triggers.add(new Trigger(tileLocation1.x, tileLocation1.y, width, height, new GateScript(), "gateInteract")); //putting the gate script in associated location
+        triggers.add(new Trigger(820, 1200, 150, 10, new TestScript(), "flowerBed"));
         return triggers;
     }
 
