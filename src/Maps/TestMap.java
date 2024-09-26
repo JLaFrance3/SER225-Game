@@ -5,10 +5,12 @@ import EnhancedMapTiles.Gate;
 import Level.*;
 import NPCs.Bug;
 import NPCs.Dinosaur;
+import NPCs.TestDummy;
 import NPCs.Walrus;
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.*;
 import Tilesets.CommonTileset;
+import Utils.Direction;
 import Utils.Point;
 
 import java.util.ArrayList;
@@ -38,15 +40,15 @@ public class TestMap extends Map {
         return enhancedMapTiles;
     }
 
-    
-
+    //array to load npc's
     @Override
     public ArrayList<NPC> loadNPCs() {
+        //this holds the npc's (?)
         ArrayList<NPC> npcs = new ArrayList<>();
 
-        Walrus walrus = new Walrus(1, getMapTile(4, 28).getLocation().subtractY(40));
-        walrus.setInteractScript(new WalrusScript());
-        npcs.add(walrus);
+        Walrus walrus = new Walrus(1, getMapTile(4, 28).getLocation().subtractY(40));//npc constructor appears to set an id (?) then set location
+        walrus.setInteractScript(new WalrusScript());//used for interaction
+        npcs.add(walrus);//adds the npc to the array
 
         Dinosaur dinosaur = new Dinosaur(2, getMapTile(13, 4).getLocation());
         dinosaur.setExistenceFlag("hasTalkedToDinosaur");
@@ -56,6 +58,10 @@ public class TestMap extends Map {
         Bug bug = new Bug(3, getMapTile(7, 12).getLocation().subtractX(20));
         bug.setInteractScript(new BugScript());
         npcs.add(bug);
+
+        TestDummy dummy = new TestDummy(4, getMapTile(5, 5).getLocation().subtractX(20),Direction.UP, getMapTile(5, 7).getLocation());
+        dummy.setInteractScript(new BugScript());
+        npcs.add(dummy);
 
         return npcs;
     }
