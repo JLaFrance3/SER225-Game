@@ -17,7 +17,6 @@ public class FarmMap extends Map {
 
     public FarmMap() {
         super("farm_map.txt", new FarmlandTileset());
-        this.playerStartPosition = getMapTile(17, 20).getLocation();
     }
 }
 

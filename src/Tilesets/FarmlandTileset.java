@@ -256,21 +256,13 @@ public class FarmlandTileset extends Tileset {
                 mapTiles.add(cropTile);
         };
 
-        //WIP Tile
-        Frame WIPFrame = new FrameBuilder(getSubImage(5, 26, false))
-                        .build();
-        
-        MapTileBuilder WIPTile = new MapTileBuilder(WIPFrame);
-
-        mapTiles.add(WIPTile);
-
         // Tree tops
         Frame[] treeFrames = new Frame[18];
         for(int i = 0; i < treeFrames.length; i++) {
                 treeFrames[i] = new FrameBuilder(getSubImage(i % 3 + 13, i / 3, false))
                                 .build();
 
-                MapTileBuilder treeTile = new MapTileBuilder(WIPFrame)
+                MapTileBuilder treeTile = new MapTileBuilder(bagFrames[7])
                                 .withTopLayer(treeFrames[i]);
 
                 mapTiles.add(treeTile);
@@ -279,7 +271,7 @@ public class FarmlandTileset extends Tileset {
         Frame tipFrame = new FrameBuilder(getSubImage(12, 7, false))
                         .build();
 
-        MapTileBuilder tipTile = new MapTileBuilder(WIPFrame)
+        MapTileBuilder tipTile = new MapTileBuilder(bagFrames[7])
                         .withTopLayer(tipFrame);
         mapTiles.add(tipTile);
 
@@ -288,7 +280,7 @@ public class FarmlandTileset extends Tileset {
                 firFrames[i] = new FrameBuilder(getSubImage(i % 3 + 13, i / 3 + 6, false))
                                 .build();
 
-                MapTileBuilder firTile = new MapTileBuilder(WIPFrame)
+                MapTileBuilder firTile = new MapTileBuilder(bagFrames[7])
                                 .withTopLayer(firFrames[i]);
 
                 mapTiles.add(firTile);
