@@ -32,7 +32,7 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("hasFoundBall", false);
 
         // define/setup map
-        map = new FarmMap();
+        map = new TestMap();
         map.setFlagManager(flagManager);
 
         // setup player

@@ -180,9 +180,15 @@ public class FarmlandTileset extends Tileset {
                 signFrames[i] = new FrameBuilder(getSubImage(i % 3 + 6, i / 3 + 10, false))
                                 .build();
 
-                MapTileBuilder signTile = new MapTileBuilder(signFrames[i])
-                                .withTileType(TileType.NOT_PASSABLE);
-
+                MapTileBuilder signTile;
+                if (i == 7 || i == 6 || i == 2) {
+                        signTile = new MapTileBuilder(signFrames[i])
+                                        .withTileType(TileType.NOT_PASSABLE);
+                }
+                else {
+                        signTile = new MapTileBuilder(grassFrames[17])
+                                        .withTopLayer(signFrames[i]);
+                }
 
                 mapTiles.add(signTile);
         };
@@ -250,8 +256,16 @@ public class FarmlandTileset extends Tileset {
                 cropFrames[i] = new FrameBuilder(getSubImage(i / 6 + 11, -(i % 6) + 11, false))
                                 .build();
 
-                MapTileBuilder cropTile = new MapTileBuilder(cropFrames[i])
-                                .withTileType(TileType.NOT_PASSABLE);
+                MapTileBuilder cropTile;
+
+                if (i == 1 || i == 2) {
+                        cropTile = new MapTileBuilder(bagFrames[7])
+                                        .withTopLayer(cropFrames[i]);
+                }
+                else {
+                        cropTile = new MapTileBuilder(cropFrames[i])
+                                        .withTileType(TileType.NOT_PASSABLE);
+                }
 
                 mapTiles.add(cropTile);
         };
@@ -270,7 +284,6 @@ public class FarmlandTileset extends Tileset {
 
         Frame tipFrame = new FrameBuilder(getSubImage(12, 7, false))
                         .build();
-
         MapTileBuilder tipTile = new MapTileBuilder(bagFrames[7])
                         .withTopLayer(tipFrame);
         mapTiles.add(tipTile);
@@ -287,7 +300,7 @@ public class FarmlandTileset extends Tileset {
         };
 
         // Tree Trunks
-        Frame[] trunkFrames = new Frame[18];
+        Frame[] trunkFrames = new Frame[13];
         for(int i = 0; i < trunkFrames.length; i++) {
                 trunkFrames[i] = new FrameBuilder(getSubImage(i / 6 + 13, i % 6 + 12, false))
                                 .build();
@@ -297,6 +310,54 @@ public class FarmlandTileset extends Tileset {
 
                 mapTiles.add(trunkTile);
         };
+
+        // Buildings
+        Frame[] buildingFrames = new Frame[12];
+        for (int i = 0; i < buildingFrames.length; i++) {
+                buildingFrames[i] = new FrameBuilder(getSubImage(i / 3 + 16, i % 3, false))
+                                .build();
+
+                MapTileBuilder buildingTile = new MapTileBuilder(bagFrames[7])
+                        .withTopLayer(buildingFrames[i]);
+
+                mapTiles.add(buildingTile);
+        }
+
+        // RoofTop
+        Frame[] roofFrames = new Frame[16];
+        for (int i = 0; i < roofFrames.length; i++) {
+                roofFrames[i] = new FrameBuilder(getSubImage(i / 4 + 16, i % 4 + 3, false))
+                                .build();
+
+                MapTileBuilder roofTile = new MapTileBuilder(roofFrames[i])
+                                .withTileType(TileType.NOT_PASSABLE);
+
+                mapTiles.add(roofTile);
+        }
+
+        // Brick wall
+        Frame[] brickFrames = new Frame[12];
+        for (int i = 0; i < brickFrames.length; i++) {
+                brickFrames[i] = new FrameBuilder(getSubImage(i / 3 + 16, i % 3 + 7, false))
+                                .build();
+
+                MapTileBuilder brickTile = new MapTileBuilder(brickFrames[i])
+                                .withTileType(TileType.NOT_PASSABLE);
+
+                mapTiles.add(brickTile);
+        }
+
+        // Windows/doors
+        Frame[] doorsFrames = new Frame[8];
+        for (int i = 0; i < doorsFrames.length; i++) {
+                doorsFrames[i] = new FrameBuilder(getSubImage(i % 4 + 16, i / 4 + 10, false))
+                                .build();
+
+                MapTileBuilder doorsTile = new MapTileBuilder(doorsFrames[i])
+                                .withTileType(TileType.NOT_PASSABLE);
+
+                mapTiles.add(doorsTile);
+        }
 
         return mapTiles;
     }

@@ -127,19 +127,13 @@ public class TileBuilder extends JPanel {
             int[] layerIndices = oldMapTile.getTileLayerIndices();
             MapTileBuilder newTileBuilder;
 
-
-            System.out.println("SelectedTileIndex: " + selectedTileIndex);
-            System.out.println("OldTile: " + oldMapTile.getTileIndex() + " OldMidTile: " + oldMapTile.getTileLayerIndices()[1] + " OldTopTile: " + oldMapTile.getTileLayerIndices()[2]);
-
             //If old map tile bottom layer is empty
             if (layerIndices[0] < 0) {
                 newTileBuilder = map.getTileset().getTile(controlPanelHolder.getSelectedTileIndex());
-                System.out.println("1");
             }
             //If selected tile is the same as current bottom layer
             else if (layerIndices[0] == controlPanelHolder.getSelectedTileIndex()) {
                 newTileBuilder = map.getTileset().getTile(controlPanelHolder.getSelectedTileIndex());
-                System.out.println("Clear!");
                 newTileBuilder.clearUpperLayers();  // Reset tile
             }
             else {
@@ -149,7 +143,6 @@ public class TileBuilder extends JPanel {
                 //If old map tile has middle layer but selected tile has no top layer
                 if (layerIndices[1] >= 0 && selectedTileBuilder.getTopLayer().isEmpty()) {
                     newTileBuilder = map.getTileset().getTile(controlPanelHolder.getSelectedTileIndex());
-                    System.out.println("2");
                 }
                 else {       
                     newTileBuilder = new MapTileBuilder(map.getTileset().getTile(oldTileIndices[0]).getBottomLayer(), oldTileIndices[0]);
@@ -164,11 +157,9 @@ public class TileBuilder extends JPanel {
                     else {
                         newTileBuilder.addMidLayer(selectedTileBuilder, controlPanelHolder.getSelectedTileIndex());
                     }
-                    System.out.println("3");
                 }
             }
             MapTile newMapTile = newTileBuilder.build(oldMapTile.getX(), oldMapTile.getY());
-            System.out.println("NewTile: " + newMapTile.getTileIndex() + " NewMidTile: " + newMapTile.getTileLayerIndices()[1] + " NewTopTile: " + newMapTile.getTileLayerIndices()[2]);
             newMapTile.setMap(map);
             map.getMapTiles()[selectedTileIndex] = newMapTile;
         }
