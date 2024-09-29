@@ -89,11 +89,18 @@ public class MapTileBuilder {
         return tileIndices;
     }
 
+    public TileType getTileType() {
+        return tileType;
+    }
+
     // Copies bottom layer of a another tile from the tileset and adds to the mid layer
     public void addMidLayer(MapTileBuilder midMapTile, int midIndex) {
         if (!(midMapTile == null)) {
             this.midLayer = midMapTile.getBottomLayer();
             this.tileIndices[1] = midIndex;
+            if (midMapTile.getTileType() == TileType.NOT_PASSABLE) {
+                this.tileType = TileType.NOT_PASSABLE;
+            }
         }
     }
 

@@ -19,22 +19,25 @@ public class TileBuilder extends JPanel {
     private SelectedTileIndexHolder controlPanelHolder;
     private GraphicsHandler graphicsHandler = new GraphicsHandler();
     private JLabel hoveredTileIndexLabel;
+    private JLabel hoveredTileLayerLabel;
     private boolean showNPCs;
     private boolean showEnhancedMapTiles;
     private boolean showTriggers;
 
-    public TileBuilder(SelectedTileIndexHolder controlPanelHolder, JLabel hoveredTileIndexLabel) {
+    public TileBuilder(SelectedTileIndexHolder controlPanelHolder, JLabel hoveredTileIndexLabel, JLabel hoveredTileLayerLabel) {
         setBackground(Colors.MAGENTA);
         setLocation(0, 0);
         setPreferredSize(new Dimension(585, 562));
         this.controlPanelHolder = controlPanelHolder;
         this.hoveredTileIndexLabel = hoveredTileIndexLabel;
+        this.hoveredTileLayerLabel = hoveredTileLayerLabel;
         addMouseListener(new MouseListener() {
             @Override
             public void mouseExited(MouseEvent e) {
                 hoveredMapTile = null;
                 pressedMapTile = null;
                 hoveredTileIndexLabel.setText("");
+                hoveredTileLayerLabel.setText("");
                 repaint();
             }
 
@@ -172,6 +175,11 @@ public class TileBuilder extends JPanel {
             int hoveredIndexX = Math.round(this.hoveredMapTile.getX()) / map.getTileset().getScaledSpriteWidth();
             int hoveredIndexY = Math.round(this.hoveredMapTile.getY()) / map.getTileset().getScaledSpriteHeight();
             hoveredTileIndexLabel.setText("X: " + hoveredIndexX + ", Y: " + hoveredIndexY);
+            hoveredTileLayerLabel.setText(String.format("Bottom: %3d Middle: %3d Top: %3d",
+                    this.hoveredMapTile.getTileLayerIndices()[0],
+                    this.hoveredMapTile.getTileLayerIndices()[1],
+                    this.hoveredMapTile.getTileLayerIndices()[2]
+            ));
             repaint();
         }
     }
