@@ -208,15 +208,20 @@ public class MapTile extends MapEntity {
 
     @Override
     public Rectangle getBounds() {
-        float x, y;
-        int x1, y1;
+        if (midLayer != null) {
+            float x, y;
+            int x1, y1;
 
-        x = bottomLayer.getX() < midLayer.getX() ? bottomLayer.getX() : midLayer.getX();
-        y = bottomLayer.getY() < midLayer.getY() ? bottomLayer.getY() : midLayer.getY();
-        x1 = bottomLayer.getWidth() > midLayer.getWidth() ? bottomLayer.getWidth() : midLayer.getWidth();
-        y1 = bottomLayer.getHeight() > midLayer.getHeight() ? bottomLayer.getHeight() : midLayer.getHeight();
+            x = bottomLayer.getX() < midLayer.getX() ? bottomLayer.getX() : midLayer.getX();
+            y = bottomLayer.getY() < midLayer.getY() ? bottomLayer.getY() : midLayer.getY();
+            x1 = bottomLayer.getWidth() > midLayer.getWidth() ? bottomLayer.getWidth() : midLayer.getWidth();
+            y1 = bottomLayer.getHeight() > midLayer.getHeight() ? bottomLayer.getHeight() : midLayer.getHeight();
 
-        return new Rectangle(x, y, x1, y1);
+            return new Rectangle(x, y, x1, y1);
+        }
+        else {
+            return bottomLayer.getBounds();
+        }
     }
 
     @Override

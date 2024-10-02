@@ -181,7 +181,7 @@ public abstract class Map {
     private void createEmptyMapFile() throws IOException {
         FileWriter fileWriter = null;
         fileWriter = new FileWriter(Config.MAP_FILES_PATH + this.mapFileName);
-        fileWriter.write("1 1\n0 -1 -1");
+        fileWriter.write("0 -1 -1\n0 -1 -1");
         fileWriter.close();
     }
 

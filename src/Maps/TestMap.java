@@ -26,15 +26,15 @@ public class TestMap extends Map {
         this.playerStartPosition = getMapTile(17, 20).getLocation();
     }
 
-    // @Override
-    // public ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
-    //     ArrayList<EnhancedMapTile> enhancedMapTiles = new ArrayList<>();
+    @Override
+    public ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
+        ArrayList<EnhancedMapTile> enhancedMapTiles = new ArrayList<>();
 
-    //     Gate gate = new Gate(getMapTile(5, 8).getLocation());
-    //     enhancedMapTiles.add(gate);
+        Gate gate = new Gate(getMapTile(5, 8).getLocation());
+        enhancedMapTiles.add(gate);
         
-    //     return enhancedMapTiles;
-    // }
+        return enhancedMapTiles;
+    }
 
     //array to load npc's
     @Override
