@@ -5,37 +5,32 @@ import Engine.Screen;
 import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
-import Maps.*;
+import Maps.DungeonMap;
 import Players.Doug;
 import Utils.Direction;
 import Utils.Point;
 
 // This class is for when the RPG game is actually being played
-public class PlayLevelScreen extends Screen {
+public class DungeonScreen extends Screen {
     protected ScreenCoordinator screenCoordinator;
     protected Map map;
-    protected DungeonScreen dungeon;
     protected Player player;
     protected PlayLevelScreenState playLevelScreenState;
     protected WinScreen winScreen;
     protected FlagManager flagManager;
 
-    public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
+    public DungeonScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
     }
 
     public void initialize() {
         // setup state
+        //help
         flagManager = new FlagManager();
-        flagManager.addFlag("hasLostBall", false);
-        flagManager.addFlag("hasTalkedToWalrus", false);
-        flagManager.addFlag("hasTalkedToDinosaur", false);
-        flagManager.addFlag("hasFoundBall", false);
-        flagManager.addFlag("gateInteract", false);
-        flagManager.addFlag("flowerBed", false);
+        
 
         // define/setup map
-        map = new TestMap();
+        map = new DungeonMap();
         map.setFlagManager(flagManager);
 
         // setup player
@@ -53,7 +48,7 @@ public class PlayLevelScreen extends Screen {
         // both are supported, however preloading is recommended
         map.preloadScripts();
 
-        winScreen = new WinScreen(this);
+        
     }
 
     public void update() {
@@ -73,11 +68,6 @@ public class PlayLevelScreen extends Screen {
         // if flag is set at any point during gameplay, game is "won"
         if (map.getFlagManager().isFlagSet("hasFoundBall")) {
             playLevelScreenState = PlayLevelScreenState.LEVEL_COMPLETED;
-        }
-
-        if (map.getFlagManager().isFlagSet("gateInteract")) { // if the gate interact flag is set then change the screen
-            screenCoordinator.setGameState(GameState.DUNGEON);
-            
         }
     }
 
@@ -108,6 +98,6 @@ public class PlayLevelScreen extends Screen {
 
     // This enum represents the different states this screen can be in
     private enum PlayLevelScreenState {
-        RUNNING, LEVEL_COMPLETED,
+        RUNNING, LEVEL_COMPLETED
     }
 }
