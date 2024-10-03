@@ -5,7 +5,7 @@ import Engine.Screen;
 import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
-import Maps.TestMap;
+import Maps.*;
 import Players.Doug;
 import Utils.Direction;
 import Utils.Point;

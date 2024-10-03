@@ -30,6 +30,15 @@ public class SpriteSheet {
 		return image.getSubimage((column * spriteWidth) + column, (row * spriteHeight) + row, spriteWidth, spriteHeight);
 	}
 
+	public BufferedImage getSubImage(int row, int column, boolean hasGridLines) {
+		if(!hasGridLines) {
+			return image.getSubimage((column * spriteWidth), (row * spriteHeight), spriteWidth, spriteHeight);
+		}
+		else {
+			return getSubImage(row, column);
+		}
+	}
+
 	public BufferedImage getImage() {
 		return image;
 	}
