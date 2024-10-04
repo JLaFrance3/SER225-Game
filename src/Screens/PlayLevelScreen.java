@@ -33,6 +33,7 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("hasFoundBall", false);
         flagManager.addFlag("gateInteract", false);
         flagManager.addFlag("flowerBed", false);
+        flagManager.addFlag("readBackground", false);
 
         // define/setup map
         map = new TestMap();

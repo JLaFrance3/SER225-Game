@@ -1,30 +1,30 @@
-package Scripts.TestMap;
+// package Scripts.TestMap;
 
-import java.util.ArrayList;
+// import java.util.ArrayList;
 
-import Level.Script;
-import ScriptActions.*;
+// import Level.Script;
+// import ScriptActions.*;
 
 
-// trigger script at beginning of game to set that heavy emotional plot
-// checkout the documentation website for a detailed guide on how this script works
-public class LostBallScript extends Script {
+// // trigger script at beginning of game to set that heavy emotional plot
+// // checkout the documentation website for a detailed guide on how this script works
+// public class LostBallScript extends Script {
 
-    @Override
-    public ArrayList<ScriptAction> loadScriptActions() {
-        ArrayList<ScriptAction> scriptActions = new ArrayList<>();
-        scriptActions.add(new LockPlayerScriptAction());
+//     @Override
+//     public ArrayList<ScriptAction> loadScriptActions() {
+//         ArrayList<ScriptAction> scriptActions = new ArrayList<>();
+//         scriptActions.add(new LockPlayerScriptAction());
 
-        scriptActions.add(new TextboxScriptAction() {{
-            addText("Where did my ball go!?");
-            addText("I left it right here before I took my 22 hour cat nap.");
-            addText("Maybe Walrus has seen it.");
-        }});
+//         scriptActions.add(new TextboxScriptAction() {{
+//             addText("Where did my ball go!?");
+//             addText("I left it right here before I took my 22 hour cat nap.");
+//             addText("Maybe Walrus has seen it.");
+//         }});
 
-        scriptActions.add(new ChangeFlagScriptAction("hasLostBall", true));
+//         scriptActions.add(new ChangeFlagScriptAction("hasLostBall", true));
 
-        scriptActions.add(new UnlockPlayerScriptAction());
+//         scriptActions.add(new UnlockPlayerScriptAction());
 
-        return scriptActions;
-    }
-}
+//         return scriptActions;
+//     }
+// }
