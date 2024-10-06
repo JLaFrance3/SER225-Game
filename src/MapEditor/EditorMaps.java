@@ -12,6 +12,7 @@ public class EditorMaps {
             add("TestMap");
             add("TitleScreen");
             add("DungeonMap");
+            add("TownMap");
         }};
     }
 
@@ -23,6 +24,8 @@ public class EditorMaps {
                 return new TitleScreenMap();
             case "DungeonMap":
                 return new DungeonMap();
+            case "TownMap":
+                return new TownMap();
             default:
                 throw new RuntimeException("Unrecognized map name");
         }
