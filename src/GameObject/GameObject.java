@@ -315,7 +315,6 @@ public class GameObject extends AnimatedSprite {
 		}
 	}
 		
-
 	@Override
 	public void drawBounds(GraphicsHandler graphicsHandler, Color color) {
 		if (map != null) {
