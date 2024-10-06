@@ -10,6 +10,7 @@ import NPCs.Walrus;
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.*;
 import Tilesets.CommonTileset;
+import Tilesets.FarmlandTileset;
 import Utils.Direction;
 import Utils.Point;
 
@@ -21,7 +22,7 @@ import Engine.ImageLoader;
 public class TestMap extends Map {
 
     public TestMap() {
-        super("test_map.txt", new CommonTileset());
+        super("test_map.txt", new FarmlandTileset());
         this.playerStartPosition = getMapTile(17, 20).getLocation();
     }
 
@@ -29,14 +30,9 @@ public class TestMap extends Map {
     public ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
         ArrayList<EnhancedMapTile> enhancedMapTiles = new ArrayList<>();
 
-        PushableRock pushableRock = new PushableRock(getMapTile(2, 7).getLocation());
-        enhancedMapTiles.add(pushableRock);
-
-        Gate gate = new Gate(getMapTile(3, 5).getLocation());
+        Gate gate = new Gate(getMapTile(5, 8).getLocation());
         enhancedMapTiles.add(gate);
         
-        
-
         return enhancedMapTiles;
     }
 
@@ -50,7 +46,7 @@ public class TestMap extends Map {
         walrus.setInteractScript(new WalrusScript());//used for interaction
         npcs.add(walrus);//adds the npc to the array
 
-        Dinosaur dinosaur = new Dinosaur(2, getMapTile(13, 4).getLocation());
+        Dinosaur dinosaur = new Dinosaur(2, getMapTile(10, 7).getLocation());
         dinosaur.setExistenceFlag("hasTalkedToDinosaur");
         dinosaur.setInteractScript(new DinoScript());
         npcs.add(dinosaur);
@@ -59,7 +55,7 @@ public class TestMap extends Map {
         bug.setInteractScript(new BugScript());
         npcs.add(bug);
 
-        TestDummy dummy = new TestDummy(4, getMapTile(5, 5).getLocation().subtractX(20),Direction.UP, getMapTile(5, 7).getLocation());
+        TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20));
         dummy.setInteractScript(new BugScript());
         npcs.add(dummy);
 
@@ -76,6 +72,9 @@ public class TestMap extends Map {
         triggers.add(new Trigger(790, 1030, 100, 10, new backgroundScript(), "readBackground"));
         triggers.add(new Trigger(790, 960, 10, 80, new backgroundScript(), "readBackground"));
         triggers.add(new Trigger(890, 960, 10, 80, new backgroundScript(), "readBackground"));
+        triggers.add(new Trigger(500, 660, 100, 10, new LostBallScript(), "hasLostBall"));
+        triggers.add(new Trigger(500, 580, 10, 80, new LostBallScript(), "hasLostBall"));
+        triggers.add(new Trigger(600, 580, 10, 80, new LostBallScript(), "hasLostBall"));
         triggers.add(new Trigger(tileLocation1.x, tileLocation1.y, width, height, new GateScript(), "gateInteract")); //putting the gate script in associated location
         triggers.add(new Trigger(820, 1200, 150, 10, new TestScript(), "flowerBed"));
         return triggers;
@@ -86,13 +85,7 @@ public class TestMap extends Map {
 
     @Override
     public void loadScripts() {
-        getMapTile(21, 19).setInteractScript(new SimpleTextScript("Cat's house"));
-
         getMapTile(7, 26).setInteractScript(new SimpleTextScript("Walrus's house"));
-
-        getMapTile(20, 4).setInteractScript(new SimpleTextScript("Dino's house"));
-
-        getMapTile(2, 6).setInteractScript(new TreeScript());
     }
 }
 

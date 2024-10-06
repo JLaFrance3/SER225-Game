@@ -32,9 +32,9 @@ public abstract class Tileset extends SpriteSheet {
     // a subclass of this class must implement this method to define tiles in the tileset
     public abstract ArrayList<MapTileBuilder> defineTiles();
 
-    // get specific tile from tileset by index, if not found the default tile is returned
+    // get specific tile from tileset by index, if not found null is returned
     public MapTileBuilder getTile(int tileNumber) {
-        return tiles.getOrDefault(tileNumber, getDefaultTile());
+        return tiles.get(tileNumber);
     }
 
     public float getTileScale() {

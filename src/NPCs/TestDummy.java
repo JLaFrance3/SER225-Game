@@ -18,7 +18,7 @@ public class TestDummy extends NPC {
     private int totalAmountMoved = 0;
     private Direction direction = Direction.UP;
     private float speed = 1;
-    private int random = 70 + (int)(Math.random()*45);
+    private int random = 45 + (int)(Math.random()*45);
     private int totalMoveCap = 90;
     private Point max, min;
     private Point inital;
@@ -40,20 +40,26 @@ public class TestDummy extends NPC {
         // this code makes the bug npc walk back and forth (left to right)
     @Override
     public void performAction(Player player) {
-        this.move((int)(max.y-inital.y), (int)inital.y);
-    }
+        // if bug has not yet moved 135 pixels in one direction, move bug forward
+        if (totalAmountMoved < 90 && totalAmountMoved < random) {
 
-    public void move(int maxDist, int minDist){
-        // if bug has not yet moved 90 pixels in one direction, move bug forward
-        if (totalAmountMoved < maxDist) {
-            float amountMoved = moveYHandleCollision(speed * direction.getVelocity());
+            float amountMoved;
+            //moves either up or down
+            if (direction == Direction.UP || direction == Direction.DOWN){
+                amountMoved = moveYHandleCollision(speed * direction.getVelocity());
+            }
+            //moves either left or right
+            else{
+                amountMoved = moveXHandleCollision(speed * direction.getVelocity());
+            }
+
             totalAmountMoved += Math.abs(amountMoved);
         }
 
         // else if bug has already moved 90 pixels in one direction, flip the bug's direction
         else {
-            totalAmountMoved = (int)(max.y-inital.y) - totalAmountMoved;
-            random = 70 + (int)(Math.random()*45);
+            totalAmountMoved = 135 - totalAmountMoved;
+            random = 45 + (int)(Math.random()*45);
             if (direction == Direction.LEFT) {
                 direction = Direction.RIGHT;
             }
