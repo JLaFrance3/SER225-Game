@@ -12,6 +12,6 @@ public class TownMap extends Map {
     
     public TownMap() {
         super("Town.txt", new TownTileset());
-        this.playerStartPosition = new Point(0, 3520);
+        this.playerStartPosition = new Point(800, 3800);
     }
 }

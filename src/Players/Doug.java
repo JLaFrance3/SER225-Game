@@ -166,7 +166,7 @@ public class Doug extends Player {
                             .withBounds(17, 14, 30, 48)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(11, 7), 14)
-                            .withBounds(17, 14, 30, 488)
+                            .withBounds(17, 14, 30, 48)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(11, 8), 14)
                             .withBounds(17, 14, 30, 48)

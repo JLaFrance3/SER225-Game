@@ -56,11 +56,11 @@ public class TownTileset extends Tileset {
             mapTiles.add(waterTile);
         };
         Frame[] waterFrames2 = new Frame[3];
-        waterFrames2[0] = new FrameBuilder(getSubImage(5, 9, false))
+        waterFrames2[0] = new FrameBuilder(getSubImage(5, 9, false), 95)
                 .build();
-        waterFrames2[1] = new FrameBuilder(getSubImage(5, 10, false))
+        waterFrames2[1] = new FrameBuilder(getSubImage(5, 10, false), 95)
                 .build();
-        waterFrames2[2] = new FrameBuilder(getSubImage(5, 11, false))
+        waterFrames2[2] = new FrameBuilder(getSubImage(5, 11, false), 95)
                 .build();
         MapTileBuilder waterTile = new MapTileBuilder(waterFrames2)
                 .withTileType(TileType.NOT_PASSABLE);
