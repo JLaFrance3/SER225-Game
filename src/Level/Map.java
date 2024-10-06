@@ -161,6 +161,7 @@ public abstract class Map {
                 int yLocation = i * tileset.getScaledSpriteHeight();
 
                 MapTileBuilder tileBuilder = new MapTileBuilder((tileIndex[0] > -1 ? tileset.getTile(tileIndex[0]) : tileset.getDefaultTile()).getBottomLayer(), tileIndex[0]);
+                if (tileIndex[0] >= 0) tileBuilder.setTileType(tileset.getTile(tileIndex[0]).getTileType());
                 if (tileIndex[1] >= 0) tileBuilder.addMidLayer(tileset.getTile(tileIndex[1]), tileIndex[1]);
                 if (tileIndex[2] >= 0) tileBuilder.addTopLayer(tileset.getTile(tileIndex[2]), tileIndex[2]);
 

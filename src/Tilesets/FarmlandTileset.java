@@ -318,6 +318,7 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder buildingTile = new MapTileBuilder(bagFrames[7])
+                        .withTileType(TileType.NOT_PASSABLE)
                         .withTopLayer(buildingFrames[i]);
 
                 mapTiles.add(buildingTile);

@@ -1,5 +1,7 @@
 package Level;
 
+import java.awt.Color;
+
 import Engine.GraphicsHandler;
 import GameObject.GameObject;
 import GameObject.IntersectableRectangle;
@@ -135,33 +137,33 @@ public class MapTile extends MapEntity {
         bottomLayer.draw(graphicsHandler);
 
         // uncomment this to draw bounds of all non passable tiles (useful for debugging)
-        /*
+        
         if (tileType == TileType.NOT_PASSABLE) {
             drawBounds(graphicsHandler, new Color(0, 0, 255, 100));
         }
-        */
+        
     }
 
     public void drawMidLayer(GraphicsHandler graphicsHandler) {
         midLayer.draw(graphicsHandler);
 
         // uncomment this to draw bounds of all non passable tiles (useful for debugging)
-        /*
+        
         if (tileType == TileType.NOT_PASSABLE) {
             drawBounds(graphicsHandler, new Color(0, 0, 255, 100));
         }
-        */
+        
     }
 
     public void drawTopLayer(GraphicsHandler graphicsHandler) {
         topLayer.draw(graphicsHandler);
 
         // uncomment this to draw bounds of all non passable tiles (useful for debugging)
-        /*
+        
         if (tileType == TileType.NOT_PASSABLE) {
             drawBounds(graphicsHandler, new Color(0, 0, 255, 100));
         }
-        */
+        
     }
 
     @Override

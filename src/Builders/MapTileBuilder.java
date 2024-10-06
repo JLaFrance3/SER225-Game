@@ -93,9 +93,13 @@ public class MapTileBuilder {
         return tileType;
     }
 
+    public void setTileType(TileType tileType) {
+        this.tileType = tileType;
+    }
+
     // Copies bottom layer of a another tile from the tileset and adds to the mid layer
     public void addMidLayer(MapTileBuilder midMapTile, int midIndex) {
-        if (!(midMapTile == null)) {
+        if (midMapTile != null) {
             this.midLayer = midMapTile.getBottomLayer();
             this.tileIndices[1] = midIndex;
             if (midMapTile.getTileType() == TileType.NOT_PASSABLE) {
@@ -106,9 +110,12 @@ public class MapTileBuilder {
 
     // Copies bottom layer of a another tile from the tileset and adds to the top layer
     public void addTopLayer(MapTileBuilder topMapTile, int topIndex) {
-        if (!(topMapTile == null)) {
+        if (topMapTile != null) {
             this.topLayer = topMapTile.getTopLayer();
             this.tileIndices[2] = topIndex;
+            if (topMapTile.getTileType() == TileType.NOT_PASSABLE) {
+                this.tileType = TileType.NOT_PASSABLE;
+            }
         }
     }
 
