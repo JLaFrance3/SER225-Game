@@ -223,8 +223,8 @@ public class Camera extends Rectangle {
         }
 
         for (EnhancedMapTile enhancedMapTile : activeEnhancedMapTiles) {
-            if (containsDraw(enhancedMapTile) && enhancedMapTile.getTopLayer() != null) {
-                enhancedMapTile.drawTopLayer(graphicsHandler);
+            if (containsDraw(enhancedMapTile) && enhancedMapTile.getMidLayer() != null) {
+                enhancedMapTile.drawMidLayer(graphicsHandler);
             }
         }
     }
