@@ -13,6 +13,7 @@ public class MapBuilder extends JPanel {
     private JLabel mapWidthLabel;
     private JLabel mapHeightLabel;
     private JLabel hoveredTileIndexLabel;
+    private JLabel hoveredTileLayerLabel;
 
     public MapBuilder(SelectedTileIndexHolder controlPanelHolder) {
         setBackground(Colors.CORNFLOWER_BLUE);
@@ -35,9 +36,13 @@ public class MapBuilder extends JPanel {
         hoveredTileIndexLabel.setSize(140, 20);
         hoveredTileIndexLabel.setLocation(152, 5);
         labelPanel.add(hoveredTileIndexLabel);
+        hoveredTileLayerLabel = new JLabel("");
+        hoveredTileLayerLabel.setSize(240, 20);
+        hoveredTileLayerLabel.setLocation(360, 5);
+        labelPanel.add(hoveredTileLayerLabel);
         add(labelPanel, BorderLayout.SOUTH);
 
-        tileBuilder = new TileBuilder(controlPanelHolder, hoveredTileIndexLabel);
+        tileBuilder = new TileBuilder(controlPanelHolder, hoveredTileIndexLabel, hoveredTileLayerLabel);
         tileBuilderScroll = new JScrollPane();
         tileBuilderScroll.setViewportView(tileBuilder);
         scrollToMaxY();
@@ -57,6 +62,7 @@ public class MapBuilder extends JPanel {
         tileBuilderScroll.getVerticalScrollBar().setValue(tileBuilderScroll.getVerticalScrollBar().getMaximum());
         mapWidthLabel.setText("Width: " + map.getWidth());
         mapHeightLabel.setText("Height: " + map.getHeight());
+        hoveredTileLayerLabel.setText("");
     }
 
     public void scrollToMaxY() {

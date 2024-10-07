@@ -6,7 +6,6 @@ import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
 import Maps.DungeonMap;
-import Maps.TestMap;
 import Players.Doug;
 import Utils.Direction;
 import Utils.Point;
