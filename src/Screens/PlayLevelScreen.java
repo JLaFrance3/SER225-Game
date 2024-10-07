@@ -35,7 +35,7 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("flowerBed", false);
 
         // define/setup map
-        map = new TestMap();
+        map = new TownMap();
         map.setFlagManager(flagManager);
 
         // setup player

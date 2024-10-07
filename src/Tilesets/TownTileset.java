@@ -10,6 +10,7 @@ import Level.Tileset;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Map;
 
 // This class represents a "common" tileset of standard tiles defined in the CommonTileset.png file
 public class TownTileset extends Tileset {
@@ -30,12 +31,12 @@ public class TownTileset extends Tileset {
                         .build();
         
                 MapTileBuilder terrainTiles;
-                if (i < 2) {
-                    terrainTiles = new MapTileBuilder(terrainFrames[j+(i*18)]);
+                if (i >= 2 && j < 15) {
+                    terrainTiles = new MapTileBuilder(terrainFrames[j+(i*18)])
+                            .withTileType(TileType.NOT_PASSABLE);;
                 }
                 else {
-                    terrainTiles = new MapTileBuilder(terrainFrames[j+(i*18)])
-                            .withTileType(TileType.NOT_PASSABLE);
+                    terrainTiles = new MapTileBuilder(terrainFrames[j+(i*18)]);
                 }
 
                 mapTiles.add(terrainTiles);
@@ -72,8 +73,14 @@ public class TownTileset extends Tileset {
             wallFrames[i] = new FrameBuilder(getSubImage(i % 3 + 6, i / 3, false))
                                 .build();
                 
-            MapTileBuilder wallTiles = new MapTileBuilder(wallFrames[i])
-                    .withTileType(TileType.NOT_PASSABLE);
+            MapTileBuilder wallTiles;
+            if (i % 3 == 2) {
+                wallTiles = new MapTileBuilder(wallFrames[i]);
+            }
+            else {
+                wallTiles = new MapTileBuilder(wallFrames[i])
+                        .withTileType(TileType.NOT_PASSABLE);
+            }
 
             mapTiles.add(wallTiles);
         }
@@ -149,7 +156,7 @@ public class TownTileset extends Tileset {
                 }
                 
                 MapTileBuilder niceBuildingTiles = new MapTileBuilder(niceBuildingFrames[i])
-                        .withTileType(TileType.NOT_PASSABLE);;
+                        .withTileType(TileType.NOT_PASSABLE);
 
                 mapTiles.add(niceBuildingTiles);
         }
@@ -166,8 +173,16 @@ public class TownTileset extends Tileset {
                         .build();
             }
                 
-            MapTileBuilder buildingDecorTiles = new MapTileBuilder(buildingDecorFrames[i])
-                    .withTileType(TileType.NOT_PASSABLE);
+            MapTileBuilder buildingDecorTiles;
+            switch (i) {
+                case 16, 17, 20, 21, 72, 73, 74, 75, 76, 77:
+                        buildingDecorTiles = new MapTileBuilder(buildingDecorFrames[i]);
+                        break;
+                default:
+                        buildingDecorTiles = new MapTileBuilder(buildingDecorFrames[i])
+                                .withTileType(TileType.NOT_PASSABLE);
+                        break;
+            }
 
             mapTiles.add(buildingDecorTiles);
         }
@@ -184,8 +199,21 @@ public class TownTileset extends Tileset {
                         .build();
             }
                 
-            MapTileBuilder decorTiles = new MapTileBuilder(decorFrames[i])
-                    .withTileType(TileType.NOT_PASSABLE);
+            MapTileBuilder decorTiles;
+            
+            switch (i) {
+                case 6, 7:
+                        decorTiles = new MapTileBuilder(decorFrames[i]);
+                        break;
+                case 5, 75, 76, 80, 81, 85, 86:
+                        decorTiles = new MapTileBuilder(blankFrame)
+                                        .withTopLayer(decorFrames[i]);
+                        break;
+                default:
+                        decorTiles = new MapTileBuilder(decorFrames[i])
+                                        .withTileType(TileType.NOT_PASSABLE);
+                        break;
+            }
 
             mapTiles.add(decorTiles);
         }
@@ -276,8 +304,18 @@ public class TownTileset extends Tileset {
             wallsFrames[i] = new FrameBuilder(getSubImage(i % 4 + 13, i / 4, false))
                     .build();
                 
-            MapTileBuilder wallsTiles = new MapTileBuilder(wallsFrames[i])
-                    .withTileType(TileType.NOT_PASSABLE);
+            MapTileBuilder wallsTiles;
+            if (i % 4 == 0 && i < 52 || i == 51 || i == 55) {
+                wallsTiles = new MapTileBuilder(blankFrame)
+                        .withTopLayer(wallsFrames[i]);
+            }
+            else if (i % 4 == 3) {
+                wallsTiles = new MapTileBuilder(wallsFrames[i]);
+            }
+            else {
+                wallsTiles = new MapTileBuilder(wallsFrames[i])
+                        .withTileType(TileType.NOT_PASSABLE);
+            }
 
             mapTiles.add(wallsTiles);
         }
@@ -289,8 +327,14 @@ public class TownTileset extends Tileset {
                 buildingFrames[j+(i*9)] = new FrameBuilder(getSubImage(j / 3 + 10 + (i/2*3), j % 3 + 23 + (i%2*3), false))
                         .build();
 
-                MapTileBuilder buildingTiles = new MapTileBuilder(buildingFrames[j+(i*9)])
-                        .withTileType(TileType.NOT_PASSABLE);
+                MapTileBuilder buildingTiles;
+                if (j >= 6) {
+                        buildingTiles = new MapTileBuilder(buildingFrames[j+(i*9)]);
+                }
+                else {
+                        buildingTiles = new MapTileBuilder(buildingFrames[j+(i*9)])
+                                .withTileType(TileType.NOT_PASSABLE);
+                }
 
                 mapTiles.add(buildingTiles);
             }

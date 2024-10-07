@@ -205,17 +205,17 @@ public class MapTile extends MapEntity {
     public void drawBottomLayer(GraphicsHandler graphicsHandler) {
         bottomLayer.draw(graphicsHandler);
 
-        // uncomment this to draw bounds of all collision bounds (useful for debugging)
-        if (tileType == TileType.NOT_PASSABLE) {
-            Rectangle scaledCalibratedBounds = new Rectangle(
-                Math.round(collisionBounds.getX1()) - Math.round(map.getCamera().getX()),
-                Math.round(collisionBounds.getY1()) - Math.round(map.getCamera().getY()),
-                Math.round(collisionBounds.getWidth()),
-                Math.round(collisionBounds.getHeight())
-            );
-            scaledCalibratedBounds.setColor(new Color(0, 0, 255, 100));
-            scaledCalibratedBounds.draw(graphicsHandler);
-        }
+        // uncomment this to draw collision bounds for map tiles(useful for debugging)
+        // if (tileType == TileType.NOT_PASSABLE) {
+        //     Rectangle scaledCalibratedBounds = new Rectangle(
+        //         Math.round(collisionBounds.getX1()) - Math.round(map.getCamera().getX()),
+        //         Math.round(collisionBounds.getY1()) - Math.round(map.getCamera().getY()),
+        //         Math.round(collisionBounds.getWidth()),
+        //         Math.round(collisionBounds.getHeight())
+        //     );
+        //     scaledCalibratedBounds.setColor(new Color(0, 0, 255, 100));
+        //     scaledCalibratedBounds.draw(graphicsHandler);
+        // }
     }
 
     public void drawMidLayer(GraphicsHandler graphicsHandler) {
