@@ -27,5 +27,13 @@ public class Gate extends EnhancedMapTile {
                 .build();
         return new GameObject(x, y, frame);
     }
+
+    @Override
+    protected GameObject loadMidLayer(SpriteSheet spriteSheet) {
+        Frame frame = new FrameBuilder(spriteSheet.getSubImage(0, 0))
+                .withScale(1)
+                .build();
+        return new GameObject(x, y, frame);
+    }
     
 }
