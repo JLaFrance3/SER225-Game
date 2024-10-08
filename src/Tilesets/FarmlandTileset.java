@@ -107,8 +107,14 @@ public class FarmlandTileset extends Tileset {
                 wheatFrames[i] = new FrameBuilder(getSubImage(i / 3, i % 3 + 3 + ((tileIndex + 3) / 18) * 3, false))
                                 .build();
 
-                MapTileBuilder wheatTile = new MapTileBuilder(wheatFrames[i])
-                                .withTileType(TileType.NOT_PASSABLE);
+                MapTileBuilder wheatTile;
+                if (i < 15) {
+                        wheatTile = new MapTileBuilder(wheatFrames[i])
+                                        .withTileType(TileType.NOT_PASSABLE);
+                }
+                else {
+                        wheatTile = new MapTileBuilder(wheatFrames[i]);
+                }
 
                 mapTiles.add(wheatTile);
                 tileIndex++;
@@ -262,6 +268,9 @@ public class FarmlandTileset extends Tileset {
                         cropTile = new MapTileBuilder(bagFrames[7])
                                         .withTopLayer(cropFrames[i]);
                 }
+                else if (i == 3){
+                        cropTile = new MapTileBuilder(cropFrames[i]);
+                }
                 else {
                         cropTile = new MapTileBuilder(cropFrames[i])
                                         .withTileType(TileType.NOT_PASSABLE);
@@ -318,6 +327,7 @@ public class FarmlandTileset extends Tileset {
                                 .build();
 
                 MapTileBuilder buildingTile = new MapTileBuilder(bagFrames[7])
+                        .withTileType(TileType.NOT_PASSABLE)
                         .withTopLayer(buildingFrames[i]);
 
                 mapTiles.add(buildingTile);
