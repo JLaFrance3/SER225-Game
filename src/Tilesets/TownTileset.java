@@ -96,17 +96,8 @@ public class TownTileset extends Tileset {
         for(int i = 0; i < roofFrames.length; i++) {
             roofFrames[i] = new FrameBuilder(getSubImage(i % 4 + 6, i / 4 + 9, false))
                                 .build();
-                MapTileBuilder roofTiles;
-                if (i / 12 % 2 == 0) {
-                    roofTiles = new MapTileBuilder(blankFrame)
-                        .withTopLayer(roofFrames[i])
-                        .withTileType(TileType.NOT_PASSABLE);
-                }
-                else {
-                    //Not going to make the upper roof tiles top layer so chimneys can be added on them
-                    roofTiles = new MapTileBuilder(roofFrames[i])
-                        .withTileType(TileType.NOT_PASSABLE);
-                }
+                MapTileBuilder roofTiles = new MapTileBuilder(blankFrame)
+                                .withTopLayer(roofFrames[i]);
 
                 mapTiles.add(roofTiles);
         }
@@ -118,8 +109,7 @@ public class TownTileset extends Tileset {
                                 .build();
                 
             MapTileBuilder roofsTiles = new MapTileBuilder(blankFrame)
-                    .withTopLayer(roofsFrames[i])
-                    .withTileType(TileType.NOT_PASSABLE);
+                    .withTopLayer(roofsFrames[i]);
 
             mapTiles.add(roofsTiles);
         }
@@ -210,8 +200,13 @@ public class TownTileset extends Tileset {
                                         .withTopLayer(decorFrames[i]);
                         break;
                 default:
-                        decorTiles = new MapTileBuilder(decorFrames[i])
-                                        .withTileType(TileType.NOT_PASSABLE);
+                        if (i >= 115 && (i-3) % 8 > 2) {
+                                decorTiles = new MapTileBuilder(decorFrames[i]);
+                        }
+                        else {
+                                decorTiles = new MapTileBuilder(decorFrames[i])
+                                                .withTileType(TileType.NOT_PASSABLE);
+                        }
                         break;
             }
 
@@ -275,13 +270,13 @@ public class TownTileset extends Tileset {
 
         // Torch animation
         Frame[] torchFrames = new Frame[4];
-        torchFrames[0] = new FrameBuilder(getSubImage(23, 14, false))
+        torchFrames[0] = new FrameBuilder(getSubImage(23, 14, false), 65)
                 .build();
-        torchFrames[1] = new FrameBuilder(getSubImage(23, 15, false))
+        torchFrames[1] = new FrameBuilder(getSubImage(23, 15, false), 65)
                 .build();
-        torchFrames[2] = new FrameBuilder(getSubImage(23, 16, false))
+        torchFrames[2] = new FrameBuilder(getSubImage(23, 16, false), 65)
                 .build();
-        torchFrames[3] = new FrameBuilder(getSubImage(23, 17, false))
+        torchFrames[3] = new FrameBuilder(getSubImage(23, 17, false), 65)
                 .build();
         MapTileBuilder torchTile = new MapTileBuilder(torchFrames);
         mapTiles.add(torchTile);
@@ -305,11 +300,14 @@ public class TownTileset extends Tileset {
                     .build();
                 
             MapTileBuilder wallsTiles;
-            if (i % 4 == 0 && i < 52 || i == 51 || i == 55) {
+            if (i % 4 == 0 && i < 52 || i == 51 || i == 55 || i == 59) {
                 wallsTiles = new MapTileBuilder(blankFrame)
                         .withTopLayer(wallsFrames[i]);
             }
             else if (i % 4 == 3) {
+                wallsTiles = new MapTileBuilder(wallsFrames[i]);
+            }
+            else if (i == 53 || i == 57) {
                 wallsTiles = new MapTileBuilder(wallsFrames[i]);
             }
             else {
@@ -338,6 +336,18 @@ public class TownTileset extends Tileset {
 
                 mapTiles.add(buildingTiles);
             }
+        }
+
+        // Animal feed
+        Frame[] feedFrames = new Frame[7];
+        for(int i = 0; i < feedFrames.length; i++) {
+                feedFrames[i] = new FrameBuilder(getSubImage(i / 2 + 17, i % 2 + 21, false))
+                    .build();
+                
+            MapTileBuilder feedTiles = new MapTileBuilder(feedFrames[i])
+                    .withTileType(TileType.NOT_PASSABLE);
+
+            mapTiles.add(feedTiles);
         }
 
         return mapTiles;

@@ -36,7 +36,7 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("readBackground", false);
 
         // define/setup map
-        map = new TownMap();
+        map = new TestMap();
         map.setFlagManager(flagManager);
 
         // setup player
