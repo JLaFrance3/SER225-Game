@@ -350,6 +350,24 @@ public class TownTileset extends Tileset {
             mapTiles.add(feedTiles);
         }
 
+        //Signs
+        Frame[] signFrames = new Frame[10];
+        for(int i = 0; i < signFrames.length; i++) {
+                signFrames[i] = new FrameBuilder(getSubImage(i / 3 + 10, i % 3 + 29, false))
+                                .build();
+
+                MapTileBuilder signTiles;
+                if (i == 5 || i == 2) {
+                        signTiles = new MapTileBuilder(signFrames[i])
+                                        .withTileType(TileType.NOT_PASSABLE);
+                }
+                else {
+                        signTiles = new MapTileBuilder(blankFrame)
+                                        .withTopLayer(signFrames[i]);
+                }
+                mapTiles.add(signTiles);
+        }
+
         return mapTiles;
     }
 }
