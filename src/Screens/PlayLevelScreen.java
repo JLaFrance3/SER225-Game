@@ -14,6 +14,7 @@ import Utils.Point;
 public class PlayLevelScreen extends Screen {
     protected ScreenCoordinator screenCoordinator;
     protected Map map;
+    protected Map startMap, townMap;
     protected DungeonScreen dungeon;
     protected Player player;
     protected PlayLevelScreenState playLevelScreenState;
@@ -33,16 +34,25 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("hasFoundBall", false);
         flagManager.addFlag("gateInteract", false);
         flagManager.addFlag("flowerBed", false);
+        flagManager.addFlag("readBackground", false);
+        flagManager.addFlag("startToTownMapPath", false);
+        flagManager.addFlag("townToStartMapPath", false);
 
-        // define/setup map
-        map = new TestMap();
-        map.setFlagManager(flagManager);
+        // game maps
+        startMap = new TestMap();
+        startMap.setFlagManager(flagManager);
+
+        townMap = new TownMap();
+        townMap.setFlagManager(flagManager);
+
+        // set current map to startMap
+        map = startMap;
 
         // setup player
         player = new Doug(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
         player.setMap(map);
         playLevelScreenState = PlayLevelScreenState.RUNNING;
-        player.setFacingDirection(Direction.LEFT);
+        player.setFacingDirection(Direction.DOWN);
 
         map.setPlayer(player);
 
@@ -78,6 +88,26 @@ public class PlayLevelScreen extends Screen {
         if (map.getFlagManager().isFlagSet("gateInteract")) { // if the gate interact flag is set then change the screen
             screenCoordinator.setGameState(GameState.DUNGEON);
             
+        }
+
+        if (map.getFlagManager().isFlagSet("startToTownMapPath")) {
+            Point p;
+            map = townMap;
+            p = map.getPositionByTileIndex(33, 125);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.UP);
+            flagManager.unsetFlag("startToTownMapPath");
+        }
+
+        if (map.getFlagManager().isFlagSet("townToStartMapPath")) {
+            Point p;
+            map = startMap;
+            p = map.getPositionByTileIndex(23, 7);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.LEFT);
+            flagManager.unsetFlag("townToStartMapPath");
         }
     }
 

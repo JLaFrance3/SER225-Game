@@ -5,6 +5,8 @@ import EnhancedMapTiles.Gate;
 import Level.*;
 import NPCs.Bug;
 import NPCs.Dinosaur;
+import NPCs.Goblin;
+import NPCs.Skeleton;
 import NPCs.TestDummy;
 import NPCs.Walrus;
 import Scripts.SimpleTextScript;
@@ -59,6 +61,22 @@ public class TestMap extends Map {
         dummy.setInteractScript(new CombatScript("Uh oh! This bug is evil as hell?"));
         npcs.add(dummy);
 
+        Goblin goblin1 = new Goblin(5, getMapTile(5, 15).getLocation().subtractX(20));
+        goblin1.setInteractScript(new DefaultMonsterScript());
+        npcs.add(goblin1);
+
+        Goblin goblin2 = new Goblin(5, getMapTile(17, 9).getLocation().subtractX(20));
+        goblin2.setInteractScript(new DefaultMonsterScript());
+        npcs.add(goblin2);
+
+        Skeleton skeleton1 = new Skeleton(6, getMapTile(9, 26).getLocation().subtractX(20));
+        skeleton1.setInteractScript(new DefaultMonsterScript());
+        npcs.add(skeleton1);
+
+        Skeleton skeleton2 = new Skeleton(6, getMapTile(17, 2).getLocation().subtractX(20));
+        skeleton1.setInteractScript(new DefaultMonsterScript());
+        npcs.add(skeleton2);
+
         return npcs;
     }
 
@@ -66,17 +84,19 @@ public class TestMap extends Map {
     public ArrayList<Trigger> loadTriggers() {
         ArrayList<Trigger> triggers = new ArrayList<>();
         Point tileLocation1 = getMapTile(6, 10).getLocation();//getting location of certain tile needed for gate
-        triggers.add(new Trigger(500, 660, 100, 10, new LostBallScript(), "hasLostBall"));
-        triggers.add(new Trigger(500, 580, 10, 80, new LostBallScript(), "hasLostBall"));
-        triggers.add(new Trigger(600, 580, 10, 80, new LostBallScript(), "hasLostBall"));
+        Point townMapTrigger = getPositionByTileIndex(25, 6);
+        triggers.add(new Trigger(500, 660, 100, 10, new backgroundScript(), "readBackground"));
+        triggers.add(new Trigger(500, 580, 10, 80, new backgroundScript(), "readBackground"));
+        triggers.add(new Trigger(600, 580, 10, 80, new backgroundScript(), "readBackground"));
         triggers.add(new Trigger(tileLocation1.x, tileLocation1.y, width, height, new GateScript(), "gateInteract")); //putting the gate script in associated location
         triggers.add(new Trigger(getMapTile(5, 17).getX(),getMapTile(5, 17).getY(),100,10,new CombatScript("Uh oh! This bug is evil as hell?"),"hasfought"));
         triggers.add(new Trigger(820, 1200, 150, 10, new TestScript(), "flowerBed"));
+        triggers.add(new Trigger(townMapTrigger.x + 20, townMapTrigger.y,10, 128, new StartToTownPathScript(), "startToTownMapPath"));
         return triggers;
     }
 
    
-    
+
 
     @Override
     public void loadScripts() {

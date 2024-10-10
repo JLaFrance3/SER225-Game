@@ -161,6 +161,7 @@ public abstract class Map {
                 int yLocation = i * tileset.getScaledSpriteHeight();
 
                 MapTileBuilder tileBuilder = new MapTileBuilder((tileIndex[0] > -1 ? tileset.getTile(tileIndex[0]) : tileset.getDefaultTile()).getBottomLayer(), tileIndex[0]);
+                if (tileIndex[0] >= 0) tileBuilder.setTileType(tileset.getTile(tileIndex[0]).getTileType());
                 if (tileIndex[1] >= 0) tileBuilder.addMidLayer(tileset.getTile(tileIndex[1]), tileIndex[1]);
                 if (tileIndex[2] >= 0) tileBuilder.addTopLayer(tileset.getTile(tileIndex[2]), tileIndex[2]);
 
@@ -181,7 +182,7 @@ public abstract class Map {
     private void createEmptyMapFile() throws IOException {
         FileWriter fileWriter = null;
         fileWriter = new FileWriter(Config.MAP_FILES_PATH + this.mapFileName);
-        fileWriter.write("0 -1 -1\n0 -1 -1");
+        fileWriter.write("2 2\n0 -1 -1 0 -1 -1\n0 -1 -1 0 -1 -1");
         fileWriter.close();
     }
 

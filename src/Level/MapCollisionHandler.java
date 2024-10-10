@@ -23,10 +23,10 @@ public class MapCollisionHandler {
                 float adjustedPositionX = gameObject.getX();
                 if (direction == Direction.RIGHT) {
                     float boundsDifference = gameObject.getX2() - gameObject.getBounds().getX2();
-                    adjustedPositionX = mapTile.getBounds().getX1() - gameObject.getWidth() + boundsDifference;
+                    adjustedPositionX = mapTile.getCollisionBounds().getX1() - gameObject.getWidth() + boundsDifference;
                 } else if (direction == Direction.LEFT) {
                     float boundsDifference = gameObject.getBounds().getX1() - gameObject.getX();
-                    adjustedPositionX = (mapTile.getBounds().getX2() + 1) - boundsDifference;
+                    adjustedPositionX = (mapTile.getCollisionBounds().getX2() + 1) - boundsDifference;
                 }
                 return new MapCollisionCheckResult(new Point(adjustedPositionX, gameObject.getY()), entityCollidedWith);
             }
@@ -39,10 +39,10 @@ public class MapCollisionHandler {
                 float adjustedPositionX = gameObject.getX();
                 if (direction == Direction.RIGHT) {
                     float boundsDifference = gameObject.getX2() - gameObject.getBounds().getX2();
-                    adjustedPositionX = enhancedMapTile.getBounds().getX1() - gameObject.getWidth() + boundsDifference;
+                    adjustedPositionX = enhancedMapTile.getCollisionBounds().getX1() - gameObject.getWidth() + boundsDifference;
                 } else if (direction == Direction.LEFT) {
                     float boundsDifference = gameObject.getBounds().getX1() - gameObject.getX();
-                    adjustedPositionX = (enhancedMapTile.getBounds().getX2() + 1) - boundsDifference;
+                    adjustedPositionX = (enhancedMapTile.getCollisionBounds().getX2() + 1) - boundsDifference;
                 }
                 return new MapCollisionCheckResult(new Point(adjustedPositionX, gameObject.getY()), entityCollidedWith);
             }
@@ -119,10 +119,10 @@ public class MapCollisionHandler {
                 float adjustedPositionY = gameObject.getY();
                 if (direction == Direction.DOWN) {
                     float boundsDifference = gameObject.getY2() - gameObject.getBounds().getY2();
-                    adjustedPositionY = mapTile.getBounds().getY1() - gameObject.getHeight() + boundsDifference;
+                    adjustedPositionY = mapTile.getCollisionBounds().getY1() - gameObject.getHeight() + boundsDifference;
                 } else if (direction == Direction.UP) {
                     float boundsDifference = gameObject.getBounds().getY1() - gameObject.getY();
-                    adjustedPositionY = (mapTile.getBounds().getY2() + 1) - boundsDifference;
+                    adjustedPositionY = (mapTile.getCollisionBounds().getY2() + 1) - boundsDifference;
                 }
                 return new MapCollisionCheckResult(new Point(gameObject.getX(), adjustedPositionY), entityCollidedWith);
             }
@@ -135,10 +135,10 @@ public class MapCollisionHandler {
                 float adjustedPositionY = gameObject.getY();
                 if (direction == Direction.DOWN) {
                     float boundsDifference = gameObject.getY2() - gameObject.getBounds().getY2();
-                    adjustedPositionY = enhancedMapTile.getBounds().getY1() - gameObject.getHeight() + boundsDifference;
+                    adjustedPositionY = enhancedMapTile.getCollisionBounds().getY1() - gameObject.getHeight() + boundsDifference;
                 } else if (direction == Direction.UP) {
                     float boundsDifference = gameObject.getBounds().getY1() - gameObject.getY();
-                    adjustedPositionY = (enhancedMapTile.getBounds().getY2() + 1) - boundsDifference;
+                    adjustedPositionY = (enhancedMapTile.getCollisionBounds().getY2() + 1) - boundsDifference;
                 }
                 return new MapCollisionCheckResult(new Point(gameObject.getX(), adjustedPositionY), entityCollidedWith);
             }
@@ -210,7 +210,7 @@ public class MapCollisionHandler {
                 case PASSABLE:
                     return false;
                 case NOT_PASSABLE:
-                    return gameObject.intersects(mapTile);
+                    return gameObject.intersects(mapTile.getCollisionBounds());
                 default:
                     return false;
             }

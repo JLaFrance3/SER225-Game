@@ -101,6 +101,11 @@ public class Textbox {
         return textQueue.isEmpty();
     }
 
+    // allows you to change the font size in a text box
+    public void fontSize(int size){
+        
+    }
+
     public void update() {
         // if textQueue has more text to display and the interact key button was pressed previously, display new text
         if (!textQueue.isEmpty() && keyLocker.isKeyLocked(interactKey)) {
@@ -112,7 +117,8 @@ public class Textbox {
             int fontY = !map.getCamera().isAtBottomOfMap() ? fontBottomY : fontTopY;
   
             // create text spritefont that will be drawn in textbox
-            text = new SpriteFont(currentTextItem.getText(), fontX, fontY, "Arial", 30, Color.black);
+            text = new SpriteFont(currentTextItem.getText(), fontX, fontY, "Arial", 20, Color.black);
+            
 
             // if there are options associated with this text item, prepare option spritefont text to be drawn in options textbox
             if (currentTextItem.getOptions() != null) {
@@ -123,7 +129,7 @@ public class Textbox {
                 options = new ArrayList<>();
                 // for each option, crate option text spritefont that will be drawn in options textbox
                 for (int i = 0; i < currentTextItem.getOptions().size(); i++) {
-                    options.add(new SpriteFont(currentTextItem.options.get(i), fontOptionX, fontOptionY + (i *  fontOptionSpacing), "Arial", 30, Color.black));
+                    options.add(new SpriteFont(currentTextItem.options.get(i), fontOptionX, fontOptionY + (i *  fontOptionSpacing), "Arial", 20, Color.black));
                 }
                 selectedOptionIndex = 0;
             }
