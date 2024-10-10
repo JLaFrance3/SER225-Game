@@ -66,11 +66,13 @@ public class TestMap extends Map {
     public ArrayList<Trigger> loadTriggers() {
         ArrayList<Trigger> triggers = new ArrayList<>();
         Point tileLocation1 = getMapTile(6, 10).getLocation();//getting location of certain tile needed for gate
+        Point townMapTrigger = getPositionByTileIndex(25, 6);
         triggers.add(new Trigger(500, 660, 100, 10, new backgroundScript(), "readBackground"));
         triggers.add(new Trigger(500, 580, 10, 80, new backgroundScript(), "readBackground"));
         triggers.add(new Trigger(600, 580, 10, 80, new backgroundScript(), "readBackground"));
         triggers.add(new Trigger(tileLocation1.x, tileLocation1.y, width, height, new GateScript(), "gateInteract")); //putting the gate script in associated location
         triggers.add(new Trigger(820, 1200, 150, 10, new TestScript(), "flowerBed"));
+        triggers.add(new Trigger(townMapTrigger.x + 20, townMapTrigger.y,10, 128, new StartToTownPathScript(), "startToTownMapPath"));
         return triggers;
     }
 
