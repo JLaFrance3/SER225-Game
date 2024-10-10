@@ -35,7 +35,7 @@ public class DefaultMonsterScript extends Script {
 
                 addScriptAction(new TextboxScriptAction() {{
                     addText("Awesome!");
-                    addText("Wait..We should probably wait until the combat is ready.");
+                    addText("Wait..We should probably wait until combat is ready.");
                 }});
             }});
 

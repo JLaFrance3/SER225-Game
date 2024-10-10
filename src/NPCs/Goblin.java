@@ -20,13 +20,32 @@ public class Goblin extends NPC {
     private float speed = 1;
     private int moveDistance = 150;  // Distance to move before turning around
     private int health = 40; //monster health
-    private int attackPower = 30; // monster attack power
+    private int attackPower = 30; // moster attack power
 
     public Goblin(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("fixedGoblin.png"), 33, 35), "WALK_RIGHT");
         this.health = health;
         this.attackPower = attackPower;
     }
+
+    public int getGoblinHealth(){
+        return health;
+    }
+
+    public void setGoblinHealth(int health){
+        this.health = health;
+    }
+
+    public int getGoblinAttackPower(){
+        return attackPower;
+    }
+
+    public void setGoblinAttackPower(int attackPower){
+        this.attackPower = attackPower;
+    }
+
+    
+
 
     @Override
     public void performAction(Player player) {

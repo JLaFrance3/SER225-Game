@@ -23,10 +23,26 @@ public class Skeleton extends NPC {
     private int attackPower = 10; // moster attack power
 
     public Skeleton(int id, Point location) {
-        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Skeleton.png"), 32, 36), "WALK_RIGHT");
+        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Skeleton.png"), 32, 33), "WALK_RIGHT");
         this.health = health;
         this.attackPower = attackPower;
 
+    }
+
+    public int getSkeletonHealth() {
+        return health;
+    }
+
+    public int getSkeletonAttackpower(){
+        return attackPower;
+    }
+
+    public void setSkeletonAttackPower(int attackPower){
+        this.attackPower = attackPower;
+    }
+
+    public void setSkeletonHealth(int health){
+        this.health = health;
     }
 
     @Override
