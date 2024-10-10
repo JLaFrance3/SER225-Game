@@ -58,7 +58,7 @@ public class TestMap extends Map {
         npcs.add(bug);
 
         TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20));
-        dummy.setInteractScript(new BugScript());
+        dummy.setInteractScript(new CombatScript("Uh oh! This bug is evil as hell?"));
         npcs.add(dummy);
 
         Goblin goblin1 = new Goblin(5, getMapTile(5, 15).getLocation().subtractX(20));
@@ -89,6 +89,7 @@ public class TestMap extends Map {
         triggers.add(new Trigger(500, 580, 10, 80, new backgroundScript(), "readBackground"));
         triggers.add(new Trigger(600, 580, 10, 80, new backgroundScript(), "readBackground"));
         triggers.add(new Trigger(tileLocation1.x, tileLocation1.y, width, height, new GateScript(), "gateInteract")); //putting the gate script in associated location
+        triggers.add(new Trigger(getMapTile(5, 17).getX(),getMapTile(5, 17).getY(),100,10,new CombatScript("Uh oh! This bug is evil as hell?"),"hasfought"));
         triggers.add(new Trigger(820, 1200, 150, 10, new TestScript(), "flowerBed"));
         triggers.add(new Trigger(townMapTrigger.x + 20, townMapTrigger.y,10, 128, new StartToTownPathScript(), "startToTownMapPath"));
         return triggers;
