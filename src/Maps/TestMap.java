@@ -77,6 +77,10 @@ public class TestMap extends Map {
         skeleton1.setInteractScript(new DefaultMonsterScript());
         npcs.add(skeleton1);
 
+        Skeleton skeleton2 = new Skeleton(6, getMapTile(10, 20).getLocation().subtractX(20));
+        skeleton1.setInteractScript(new DefaultMonsterScript());
+        npcs.add(skeleton2);
+
         return npcs;
     }
 
