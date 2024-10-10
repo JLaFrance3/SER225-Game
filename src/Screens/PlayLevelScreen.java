@@ -93,7 +93,7 @@ public class PlayLevelScreen extends Screen {
         if (map.getFlagManager().isFlagSet("startToTownMapPath")) {
             Point p;
             map = townMap;
-            p = map.getPositionByTileIndex(33, 137);
+            p = map.getPositionByTileIndex(33, 125);
             player.setMap(map);
             player.setLocation(p.x, p.y);
             player.setFacingDirection(Direction.UP);

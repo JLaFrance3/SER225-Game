@@ -26,7 +26,7 @@ public class TownMap extends Map {
     @Override
     public ArrayList<Trigger> loadTriggers() {
         ArrayList<Trigger> triggers = new ArrayList<>();
-        Point startMapTrigger = getPositionByTileIndex(32, 139);
+        Point startMapTrigger = getPositionByTileIndex(32, 127);
 
         triggers.add(new Trigger(startMapTrigger.x, startMapTrigger.y + 20,128, 10, new TownToStartPathScript(), "townToStartMapPath"));
         return triggers;

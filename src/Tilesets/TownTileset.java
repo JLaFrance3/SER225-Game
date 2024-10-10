@@ -145,8 +145,19 @@ public class TownTileset extends Tileset {
                             .build();
                 }
                 
-                MapTileBuilder niceBuildingTiles = new MapTileBuilder(niceBuildingFrames[i])
-                        .withTileType(TileType.NOT_PASSABLE);
+                MapTileBuilder niceBuildingTiles;
+                switch (i) {
+                        case 18, 19, 27, 28:
+                                niceBuildingTiles = new MapTileBuilder(roofFrames[62])
+                                                .withTopLayer(niceBuildingFrames[i])
+                                                .withTileType(TileType.NOT_PASSABLE);
+                                break;
+                        default:
+                                niceBuildingTiles = new MapTileBuilder(niceBuildingFrames[i])
+                                                .withTileType(TileType.NOT_PASSABLE);
+                                break;
+                }
+
 
                 mapTiles.add(niceBuildingTiles);
         }
@@ -351,13 +362,13 @@ public class TownTileset extends Tileset {
         }
 
         //Signs
-        Frame[] signFrames = new Frame[10];
+        Frame[] signFrames = new Frame[11];
         for(int i = 0; i < signFrames.length; i++) {
                 signFrames[i] = new FrameBuilder(getSubImage(i / 3 + 10, i % 3 + 29, false))
                                 .build();
 
                 MapTileBuilder signTiles;
-                if (i == 5 || i == 2) {
+                if (i == 2 || i == 5 || i == 10) {
                         signTiles = new MapTileBuilder(signFrames[i])
                                         .withTileType(TileType.NOT_PASSABLE);
                 }
