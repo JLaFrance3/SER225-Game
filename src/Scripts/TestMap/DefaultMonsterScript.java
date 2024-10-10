@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import Level.Script;
 import ScriptActions.*;
 
-// script for talking to bug npc
-// checkout the documentation website for a detailed guide on how this script works
-public class BugScript extends Script {
+// placeholder script for monsters
+
+public class DefaultMonsterScript extends Script {
 
     @Override
     public ArrayList<ScriptAction> loadScriptActions() {
@@ -19,8 +19,8 @@ public class BugScript extends Script {
         scriptActions.add(new NPCFacePlayerScriptAction());
 
         scriptActions.add(new TextboxScriptAction() {{
-            addText("Hello!");
-            addText("Do you like bugs?", new String[] { "Yes", "No"});
+            addText("Hi!!");
+            addText("Can I kill You?", new String[] { "Yes", "No"});
         }});
 
         scriptActions.add(new ConditionalScriptAction() {{
@@ -34,8 +34,10 @@ public class BugScript extends Script {
                 });
 
                 addScriptAction(new TextboxScriptAction() {{
-                    addText("I knew you were a cool cat!");
-                    addText("I'm going to let you in on a little secret...\nYou can push some rocks out of the way.");
+                    addText("Awesome!");
+                    addText("Wait...We should probably wait until combat is ready.");
+                    addText( "Otherwise it wouldn't be much of a fight.");
+                    addText("...No offense");
                 }});
             }});
 
@@ -48,7 +50,7 @@ public class BugScript extends Script {
                     }
                 });
                 
-                addScriptAction(new TextboxScriptAction("Oh...uh...awkward..."));
+                addScriptAction(new TextboxScriptAction("Rude"));
             }});
         }});
 

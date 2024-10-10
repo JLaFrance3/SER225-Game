@@ -3,27 +3,29 @@ package Scripts.TestMap;
 import java.util.ArrayList;
 
 import Level.Script;
-import ScriptActions.*;
+import ScriptActions.ChangeFlagScriptAction;
+import ScriptActions.ConditionalScriptAction;
+import ScriptActions.ConditionalScriptActionGroup;
+import ScriptActions.CustomRequirement;
+import ScriptActions.FlagRequirement;
+import ScriptActions.LockPlayerScriptAction;
+import ScriptActions.ScriptAction;
+import ScriptActions.TextboxScriptAction;
+import ScriptActions.UnlockPlayerScriptAction;
 
-// script for talking to bug npc
-// checkout the documentation website for a detailed guide on how this script works
-public class BugScript extends Script {
-
+public class TestScript extends Script {
     @Override
     public ArrayList<ScriptAction> loadScriptActions() {
         ArrayList<ScriptAction> scriptActions = new ArrayList<>();
         scriptActions.add(new LockPlayerScriptAction());
 
-        scriptActions.add(new NPCLockScriptAction());
-
-        scriptActions.add(new NPCFacePlayerScriptAction());
-
         scriptActions.add(new TextboxScriptAction() {{
-            addText("Hello!");
-            addText("Do you like bugs?", new String[] { "Yes", "No"});
+            addText("These flowers look nice.");
+            addText("What kind of flowers do you like most?", new String[] { "Tulips", "Roses" });
         }});
 
         scriptActions.add(new ConditionalScriptAction() {{
+            // Answer 1
             addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{
                 addRequirement(new CustomRequirement() {
                     @Override
@@ -34,11 +36,11 @@ public class BugScript extends Script {
                 });
 
                 addScriptAction(new TextboxScriptAction() {{
-                    addText("I knew you were a cool cat!");
-                    addText("I'm going to let you in on a little secret...\nYou can push some rocks out of the way.");
+                    addText("Oh, I love tulips too!");
                 }});
             }});
 
+            // Answer 2
             addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{
                 addRequirement(new CustomRequirement() {
                     @Override
@@ -48,11 +50,11 @@ public class BugScript extends Script {
                     }
                 });
                 
-                addScriptAction(new TextboxScriptAction("Oh...uh...awkward..."));
+                addScriptAction(new TextboxScriptAction("Roses are pretty!"));
             }});
         }});
 
-        scriptActions.add(new NPCUnlockScriptAction());
+        scriptActions.add(new ChangeFlagScriptAction("flowerBed", true));
         scriptActions.add(new UnlockPlayerScriptAction());
 
         return scriptActions;

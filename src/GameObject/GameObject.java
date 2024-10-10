@@ -1,6 +1,7 @@
 package GameObject;
 
 import Engine.GraphicsHandler;
+import Engine.ImageLoader;
 import Level.*;
 import Utils.Direction;
 import Utils.ImageUtils;
@@ -36,6 +37,8 @@ public class GameObject extends AnimatedSprite {
 
 	protected boolean affectedByTriggers = false;
 
+	
+
 	public GameObject(SpriteSheet spriteSheet, float x, float y, String startingAnimation) {
 		super(spriteSheet, x, y, startingAnimation);
 		this.startPositionX = x;
@@ -67,6 +70,9 @@ public class GameObject extends AnimatedSprite {
 		this.previousX = x;
 		this.previousY = y;
 	}
+
+
+		
 
 	public GameObject(float x, float y) {
 		super(x, y, new Frame(ImageUtils.createSolidImage(new Color(255, 0, 255)), ImageEffect.NONE, 1, null));
@@ -297,7 +303,7 @@ public class GameObject extends AnimatedSprite {
 	public void draw(GraphicsHandler graphicsHandler) {
 		if (map != null) {
 			graphicsHandler.drawImage(
-				currentFrame.getImage(),
+				currentFrame.getImage(),				
 				Math.round(getCalibratedXLocation()),
 				Math.round(getCalibratedYLocation()),
 				currentFrame.getWidth(),
@@ -308,7 +314,7 @@ public class GameObject extends AnimatedSprite {
 			super.draw(graphicsHandler);
 		}
 	}
-
+		
 	@Override
 	public void drawBounds(GraphicsHandler graphicsHandler, Color color) {
 		if (map != null) {
@@ -319,4 +325,5 @@ public class GameObject extends AnimatedSprite {
 			super.drawBounds(graphicsHandler, color);
 		}
 	}
+	
 }
