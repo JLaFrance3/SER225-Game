@@ -5,6 +5,8 @@ import EnhancedMapTiles.Gate;
 import Level.*;
 import NPCs.Bug;
 import NPCs.Dinosaur;
+import NPCs.Goblin;
+import NPCs.Skeleton;
 import NPCs.TestDummy;
 import NPCs.Walrus;
 import Scripts.SimpleTextScript;
@@ -32,7 +34,7 @@ public class TestMap extends Map {
         PushableRock pushableRock = new PushableRock(getMapTile(2, 7).getLocation());
         enhancedMapTiles.add(pushableRock);
 
-        Gate gate = new Gate(getMapTile(3, 5).getLocation());
+        Gate gate = new Gate(getMapTile(16, 27).getLocation());
         enhancedMapTiles.add(gate);
         
         
@@ -62,6 +64,16 @@ public class TestMap extends Map {
         TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20));
         dummy.setInteractScript(new BugScript());
         npcs.add(dummy);
+
+        Goblin goblin1 = new Goblin(5, getMapTile(3, 21).getLocation().subtractX(20));
+        npcs.add(goblin1);
+
+        Goblin goblin2 = new Goblin(5, getMapTile(18, 14).getLocation().subtractX(20));
+       // goblin2.setInteractScript(new BugScript());
+        npcs.add(goblin2);
+
+        Skeleton skeleton1 = new Skeleton(6, getMapTile(16, 25).getLocation().subtractX(20));
+        npcs.add(skeleton1);
 
         return npcs;
     }

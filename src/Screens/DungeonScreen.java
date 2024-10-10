@@ -34,7 +34,7 @@ public class DungeonScreen extends Screen {
         map = new DungeonMap();
         map.setFlagManager(flagManager);
 
-        // setup player
+        // setup player 
         player = new Doug(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
         player.setMap(map);
         playLevelScreenState = PlayLevelScreenState.RUNNING;

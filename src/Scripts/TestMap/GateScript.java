@@ -20,7 +20,6 @@ public class GateScript extends Script {
         }});
         scriptActions.add(new ChangeFlagScriptAction("gateInteract", true));
        
-       // screenCoordinator.setGameState(GameState.DUNGEON);
        
         scriptActions.add(new UnlockPlayerScriptAction());
 
