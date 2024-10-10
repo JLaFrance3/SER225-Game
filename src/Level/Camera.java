@@ -159,11 +159,13 @@ public class Camera extends Rectangle {
 
     public void draw(GraphicsHandler graphicsHandler) {
         drawMapTilesBottomLayer(graphicsHandler);
+        drawMapTilesMidLayer(graphicsHandler);
         drawMapTilesTopLayer(graphicsHandler);
     }
 
     public void draw(Player player, GraphicsHandler graphicsHandler) {
         drawMapTilesBottomLayer(graphicsHandler);
+        drawMapTilesMidLayer(graphicsHandler);
         drawMapEntities(player, graphicsHandler);
         drawMapTilesTopLayer(graphicsHandler);
     }
@@ -204,6 +206,25 @@ public class Camera extends Rectangle {
         for (EnhancedMapTile enhancedMapTile : activeEnhancedMapTiles) {
             if (containsDraw(enhancedMapTile) && enhancedMapTile.getTopLayer() != null) {
                 enhancedMapTile.drawTopLayer(graphicsHandler);
+            }
+        }
+    }
+
+    // draws the top layer of visible map tiles to the screen where applicable
+    public void drawMapTilesMidLayer(GraphicsHandler graphicsHandler) {
+        Point tileIndex = getTileIndexByCameraPosition();
+        for (int i = tileIndex.y - 1; i <= tileIndex.y + height + 1; i++) {
+            for (int j = tileIndex.x - 1; j <= tileIndex.x + width + 1; j++) {
+                MapTile tile = map.getMapTile(j, i);
+                if (tile != null && tile.getMidLayer() != null) {
+                    tile.drawMidLayer(graphicsHandler);
+                }
+            }
+        }
+
+        for (EnhancedMapTile enhancedMapTile : activeEnhancedMapTiles) {
+            if (containsDraw(enhancedMapTile) && enhancedMapTile.getMidLayer() != null) {
+                enhancedMapTile.drawMidLayer(graphicsHandler);
             }
         }
     }

@@ -24,10 +24,29 @@ public class SpriteSheet {
 		return image.getSubimage((animationNumber * spriteWidth) + animationNumber, (spriteNumber * spriteHeight) + spriteNumber, spriteWidth, spriteHeight);
 	}
 
+	//Overloaded method specifying whether the spritesheet has gridlines or not
+	public BufferedImage getSprite(int spriteNumber, int animationNumber, boolean hasGridLines) {
+		if (!hasGridLines) {
+			return image.getSubimage((animationNumber * spriteWidth), (spriteNumber * spriteHeight), spriteWidth, spriteHeight);
+		}
+		else {
+			return getSprite(spriteNumber, animationNumber);
+		}
+	}
+
 	// returns a subimage from the sprite sheet image based on the row and column
 	// this does the same as "getSprite", I added two methods that do the same thing for some reason
 	public BufferedImage getSubImage(int row, int column) {
 		return image.getSubimage((column * spriteWidth) + column, (row * spriteHeight) + row, spriteWidth, spriteHeight);
+	}
+
+	public BufferedImage getSubImage(int row, int column, boolean hasGridLines) {
+		if(!hasGridLines) {
+			return image.getSubimage((column * spriteWidth), (row * spriteHeight), spriteWidth, spriteHeight);
+		}
+		else {
+			return getSubImage(row, column);
+		}
 	}
 
 	public BufferedImage getImage() {

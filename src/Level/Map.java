@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Builders.MapTileBuilder;
+
 /*
     This class is for defining a map that is used for a specific level
     The map class handles/manages a lot of different things, including:
@@ -149,10 +151,21 @@ public abstract class Map {
         // read in each tile index from the map file, use the defined tileset to get the associated MapTile to that tileset, and place it in the array
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                int tileIndex = fileInput.nextInt();
+                int[] tileIndex = new int[3];
+
+                for (int k = 0; k < 3; k++) {  
+                    tileIndex[k] = fileInput.nextInt();
+                }
+
                 int xLocation = j * tileset.getScaledSpriteWidth();
                 int yLocation = i * tileset.getScaledSpriteHeight();
-                MapTile tile = tileset.getTile(tileIndex).build(xLocation, yLocation);
+
+                MapTileBuilder tileBuilder = new MapTileBuilder((tileIndex[0] > -1 ? tileset.getTile(tileIndex[0]) : tileset.getDefaultTile()).getBottomLayer(), tileIndex[0]);
+                if (tileIndex[0] >= 0) tileBuilder.setTileType(tileset.getTile(tileIndex[0]).getTileType());
+                if (tileIndex[1] >= 0) tileBuilder.addMidLayer(tileset.getTile(tileIndex[1]), tileIndex[1]);
+                if (tileIndex[2] >= 0) tileBuilder.addTopLayer(tileset.getTile(tileIndex[2]), tileIndex[2]);
+
+                MapTile tile = tileBuilder.build(xLocation, yLocation);
                 tile.setMap(this);
                 setMapTile(j, i, tile);
 
@@ -161,7 +174,6 @@ public abstract class Map {
                 }
             }
         }
-
         fileInput.close();
     }
 
@@ -170,7 +182,7 @@ public abstract class Map {
     private void createEmptyMapFile() throws IOException {
         FileWriter fileWriter = null;
         fileWriter = new FileWriter(Config.MAP_FILES_PATH + this.mapFileName);
-        fileWriter.write("0 0\n");
+        fileWriter.write("2 2\n0 -1 -1 0 -1 -1\n0 -1 -1 0 -1 -1");
         fileWriter.close();
     }
 

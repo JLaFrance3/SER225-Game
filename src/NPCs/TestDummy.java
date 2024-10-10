@@ -24,6 +24,9 @@ public class TestDummy extends NPC {
     private Point inital;
     //private int lowerX, lowerY, upperX, upperY;
 
+    private int health = 50; //monster health
+    private int attackPower = 10; // monster attack power
+
     
     public TestDummy(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Bug.png"), 24, 15), "WALK_RIGHT");

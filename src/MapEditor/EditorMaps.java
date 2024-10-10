@@ -1,10 +1,8 @@
 package MapEditor;
 
 import Level.Map;
-import Maps.TestDungeon;
-import Maps.DungeonMap;
-import Maps.TestMap;
-import Maps.TitleScreenMap;
+import Maps.*;
+
 
 import java.util.ArrayList;
 
@@ -13,8 +11,8 @@ public class EditorMaps {
         return new ArrayList<String>() {{
             add("TestMap");
             add("TitleScreen");
-            add("TestDungeon");
             add("DungeonMap");
+            add("TownMap");
         }};
     }
 
@@ -24,10 +22,10 @@ public class EditorMaps {
                 return new TestMap();
             case "TitleScreen":
                 return new TitleScreenMap();
-            case "TestDungeon":
-                return new TestDungeon();
             case "DungeonMap":
                 return new DungeonMap();
+            case "TownMap":
+                return new TownMap();
             default:
                 throw new RuntimeException("Unrecognized map name");
         }

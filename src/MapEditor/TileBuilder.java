@@ -5,6 +5,9 @@ import Level.*;
 import Utils.Colors;
 
 import javax.swing.*;
+
+import Builders.MapTileBuilder;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -12,31 +15,36 @@ import java.awt.event.MouseMotionAdapter;
 
 public class TileBuilder extends JPanel {
     private Map map;
-    private MapTile hoveredMapTile;
+    private MapTile hoveredMapTile, pressedMapTile;
     private SelectedTileIndexHolder controlPanelHolder;
     private GraphicsHandler graphicsHandler = new GraphicsHandler();
     private JLabel hoveredTileIndexLabel;
+    private JLabel hoveredTileLayerLabel;
     private boolean showNPCs;
     private boolean showEnhancedMapTiles;
     private boolean showTriggers;
 
-    public TileBuilder(SelectedTileIndexHolder controlPanelHolder, JLabel hoveredTileIndexLabel) {
+    public TileBuilder(SelectedTileIndexHolder controlPanelHolder, JLabel hoveredTileIndexLabel, JLabel hoveredTileLayerLabel) {
         setBackground(Colors.MAGENTA);
         setLocation(0, 0);
         setPreferredSize(new Dimension(585, 562));
         this.controlPanelHolder = controlPanelHolder;
         this.hoveredTileIndexLabel = hoveredTileIndexLabel;
+        this.hoveredTileLayerLabel = hoveredTileLayerLabel;
         addMouseListener(new MouseListener() {
             @Override
             public void mouseExited(MouseEvent e) {
                 hoveredMapTile = null;
+                pressedMapTile = null;
                 hoveredTileIndexLabel.setText("");
+                hoveredTileLayerLabel.setText("");
                 repaint();
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
                 tileSelected(e.getPoint());
+                pressedMapTile = getHoveredTile(e.getPoint());
             }
 
             @Override
@@ -58,7 +66,11 @@ public class TileBuilder extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 tileHovered(e.getPoint());
-                tileSelected(e.getPoint());
+
+                if (!(hoveredMapTile.equals(pressedMapTile))) {
+                    tileSelected(e.getPoint());
+                    pressedMapTile = getHoveredTile(e.getPoint());
+                }
             }
         });
     }
@@ -113,12 +125,46 @@ public class TileBuilder extends JPanel {
 
     public void tileSelected(Point selectedPoint) {
         int selectedTileIndex = getSelectedTileIndex(selectedPoint);
-        if (selectedTileIndex != -1) {
+        if (selectedTileIndex > -1) {
             MapTile oldMapTile = map.getMapTiles()[selectedTileIndex];
-            MapTile newMapTile =  map.getTileset().getTile(controlPanelHolder.getSelectedTileIndex()).build(oldMapTile.getX(), oldMapTile.getY());
+            int[] layerIndices = oldMapTile.getTileLayerIndices();
+            MapTileBuilder newTileBuilder;
+
+            //If old map tile bottom layer is empty
+            if (layerIndices[0] < 0) {
+                newTileBuilder = map.getTileset().getTile(controlPanelHolder.getSelectedTileIndex());
+            }
+            //If selected tile is the same as current bottom layer
+            else if (layerIndices[0] == controlPanelHolder.getSelectedTileIndex()) {
+                newTileBuilder = map.getTileset().getTile(controlPanelHolder.getSelectedTileIndex());
+                newTileBuilder.clearUpperLayers();  // Reset tile
+            }
+            else {
+                MapTileBuilder selectedTileBuilder = map.getTileset().getTile(controlPanelHolder.getSelectedTileIndex());
+                int[] oldTileIndices = oldMapTile.getTileLayerIndices();
+
+                //If old map tile has middle layer but selected tile has no top layer
+                if (layerIndices[1] >= 0 && selectedTileBuilder.getTopLayer().isEmpty()) {
+                    newTileBuilder = map.getTileset().getTile(controlPanelHolder.getSelectedTileIndex());
+                }
+                else {       
+                    newTileBuilder = new MapTileBuilder(map.getTileset().getTile(oldTileIndices[0]).getBottomLayer(), oldTileIndices[0]);
+                    
+                    // If selected tile has top layer
+                    if (!selectedTileBuilder.getTopLayer().isEmpty()) {
+                        newTileBuilder.addTopLayer(selectedTileBuilder, controlPanelHolder.getSelectedTileIndex());
+                        if (layerIndices[1] >= 0) {
+                            newTileBuilder.addMidLayer(map.getTileset().getTile(oldTileIndices[1]), oldTileIndices[1]);
+                        }
+                    }
+                    else {
+                        newTileBuilder.addMidLayer(selectedTileBuilder, controlPanelHolder.getSelectedTileIndex());
+                    }
+                }
+            }
+            MapTile newMapTile = newTileBuilder.build(oldMapTile.getX(), oldMapTile.getY());
             newMapTile.setMap(map);
             map.getMapTiles()[selectedTileIndex] = newMapTile;
-
         }
         repaint();
     }
@@ -129,6 +175,11 @@ public class TileBuilder extends JPanel {
             int hoveredIndexX = Math.round(this.hoveredMapTile.getX()) / map.getTileset().getScaledSpriteWidth();
             int hoveredIndexY = Math.round(this.hoveredMapTile.getY()) / map.getTileset().getScaledSpriteHeight();
             hoveredTileIndexLabel.setText("X: " + hoveredIndexX + ", Y: " + hoveredIndexY);
+            hoveredTileLayerLabel.setText(String.format("Bottom: %3d Middle: %3d Top: %3d",
+                    this.hoveredMapTile.getTileLayerIndices()[0],
+                    this.hoveredMapTile.getTileLayerIndices()[1],
+                    this.hoveredMapTile.getTileLayerIndices()[2]
+            ));
             repaint();
         }
     }

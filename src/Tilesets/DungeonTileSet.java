@@ -26,8 +26,9 @@ public class DungeonTileSet extends Tileset{
                 .withScale(tileScale)
                 .build();
 
-        MapTileBuilder whiteBrick = new MapTileBuilder(whiteBrickFrame);
-                //.withTileType(TileType.NOT_PASSABLE);     
+        MapTileBuilder whiteBrick = new MapTileBuilder(whiteBrickFrame) //why is  .withTileType(TileType.NOT_PASSABLE) not working?
+                .withTileType(TileType.NOT_PASSABLE);                   //I think you might have placed the semicolon wrong?
+        
        
         mapTiles.add(whiteBrick);
 
