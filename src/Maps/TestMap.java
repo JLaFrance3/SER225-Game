@@ -66,13 +66,15 @@ public class TestMap extends Map {
         npcs.add(dummy);
 
         Goblin goblin1 = new Goblin(5, getMapTile(3, 21).getLocation().subtractX(20));
+        goblin1.setInteractScript(new DefaultMonsterScript());
         npcs.add(goblin1);
 
         Goblin goblin2 = new Goblin(5, getMapTile(18, 14).getLocation().subtractX(20));
-       // goblin2.setInteractScript(new BugScript());
+        goblin2.setInteractScript(new DefaultMonsterScript());
         npcs.add(goblin2);
 
         Skeleton skeleton1 = new Skeleton(6, getMapTile(16, 25).getLocation().subtractX(20));
+        skeleton1.setInteractScript(new DefaultMonsterScript());
         npcs.add(skeleton1);
 
         return npcs;
