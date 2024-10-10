@@ -61,7 +61,7 @@ public abstract class Player extends GameObject {
 
     public void update() {
 
-        System.out.println("Udpate Method- CurrentState: " + playerState);
+        // System.out.println("Udpate Method- CurrentState: " + playerState);
 
         if (!isLocked) {
             moveAmountX = 0;
@@ -117,7 +117,7 @@ public abstract class Player extends GameObject {
             // If no keys are pressed, set player to STANDING state
             playerState = PlayerState.STANDING;
         }
-        System.out.println("Transitioned to PlayerState:  " + playerState);
+        // System.out.println("Transitioned to PlayerState: " + playerState);
         // After deciding the state, call the appropriate method for the state
 
         switch (playerState) {
@@ -367,7 +367,7 @@ public abstract class Player extends GameObject {
                 case RIGHT -> currentAnimationName = "WALK_RIGHT";
             }
         } // debug
-        System.out.println("CurrentANimation:" + currentAnimationName);
+          // System.out.println("CurrentANimation:" + currentAnimationName);
     }
 
     @Override
