@@ -16,7 +16,7 @@ import java.util.Map;
 public class TownTileset extends Tileset {
 
     public TownTileset() {
-        super(ImageLoader.load("TownTileset.png", new Color(0, 0, 0, 0)), 32, 32);
+        super(ImageLoader.load("TownTileset.png", true), 32, 32);
     }
 
     @Override
@@ -206,7 +206,7 @@ public class TownTileset extends Tileset {
                 case 6, 7:
                         decorTiles = new MapTileBuilder(decorFrames[i]);
                         break;
-                case 5, 75, 76, 80, 81, 85, 86:
+                case 0, 5, 10, 75, 76, 80, 81, 85, 86:
                         decorTiles = new MapTileBuilder(blankFrame)
                                         .withTopLayer(decorFrames[i]);
                         break;
@@ -255,8 +255,17 @@ public class TownTileset extends Tileset {
                     .build();
             }
                 
-            MapTileBuilder treeTiles = new MapTileBuilder(treeFrames[i])
-                    .withTileType(TileType.NOT_PASSABLE);
+            MapTileBuilder treeTiles;
+            switch (i) {
+                case 0, 3, 6:
+                        treeTiles = new MapTileBuilder(blankFrame)
+                                        .withTopLayer(treeFrames[i]);
+                        break;
+                default:
+                        treeTiles = new MapTileBuilder(treeFrames[i])
+                                        .withTileType(TileType.NOT_PASSABLE);
+                        break;
+            }
 
             mapTiles.add(treeTiles);
         }

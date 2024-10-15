@@ -113,9 +113,9 @@ public class MapTile extends MapEntity {
             BufferedImage image;
             int width, height, top, bottom, left, right;
 
-            // Get collision image information from toplayer
-            if (topLayer != null) {
-                image = topLayer.getAnimations().get("DEFAULT")[0].getImage();
+            // Get collision image information from midlayer
+            if (midLayer != null) {
+                image = midLayer.getAnimations().get("DEFAULT")[0].getImage();
                 width = image.getWidth();
                 height = image.getHeight();
                 top = height / 2;
@@ -124,25 +124,14 @@ public class MapTile extends MapEntity {
                 right = left;
             }
             else {
-                // If no toplayer, get image information from midlayer
-                if (midLayer != null) {
-                    image = midLayer.getAnimations().get("DEFAULT")[0].getImage();
-                    width = image.getWidth();
-                    height = image.getHeight();
-                    top = height / 2;
-                    bottom = top;
-                    left = width / 2;
-                    right = left;
-                }
-                else {
-                    newBounds = getBounds();
-                    return newBounds;
-                }
+                newBounds = getBounds();
+                return newBounds;
             }
+            
             // Calculate bounds based on rgb values
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
-                    if (image.getRGB(i, j) != 0) {
+                    if ((image.getRGB(i, j) >> 24 & 0xff) > 160) {
                         top = Math.min(top, j);
                         bottom = Math.max(bottom, j);
                         left = Math.min(left, i);
@@ -157,6 +146,11 @@ public class MapTile extends MapEntity {
                     right - left + 1,
                     bottom - top + 1
             );
+            //Double check tile should actually be NOT_PASSABLE
+            if (newBounds.getWidth() == 1 && newBounds.getHeight() == 1) {
+                this.tileType = TileType.PASSABLE;
+                newBounds = getBounds();
+            }
         }
         else {newBounds = getBounds();}
 

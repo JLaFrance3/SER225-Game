@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class FarmlandTileset extends Tileset {
 
     public FarmlandTileset() {
-        super(ImageLoader.load("FarmlandTileset.png", new Color(0, 0, 0, 0)), 32, 32);
+        super(ImageLoader.load("FarmlandTileset.png", true), 32, 32);
     }
 
     @Override
