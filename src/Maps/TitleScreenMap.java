@@ -17,7 +17,7 @@ public class TitleScreenMap extends Map {
 
     public TitleScreenMap() {
         super("title_screen_map.txt", new FarmlandTileset());
-        Point playerLocation = getMapTile(11, 8).getLocation().subtractX(6).subtractY(7);
+        Point playerLocation = getMapTile(10, 8).getLocation().subtractX(7).subtractY(8);
         player = new Sprite(ImageLoader.loadSubImage("Doug.png", Colors.MAGENTA, 0, 128, 63, 63));
         player.setLocation(playerLocation.x, playerLocation.y);
     }

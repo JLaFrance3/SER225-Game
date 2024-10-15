@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import Level.Map;
 import Level.Trigger;
 import Scripts.TestMap.GateScript;
-import Scripts.TestMap.LostBallScript;
 import Scripts.TestMap.TestScript;
 import Scripts.TestMap.backgroundScript;
 import Scripts.TownMap.TownToStartPathScript;

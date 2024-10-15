@@ -37,6 +37,7 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("readBackground", false);
         flagManager.addFlag("startToTownMapPath", false);
         flagManager.addFlag("townToStartMapPath", false);
+        flagManager.addFlag("hasfought", false);
 
         // game maps
         startMap = new TestMap();
