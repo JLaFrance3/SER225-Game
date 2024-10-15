@@ -17,6 +17,21 @@ public class ImageLoader {
         return ImageLoader.load(imageFileName, Config.TRANSPARENT_COLOR);
     }
 
+    // loads an image and uses normal alpha transparency
+    public static BufferedImage load(String imageFileName, Boolean hasAlpha) {
+        if (!hasAlpha) {
+            return ImageLoader.load(imageFileName);
+        }
+        else {
+            try {
+                return ImageIO.read(new File(Config.RESOURCES_PATH + imageFileName));
+            } catch (IOException e) {
+                System.out.println("Unable to find file " + Config.RESOURCES_PATH + imageFileName);
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     // loads an image and allows the transparent color to be specified
     public static BufferedImage load(String imageFileName, Color transparentColor) {
         try {
@@ -27,6 +42,8 @@ public class ImageLoader {
             throw new RuntimeException(e);
         }
     }
+
+    
 
     // loads a piece of an image from an image file and sets its transparent color to the one defined in the Config class
     public static BufferedImage loadSubImage(String imageFileName, int x, int y, int width, int height) {

@@ -31,7 +31,8 @@ public class IndoorTileset extends Tileset {
         // Dark Tile
         Frame darkFrame = new FrameBuilder(getSubImage(8, 0, false))
                 .build();
-        MapTileBuilder darkTile = new MapTileBuilder(darkFrame);
+        MapTileBuilder darkTile = new MapTileBuilder(darkFrame)
+                        .withTileType(TileType.NOT_PASSABLE);
         mapTiles.add(darkTile);
 
         // Floor tiles
@@ -55,7 +56,7 @@ public class IndoorTileset extends Tileset {
         }
 
         // Indoor items
-        Frame[] indoorFrames = new Frame[90];
+        Frame[] indoorFrames = new Frame[117];
         for(int i = 0; i < indoorFrames.length; i++) {
             indoorFrames[i] = new FrameBuilder(getSubImage(i / 9 + 10, i % 9, false))
                     .build();
