@@ -208,7 +208,8 @@ public class IndoorTileset extends Tileset {
         for(int i = 0; i < shopItemFrames.length; i++) {
             shopItemFrames[i] = new FrameBuilder(getSubImage(i / 24 + 23, i % 24, false))
                     .build();
-            MapTileBuilder shopItemTiles = new MapTileBuilder(shopItemFrames[i]);
+            MapTileBuilder shopItemTiles = new MapTileBuilder(blankFrame)
+                        .withTopLayer(shopItemFrames[i]);
 
             mapTiles.add(shopItemTiles);
         }
@@ -222,6 +223,17 @@ public class IndoorTileset extends Tileset {
                     .withTileType(TileType.NOT_PASSABLE);
 
             mapTiles.add(stairTiles);
+        }
+
+        // Doors
+        Frame[] doorFrames = new Frame[4];
+        for(int i = 0; i < doorFrames.length; i++) {
+                doorFrames[i] = new FrameBuilder(getSubImage(i + 18, 26, false))
+                    .build();
+            MapTileBuilder doorTiles = new MapTileBuilder(doorFrames[i])
+                    .withTileType(TileType.NOT_PASSABLE);
+
+            mapTiles.add(doorTiles);
         }
 
         return mapTiles;
