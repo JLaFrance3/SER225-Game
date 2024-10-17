@@ -179,6 +179,13 @@ public class Rectangle implements IntersectableRectangle {
 		return new Rectangle(x, y, getWidth(), getHeight());
 	}
 
+	// check if rectangle contains a point
+	public boolean contains(Point p) {
+		Rectangle intersectRectangle = getIntersectRectangle();
+		return p.x >= intersectRectangle.getX1() && p.x <= intersectRectangle.getX2() &&
+				p.y >= intersectRectangle.getY1() && p.y <= intersectRectangle.getY2();
+	}
+
 	// check if this intersects with another rectangle
 	public boolean intersects(IntersectableRectangle other) {
 		Rectangle intersectRectangle = getIntersectRectangle();

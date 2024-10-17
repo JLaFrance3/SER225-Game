@@ -22,9 +22,11 @@ public class PlayLevelScreen extends Screen {
     protected PlayLevelScreenState playLevelScreenState;
     protected WinScreen winScreen;
     protected FlagManager flagManager;
+    protected Point lockDoorInteractPoint;
 
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
+        lockDoorInteractPoint = null;
     }
 
     public void initialize() {
@@ -38,6 +40,7 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("flowerBed", false);
         flagManager.addFlag("readBackground", false);
         flagManager.addFlag("hasfought", false);
+        flagManager.addFlag("lockedDoor", false);
 
         // Map change flags
         mapChangeFlags = new String[]{
@@ -127,14 +130,30 @@ public class PlayLevelScreen extends Screen {
                 break;
         }
 
-        // if flag is set at any point during gameplay, game is "won"
+        // Gamestate changes
         if (map.getFlagManager().isFlagSet("hasFoundBall")) {
             playLevelScreenState = PlayLevelScreenState.LEVEL_COMPLETED;
         }
-
         if (map.getFlagManager().isFlagSet("gateInteract")) { // if the gate interact flag is set then change the screen
             screenCoordinator.setGameState(GameState.DUNGEON);
-            
+        }
+
+        if (map.getFlagManager().isFlagSet("lockedDoor")) {
+            //Attempting to not spam player with lockedDoor textboxes
+            if (lockDoorInteractPoint == null) {
+                lockDoorInteractPoint = player.getLocation();
+            }
+            //Checks if player has moved from tile in which lockedDoorScript was triggered
+            if (map.getTileByPosition(player.getX1(), player.getY1()).getIntersectRectangle().contains(lockDoorInteractPoint)) {
+                //Do nothing
+            }
+            else if (map.getTextbox().isActive()) {
+                lockDoorInteractPoint = player.getLocation();
+            }
+            else {
+                flagManager.unsetFlag("lockedDoor");
+                lockDoorInteractPoint = null;
+            }
         }
 
         // Map change triggers
