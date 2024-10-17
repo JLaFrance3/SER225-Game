@@ -1,9 +1,7 @@
 package Maps;
 
 import Level.Map;
-import Tilesets.CommonTileset;
 import Tilesets.DungeonTileSet;
-import Utils.Point;
 
 //this class represents the Dungeon map I am building
 

@@ -4,13 +4,9 @@ import Builders.FrameBuilder;
 import Builders.MapTileBuilder;
 import Engine.ImageLoader;
 import GameObject.Frame;
-import GameObject.ImageEffect;
 import Level.TileType;
 import Level.Tileset;
-
-import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Map;
 
 // This class represents a "common" tileset of standard tiles defined in the CommonTileset.png file
 public class TownTileset extends Tileset {
@@ -147,6 +143,9 @@ public class TownTileset extends Tileset {
                 
                 MapTileBuilder niceBuildingTiles;
                 switch (i) {
+                        case 3, 4, 5:
+                                niceBuildingTiles = new MapTileBuilder(niceBuildingFrames[i]);
+                                break;
                         case 18, 19, 27, 28:
                                 niceBuildingTiles = new MapTileBuilder(roofFrames[62])
                                                 .withTopLayer(niceBuildingFrames[i])
@@ -157,7 +156,6 @@ public class TownTileset extends Tileset {
                                                 .withTileType(TileType.NOT_PASSABLE);
                                 break;
                 }
-
 
                 mapTiles.add(niceBuildingTiles);
         }

@@ -1,6 +1,5 @@
 package Maps;
 
-import EnhancedMapTiles.PushableRock;
 import EnhancedMapTiles.Gate;
 import Level.*;
 import NPCs.Bug;
@@ -11,14 +10,9 @@ import NPCs.TestDummy;
 import NPCs.Walrus;
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.*;
-import Tilesets.CommonTileset;
 import Tilesets.FarmlandTileset;
-import Utils.Direction;
 import Utils.Point;
-
 import java.util.ArrayList;
-
-import Engine.ImageLoader;
 
 // Represents a test map to be used in a level
 public class TestMap extends Map {
