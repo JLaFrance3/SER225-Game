@@ -4,13 +4,11 @@ import Builders.FrameBuilder;
 import Builders.MapTileBuilder;
 import Engine.ImageLoader;
 import GameObject.Frame;
-import GameObject.ImageEffect;
 import Level.TileType;
 import Level.Tileset;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class IndoorTileset extends Tileset {
 
@@ -60,7 +58,22 @@ public class IndoorTileset extends Tileset {
         for(int i = 0; i < indoorFrames.length; i++) {
             indoorFrames[i] = new FrameBuilder(getSubImage(i / 9 + 10, i % 9, false))
                     .build();
-            MapTileBuilder indoorTiles = new MapTileBuilder(indoorFrames[i]);
+            MapTileBuilder indoorTiles;
+
+            switch (i) {
+                case 73, 82:
+                        indoorTiles = new MapTileBuilder(blankFrame)
+                                        .withTopLayer(indoorFrames[i]);
+                        break;
+                case 90, 91, 99, 100, 108, 109:
+                        indoorTiles = new MapTileBuilder(indoorFrames[i]);
+                        break;
+            
+                default:
+                        indoorTiles = new MapTileBuilder(indoorFrames[i])
+                                        .withTileType(TileType.NOT_PASSABLE);
+                        break;
+            }
 
             mapTiles.add(indoorTiles);
         }
