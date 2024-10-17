@@ -4,11 +4,8 @@ import Builders.FrameBuilder;
 import Builders.MapTileBuilder;
 import Engine.ImageLoader;
 import GameObject.Frame;
-import GameObject.ImageEffect;
 import Level.TileType;
 import Level.Tileset;
-
-import java.awt.Color;
 import java.util.ArrayList;
 
 // This class represents a "common" tileset of standard tiles defined in the CommonTileset.png file
@@ -351,8 +348,15 @@ public class FarmlandTileset extends Tileset {
                 brickFrames[i] = new FrameBuilder(getSubImage(i / 3 + 16, i % 3 + 7, false))
                                 .build();
 
-                MapTileBuilder brickTile = new MapTileBuilder(brickFrames[i])
+                MapTileBuilder brickTile;
+
+                if (i >= 6 && i < 9 || i == 11) {
+                        brickTile = new MapTileBuilder(brickFrames[i]);
+                }
+                else {
+                        brickTile = new MapTileBuilder(brickFrames[i])
                                 .withTileType(TileType.NOT_PASSABLE);
+                }
 
                 mapTiles.add(brickTile);
         }
