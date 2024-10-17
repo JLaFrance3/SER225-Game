@@ -8,6 +8,7 @@ import NPCs.Goblin;
 import NPCs.Skeleton;
 import NPCs.TestDummy;
 import NPCs.Walrus;
+import Scripts.LockedDoorScript;
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.*;
 import Tilesets.FarmlandTileset;
@@ -86,15 +87,25 @@ public class TestMap extends Map {
         triggers.add(new Trigger(getMapTile(5, 17).getX(),getMapTile(5, 17).getY(),100,10,new CombatScript("Uh oh! This bug is evil as hell?"),"hasfought"));
         triggers.add(new Trigger(820, 1200, 150, 10, new TestScript(), "flowerBed"));
         triggers.add(new Trigger(townMapTrigger.x + 20, townMapTrigger.y,10, 128, new StartToTownPathScript(), "startToTownMapPath"));
+
+        //Locked door triggers
+        Point[] lockDoorTriggers = new Point[] {
+            getPositionByTileIndex(5, 26),
+            getPositionByTileIndex(17, 18),
+            getPositionByTileIndex(13, 5)
+        };
+        Script lockedDoorScript = new LockedDoorScript();
+        triggers.add(new Trigger(lockDoorTriggers[0].x, lockDoorTriggers[1].y + 24, 32, 10, lockedDoorScript,"lockedDoor"));
+        triggers.add(new Trigger(lockDoorTriggers[1].x, lockDoorTriggers[1].y + 24, 32, 10, lockedDoorScript,"lockedDoor"));
+        triggers.add(new Trigger(lockDoorTriggers[2].x, lockDoorTriggers[2].y + 24, 32, 10, lockedDoorScript,"lockedDoor"));
+
+        //Sign triggers
+        Point walrusHouseSign = getMapTile(7, 26).getLocation();
+        Point leaveStartAreaSign = getMapTile(22, 8).getLocation();
+        triggers.add(new Trigger(walrusHouseSign.x, walrusHouseSign.y, 32, 32, new WalrusHouseSign(),"walrusHouseSign"));
+        triggers.add(new Trigger(leaveStartAreaSign.x, leaveStartAreaSign.y, 32, 32, new LeaveStartAreaSign(),"leaveStartAreaSign"));
+
         return triggers;
-    }
-
-   
-
-
-    @Override
-    public void loadScripts() {
-        getMapTile(7, 26).setInteractScript(new SimpleTextScript("Walrus's house"));
     }
 }
 

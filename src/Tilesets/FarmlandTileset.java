@@ -348,8 +348,15 @@ public class FarmlandTileset extends Tileset {
                 brickFrames[i] = new FrameBuilder(getSubImage(i / 3 + 16, i % 3 + 7, false))
                                 .build();
 
-                MapTileBuilder brickTile = new MapTileBuilder(brickFrames[i])
+                MapTileBuilder brickTile;
+
+                if (i >= 6 && i < 9 || i == 11) {
+                        brickTile = new MapTileBuilder(brickFrames[i]);
+                }
+                else {
+                        brickTile = new MapTileBuilder(brickFrames[i])
                                 .withTileType(TileType.NOT_PASSABLE);
+                }
 
                 mapTiles.add(brickTile);
         }

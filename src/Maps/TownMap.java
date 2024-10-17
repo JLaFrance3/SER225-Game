@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import Level.Map;
 import Level.Trigger;
 import Level.Script;
+import Scripts.LockedDoorScript;
+import Scripts.SimpleTextScript;
 import Scripts.TownMap.*;
 import Tilesets.TownTileset;
 import Utils.Point;
@@ -62,7 +64,15 @@ public class TownMap extends Map {
         triggers.add(new Trigger(manorDoorTrigger.x, manorDoorTrigger.y + 24, 32, 10, new TownToManorScript(), "townToManorDoor"));
         triggers.add(new Trigger(smithDoorTrigger.x, smithDoorTrigger.y + 24, 32, 10, new TownToSmithScript(), "townToSmithDoor"));
         triggers.add(new Trigger(townHallDoorTrigger.x, townHallDoorTrigger.y + 24, 64, 10, new TownToHallScript(), "townToHallDoor"));
-             
+
+        //Sign triggers
+        Point townHallSign = getMapTile(76, 77).getLocation();
+        Point directionSign = getMapTile(26, 107).getLocation();
+        Point startAreaSign = getMapTile(30, 121).getLocation();
+        triggers.add(new Trigger(townHallSign.x, townHallSign.y, 32, 32, new TownHallSign(),"townHallSign"));
+        triggers.add(new Trigger(directionSign.x, directionSign.y, 32, 32, new DirectionSign(),"directionSign"));
+        triggers.add(new Trigger(startAreaSign.x, startAreaSign.y, 32, 32, new StartAreaSign(),"startAreaSign"));
+
         return triggers;
     }
 }

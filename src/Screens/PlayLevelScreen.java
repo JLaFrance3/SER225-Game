@@ -41,6 +41,11 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("readBackground", false);
         flagManager.addFlag("hasfought", false);
         flagManager.addFlag("lockedDoor", false);
+        flagManager.addFlag("walrusHouseSign", false);
+        flagManager.addFlag("leaveStartAreaSign", false);
+        flagManager.addFlag("townHallSign", false);
+        flagManager.addFlag("directionSign", false);
+        flagManager.addFlag("startAreaSign", false);
 
         // Map change flags
         mapChangeFlags = new String[]{

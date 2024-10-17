@@ -201,7 +201,7 @@ public class TownTileset extends Tileset {
             MapTileBuilder decorTiles;
             
             switch (i) {
-                case 6, 7:
+                case 6, 7, 64, 74:
                         decorTiles = new MapTileBuilder(decorFrames[i]);
                         break;
                 case 0, 5, 10, 75, 76, 80, 81, 85, 86:

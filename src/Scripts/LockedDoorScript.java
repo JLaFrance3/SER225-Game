@@ -1,4 +1,4 @@
-package Scripts.TownMap;
+package Scripts;
 
 import java.util.ArrayList;
 import Level.Script;
@@ -8,7 +8,6 @@ public class LockedDoorScript extends Script {
     @Override
     public ArrayList<ScriptAction> loadScriptActions() {
         ArrayList<ScriptAction> scriptActions = new ArrayList<>();
-        int lockedDoorDelay = 0;
 
         scriptActions.add(new ChangeFlagScriptAction("lockedDoor", true));
         scriptActions.add(new TextboxScriptAction() {{
