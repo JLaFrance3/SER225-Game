@@ -201,7 +201,7 @@ public class PlayLevelScreen extends Screen {
         if (map.getFlagManager().isFlagSet("townToH1Door")) {
             Point p;
             map = H1Map;
-            p = map.getPositionByTileIndex(10, 11);
+            p = map.getPositionByTileIndex(9, 11);
             player.setMap(map);
             player.setLocation(p.x, p.y);
             player.setFacingDirection(Direction.UP);
