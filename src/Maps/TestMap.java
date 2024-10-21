@@ -1,5 +1,6 @@
 package Maps;
 
+import EnhancedMapTiles.Chest;
 import EnhancedMapTiles.Gate;
 import Level.*;
 import NPCs.Bug;
@@ -29,6 +30,9 @@ public class TestMap extends Map {
 
         Gate gate = new Gate(getMapTile(5, 8).getLocation());
         enhancedMapTiles.add(gate);
+
+        Chest chest1 = new Chest(getMapTile(12, 24).getLocation());
+        enhancedMapTiles.add(chest1);
         
         return enhancedMapTiles;
     }
@@ -57,20 +61,20 @@ public class TestMap extends Map {
         npcs.add(dummy);
 
         Goblin goblin1 = new Goblin(5, getMapTile(5, 15).getLocation().subtractX(20));
-        goblin1.setInteractScript(new DefaultMonsterScript());
+        goblin1.setInteractScript(new CombatScript("oh no! this goblin is evil as hell!?"));
         npcs.add(goblin1);
 
         Goblin goblin2 = new Goblin(5, getMapTile(17, 9).getLocation().subtractX(20));
-        goblin2.setInteractScript(new DefaultMonsterScript());
+        goblin2.setInteractScript(new CombatScript("oh no! this goblin is evil as hell!?"));
         npcs.add(goblin2);
 
         Skeleton skeleton1 = new Skeleton(6, getMapTile(9, 26).getLocation().subtractX(20));
         skeleton1.setInteractScript(new DefaultMonsterScript());
-        npcs.add(skeleton1);
+     //   npcs.add(skeleton1);
 
         Skeleton skeleton2 = new Skeleton(6, getMapTile(17, 2).getLocation().subtractX(20));
         skeleton1.setInteractScript(new DefaultMonsterScript());
-        npcs.add(skeleton2);
+      //  npcs.add(skeleton2);
 
         return npcs;
     }
@@ -78,15 +82,16 @@ public class TestMap extends Map {
     @Override
     public ArrayList<Trigger> loadTriggers() {
         ArrayList<Trigger> triggers = new ArrayList<>();
-        Point tileLocation1 = getMapTile(6, 10).getLocation();//getting location of certain tile needed for gate
+       // Point tileLocation1 = getMapTile(6, 10).getLocation();//getting location of certain tile needed for gate
         Point townMapTrigger = getPositionByTileIndex(25, 6);
         triggers.add(new Trigger(500, 660, 100, 10, new backgroundScript(), "readBackground"));
         triggers.add(new Trigger(500, 580, 10, 80, new backgroundScript(), "readBackground"));
         triggers.add(new Trigger(600, 580, 10, 80, new backgroundScript(), "readBackground"));
-        triggers.add(new Trigger(tileLocation1.x, tileLocation1.y, width, height, new GateScript(), "gateInteract")); //putting the gate script in associated location
+       // triggers.add(new Trigger(tileLocation1.x, tileLocation1.y, width, height, new GateScript(), "gateInteract")); //putting the gate script in associated location
         triggers.add(new Trigger(getMapTile(5, 17).getX(),getMapTile(5, 17).getY(),100,10,new CombatScript("Uh oh! This bug is evil as hell?"),"hasfought"));
         triggers.add(new Trigger(820, 1200, 150, 10, new TestScript(), "flowerBed"));
         triggers.add(new Trigger(townMapTrigger.x + 20, townMapTrigger.y,10, 128, new StartToTownPathScript(), "startToTownMapPath"));
+        triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "startToDungeon"));
 
         //Locked door triggers
         Point[] lockDoorTriggers = new Point[] {
