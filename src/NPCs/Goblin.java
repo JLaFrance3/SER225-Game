@@ -76,13 +76,13 @@ public class Goblin extends NPC {
         return new HashMap<String, Frame[]>() {{
             put("STAND_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(0, 0))
-                            .withScale(3)
+                            .withScale(2)
                             .withBounds(4, 5, 5, 10)
                             .build()
             });
             put("STAND_RIGHT", new Frame[] {
                    new FrameBuilder(spriteSheet.getSprite(0, 0))
-                           .withScale(3)
+                           .withScale(2)
                            .withBounds(4, 5, 5, 10)
                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                            .build()
@@ -90,23 +90,23 @@ public class Goblin extends NPC {
 
             put("WALK_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(10, 1), 14)
-                            .withScale(3)
+                            .withScale(2)
                             .withBounds(4, 5, 5, 10)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 1), 14)
-                            .withScale(3)
+                            .withScale(2)
                             .withBounds(4, 5, 5, 10)
                             .build()
             });
 
             put("WALK_RIGHT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(1, 0), 14)
-                            .withScale(3)
+                            .withScale(2)
                             .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .withBounds(4, 5, 5, 10)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 1), 14)
-                            .withScale(3)
+                            .withScale(2)
                             .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .withBounds(4, 5, 5, 10)
                             .build()
