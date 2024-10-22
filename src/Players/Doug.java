@@ -11,13 +11,6 @@ import java.util.HashMap;
 
 // This is the class for Doug, a demo character
 public class Doug extends Player {
-        // private SpriteSheet attackSpriteSheet;
-        // private String currentAction;
-        // private boolean isWieldingSword = false;
-        // private SpriteSheet swordSprite;
-        // private HashMap<String,Frame[]> regularAnimations;
-        // private HashMap<String, Frame[]> swordAnimations;
-
         public Doug(float x, float y) {
                 super(new SpriteSheet(ImageLoader.load("Doug.png"), 63, 63), x, y, "STAND_DOWN");
                 walkSpeed = 2.3f;
@@ -25,8 +18,6 @@ public class Doug extends Player {
 
         public void update() {
                 super.update();
-                // handlePlayerState();
-
         }
 
         public void draw(GraphicsHandler graphicsHandler) {

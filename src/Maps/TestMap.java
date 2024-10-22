@@ -43,18 +43,18 @@ public class TestMap extends Map {
         //this holds the npc's (?)
         ArrayList<NPC> npcs = new ArrayList<>();
 
-        Walrus walrus = new Walrus(1, getMapTile(4, 28).getLocation().subtractY(40));//npc constructor appears to set an id (?) then set location
-        walrus.setInteractScript(new WalrusScript());//used for interaction
-        npcs.add(walrus);//adds the npc to the array
+        // Walrus walrus = new Walrus(1, getMapTile(4, 28).getLocation().subtractY(40));//npc constructor appears to set an id (?) then set location
+        // walrus.setInteractScript(new WalrusScript());//used for interaction
+        // npcs.add(walrus);//adds the npc to the array
 
-        Dinosaur dinosaur = new Dinosaur(2, getMapTile(10, 7).getLocation());
-        dinosaur.setExistenceFlag("hasTalkedToDinosaur");
-        dinosaur.setInteractScript(new DinoScript());
-        npcs.add(dinosaur);
+        // Dinosaur dinosaur = new Dinosaur(2, getMapTile(10, 7).getLocation());
+        // dinosaur.setExistenceFlag("hasTalkedToDinosaur");
+        // dinosaur.setInteractScript(new DinoScript());
+        // npcs.add(dinosaur);
         
-        Bug bug = new Bug(3, getMapTile(7, 12).getLocation().subtractX(20));
-        bug.setInteractScript(new BugScript());
-        npcs.add(bug);
+        // Bug bug = new Bug(3, getMapTile(7, 12).getLocation().subtractX(20));
+        // bug.setInteractScript(new BugScript());
+        // npcs.add(bug);
 
         TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20));
         dummy.setInteractScript(new CombatScript("Uh oh! This bug is evil as hell?"));
