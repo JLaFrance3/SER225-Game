@@ -17,7 +17,7 @@ public class QuestOneChestScript extends Script{
     @Override
     public ArrayList<ScriptAction> loadScriptActions() {
         ArrayList<ScriptAction> scriptActions = new ArrayList<>();
-        scriptActions.add(new LockPlayerScriptAction());
+        // scriptActions.add(new LockPlayerScriptAction());
         
         scriptActions.add(new ConditionalScriptAction() {{
             // if the player has visited the tree with the carving, the text will inform the player of what they found in the chest
@@ -25,13 +25,12 @@ public class QuestOneChestScript extends Script{
                 addRequirement(new FlagRequirement("readQuestOne", true));
                 addRequirement(new FlagRequirement("readQuestOneChest", false));
 
+                addScriptAction(new ChangeFlagScriptAction("readQuestOneChest", true));
                 addScriptAction(new TextboxScriptAction () {{
                     addText("You try to use the key you obtained from the tree to unlock the chest.");
                     addText("It opens! Inside, you find a map with the same \"Uncanny\" symbol at the top.");
                     addText("You have completed your first quest! Now let's examine this map further...");
                 }});
-
-                addScriptAction(new ChangeFlagScriptAction("readQuestOneChest", true));
             }});
 
             // if the player has not visited any part of the quest yet, the text will explain that the chest is locked but could be helpful
@@ -45,7 +44,7 @@ public class QuestOneChestScript extends Script{
             }});
         }});
 
-        scriptActions.add(new UnlockPlayerScriptAction());
+        // scriptActions.add(new UnlockPlayerScriptAction());
 
         return scriptActions;
     }
