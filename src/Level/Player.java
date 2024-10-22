@@ -13,6 +13,13 @@ import GameObject.SpriteSheet;
 import Utils.Direction;
 import java.awt.image.BufferedImage;
 
+//These are found sounds for Motions 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.AudioInputStream;
+import java.io.File;
+import java.io.IOException;
+
 public abstract class Player extends GameObject {
     // values that affect player movement
     // these should be set in a subclass
@@ -43,10 +50,25 @@ public abstract class Player extends GameObject {
 
     // attack mode for Sprite
     private static Key ATTACK_UP_KEY = Key.U; // SWORD MOTION
+    private boolean isSwordSoundPlayed = false;
+    private boolean isDeathSoundPlayed = false;
+    private boolean isArrowSoundPlayed = false;
+    private boolean isMagicSoundPlayed = false;
+
+    private boolean isActive = false;
+    private Clip swordClip;// checking if sword clip is played
+    private Clip DeathClip;// checking if death clip is played
+    private Clip ArrowClip; // checking if Arrow clip is played
+    private Clip MagicClip;// checking if MAgic clip is played
     private static Key ATTACK_DOWN_KEY = Key.J; // DEATH
     private static Key ATTACK_RIGHT_KEY = Key.K; // MAGIC MOTION
     private static Key ATTACK_LEFT_KEY = Key.H; // ARROW MOTION
 
+    private boolean isKeyPressed = false;
+    // private SpriteSheet swordSprite;// reference for sword sprite
+    // private boolean isWieldingSword = false;// tracking if weapon is there
+    /* private boolean isMovingLeft = false; */
+    /* private boolean isMovingRight = false; */
     protected boolean isLocked = false;
 
     // Character customization options
@@ -72,7 +94,8 @@ public abstract class Player extends GameObject {
         this.intelligence = 0;
     }
 
-    public Player(SpriteSheet[] spriteComponents, float x, float y, String startingAnimationName, String name, boolean isMale) {
+    public Player(SpriteSheet[] spriteComponents, float x, float y, String startingAnimationName, String name,
+            boolean isMale) {
         super(spriteComponents[0], x, y, startingAnimationName);
         facingDirection = Direction.DOWN;
         playerState = PlayerState.STANDING;
@@ -86,8 +109,8 @@ public abstract class Player extends GameObject {
         this.constitution = 0;
         this.intelligence = 0;
 
-        //Create new spritesheet by combing component layers onto one buffered image
-        //TODO: Test this
+        // Create new spritesheet by combing component layers onto one buffered image
+        // TODO: Test this
         BufferedImage customSprite = new BufferedImage(832, 1344, BufferedImage.TYPE_INT_ARGB);
         Graphics g = customSprite.getGraphics();
         for (SpriteSheet spriteLayer : spriteComponents) {
@@ -111,6 +134,7 @@ public abstract class Player extends GameObject {
             do {
                 previousPlayerState = playerState;
                 handlePlayerState();
+
             } while (previousPlayerState != playerState);
 
             // move player with respect to map collisions based on how much player needs to
@@ -119,11 +143,12 @@ public abstract class Player extends GameObject {
             lastAmountMovedX = super.moveXHandleCollision(moveAmountX);
 
             handlePlayerAnimation();
+            // playSoundEffect(currentAnimationName);
 
             updateLockedKeys();
 
             if (Keyboard.isKeyDown(Key.U)) {
-                handleSwordAttack(); // Sword attack
+                handleSwordAttack(); // Sword attack motion if hold down U key
             } else if (Keyboard.isKeyDown(Key.H)) {
                 handleArrowAttack(); // Arrow attack
             } else if (Keyboard.isKeyDown(Key.J)) {
@@ -184,6 +209,7 @@ public abstract class Player extends GameObject {
                 || Keyboard.isKeyDown(ATTACK_UP_KEY) || Keyboard.isKeyDown(ATTACK_DOWN_KEY)) {
             playerState = PlayerState.ATTACK;
         }
+
         if (Keyboard.isKeyDown(ATTACK_UP_KEY)) {
             handleSwordAttack();
 
@@ -197,10 +223,10 @@ public abstract class Player extends GameObject {
             handleMagicAttack();
         } else {
             if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY)
-                    || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY) || Keyboard.isKeyDown(Key.UP)
+                    || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY)
+                    || Keyboard.isKeyDown(Key.UP)
                     || Keyboard.isKeyDown(Key.DOWN) || Keyboard.isKeyDown(Key.LEFT) || Keyboard.isKeyDown(Key.RIGHT)) {
                 playerState = PlayerState.WALKING; // Move back to WALKING state if movement keys are presse
-
             } else {
                 playerState = PlayerState.STANDING;
                 // if no AtTACK KEYS are pressed then revert back to walking
@@ -208,38 +234,52 @@ public abstract class Player extends GameObject {
         }
     }
 
+    protected Clip playSoundEffect(String sounndFilePath) {
+        try {
+            AudioInputStream AIS = AudioSystem.getAudioInputStream(new File(sounndFilePath));
+
+            Clip clip = AudioSystem.getClip();
+            clip.open(AIS);
+            clip.setFramePosition(0);
+            clip.start();
+            return clip;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;// couldn't find clip
+        }
+    }
+
     private void handleSwordAttack() {
+        System.out.println("Player is in SWORD STATE ");
+        if (swordClip == null || !swordClip.isActive()) {
+            swordClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Sword.wav");
+            isSwordSoundPlayed = false;
+
+        }
 
         if (facingDirection == Direction.UP) {
             currentAnimationName = "SWORD_UP";
-            System.out.println("Player isin SWORD_UP STATE");
-
         } else if (facingDirection == Direction.DOWN) {
             currentAnimationName = "SWORD_DOWN";
-            System.out.println("Player is in SWORD_DOWN STATE");
-
         } else if (facingDirection == Direction.LEFT) {
             currentAnimationName = "SWORD_LEFT";
-            System.out.println("Player is in SWORD_LEFT STATE");
-
         } else if (facingDirection == Direction.RIGHT) {
             currentAnimationName = "SWORD_RIGHT";
-            System.out.println("Player is in SWORD_RIGHT STATE");
-
         }
         if (playerState != PlayerState.ATTACK) {
             playerState = PlayerState.ATTACK;
 
         }
-
     }
 
     private void handleDeathAttack() {
-
+        System.out.println("Player is in DEATH State");
+        if (DeathClip == null || !DeathClip.isActive()) {
+            DeathClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Player Death.wav");
+            isDeathSoundPlayed = false;
+        }
         if (facingDirection == Direction.DOWN) {
             currentAnimationName = "FALL_DOWN";
-            System.out.println("Player is in FALL_DOWN STATE");
-
         }
         if (playerState != PlayerState.ATTACK) {
             playerState = PlayerState.ATTACK;
@@ -248,23 +288,20 @@ public abstract class Player extends GameObject {
     }
 
     private void handleArrowAttack() {
+        System.out.println("Player is in ARROW State");
+        if (ArrowClip == null || !ArrowClip.isActive()) {
+            ArrowClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Arrow2.wav");
+            isArrowSoundPlayed = false;
+        }
 
         if (facingDirection == Direction.UP) {
             currentAnimationName = "ARROW_UP";
-            System.out.println("Player is in ARROW_UP STATE");
-
         } else if (facingDirection == Direction.DOWN) {
             currentAnimationName = "ARROW_DOWN";
-            System.out.println("Player is in ARROW_DOWN STATE");
-
         } else if (facingDirection == Direction.LEFT) {
             currentAnimationName = "ARROW_LEFT";
-            System.out.println("Player is in ARROW_LEFT STATE");
-
         } else if (facingDirection == Direction.RIGHT) {
             currentAnimationName = "ARROW_RIGHT";
-            System.out.println("Player is in ARROW_RIGHT STATE");
-
         }
         if (playerState != PlayerState.ATTACK) {
             playerState = PlayerState.ATTACK;
@@ -273,25 +310,20 @@ public abstract class Player extends GameObject {
     }
 
     private void handleMagicAttack() {
-
+        System.out.println("Player is in MAGIC State");
+        if (MagicClip == null || !MagicClip.isActive()) {
+            MagicClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Magic.wav");
+            isMagicSoundPlayed = false;
+        }
         if (facingDirection == Direction.UP) {
             currentAnimationName = "MAGIC_UP";
-            System.out.println("Player is in MAGIC_UP STATE");
-
         } else if (facingDirection == Direction.DOWN) {
             currentAnimationName = "MAGIC_DOWN";
-            System.out.println("Player is in MAGIC_DOWN STATE");
-
         } else if (facingDirection == Direction.LEFT) {
             currentAnimationName = "MAGIC_LEFT";
-            System.out.println("Player is in MAGIC_LEFT STATE");
-
         } else if (facingDirection == Direction.RIGHT) {
             currentAnimationName = "MAGIC_RIGHT";
-            System.out.println("Player is in MAGIC_RIGHT STATE");
-
         }
-
         if (playerState != PlayerState.ATTACK) {
             playerState = PlayerState.ATTACK;
         }
@@ -454,21 +486,45 @@ public abstract class Player extends GameObject {
         return lastWalkingYDirection;
     }
 
-    //Player stats
+    // Player stats
     protected void setStats(int strength, int dexterity, int constitution, int intelligence) {
         setStrength(strength);
         setDexterity(dexterity);
         setConstitution(constitution);
         setIntelligence(intelligence);
     }
-    protected void setStrength(int strength) {this.strength = strength;}
-    protected void setDexterity(int dexterity) {this.dexterity = dexterity;}
-    protected void setConstitution(int constitution) {this.constitution = constitution;}
-    protected void setIntelligence(int intelligence) {this.intelligence = intelligence;}
-    protected int getStrength() {return strength;}
-    protected int getDexterity() {return dexterity;}
-    protected int getConstitution() {return constitution;}
-    protected int getIntelligence() {return intelligence;}
+
+    protected void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    protected void setDexterity(int dexterity) {
+        this.dexterity = dexterity;
+    }
+
+    protected void setConstitution(int constitution) {
+        this.constitution = constitution;
+    }
+
+    protected void setIntelligence(int intelligence) {
+        this.intelligence = intelligence;
+    }
+
+    protected int getStrength() {
+        return strength;
+    }
+
+    protected int getDexterity() {
+        return dexterity;
+    }
+
+    protected int getConstitution() {
+        return constitution;
+    }
+
+    protected int getIntelligence() {
+        return intelligence;
+    }
 
     public void lock() {
         isLocked = true;
