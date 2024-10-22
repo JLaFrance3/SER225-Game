@@ -1,6 +1,7 @@
 package Level;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 import Engine.GraphicsHandler;
 import Engine.Key;
@@ -10,6 +11,7 @@ import GameObject.GameObject;
 import GameObject.Rectangle;
 import GameObject.SpriteSheet;
 import Utils.Direction;
+import java.awt.image.BufferedImage;
 
 public abstract class Player extends GameObject {
     // values that affect player movement
@@ -45,11 +47,15 @@ public abstract class Player extends GameObject {
     private static Key ATTACK_RIGHT_KEY = Key.K; // MAGIC MOTION
     private static Key ATTACK_LEFT_KEY = Key.H; // ARROW MOTION
 
-    // private SpriteSheet swordSprite;// reference for sword sprite
-    // private boolean isWieldingSword = false;// tracking if weapon is there
-    /* private boolean isMovingLeft = false; */
-    /* private boolean isMovingRight = false; */
     protected boolean isLocked = false;
+
+    // Character customization options
+    private String name;
+    private boolean isMale;
+    protected SpriteSheet[] spriteComponents;
+
+    // Player stats
+    protected int strength, dexterity, constitution, intelligence;
 
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
@@ -57,6 +63,38 @@ public abstract class Player extends GameObject {
         playerState = PlayerState.STANDING;
         previousPlayerState = playerState;
         this.affectedByTriggers = true;
+        this.name = "Doug";
+        this.isMale = true;
+        this.spriteComponents = new SpriteSheet[8];
+        this.strength = 0;
+        this.dexterity = 0;
+        this.constitution = 0;
+        this.intelligence = 0;
+    }
+
+    public Player(SpriteSheet[] spriteComponents, float x, float y, String startingAnimationName, String name, boolean isMale) {
+        super(spriteComponents[0], x, y, startingAnimationName);
+        facingDirection = Direction.DOWN;
+        playerState = PlayerState.STANDING;
+        previousPlayerState = playerState;
+        this.affectedByTriggers = true;
+        this.name = name;
+        this.isMale = isMale;
+        this.spriteComponents = new SpriteSheet[8];
+        this.strength = 0;
+        this.dexterity = 0;
+        this.constitution = 0;
+        this.intelligence = 0;
+
+        //Create new spritesheet by combing component layers onto one buffered image
+        //TODO: Test this
+        BufferedImage customSprite = new BufferedImage(832, 1344, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = customSprite.getGraphics();
+        for (SpriteSheet spriteLayer : spriteComponents) {
+            g.drawImage(spriteLayer.getImage(), 0, 0, null);
+        }
+        g.dispose();
+        setSpriteSheet(new SpriteSheet(customSprite, 64, 64));
     }
 
     public void update() {
@@ -169,8 +207,6 @@ public abstract class Player extends GameObject {
             }
         }
     }
-
-    private boolean isAttacking = false;
 
     private void handleSwordAttack() {
 
@@ -417,6 +453,22 @@ public abstract class Player extends GameObject {
     public Direction getLastWalkingYDirection() {
         return lastWalkingYDirection;
     }
+
+    //Player stats
+    protected void setStats(int strength, int dexterity, int constitution, int intelligence) {
+        setStrength(strength);
+        setDexterity(dexterity);
+        setConstitution(constitution);
+        setIntelligence(intelligence);
+    }
+    protected void setStrength(int strength) {this.strength = strength;}
+    protected void setDexterity(int dexterity) {this.dexterity = dexterity;}
+    protected void setConstitution(int constitution) {this.constitution = constitution;}
+    protected void setIntelligence(int intelligence) {this.intelligence = intelligence;}
+    protected int getStrength() {return strength;}
+    protected int getDexterity() {return dexterity;}
+    protected int getConstitution() {return constitution;}
+    protected int getIntelligence() {return intelligence;}
 
     public void lock() {
         isLocked = true;
