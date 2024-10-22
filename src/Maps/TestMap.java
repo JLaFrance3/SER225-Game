@@ -31,7 +31,7 @@ public class TestMap extends Map {
         Gate gate = new Gate(getMapTile(5, 8).getLocation());
         enhancedMapTiles.add(gate);
 
-        Chest chest1 = new Chest(getMapTile(12, 24).getLocation());
+        Chest chest1 = new Chest(getMapTile(17, 3).getLocation());
         enhancedMapTiles.add(chest1);
         
         return enhancedMapTiles;

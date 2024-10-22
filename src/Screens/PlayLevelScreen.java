@@ -30,10 +30,12 @@ public class PlayLevelScreen extends Screen {
     protected WinScreen winScreen;
     protected FlagManager flagManager;
     protected Point lockDoorInteractPoint;
+    protected Point chestInteractPoint;
 
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
         lockDoorInteractPoint = null;
+        chestInteractPoint = null;
     }
 
     public void initialize() {
@@ -184,6 +186,23 @@ public class PlayLevelScreen extends Screen {
             } else {
                 flagManager.unsetFlag("lockedDoor");
                 lockDoorInteractPoint = null;
+            }
+        }
+
+        if (map.getFlagManager().isFlagSet("readQuestOneChest")) {
+            // Attempting to not spam player with chest textboxes
+            if (chestInteractPoint == null) {
+                chestInteractPoint = player.getLocation();
+            }
+            // Checks if player has moved from tile in which QuestOneChestScript was triggered
+            if (map.getTileByPosition(player.getX1(), player.getY1()).getIntersectRectangle()
+                    .contains(chestInteractPoint)) {
+                // Do nothing
+            } else if (map.getTextbox().isActive()) {
+                chestInteractPoint = player.getLocation();
+            } else {
+                flagManager.unsetFlag("readQuestOneChest");
+                chestInteractPoint = null;
             }
         }
 
