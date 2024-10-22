@@ -20,6 +20,8 @@ public class TownMap extends Map {
         this.playerStartPosition = new Point(500, 3000);
     }
 
+    
+
     @Override
     public ArrayList<Trigger> loadTriggers() {
         ArrayList<Trigger> triggers = new ArrayList<>();

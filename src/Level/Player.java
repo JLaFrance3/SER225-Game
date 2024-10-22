@@ -1,6 +1,7 @@
 package Level;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 import Engine.GraphicsHandler;
 import Engine.Key;
@@ -10,6 +11,7 @@ import GameObject.GameObject;
 import GameObject.Rectangle;
 import GameObject.SpriteSheet;
 import Utils.Direction;
+import java.awt.image.BufferedImage;
 
 //These are found sounds for Motions 
 import javax.sound.sampled.AudioSystem;
@@ -69,12 +71,53 @@ public abstract class Player extends GameObject {
     /* private boolean isMovingRight = false; */
     protected boolean isLocked = false;
 
+    // Character customization options
+    private String name;
+    private boolean isMale;
+    protected SpriteSheet[] spriteComponents;
+
+    // Player stats
+    protected int strength, dexterity, constitution, intelligence;
+
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
         facingDirection = Direction.DOWN;
         playerState = PlayerState.STANDING;
         previousPlayerState = playerState;
         this.affectedByTriggers = true;
+        this.name = "Doug";
+        this.isMale = true;
+        this.spriteComponents = new SpriteSheet[8];
+        this.strength = 0;
+        this.dexterity = 0;
+        this.constitution = 0;
+        this.intelligence = 0;
+    }
+
+    public Player(SpriteSheet[] spriteComponents, float x, float y, String startingAnimationName, String name,
+            boolean isMale) {
+        super(spriteComponents[0], x, y, startingAnimationName);
+        facingDirection = Direction.DOWN;
+        playerState = PlayerState.STANDING;
+        previousPlayerState = playerState;
+        this.affectedByTriggers = true;
+        this.name = name;
+        this.isMale = isMale;
+        this.spriteComponents = new SpriteSheet[8];
+        this.strength = 0;
+        this.dexterity = 0;
+        this.constitution = 0;
+        this.intelligence = 0;
+
+        // Create new spritesheet by combing component layers onto one buffered image
+        // TODO: Test this
+        BufferedImage customSprite = new BufferedImage(832, 1344, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = customSprite.getGraphics();
+        for (SpriteSheet spriteLayer : spriteComponents) {
+            g.drawImage(spriteLayer.getImage(), 0, 0, null);
+        }
+        g.dispose();
+        setSpriteSheet(new SpriteSheet(customSprite, 64, 64));
     }
 
     public void update() {
@@ -126,7 +169,8 @@ public abstract class Player extends GameObject {
             // If any attack key is pressed, set player to ATTACK state
             playerState = PlayerState.ATTACK;
         } else if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY)
-                || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY)) {
+                || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY) || Keyboard.isKeyDown(Key.UP)
+                || Keyboard.isKeyDown(Key.DOWN) || Keyboard.isKeyDown(Key.LEFT) || Keyboard.isKeyDown(Key.RIGHT)) {
             // If movement keys are pressed, set player to WALKING state
             playerState = PlayerState.WALKING;
         } else {
@@ -179,7 +223,9 @@ public abstract class Player extends GameObject {
             handleMagicAttack();
         } else {
             if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY)
-                    || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY)) {
+                    || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY)
+                    || Keyboard.isKeyDown(Key.UP)
+                    || Keyboard.isKeyDown(Key.DOWN) || Keyboard.isKeyDown(Key.LEFT) || Keyboard.isKeyDown(Key.RIGHT)) {
                 playerState = PlayerState.WALKING; // Move back to WALKING state if movement keys are presse
             } else {
                 playerState = PlayerState.STANDING;
@@ -293,7 +339,8 @@ public abstract class Player extends GameObject {
 
         // if a walk key is pressed, player enters WALKING state
         if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(MOVE_UP_KEY)
-                || Keyboard.isKeyDown(MOVE_DOWN_KEY)) {
+                || Keyboard.isKeyDown(MOVE_DOWN_KEY) || Keyboard.isKeyDown(Key.UP) || Keyboard.isKeyDown(Key.DOWN)
+                || Keyboard.isKeyDown(Key.LEFT) || Keyboard.isKeyDown(Key.RIGHT)) {
             playerState = PlayerState.WALKING;
         }
     }
@@ -304,34 +351,30 @@ public abstract class Player extends GameObject {
             keyLocker.lockKey(INTERACT_KEY);
             map.entityInteract(this);
         }
-        moveAmountX = 0;
-        moveAmountY = 0;
         // if walk up key is pressed, move player up
-        if (Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(Key.W)) {
+        if (Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(Key.UP)) {
             moveAmountY -= walkSpeed;
             facingDirection = Direction.UP;
             currentWalkingYDirection = Direction.UP;
             lastWalkingYDirection = Direction.UP;
         }
-
-        // if walk left key is pressed, move player to the left
-        if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(Key.A)) {
-            moveAmountX -= walkSpeed;
-            facingDirection = Direction.LEFT;
-            currentWalkingXDirection = Direction.LEFT;
-            lastWalkingXDirection = Direction.LEFT;
-        }
-
         // if walk down key is pressed, move player down
-        if (Keyboard.isKeyDown(MOVE_DOWN_KEY) || Keyboard.isKeyDown(Key.S)) {
+        else if (Keyboard.isKeyDown(MOVE_DOWN_KEY) || Keyboard.isKeyDown(Key.DOWN)) {
             moveAmountY += walkSpeed;
             facingDirection = Direction.DOWN;
             currentWalkingYDirection = Direction.DOWN;
             lastWalkingYDirection = Direction.DOWN;
         }
 
+        // if walk left key is pressed, move player to the left
+        if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(Key.LEFT)) {
+            moveAmountX -= walkSpeed;
+            facingDirection = Direction.LEFT;
+            currentWalkingXDirection = Direction.LEFT;
+            lastWalkingXDirection = Direction.LEFT;
+        }
         // if walk right key is pressed, move player to the right
-        if (Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(Key.D)) {
+        else if (Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(Key.RIGHT)) {
             moveAmountX += walkSpeed;
             facingDirection = Direction.RIGHT;
             currentWalkingXDirection = Direction.RIGHT;
@@ -356,7 +399,8 @@ public abstract class Player extends GameObject {
         }
 
         if (Keyboard.isKeyUp(MOVE_LEFT_KEY) && Keyboard.isKeyUp(MOVE_RIGHT_KEY) && Keyboard.isKeyUp(MOVE_UP_KEY)
-                && Keyboard.isKeyUp(MOVE_DOWN_KEY)) {
+                && Keyboard.isKeyUp(MOVE_DOWN_KEY) && Keyboard.isKeyUp(Key.UP) && Keyboard.isKeyUp(Key.DOWN)
+                && Keyboard.isKeyUp(Key.LEFT) && Keyboard.isKeyUp(Key.RIGHT)) {
             playerState = PlayerState.STANDING;
         }
     }
@@ -440,6 +484,46 @@ public abstract class Player extends GameObject {
 
     public Direction getLastWalkingYDirection() {
         return lastWalkingYDirection;
+    }
+
+    // Player stats
+    protected void setStats(int strength, int dexterity, int constitution, int intelligence) {
+        setStrength(strength);
+        setDexterity(dexterity);
+        setConstitution(constitution);
+        setIntelligence(intelligence);
+    }
+
+    protected void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    protected void setDexterity(int dexterity) {
+        this.dexterity = dexterity;
+    }
+
+    protected void setConstitution(int constitution) {
+        this.constitution = constitution;
+    }
+
+    protected void setIntelligence(int intelligence) {
+        this.intelligence = intelligence;
+    }
+
+    protected int getStrength() {
+        return strength;
+    }
+
+    protected int getDexterity() {
+        return dexterity;
+    }
+
+    protected int getConstitution() {
+        return constitution;
+    }
+
+    protected int getIntelligence() {
+        return intelligence;
     }
 
     public void lock() {

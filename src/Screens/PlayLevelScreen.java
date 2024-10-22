@@ -21,7 +21,7 @@ import java.io.IOException;
 public class PlayLevelScreen extends Screen {
     protected ScreenCoordinator screenCoordinator;
     protected Map map;
-    protected Map startMap, townMap, generalStoreMap, H1Map, H2Map, H3Map, H3_1Map;
+    protected Map startMap, townMap, generalStoreMap, H1Map, H2Map, H3Map, H3_1Map, dungeonMap;
     protected Map innMap, manorMap, smithMap, townHallMap;
     protected String[] mapChangeFlags;
     protected DungeonScreen dungeon;
@@ -75,7 +75,9 @@ public class PlayLevelScreen extends Screen {
                 "townToSmithDoor",
                 "smithToTownDoor",
                 "townToHallDoor",
-                "hallToTownDoor"
+                "hallToTownDoor",
+                "startToDungeon",
+                "dungeonToStart"
         };
 
         // Add all map change flags
@@ -106,6 +108,8 @@ public class PlayLevelScreen extends Screen {
         smithMap.setFlagManager(flagManager);
         townHallMap = new TownHallMap();
         townHallMap.setFlagManager(flagManager);
+        dungeonMap = new DungeonMap();
+        dungeonMap.setFlagManager(flagManager);
 
         // set current map to startMap
         map = startMap;
@@ -360,6 +364,24 @@ public class PlayLevelScreen extends Screen {
             player.setLocation(p.x, p.y);
             player.setFacingDirection(Direction.DOWN);
             flagManager.unsetFlag("hallToTownDoor");
+        }
+        if (map.getFlagManager().isFlagSet("startToDungeon")) {
+            Point p;
+            map = dungeonMap;
+            p = map.getPositionByTileIndex(8, 5);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            flagManager.unsetFlag("startToDungeon");
+        }
+        if (map.getFlagManager().isFlagSet("dungeonToStart")) {
+            Point p;
+            map = startMap;
+            p = map.getPositionByTileIndex(17, 20);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            flagManager.unsetFlag("dungeonToStart");
         }
     }
 

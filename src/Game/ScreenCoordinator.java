@@ -3,11 +3,12 @@ package Game;
 import Engine.DefaultScreen;
 import Engine.GraphicsHandler;
 import Engine.Screen;
-import Maps.DungeonMap;
+import Screens.CharacterScreen;
 import Screens.CreditsScreen;
 import Screens.DungeonScreen;
 import Screens.MenuScreen;
 import Screens.PlayLevelScreen;
+import javax.swing.JPanel;
 
 /*
  * Based on the current game state, this class determines which Screen should be shown
@@ -20,6 +21,13 @@ public class ScreenCoordinator extends Screen {
 	// keep track of gameState so ScreenCoordinator knows which Screen to show
 	protected GameState gameState;
 	protected GameState previousGameState;
+
+	//GamePanel used by some screens to access swing components
+	protected JPanel gamePanel;
+
+	public ScreenCoordinator(JPanel gp) {
+		this.gamePanel = gp;
+	}
 
 	public GameState getGameState() {
 		return gameState;
@@ -49,11 +57,15 @@ public class ScreenCoordinator extends Screen {
 					case LEVEL:
 						currentScreen = new PlayLevelScreen(this);
 						break;
+					case CHARACTER:
+						currentScreen = new CharacterScreen(this, gamePanel);
+						break;
 					case CREDITS:
 						currentScreen = new CreditsScreen(this);
 						break;
 					case DUNGEON: 
 						currentScreen =  new DungeonScreen(this);
+						break;
 				}
 				currentScreen.initialize();
 			}
