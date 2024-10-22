@@ -53,6 +53,9 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("townHallSign", false);
         flagManager.addFlag("directionSign", false);
         flagManager.addFlag("startAreaSign", false);
+        flagManager.addFlag("readTestQuest", false);
+        flagManager.addFlag("readQuestOne", false);
+        flagManager.addFlag("readQuestOneChest", false);
 
         // Map change flags
         mapChangeFlags = new String[] {
