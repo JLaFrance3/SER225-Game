@@ -10,11 +10,18 @@ import Players.Doug;
 import Utils.Direction;
 import Utils.Point;
 
+// these are for intro sound 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.AudioInputStream;
+import java.io.File;
+import java.io.IOException;
+
 // This class is for when the RPG game is actually being played
 public class PlayLevelScreen extends Screen {
     protected ScreenCoordinator screenCoordinator;
     protected Map map;
-    protected Map startMap, townMap, generalStoreMap, H1Map, H2Map, H3Map, H3_1Map;
+    protected Map startMap, townMap, generalStoreMap, H1Map, H2Map, H3Map, H3_1Map, dungeonMap;
     protected Map innMap, manorMap, smithMap, townHallMap;
     protected String[] mapChangeFlags;
     protected DungeonScreen dungeon;
@@ -51,30 +58,32 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("readQuestOneChest", false);
 
         // Map change flags
-        mapChangeFlags = new String[]{
-            "startToTownMapPath",
-            "townToStartMapPath",
-            "townToStoreDoor",
-            "storeToTownDoor",
-            "townToH1Door",
-            "H1ToTownDoor",
-            "townToH2Door",
-            "H2ToTownDoor",
-            "townToH3Door",
-            "townToH3_1Door",
-            "H3ToTownDoor",
-            "H3_1ToTownDoor",
-            "townToInnDoor",
-            "innToTownDoor",
-            "townToManorDoor",
-            "manorToTownDoor",
-            "townToSmithDoor",
-            "smithToTownDoor",
-            "townToHallDoor",
-            "hallToTownDoor"
+        mapChangeFlags = new String[] {
+                "startToTownMapPath",
+                "townToStartMapPath",
+                "townToStoreDoor",
+                "storeToTownDoor",
+                "townToH1Door",
+                "H1ToTownDoor",
+                "townToH2Door",
+                "H2ToTownDoor",
+                "townToH3Door",
+                "townToH3_1Door",
+                "H3ToTownDoor",
+                "H3_1ToTownDoor",
+                "townToInnDoor",
+                "innToTownDoor",
+                "townToManorDoor",
+                "manorToTownDoor",
+                "townToSmithDoor",
+                "smithToTownDoor",
+                "townToHallDoor",
+                "hallToTownDoor",
+                "startToDungeon",
+                "dungeonToStart"
         };
 
-        //Add all map change flags
+        // Add all map change flags
         for (String s : mapChangeFlags) {
             flagManager.addFlag(s, false);
         }
@@ -102,6 +111,8 @@ public class PlayLevelScreen extends Screen {
         smithMap.setFlagManager(flagManager);
         townHallMap = new TownHallMap();
         townHallMap.setFlagManager(flagManager);
+        dungeonMap = new DungeonMap();
+        dungeonMap.setFlagManager(flagManager);
 
         // set current map to startMap
         map = startMap;
@@ -122,12 +133,25 @@ public class PlayLevelScreen extends Screen {
         map.preloadScripts();
 
         winScreen = new WinScreen(this);
+
+        try {
+            AudioInputStream AIS = AudioSystem
+                    .getAudioInputStream(new File("Resources/SoundEffects_AttackMotions/intro to rpg.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(AIS);
+            clip.setFramePosition(0);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);// intro sound would be continously
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void update() {
         // based on screen state, perform specific actions
         switch (playLevelScreenState) {
-            // if level is "running" update player and map to keep game logic for the platformer level going
+            // if level is "running" update player and map to keep game logic for the
+            // platformer level going
             case RUNNING:
                 player.update();
                 map.update(player);
@@ -147,18 +171,17 @@ public class PlayLevelScreen extends Screen {
         }
 
         if (map.getFlagManager().isFlagSet("lockedDoor")) {
-            //Attempting to not spam player with lockedDoor textboxes
+            // Attempting to not spam player with lockedDoor textboxes
             if (lockDoorInteractPoint == null) {
                 lockDoorInteractPoint = player.getLocation();
             }
-            //Checks if player has moved from tile in which lockedDoorScript was triggered
-            if (map.getTileByPosition(player.getX1(), player.getY1()).getIntersectRectangle().contains(lockDoorInteractPoint)) {
-                //Do nothing
-            }
-            else if (map.getTextbox().isActive()) {
+            // Checks if player has moved from tile in which lockedDoorScript was triggered
+            if (map.getTileByPosition(player.getX1(), player.getY1()).getIntersectRectangle()
+                    .contains(lockDoorInteractPoint)) {
+                // Do nothing
+            } else if (map.getTextbox().isActive()) {
                 lockDoorInteractPoint = player.getLocation();
-            }
-            else {
+            } else {
                 flagManager.unsetFlag("lockedDoor");
                 lockDoorInteractPoint = null;
             }
@@ -345,6 +368,24 @@ public class PlayLevelScreen extends Screen {
             player.setFacingDirection(Direction.DOWN);
             flagManager.unsetFlag("hallToTownDoor");
         }
+        if (map.getFlagManager().isFlagSet("startToDungeon")) {
+            Point p;
+            map = dungeonMap;
+            p = map.getPositionByTileIndex(8, 5);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            flagManager.unsetFlag("startToDungeon");
+        }
+        if (map.getFlagManager().isFlagSet("dungeonToStart")) {
+            Point p;
+            map = startMap;
+            p = map.getPositionByTileIndex(17, 20);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            flagManager.unsetFlag("dungeonToStart");
+        }
     }
 
     public void draw(GraphicsHandler graphicsHandler) {
@@ -362,7 +403,6 @@ public class PlayLevelScreen extends Screen {
     public PlayLevelScreenState getPlayLevelScreenState() {
         return playLevelScreenState;
     }
-
 
     public void resetLevel() {
         initialize();
