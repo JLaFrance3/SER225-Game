@@ -76,6 +76,12 @@ public class ScreenCoordinator extends Screen {
 		} while (previousGameState != gameState);
 	}
 
+	private void printMemoryUsage() {
+        Runtime runtime = Runtime.getRuntime();
+        long usedMemory = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("Used memory: " + usedMemory / 1024 / 1024 + " MB");
+    }
+
 	@Override
 	public void draw(GraphicsHandler graphicsHandler) {
 		// call the draw method for the currentScreen
