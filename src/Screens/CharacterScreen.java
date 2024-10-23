@@ -20,39 +20,36 @@ import java.awt.image.BufferedImage;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 
 public class CharacterScreen extends Screen {
-    protected ScreenCoordinator screenCoordinator;
-    protected Map background;
-    protected BufferedImage menuGUI;
-    protected BufferedImage menuImage;
-    protected JPanel gamePanel;
-    protected JTextField nameField;
-    protected JLabel nameLabel, skinLabel, hairLabel, hairColorLabel, eyeLabel, faceHairLabel,
+    private ScreenCoordinator screenCoordinator;
+    private Map background;
+    private BufferedImage menuGUI;
+    private BufferedImage menuImage;
+    private JPanel gamePanel;
+    private JTextField nameField;
+    private JLabel nameLabel, skinLabel, hairLabel, hairColorLabel, eyeLabel, faceHairLabel,
             shirtLabel, pantsLabel, shoesLabel, classLabel;
-    protected JButton[] arrowSelectors;
-    protected JButton confirmButton, cancelButton, exitButton;
-    protected JToggleButton maleRB, femaleRB;
-    protected ButtonGroup genderBG;
-    protected ButtonListener buttonListener;
-    protected KeyLocker keyLocker = new KeyLocker();
+    private JButton[] arrowSelectors;
+    private JButton confirmButton, cancelButton, exitButton;
+    private JToggleButton maleRB, femaleRB;
+    private ButtonGroup genderBG;
+    private ButtonListener buttonListener;
+    private KeyLocker keyLocker = new KeyLocker();
 
-    protected SpriteSheet[][] headAndBodySpritesheets;
-    protected SpriteSheet[][] hairSpritesheets;
-    protected String[] hairColors;
-    protected SpriteSheet[] eyeSpritesheets;
-    protected SpriteSheet[][] faceHairSpritesheets;
-    protected SpriteSheet[] shirtSpritesheet;
-    protected SpriteSheet[] pantSpritesheet;
-    protected SpriteSheet[] shoeSpritesheets;
-    protected String name;
-    protected Boolean isMale;
-    protected int[] spriteSelections;
-    protected int[] previousSelections;
-    protected BufferedImage displaySprite, scaleDisplaySprite;
+    private SpriteSheet[][] headAndBodySpritesheets;
+    private SpriteSheet[][] hairSpritesheets;
+    private String[] hairColors;
+    private SpriteSheet[] eyeSpritesheets;
+    private SpriteSheet[][] faceHairSpritesheets;
+    private SpriteSheet[] shirtSpritesheet;
+    private SpriteSheet[] pantSpritesheet;
+    private SpriteSheet[] shoeSpritesheets;
+    private String name;
+    private Boolean isMale;
+    private int[] spriteSelections;
+    private int[] previousSelections;
+    private BufferedImage displaySprite, scaleDisplaySprite;
 
     public CharacterScreen(ScreenCoordinator screenCoordinator, JPanel gamePanel) {
         this.screenCoordinator = screenCoordinator;
@@ -253,7 +250,7 @@ public class CharacterScreen extends Screen {
         shoeSpritesheets = new SpriteSheet[14];
 
         //TODO: This method takes too long, definitely better to load images as needed
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < headAndBodySpritesheets.length; i++) {
             if (i < headAndBodySpritesheets.length / 2) {
                 headAndBodySpritesheets[i][0] = new SpriteSheet(ImageLoader.load("PlayerSprite/head/male/head_" +
                         i  + ".png", true), 64, 64);
@@ -266,8 +263,9 @@ public class CharacterScreen extends Screen {
                 headAndBodySpritesheets[i][1] = new SpriteSheet(ImageLoader.load("PlayerSprite/body/female/body_" +
                         (i - headAndBodySpritesheets.length / 2) + ".png", true), 64, 64);
             }
+            printMemoryUsage();
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < hairSpritesheets.length; i++) {
             if (i < hairSpritesheets.length / 2) {
                 for (int j = 0; j < hairSpritesheets[i].length; j++) {
                     hairSpritesheets[i][j] = new SpriteSheet(ImageLoader.load("PlayerSprite/hair/male/hair_" +
@@ -280,18 +278,21 @@ public class CharacterScreen extends Screen {
                             (i - hairSpritesheets.length / 2) + hairColors[k] + ".png", true), 64, 64);
                 }
             }
+            printMemoryUsage();
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < eyeSpritesheets.length; i++) {
             eyeSpritesheets[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/eyes/eyes_" + i  + ".png", true), 
                     64, 64);
+            printMemoryUsage();
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < faceHairSpritesheets.length; i++) {
             for (int j = 0; j < faceHairSpritesheets[i].length; j++) {
                 faceHairSpritesheets[i][j] = new SpriteSheet(ImageLoader.load("PlayerSprite/facehair/facehair_" +
                     i  + hairColors[j] + ".png", true), 64, 64);
             }
+            printMemoryUsage();
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < shirtSpritesheet.length; i++) {
             if (i < shirtSpritesheet.length / 2) {
                 shirtSpritesheet[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/shirt/male/shirt_" +
                         i  + ".png", true), 64, 64);
@@ -300,8 +301,9 @@ public class CharacterScreen extends Screen {
                 shirtSpritesheet[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/shirt/female/shirt_" + 
                         (i - shirtSpritesheet.length / 2)  + ".png", true), 64, 64);
             }
+            printMemoryUsage();
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < pantSpritesheet.length; i++) {
             if (i < pantSpritesheet.length / 2) {
                 pantSpritesheet[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/pants/male/pants_" +
                         i  + ".png", true), 64, 64);
@@ -310,8 +312,9 @@ public class CharacterScreen extends Screen {
                 pantSpritesheet[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/pants/female/pants_" + 
                         (i - pantSpritesheet.length / 2)  + ".png", true), 64, 64);
             }
+            printMemoryUsage();
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < shoeSpritesheets.length; i++) {
             if (i < shoeSpritesheets.length / 2) {
                 shoeSpritesheets[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/shoes/male/shoes_" +
                         i  + ".png", true), 64, 64);
@@ -320,6 +323,7 @@ public class CharacterScreen extends Screen {
                 shoeSpritesheets[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/shoes/female/shoes_" + 
                         (i - shoeSpritesheets.length / 2)  + ".png", true), 64, 64);
             }
+            printMemoryUsage();
         }
 
         updateDisplaySprite();
@@ -363,6 +367,12 @@ public class CharacterScreen extends Screen {
         Graphics2D g2 = scaleDisplaySprite.createGraphics();
         g2.drawImage(displaySprite, 0, 0, scaleDisplaySprite.getWidth(), scaleDisplaySprite.getHeight(), null);
         g2.dispose();
+    }
+
+    private void printMemoryUsage() {
+        Runtime runtime = Runtime.getRuntime();
+        long usedMemory = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("Used memory: " + usedMemory / 1024 / 1024 + " MB");
     }
 
     public void draw(GraphicsHandler graphicsHandler) {
