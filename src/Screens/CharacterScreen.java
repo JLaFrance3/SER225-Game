@@ -62,10 +62,10 @@ public class CharacterScreen extends Screen {
         this.spriteSelections[4] = -1;
         this.previousSelections = new int[8];
         this.hairColors = new String[] {
-            "/ash", "/black", "/blonde", "/blue", "/carrot", "/chestnut", "/dark_brown",
-            "/dark_gray", "/ginger", "/gold", "/gray", "/green", "/light_brown", "/navy",
-            "/orange", "/pink", "/platinum", "/purple", "/raven", "/red",
-            "/redhead", "/rose", "/sandy", "/strawberry", "/violet", "/white",
+            "/ash", "/black", "/blonde", "/chestnut", "/dark_brown",
+            "/dark_gray", "/ginger", "/gray", "/green", "/light_brown",
+            "/pink", "/platinum", "/raven", "/redhead", "/sandy",
+            "/strawberry", "/white",
         };
         this.displaySprite = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB); 
         this.scaleDisplaySprite = new BufferedImage(128, 128, BufferedImage.TYPE_INT_ARGB);
@@ -242,14 +242,13 @@ public class CharacterScreen extends Screen {
 
         // Load sprite components
         headAndBodySpritesheets = new SpriteSheet[14][2];
-        hairSpritesheets = new SpriteSheet[38][26];
+        hairSpritesheets = new SpriteSheet[34][17];
         eyeSpritesheets = new SpriteSheet[8];
-        faceHairSpritesheets = new SpriteSheet[6][26];
+        faceHairSpritesheets = new SpriteSheet[6][17];
         shirtSpritesheet = new SpriteSheet[16];
         pantSpritesheet = new SpriteSheet[8];
         shoeSpritesheets = new SpriteSheet[14];
 
-        //TODO: This method takes too long, definitely better to load images as needed
         for (int i = 0; i < headAndBodySpritesheets.length; i++) {
             if (i < headAndBodySpritesheets.length / 2) {
                 headAndBodySpritesheets[i][0] = new SpriteSheet(ImageLoader.load("PlayerSprite/head/male/head_" +
@@ -351,10 +350,12 @@ public class CharacterScreen extends Screen {
     private void updateDisplaySprite() {
         // Create default display sprite
         Graphics g = displaySprite.getGraphics();
+        g.setColor(Color.decode("#EFE4B0"));
+        g.fillRect(0, 0, displaySprite.getWidth(), displaySprite.getHeight());
         g.drawImage(headAndBodySpritesheets[spriteSelections[0]][1].getSubImage(2, 0, false), 0, 0, null);
         g.drawImage(headAndBodySpritesheets[spriteSelections[0]][0].getSubImage(2, 0, false), 0, 0, null);
-        g.drawImage(hairSpritesheets[spriteSelections[1]][spriteSelections[2]].getSubImage(2, 0, false), 0, 0, null);
         g.drawImage(eyeSpritesheets[spriteSelections[3]].getSubImage(2, 0, false), 0, 0, null);
+        g.drawImage(hairSpritesheets[spriteSelections[1]][spriteSelections[2]].getSubImage(2, 0, false), 0, 0, null);
         if (isMale && spriteSelections[4] > -1) {
             g.drawImage(faceHairSpritesheets[spriteSelections[4]][spriteSelections[2]].getSubImage(2, 0, false), 0, 0, null);
         }
@@ -454,13 +455,11 @@ public class CharacterScreen extends Screen {
                 if (isMale) {
                     spriteSelections[4] = Math.floorMod(spriteSelections[4] - 1, faceHairSpritesheets.length + 1) - 1;
                 }
-                System.out.println(spriteSelections[4]);
             }
             else if (e.getSource() == arrowSelectors[9]) {
                 if (isMale) {
                     spriteSelections[4] = (spriteSelections[4] + 1) % (faceHairSpritesheets.length + 1) - 1;
                 }
-                System.out.println(spriteSelections[4]);
             }
             else if (e.getSource() == arrowSelectors[10]) {
                 if (isMale) {
