@@ -231,6 +231,9 @@ public abstract class Player extends GameObject {
                 playerState = PlayerState.STANDING;
                 // if no AtTACK KEYS are pressed then revert back to walking
             }
+            if (swordClip != null) {
+                System.out.println(" SwordClip Stops");
+            }
         }
     }
 
