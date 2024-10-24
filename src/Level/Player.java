@@ -1,8 +1,9 @@
 package Level;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
-import Engine.GraphicsHandler;
+
 import Engine.Key;
 import Engine.KeyLocker;
 import Engine.Keyboard;
@@ -10,6 +11,14 @@ import GameObject.GameObject;
 import GameObject.Rectangle;
 import GameObject.SpriteSheet;
 import Utils.Direction;
+
+
+//These are found sounds for Motions 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.AudioInputStream;
+import java.io.File;
+import java.io.IOException;
 
 public abstract class Player extends GameObject {
     // values that affect player movement
@@ -41,10 +50,21 @@ public abstract class Player extends GameObject {
 
     // attack mode for Sprite
     private static Key ATTACK_UP_KEY = Key.U; // SWORD MOTION
+    private boolean isSwordSoundPlayed = false;
+    private boolean isDeathSoundPlayed = false;
+    private boolean isArrowSoundPlayed = false;
+    private boolean isMagicSoundPlayed = false;
+
+    private boolean isActive = false;
+    private Clip swordClip;// checking if sword clip is played
+    private Clip DeathClip;// checking if death clip is played
+    private Clip ArrowClip; // checking if Arrow clip is played
+    private Clip MagicClip;// checking if MAgic clip is played
     private static Key ATTACK_DOWN_KEY = Key.J; // DEATH
     private static Key ATTACK_RIGHT_KEY = Key.K; // MAGIC MOTION
     private static Key ATTACK_LEFT_KEY = Key.H; // ARROW MOTION
 
+    private boolean isKeyPressed = false;
     // private SpriteSheet swordSprite;// reference for sword sprite
     // private boolean isWieldingSword = false;// tracking if weapon is there
     /* private boolean isMovingLeft = false; */
@@ -75,6 +95,7 @@ public abstract class Player extends GameObject {
             do {
                 previousPlayerState = playerState;
                 handlePlayerState();
+
             } while (previousPlayerState != playerState);
 
             // move player with respect to map collisions based on how much player needs to
@@ -83,11 +104,12 @@ public abstract class Player extends GameObject {
             lastAmountMovedX = super.moveXHandleCollision(moveAmountX);
 
             handlePlayerAnimation();
+            // playSoundEffect(currentAnimationName);
 
             updateLockedKeys();
 
             if (Keyboard.isKeyDown(Key.U)) {
-                handleSwordAttack(); // Sword attack
+                handleSwordAttack(); // Sword attack motion if hold down U key
             } else if (Keyboard.isKeyDown(Key.H)) {
                 handleArrowAttack(); // Arrow attack
             } else if (Keyboard.isKeyDown(Key.J)) {
@@ -108,7 +130,8 @@ public abstract class Player extends GameObject {
             // If any attack key is pressed, set player to ATTACK state
             playerState = PlayerState.ATTACK;
         } else if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY)
-                || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY)) {
+                || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY) || Keyboard.isKeyDown(Key.UP)
+                || Keyboard.isKeyDown(Key.DOWN) || Keyboard.isKeyDown(Key.LEFT) || Keyboard.isKeyDown(Key.RIGHT)) {
             // If movement keys are pressed, set player to WALKING state
             playerState = PlayerState.WALKING;
         } else {
@@ -147,6 +170,7 @@ public abstract class Player extends GameObject {
                 || Keyboard.isKeyDown(ATTACK_UP_KEY) || Keyboard.isKeyDown(ATTACK_DOWN_KEY)) {
             playerState = PlayerState.ATTACK;
         }
+
         if (Keyboard.isKeyDown(ATTACK_UP_KEY)) {
             handleSwordAttack();
 
@@ -160,50 +184,66 @@ public abstract class Player extends GameObject {
             handleMagicAttack();
         } else {
             if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY)
-                    || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY)) {
+                    || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY)
+                    || Keyboard.isKeyDown(Key.UP)
+                    || Keyboard.isKeyDown(Key.DOWN) || Keyboard.isKeyDown(Key.LEFT) || Keyboard.isKeyDown(Key.RIGHT)) {
                 playerState = PlayerState.WALKING; // Move back to WALKING state if movement keys are presse
-
             } else {
                 playerState = PlayerState.STANDING;
                 // if no AtTACK KEYS are pressed then revert back to walking
             }
+            if (swordClip != null) {
+                System.out.println(" SwordClip Stops");
+            }
         }
     }
 
-    private boolean isAttacking = false;
+    protected Clip playSoundEffect(String sounndFilePath) {
+        try {
+            AudioInputStream AIS = AudioSystem.getAudioInputStream(new File(sounndFilePath));
+
+            Clip clip = AudioSystem.getClip();
+            clip.open(AIS);
+            clip.setFramePosition(0);
+            clip.start();
+            return clip;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;// couldn't find clip
+        }
+    }
 
     private void handleSwordAttack() {
+        System.out.println("Player is in SWORD STATE ");
+        if (swordClip == null || !swordClip.isActive()) {
+            swordClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Sword.wav");
+            isSwordSoundPlayed = false;
+
+        }
 
         if (facingDirection == Direction.UP) {
             currentAnimationName = "SWORD_UP";
-            System.out.println("Player isin SWORD_UP STATE");
-
         } else if (facingDirection == Direction.DOWN) {
             currentAnimationName = "SWORD_DOWN";
-            System.out.println("Player is in SWORD_DOWN STATE");
-
         } else if (facingDirection == Direction.LEFT) {
             currentAnimationName = "SWORD_LEFT";
-            System.out.println("Player is in SWORD_LEFT STATE");
-
         } else if (facingDirection == Direction.RIGHT) {
             currentAnimationName = "SWORD_RIGHT";
-            System.out.println("Player is in SWORD_RIGHT STATE");
-
         }
         if (playerState != PlayerState.ATTACK) {
             playerState = PlayerState.ATTACK;
 
         }
-
     }
 
     private void handleDeathAttack() {
-
+        System.out.println("Player is in DEATH State");
+        if (DeathClip == null || !DeathClip.isActive()) {
+            DeathClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Player Death.wav");
+            isDeathSoundPlayed = false;
+        }
         if (facingDirection == Direction.DOWN) {
             currentAnimationName = "FALL_DOWN";
-            System.out.println("Player is in FALL_DOWN STATE");
-
         }
         if (playerState != PlayerState.ATTACK) {
             playerState = PlayerState.ATTACK;
@@ -212,23 +252,20 @@ public abstract class Player extends GameObject {
     }
 
     private void handleArrowAttack() {
+        System.out.println("Player is in ARROW State");
+        if (ArrowClip == null || !ArrowClip.isActive()) {
+            ArrowClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Arrow2.wav");
+            isArrowSoundPlayed = false;
+        }
 
         if (facingDirection == Direction.UP) {
             currentAnimationName = "ARROW_UP";
-            System.out.println("Player is in ARROW_UP STATE");
-
         } else if (facingDirection == Direction.DOWN) {
             currentAnimationName = "ARROW_DOWN";
-            System.out.println("Player is in ARROW_DOWN STATE");
-
         } else if (facingDirection == Direction.LEFT) {
             currentAnimationName = "ARROW_LEFT";
-            System.out.println("Player is in ARROW_LEFT STATE");
-
         } else if (facingDirection == Direction.RIGHT) {
             currentAnimationName = "ARROW_RIGHT";
-            System.out.println("Player is in ARROW_RIGHT STATE");
-
         }
         if (playerState != PlayerState.ATTACK) {
             playerState = PlayerState.ATTACK;
@@ -237,25 +274,20 @@ public abstract class Player extends GameObject {
     }
 
     private void handleMagicAttack() {
-
+        System.out.println("Player is in MAGIC State");
+        if (MagicClip == null || !MagicClip.isActive()) {
+            MagicClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Magic.wav");
+            isMagicSoundPlayed = false;
+        }
         if (facingDirection == Direction.UP) {
             currentAnimationName = "MAGIC_UP";
-            System.out.println("Player is in MAGIC_UP STATE");
-
         } else if (facingDirection == Direction.DOWN) {
             currentAnimationName = "MAGIC_DOWN";
-            System.out.println("Player is in MAGIC_DOWN STATE");
-
         } else if (facingDirection == Direction.LEFT) {
             currentAnimationName = "MAGIC_LEFT";
-            System.out.println("Player is in MAGIC_LEFT STATE");
-
         } else if (facingDirection == Direction.RIGHT) {
             currentAnimationName = "MAGIC_RIGHT";
-            System.out.println("Player is in MAGIC_RIGHT STATE");
-
         }
-
         if (playerState != PlayerState.ATTACK) {
             playerState = PlayerState.ATTACK;
         }
@@ -271,7 +303,8 @@ public abstract class Player extends GameObject {
 
         // if a walk key is pressed, player enters WALKING state
         if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(MOVE_UP_KEY)
-                || Keyboard.isKeyDown(MOVE_DOWN_KEY)) {
+                || Keyboard.isKeyDown(MOVE_DOWN_KEY) || Keyboard.isKeyDown(Key.UP) || Keyboard.isKeyDown(Key.DOWN)
+                || Keyboard.isKeyDown(Key.LEFT) || Keyboard.isKeyDown(Key.RIGHT)) {
             playerState = PlayerState.WALKING;
         }
     }
@@ -282,34 +315,30 @@ public abstract class Player extends GameObject {
             keyLocker.lockKey(INTERACT_KEY);
             map.entityInteract(this);
         }
-        moveAmountX = 0;
-        moveAmountY = 0;
         // if walk up key is pressed, move player up
-        if (Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(Key.W)) {
+        if (Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(Key.UP)) {
             moveAmountY -= walkSpeed;
             facingDirection = Direction.UP;
             currentWalkingYDirection = Direction.UP;
             lastWalkingYDirection = Direction.UP;
         }
-
-        // if walk left key is pressed, move player to the left
-        if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(Key.A)) {
-            moveAmountX -= walkSpeed;
-            facingDirection = Direction.LEFT;
-            currentWalkingXDirection = Direction.LEFT;
-            lastWalkingXDirection = Direction.LEFT;
-        }
-
         // if walk down key is pressed, move player down
-        if (Keyboard.isKeyDown(MOVE_DOWN_KEY) || Keyboard.isKeyDown(Key.S)) {
+        else if (Keyboard.isKeyDown(MOVE_DOWN_KEY) || Keyboard.isKeyDown(Key.DOWN)) {
             moveAmountY += walkSpeed;
             facingDirection = Direction.DOWN;
             currentWalkingYDirection = Direction.DOWN;
             lastWalkingYDirection = Direction.DOWN;
         }
 
+        // if walk left key is pressed, move player to the left
+        if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(Key.LEFT)) {
+            moveAmountX -= walkSpeed;
+            facingDirection = Direction.LEFT;
+            currentWalkingXDirection = Direction.LEFT;
+            lastWalkingXDirection = Direction.LEFT;
+        }
         // if walk right key is pressed, move player to the right
-        if (Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(Key.D)) {
+        else if (Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(Key.RIGHT)) {
             moveAmountX += walkSpeed;
             facingDirection = Direction.RIGHT;
             currentWalkingXDirection = Direction.RIGHT;
@@ -334,7 +363,8 @@ public abstract class Player extends GameObject {
         }
 
         if (Keyboard.isKeyUp(MOVE_LEFT_KEY) && Keyboard.isKeyUp(MOVE_RIGHT_KEY) && Keyboard.isKeyUp(MOVE_UP_KEY)
-                && Keyboard.isKeyUp(MOVE_DOWN_KEY)) {
+                && Keyboard.isKeyUp(MOVE_DOWN_KEY) && Keyboard.isKeyUp(Key.UP) && Keyboard.isKeyUp(Key.DOWN)
+                && Keyboard.isKeyUp(Key.LEFT) && Keyboard.isKeyUp(Key.RIGHT)) {
             playerState = PlayerState.STANDING;
         }
     }

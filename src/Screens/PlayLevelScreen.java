@@ -4,25 +4,58 @@ import Engine.GraphicsHandler;
 import Engine.Screen;
 import Game.GameState;
 import Game.ScreenCoordinator;
+import GameObject.SpriteSheet;
 import Level.*;
 import Maps.*;
+import Players.Avatar;
 import Players.Doug;
 import Utils.Direction;
 import Utils.Point;
+
+// these are for intro sound 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.AudioInputStream;
+import java.io.File;
+import java.io.IOException;
 
 // This class is for when the RPG game is actually being played
 public class PlayLevelScreen extends Screen {
     protected ScreenCoordinator screenCoordinator;
     protected Map map;
-    protected Map startMap, townMap;
+    protected Map startMap, townMap, generalStoreMap, H1Map, H2Map, H3Map, H3_1Map, dungeonMap;
+    protected Map innMap, manorMap, smithMap, townHallMap;
+    protected String[] mapChangeFlags;
     protected DungeonScreen dungeon;
     protected Player player;
     protected PlayLevelScreenState playLevelScreenState;
     protected WinScreen winScreen;
     protected FlagManager flagManager;
+    protected Point lockDoorInteractPoint;
+    protected Point chestInteractPoint;
+    protected SpriteSheet[] playerSpriteComponents;
+    protected String playerName;
+    protected boolean player_isMale;
+    protected String playerClass;
 
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
+        this.lockDoorInteractPoint = null;
+        this.chestInteractPoint = null;
+        this.playerSpriteComponents = null;
+        this.playerName = null;
+        this.player_isMale = false;
+        this.playerClass = null;
+    }
+
+    public PlayLevelScreen(ScreenCoordinator screenCoordinator, SpriteSheet[] spriteComponents, String name, boolean isMale, String playerClass) {
+        this.screenCoordinator = screenCoordinator;
+        this.lockDoorInteractPoint = null;
+        this.chestInteractPoint = null;
+        this.playerSpriteComponents = spriteComponents;
+        this.playerName = name;
+        this.player_isMale = isMale;
+        this.playerClass = playerClass;
     }
 
     public void initialize() {
@@ -35,22 +68,84 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("gateInteract", false);
         flagManager.addFlag("flowerBed", false);
         flagManager.addFlag("readBackground", false);
-        flagManager.addFlag("startToTownMapPath", false);
-        flagManager.addFlag("townToStartMapPath", false);
         flagManager.addFlag("hasfought", false);
+        flagManager.addFlag("lockedDoor", false);
+        flagManager.addFlag("walrusHouseSign", false);
+        flagManager.addFlag("leaveStartAreaSign", false);
+        flagManager.addFlag("townHallSign", false);
+        flagManager.addFlag("directionSign", false);
+        flagManager.addFlag("startAreaSign", false);
+        flagManager.addFlag("readTestQuest", false);
+        flagManager.addFlag("readQuestOne", false);
+        flagManager.addFlag("readQuestOneChest", false);
+
+        // Map change flags
+        mapChangeFlags = new String[] {
+                "startToTownMapPath",
+                "townToStartMapPath",
+                "townToStoreDoor",
+                "storeToTownDoor",
+                "townToH1Door",
+                "H1ToTownDoor",
+                "townToH2Door",
+                "H2ToTownDoor",
+                "townToH3Door",
+                "townToH3_1Door",
+                "H3ToTownDoor",
+                "H3_1ToTownDoor",
+                "townToInnDoor",
+                "innToTownDoor",
+                "townToManorDoor",
+                "manorToTownDoor",
+                "townToSmithDoor",
+                "smithToTownDoor",
+                "townToHallDoor",
+                "hallToTownDoor",
+                "startToDungeon",
+                "dungeonToStart"
+        };
+
+        // Add all map change flags
+        for (String s : mapChangeFlags) {
+            flagManager.addFlag(s, false);
+        }
 
         // game maps
         startMap = new TestMap();
         startMap.setFlagManager(flagManager);
-
         townMap = new TownMap();
         townMap.setFlagManager(flagManager);
+        generalStoreMap = new GeneralStoreMap();
+        generalStoreMap.setFlagManager(flagManager);
+        H1Map = new House1Map();
+        H1Map.setFlagManager(flagManager);
+        H2Map = new House2Map();
+        H2Map.setFlagManager(flagManager);
+        H3Map = new House3Map();
+        H3Map.setFlagManager(flagManager);
+        H3_1Map = new House3_1Map();
+        H3_1Map.setFlagManager(flagManager);
+        innMap = new InnMap();
+        innMap.setFlagManager(flagManager);
+        manorMap = new ManorMap();
+        manorMap.setFlagManager(flagManager);
+        smithMap = new SmithMap();
+        smithMap.setFlagManager(flagManager);
+        townHallMap = new TownHallMap();
+        townHallMap.setFlagManager(flagManager);
+        dungeonMap = new DungeonMap();
+        dungeonMap.setFlagManager(flagManager);
 
         // set current map to startMap
         map = startMap;
 
         // setup player
-        player = new Doug(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+        if (playerSpriteComponents != null) {
+            player = new Avatar(playerSpriteComponents, map.getPlayerStartPosition().x, map.getPlayerStartPosition().y, playerName, player_isMale, playerClass); 
+        }
+        else {
+            player = new Doug(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+        }
         player.setMap(map);
         playLevelScreenState = PlayLevelScreenState.RUNNING;
         player.setFacingDirection(Direction.DOWN);
@@ -65,12 +160,25 @@ public class PlayLevelScreen extends Screen {
         map.preloadScripts();
 
         winScreen = new WinScreen(this);
+
+        try {
+            AudioInputStream AIS = AudioSystem
+                    .getAudioInputStream(new File("Resources/SoundEffects_AttackMotions/intro to rpg2.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(AIS);
+            clip.setFramePosition(0);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);// intro sound would be continously
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void update() {
         // based on screen state, perform specific actions
         switch (playLevelScreenState) {
-            // if level is "running" update player and map to keep game logic for the platformer level going
+            // if level is "running" update player and map to keep game logic for the
+            // platformer level going
             case RUNNING:
                 player.update();
                 map.update(player);
@@ -81,16 +189,50 @@ public class PlayLevelScreen extends Screen {
                 break;
         }
 
-        // if flag is set at any point during gameplay, game is "won"
+        // Gamestate changes
         if (map.getFlagManager().isFlagSet("hasFoundBall")) {
             playLevelScreenState = PlayLevelScreenState.LEVEL_COMPLETED;
         }
-
         if (map.getFlagManager().isFlagSet("gateInteract")) { // if the gate interact flag is set then change the screen
             screenCoordinator.setGameState(GameState.DUNGEON);
-            
         }
 
+        if (map.getFlagManager().isFlagSet("lockedDoor")) {
+            // Attempting to not spam player with lockedDoor textboxes
+            if (lockDoorInteractPoint == null) {
+                lockDoorInteractPoint = player.getLocation();
+            }
+            // Checks if player has moved from tile in which lockedDoorScript was triggered
+            if (map.getTileByPosition(player.getX1(), player.getY1()).getIntersectRectangle()
+                    .contains(lockDoorInteractPoint)) {
+                // Do nothing
+            } else if (map.getTextbox().isActive()) {
+                lockDoorInteractPoint = player.getLocation();
+            } else {
+                flagManager.unsetFlag("lockedDoor");
+                lockDoorInteractPoint = null;
+            }
+        }
+
+        if (map.getFlagManager().isFlagSet("readQuestOneChest")) {
+            // Attempting to not spam player with chest textboxes
+            if (chestInteractPoint == null) {
+                chestInteractPoint = player.getLocation();
+            }
+            // Checks if player has moved from tile in which QuestOneChestScript was
+            // triggered
+            if (map.getTileByPosition(player.getX1(), player.getY1()).getIntersectRectangle()
+                    .contains(chestInteractPoint)) {
+                // Do nothing
+            } else if (map.getTextbox().isActive()) {
+                chestInteractPoint = player.getLocation();
+            } else {
+                flagManager.unsetFlag("readQuestOneChest");
+                chestInteractPoint = null;
+            }
+        }
+
+        // Map change triggers
         if (map.getFlagManager().isFlagSet("startToTownMapPath")) {
             Point p;
             map = townMap;
@@ -100,7 +242,6 @@ public class PlayLevelScreen extends Screen {
             player.setFacingDirection(Direction.UP);
             flagManager.unsetFlag("startToTownMapPath");
         }
-
         if (map.getFlagManager().isFlagSet("townToStartMapPath")) {
             Point p;
             map = startMap;
@@ -109,6 +250,186 @@ public class PlayLevelScreen extends Screen {
             player.setLocation(p.x, p.y);
             player.setFacingDirection(Direction.LEFT);
             flagManager.unsetFlag("townToStartMapPath");
+        }
+        if (map.getFlagManager().isFlagSet("townToStoreDoor")) {
+            Point p;
+            map = generalStoreMap;
+            p = map.getPositionByTileIndex(9, 12);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.UP);
+            flagManager.unsetFlag("townToStoreDoor");
+        }
+        if (map.getFlagManager().isFlagSet("storeToTownDoor")) {
+            Point p;
+            map = townMap;
+            p = map.getPositionByTileIndex(38, 57);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            flagManager.unsetFlag("storeToTownDoor");
+        }
+        if (map.getFlagManager().isFlagSet("townToH1Door")) {
+            Point p;
+            map = H1Map;
+            p = map.getPositionByTileIndex(9, 11);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.UP);
+            flagManager.unsetFlag("townToH1Door");
+        }
+        if (map.getFlagManager().isFlagSet("H1ToTownDoor")) {
+            Point p;
+            map = townMap;
+            p = map.getPositionByTileIndex(76, 46);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            flagManager.unsetFlag("H1ToTownDoor");
+        }
+        if (map.getFlagManager().isFlagSet("townToH2Door")) {
+            Point p;
+            map = H2Map;
+            p = map.getPositionByTileIndex(9, 11);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.UP);
+            flagManager.unsetFlag("townToH2Door");
+        }
+        if (map.getFlagManager().isFlagSet("H2ToTownDoor")) {
+            Point p;
+            map = townMap;
+            p = map.getPositionByTileIndex(85, 46);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            flagManager.unsetFlag("H2ToTownDoor");
+        }
+        if (map.getFlagManager().isFlagSet("townToH3Door")) {
+            Point p;
+            map = H3Map;
+            p = map.getPositionByTileIndex(10, 11);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.UP);
+            flagManager.unsetFlag("townToH3Door");
+        }
+        if (map.getFlagManager().isFlagSet("H3ToTownDoor")) {
+            Point p;
+            map = townMap;
+            p = map.getPositionByTileIndex(110, 68);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            flagManager.unsetFlag("H3ToTownDoor");
+        }
+        if (map.getFlagManager().isFlagSet("townToH3_1Door")) {
+            Point p;
+            map = H3_1Map;
+            p = map.getPositionByTileIndex(10, 11);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.UP);
+            flagManager.unsetFlag("townToH3_1Door");
+        }
+        if (map.getFlagManager().isFlagSet("H3_1ToTownDoor")) {
+            Point p;
+            map = townMap;
+            p = map.getPositionByTileIndex(100, 52);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            flagManager.unsetFlag("H3_1ToTownDoor");
+        }
+        if (map.getFlagManager().isFlagSet("townToInnDoor")) {
+            Point p;
+            map = innMap;
+            p = map.getPositionByTileIndex(9, 11);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.UP);
+            flagManager.unsetFlag("townToInnDoor");
+        }
+        if (map.getFlagManager().isFlagSet("innToTownDoor")) {
+            Point p;
+            map = townMap;
+            p = map.getPositionByTileIndex(33, 39);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            flagManager.unsetFlag("innToTownDoor");
+        }
+        if (map.getFlagManager().isFlagSet("townToManorDoor")) {
+            Point p;
+            map = manorMap;
+            p = map.getPositionByTileIndex(15, 23);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.UP);
+            flagManager.unsetFlag("townToManorDoor");
+        }
+        if (map.getFlagManager().isFlagSet("manorToTownDoor")) {
+            Point p;
+            map = townMap;
+            p = map.getPositionByTileIndex(60, 30);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            flagManager.unsetFlag("manorToTownDoor");
+        }
+        if (map.getFlagManager().isFlagSet("townToSmithDoor")) {
+            Point p;
+            map = smithMap;
+            p = map.getPositionByTileIndex(10, 11);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.UP);
+            flagManager.unsetFlag("townToSmithDoor");
+        }
+        if (map.getFlagManager().isFlagSet("smithToTownDoor")) {
+            Point p;
+            map = townMap;
+            p = map.getPositionByTileIndex(13, 77);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            flagManager.unsetFlag("smithToTownDoor");
+        }
+        if (map.getFlagManager().isFlagSet("townToHallDoor")) {
+            Point p;
+            map = townHallMap;
+            p = map.getPositionByTileIndex(10, 12);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.UP);
+            flagManager.unsetFlag("townToHallDoor");
+        }
+        if (map.getFlagManager().isFlagSet("hallToTownDoor")) {
+            Point p;
+            map = townMap;
+            p = map.getPositionByTileIndex(78, 76);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            flagManager.unsetFlag("hallToTownDoor");
+        }
+        if (map.getFlagManager().isFlagSet("startToDungeon")) {
+            Point p;
+            map = dungeonMap;
+            p = map.getPositionByTileIndex(8, 5);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            flagManager.unsetFlag("startToDungeon");
+        }
+        if (map.getFlagManager().isFlagSet("dungeonToStart")) {
+            Point p;
+            map = startMap;
+            p = map.getPositionByTileIndex(17, 20);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            flagManager.unsetFlag("dungeonToStart");
         }
     }
 
@@ -127,7 +448,6 @@ public class PlayLevelScreen extends Screen {
     public PlayLevelScreenState getPlayLevelScreenState() {
         return playLevelScreenState;
     }
-
 
     public void resetLevel() {
         initialize();

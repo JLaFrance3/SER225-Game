@@ -2,10 +2,8 @@ package Maps;
 
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
-import GameObject.ImageEffect;
 import GameObject.Sprite;
 import Level.Map;
-import Tilesets.CommonTileset;
 import Tilesets.FarmlandTileset;
 import Utils.Colors;
 import Utils.Point;
@@ -18,7 +16,7 @@ public class TitleScreenMap extends Map {
     public TitleScreenMap() {
         super("title_screen_map.txt", new FarmlandTileset());
         Point playerLocation = getMapTile(10, 8).getLocation().subtractX(7).subtractY(8);
-        player = new Sprite(ImageLoader.loadSubImage("Doug.png", Colors.MAGENTA, 0, 128, 63, 63));
+        player = new Sprite(ImageLoader.loadSubImage("Doug.png", 0, 128, 64, 64, true));
         player.setLocation(playerLocation.x, playerLocation.y);
     }
 

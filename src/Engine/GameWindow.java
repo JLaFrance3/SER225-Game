@@ -32,4 +32,8 @@ public class GameWindow {
 	public ScreenManager getScreenManager() {
 		return gamePanel.getScreenManager();
 	}
+
+	public GamePanel getGamePanel() {
+		return gamePanel;
+	}
 }
