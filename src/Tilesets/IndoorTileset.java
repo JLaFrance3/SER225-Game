@@ -61,7 +61,7 @@ public class IndoorTileset extends Tileset {
             MapTileBuilder indoorTiles;
 
             switch (i) {
-                case 73, 82:
+                case 27, 28, 29, 36, 37, 38, 73, 82:
                         indoorTiles = new MapTileBuilder(blankFrame)
                                         .withTopLayer(indoorFrames[i]);
                         break;

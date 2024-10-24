@@ -37,6 +37,11 @@ public class BugScript extends Script {
                     addText("I knew you were a cool cat!");
                     addText("I'm going to let you in on a little secret...\nYou can push some rocks out of the way.");
                 }});
+
+                addScriptAction(new TextboxScriptAction() {{
+                    addText("yap alert time hehehehehehehehehehehehehehehehe");
+                    addText("I'm going to stroke my shit i got lotion on my shit im over here stroking my shit rn");
+                }});
             }});
 
             addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{

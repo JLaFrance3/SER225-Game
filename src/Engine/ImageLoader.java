@@ -61,4 +61,20 @@ public class ImageLoader {
             throw new RuntimeException(e);
         }
     }
+
+    // loads a piece of an image from an image file, specify if using alpha transparency
+    public static BufferedImage loadSubImage(String imageFileName, int x, int y, int width, int height, boolean hasAlpha) {
+        if (!hasAlpha) {
+            return loadSubImage(imageFileName, x, y, width, height);
+        }
+        else {
+            try {
+                BufferedImage initialImage = ImageIO.read(new File(Config.RESOURCES_PATH + imageFileName));
+                return initialImage.getSubimage(x, y, width, height);
+            } catch (IOException e) {
+                System.out.println("Unable to find file " + Config.RESOURCES_PATH + imageFileName);
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }
