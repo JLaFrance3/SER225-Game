@@ -27,12 +27,12 @@ public class CombatScript extends Script {
         ArrayList<ScriptAction> combatActions = new ArrayList<>();
 
         scriptActions.add(new LockPlayerScriptAction());
-        // if (this.map.getNPCs() != null){
+        if (this.map.getNPCs() != null){
             
-        //     scriptActions.add(new NPCLockScriptAction());
+            scriptActions.add(new NPCLockScriptAction());
 
-        //     scriptActions.add(new NPCFacePlayerScriptAction());
-        // }
+            scriptActions.add(new NPCFacePlayerScriptAction());
+        }
         scriptActions.add(new TextboxScriptAction() {{
             addText(combatAlertText,new String[] { "Fight"});
         }});
@@ -43,8 +43,6 @@ public class CombatScript extends Script {
                     @Override
                     public boolean isRequirementMet() {
                         int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
-                        if (player.health <= 0)
-                            answer = 1;
                         return answer == 0;
                     }
                 });
@@ -66,6 +64,26 @@ public class CombatScript extends Script {
                         addScriptAction(new TextboxScriptAction() {{
                             addText("you slash your opponent dealing " + (int)(Math.random()*6) + " damage");
                         }});
+
+                        switch ((int)(Math.random()*6)%3) {
+                            case 0:
+                                addScriptAction(new TextboxScriptAction() {{
+                                    addText("it appears bloodied");
+                                }});
+                                break;
+                            case 1:
+                                addScriptAction(new TextboxScriptAction() {{
+                                    addText("it appears healthy");
+                                }});
+                                break;
+                            case 2:
+                                addScriptAction(new TextboxScriptAction() {{
+                                    addText("it is near death");
+                                }});
+                                break;
+                            default:
+                                break;
+                        }
                         addScriptAction(new AttackScriptAction(){{
                             updateDamage();
                             applyDamage();
@@ -149,6 +167,9 @@ public class CombatScript extends Script {
         
         scriptActions.add(new ChangeFlagScriptAction("hasfought", true));
         scriptActions.add(new UnlockPlayerScriptAction());
+        if (this.map.getNPCs() != null){
+            scriptActions.add(new NPCUnlockScriptAction());
+        }
 
         return scriptActions;
     }
