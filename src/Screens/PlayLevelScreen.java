@@ -1,7 +1,7 @@
 package Screens;
+import java.awt.image.BufferedImage;
 
-import Engine.GraphicsHandler;
-import Engine.Screen;
+import Engine.*;
 import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
@@ -9,11 +9,16 @@ import Maps.*;
 import Players.Doug;
 import Utils.Direction;
 import Utils.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.EnumMap;
+import java.util.HashMap;
 
 // This class is for when the RPG game is actually being played
 public class PlayLevelScreen extends Screen {
     protected ScreenCoordinator screenCoordinator;
     protected Map map;
+    protected BufferedImage inventory;
     protected Map startMap, townMap, generalStoreMap, H1Map, H2Map, H3Map, H3_1Map, dungeonMap;
     protected Map innMap, manorMap, smithMap, townHallMap;
     protected String[] mapChangeFlags;
@@ -21,12 +26,19 @@ public class PlayLevelScreen extends Screen {
     protected Player player;
     protected PlayLevelScreenState playLevelScreenState;
     protected WinScreen winScreen;
+    protected InventoryScreen inventoryScreen;
     protected FlagManager flagManager;
     protected Point lockDoorInteractPoint;
+    protected KeyLocker keyLocker = new KeyLocker();
+    protected boolean invToggle = false;
+    protected int keyPressTimer = 0;
 
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
         lockDoorInteractPoint = null;
+        inventory = ImageLoader.load("inventory.png");
+        keyPressTimer = 0;
+
     }
 
     public void initialize() {
@@ -46,6 +58,11 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("townHallSign", false);
         flagManager.addFlag("directionSign", false);
         flagManager.addFlag("startAreaSign", false);
+        flagManager.addFlag("hasInteractedKey1", false);
+        flagManager.addFlag("hasInteractedThunder", false);
+        flagManager.addFlag("hasInteractedChest1", false);
+        flagManager.addFlag("hasInteractedGreatSword", false);
+
 
         // Map change flags
         mapChangeFlags = new String[]{
@@ -125,6 +142,9 @@ public class PlayLevelScreen extends Screen {
         map.preloadScripts();
 
         winScreen = new WinScreen(this);
+        inventoryScreen = new InventoryScreen(this, player);
+
+        
     }
 
     public void update() {
@@ -141,12 +161,21 @@ public class PlayLevelScreen extends Screen {
                 break;
         }
 
+        if (Keyboard.isKeyDown(Key.I) && keyPressTimer == 0) {
+            keyPressTimer = 14;
+            invToggle = ! invToggle;
+        } else {
+            if (keyPressTimer > 0) {
+                keyPressTimer--;
+            }
+        }
+
+        
+        
+
         // Gamestate changes
         if (map.getFlagManager().isFlagSet("hasFoundBall")) {
             playLevelScreenState = PlayLevelScreenState.LEVEL_COMPLETED;
-        }
-        if (map.getFlagManager().isFlagSet("gateInteract")) { // if the gate interact flag is set then change the screen
-            screenCoordinator.setGameState(GameState.DUNGEON);
         }
 
         if (map.getFlagManager().isFlagSet("lockedDoor")) {
@@ -378,7 +407,13 @@ public class PlayLevelScreen extends Screen {
                 winScreen.draw(graphicsHandler);
                 break;
         }
+        if(invToggle){
+            inventoryScreen.draw(graphicsHandler);
+        }   
     }
+
+    
+            
 
     public PlayLevelScreenState getPlayLevelScreenState() {
         return playLevelScreenState;
@@ -392,6 +427,7 @@ public class PlayLevelScreen extends Screen {
     public void goBackToMenu() {
         screenCoordinator.setGameState(GameState.MENU);
     }
+        // }
 
     // This enum represents the different states this screen can be in
     private enum PlayLevelScreenState {

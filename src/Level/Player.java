@@ -6,10 +6,12 @@ import Engine.GraphicsHandler;
 import Engine.Key;
 import Engine.KeyLocker;
 import Engine.Keyboard;
+import EnhancedMapTiles.InventoryItem;
 import GameObject.GameObject;
 import GameObject.Rectangle;
 import GameObject.SpriteSheet;
 import Utils.Direction;
+import java.util.ArrayList;
 
 public abstract class Player extends GameObject {
     // values that affect player movement
@@ -51,6 +53,11 @@ public abstract class Player extends GameObject {
     /* private boolean isMovingRight = false; */
     protected boolean isLocked = false;
 
+    private ArrayList<InventoryItem> inventoryArrayList = new ArrayList<>();
+
+
+
+
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
         facingDirection = Direction.DOWN;
@@ -58,6 +65,14 @@ public abstract class Player extends GameObject {
         previousPlayerState = playerState;
         this.affectedByTriggers = true;
     }
+    
+
+    public  ArrayList<InventoryItem> getInventoryArrayList(){
+        return inventoryArrayList;
+    }
+
+   
+    
 
     public void update() {
 
