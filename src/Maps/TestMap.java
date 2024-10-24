@@ -2,6 +2,9 @@ package Maps;
 
 import EnhancedMapTiles.Chest;
 import EnhancedMapTiles.Gate;
+import EnhancedMapTiles.Swords.GreatSword;
+import EnhancedMapTiles.KeyItem;
+import EnhancedMapTiles.Spells.Thunder;
 import Level.*;
 import NPCs.Bug;
 import NPCs.Dinosaur;
@@ -16,6 +19,8 @@ import Tilesets.FarmlandTileset;
 import Utils.Point;
 import java.util.ArrayList;
 
+
+
 // Represents a test map to be used in a level
 public class TestMap extends Map {
 
@@ -29,10 +34,31 @@ public class TestMap extends Map {
         ArrayList<EnhancedMapTile> enhancedMapTiles = new ArrayList<>();
 
         Gate gate = new Gate(getMapTile(5, 8).getLocation());
-        enhancedMapTiles.add(gate);
+        //enhancedMapTiles.add(gate);
 
+        Chest chest2 = new Chest(getMapTile(12, 24).getLocation());
+        chest2.setExistenceFlag("hasInteractedChest2");
+        chest2.setInteractScript(new Chest2Script());
+        enhancedMapTiles.add(chest2);
+        
+        
         Chest chest1 = new Chest(getMapTile(17, 3).getLocation());
         enhancedMapTiles.add(chest1);
+
+        KeyItem key1 = new KeyItem(getMapTile(3, 28).getLocation());
+        key1.setExistenceFlag("hasInteractedKey1");
+        key1.setInteractScript(new Key1Script());
+        enhancedMapTiles.add(key1);
+
+        Thunder thunderSpell = new Thunder(getMapTile(10,10).getLocation());
+        thunderSpell.setExistenceFlag("hasInteractedThunder");
+        thunderSpell.setInteractScript(new ThunderSpellScript());
+        enhancedMapTiles.add(thunderSpell);
+
+        GreatSword greatsword = new GreatSword(getMapTile(11,20).getLocation());
+        greatsword.setExistenceFlag("hasInteractedGreatSword");
+        greatsword.setInteractScript(new GreatSwordScript());
+        enhancedMapTiles.add(greatsword);
         
         return enhancedMapTiles;
     }
@@ -91,7 +117,9 @@ public class TestMap extends Map {
         triggers.add(new Trigger(getMapTile(5, 17).getX(),getMapTile(5, 17).getY(),100,10,new CombatScript("Uh oh! This bug is evil as hell?"),"hasfought"));
         triggers.add(new Trigger(820, 1200, 150, 10, new TestScript(), "flowerBed"));
         triggers.add(new Trigger(townMapTrigger.x + 20, townMapTrigger.y,10, 128, new StartToTownPathScript(), "startToTownMapPath"));
-        //triggers.add(new Trigger(getMapTile(2, 8).getX(),getMapTile(2, 8).getY(), 30, 30, new TestQuestScript(), "readTestQuest"));
+      //  triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "startToDungeon"));
+       
+      //triggers.add(new Trigger(getMapTile(2, 8).getX(),getMapTile(2, 8).getY(), 30, 30, new TestQuestScript(), "readTestQuest"));
         triggers.add(new Trigger(getMapTile(1, 6).getX(),getMapTile(1, 6).getY(), 30, 10, new QuestOneScript(), "readQuestOne"));
         triggers.add(new Trigger(getMapTile(17, 4).getX(),getMapTile(17, 4).getY(), 30, 30, new QuestOneChestScript(), "readQuestOneChest"));
         triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "startToDungeon"));
