@@ -9,6 +9,7 @@ import Screens.DungeonScreen;
 import Screens.MenuScreen;
 import Screens.PlayLevelScreen;
 import javax.swing.JPanel;
+import GameObject.SpriteSheet;
 
 /*
  * Based on the current game state, this class determines which Screen should be shown
@@ -55,7 +56,16 @@ public class ScreenCoordinator extends Screen {
 						currentScreen = new MenuScreen(this);
 						break;
 					case LEVEL:
-						currentScreen = new PlayLevelScreen(this);
+						if (previousGameState == GameState.CHARACTER) {
+							SpriteSheet[] playerSpriteComponents = ((CharacterScreen)currentScreen).getPlayerSpriteComponents();
+							String playerName = ((CharacterScreen)currentScreen).getPlayerName();
+							boolean player_isMale = ((CharacterScreen)currentScreen).getPlayerGender();
+							String playerClass = ((CharacterScreen)currentScreen).getPlayerClass();
+							currentScreen = new PlayLevelScreen(this, playerSpriteComponents, playerName, player_isMale, playerClass);
+						}
+						else {
+							currentScreen = new PlayLevelScreen(this);
+						}
 						break;
 					case CHARACTER:
 						currentScreen = new CharacterScreen(this, gamePanel);
