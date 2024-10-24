@@ -51,6 +51,8 @@ public abstract class Player extends GameObject {
     /* private boolean isMovingRight = false; */
     protected boolean isLocked = false;
 
+    public static int health = 5;
+
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
         facingDirection = Direction.DOWN;

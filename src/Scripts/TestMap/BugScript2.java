@@ -7,7 +7,7 @@ import ScriptActions.*;
 
 // script for talking to bug npc
 // checkout the documentation website for a detailed guide on how this script works
-public class BugScript extends Script {
+public class BugScript2 extends Script {
 
     @Override
     public ArrayList<ScriptAction> loadScriptActions() {
@@ -23,8 +23,8 @@ public class BugScript extends Script {
             addText("Do you like bugs?", new String[] { "Yes", "No"});
         }});
 
-        scriptActions.add(new ConditionalScriptAction() {{
-            addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{
+        scriptActions.add(new LoopScriptAction() {{
+            addLoopScriptActionGroup(new LoopScriptActionGroup() {{
                 addRequirement(new CustomRequirement() {
                     @Override
                     public boolean isRequirementMet() {
@@ -32,7 +32,7 @@ public class BugScript extends Script {
                         return answer == 0;
                     }
                 });
-
+                
                 addScriptAction(new TextboxScriptAction() {{
                     addText("I knew you were a cool cat!");
                     addText("I'm going to let you in on a little secret...\nYou can push some rocks out of the way.");
@@ -42,8 +42,45 @@ public class BugScript extends Script {
                     addText("yap alert time hehehehehehehehehehehehehehehehe");
                     addText("I'm going to stroke my shit i got lotion on my shit im over here stroking my shit rn");
                 }});
+
+                addScriptAction(new TextboxScriptAction() {{
+                    addText("Hello!");
+                    addText("Do you like bugs?", new String[] { "Yes", "No"});
+                }});
+
+                addScriptAction(new ChangeFlagScriptAction("TEXTBOX_OPTION_SELECTION", true));
             }});
 
+            addLoopScriptActionGroup(new LoopScriptActionGroup() {{
+                addRequirement(new CustomRequirement() {
+                    @Override
+                    public boolean isRequirementMet() {
+                        int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
+                        System.out.println(answer);
+                        return answer == 1;
+                    }
+                });
+                
+                // addScriptAction(new ChangeFlagScriptAction("TEXTBOX_OPTION_SELECTION", false));
+
+                addScriptAction(new TextboxScriptAction("Oh...uh...awkward..."));
+            }});
+
+            // addLoopScriptActionGroup(new LoopScriptActionGroup() {{
+            //     addRequirement(new CustomRequirement() {
+            //         @Override
+            //         public boolean isRequirementMet() {
+            //             int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
+            //             return answer == 2;
+            //         }
+            //     });
+                
+            //     addScriptAction(new ChangeFlagScriptAction("TEXTBOX_OPTION_SELECTION", false));
+            //     addScriptAction(new TextboxScriptAction("OOOOOOOOOOOOoooooooooOOoOoooooOOO"));
+            // }});
+        }});
+
+        scriptActions.add(new ConditionalScriptAction() {{
             addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{
                 addRequirement(new CustomRequirement() {
                     @Override

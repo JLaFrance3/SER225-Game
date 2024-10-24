@@ -34,15 +34,17 @@ public class CombatScript extends Script {
         //     scriptActions.add(new NPCFacePlayerScriptAction());
         // }
         scriptActions.add(new TextboxScriptAction() {{
-            addText(combatAlertText,new String[] { "Fight", "Move", "Run"});
+            addText(combatAlertText,new String[] { "Fight"});
         }});
 
-        scriptActions.add(new ConditionalScriptAction() {{
-            addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{
+        scriptActions.add(new LoopScriptAction() {{
+            addLoopScriptActionGroup(new LoopScriptActionGroup() {{
                 addRequirement(new CustomRequirement() {
                     @Override
                     public boolean isRequirementMet() {
                         int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
+                        if (player.health <= 0)
+                            answer = 1;
                         return answer == 0;
                     }
                 });
@@ -50,9 +52,85 @@ public class CombatScript extends Script {
                 addScriptAction(new TextboxScriptAction() {{
                     addText("How will you strike?", new String[] {"Attack", "Spell", "Item"});
                 }});
+
+                addScriptAction(new ConditionalScriptAction() {{
+                    addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{    
+                        addRequirement(new CustomRequirement() {
+                            @Override
+                            public boolean isRequirementMet() {
+                                int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
+                                return answer == 0;
+                            }
+                        });
+
+                        addScriptAction(new TextboxScriptAction() {{
+                            addText("you slash your opponent dealing " + (int)(Math.random()*6) + " damage");
+                        }});
+                        addScriptAction(new AttackScriptAction(){{
+                            updateDamage();
+                            applyDamage();
+                            addText("you get bit for " + getDamage() + " damage");
+                        }});
+        
+                        addScriptAction(new TextboxScriptAction() {{
+                            addText("you have... ");
+                        }});
+
+                        addScriptAction(new TextboxScriptAction() {{
+                            addText(player.health + " HP left");
+                        }});
+                    }});
+                    addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{    
+                        addRequirement(new CustomRequirement() {
+                            @Override
+                            public boolean isRequirementMet() {
+                                int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
+                                return answer == 1;
+                            }
+                        });
+
+                        addScriptAction(new TextboxScriptAction() {{
+                            addText("you heal for " + (int)(Math.random()*6) + " HP");
+                        }});
+                        addScriptAction(new AttackScriptAction(){{
+                            updateDamage();
+                            applyDamage();
+                            addText("you get bit for " + getDamage() + " damage");
+                        }});
+        
+                        addScriptAction(new TextboxScriptAction() {{
+                            addText("you have... ");
+                        }});
+
+                        addScriptAction(new TextboxScriptAction() {{
+                            addText(player.health + " HP left");
+                        }});
+                    }});
+
+                    addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{    
+                        addRequirement(new CustomRequirement() {
+                            @Override
+                            public boolean isRequirementMet() {
+                                int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
+                                return answer == 2;
+                            }
+                        });
+        
+                        addScriptAction(new TextboxScriptAction() {{
+                            addText("inventoru",new String[] { "item", "itemer"});
+                        }});
+;
+                    }});
+                }});
+
+                if (player.health > 0){
+                    addScriptAction(new TextboxScriptAction() {{
+                        addText(combatAlertText,new String[] { "Fight", "Run"});
+                    }});
+                }
             }});
 
-            addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{
+            addLoopScriptActionGroup(new LoopScriptActionGroup() {{
                 addRequirement(new CustomRequirement() {
                     @Override
                     public boolean isRequirementMet() {
@@ -61,19 +139,11 @@ public class CombatScript extends Script {
                     }
                 });
                 
-                addScriptAction(new TextboxScriptAction("um... I promise this will be implemented soon"));
+                addScriptAction(new ChangeFlagScriptAction("TEXTBOX_OPTION_SELECTION", true));
+                addScriptAction(new TextboxScriptAction("you retreat from the battle"));
             }});
-            addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{
-                addRequirement(new CustomRequirement() {
-                    @Override
-                    public boolean isRequirementMet() {
-                        int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
-                        return answer == 2;
-                    }
-                });
-                
-                addScriptAction(new TextboxScriptAction("hey where are you going?"));
-            }});  
+            
+            
         }});
 
         
