@@ -163,7 +163,7 @@ public class PlayLevelScreen extends Screen {
 
         try {
             AudioInputStream AIS = AudioSystem
-                    .getAudioInputStream(new File("Resources/SoundEffects_AttackMotions/intro to rpg.wav"));
+                    .getAudioInputStream(new File("Resources/SoundEffects_AttackMotions/intro to rpg2.wav"));
             Clip clip = AudioSystem.getClip();
             clip.open(AIS);
             clip.setFramePosition(0);
@@ -219,7 +219,8 @@ public class PlayLevelScreen extends Screen {
             if (chestInteractPoint == null) {
                 chestInteractPoint = player.getLocation();
             }
-            // Checks if player has moved from tile in which QuestOneChestScript was triggered
+            // Checks if player has moved from tile in which QuestOneChestScript was
+            // triggered
             if (map.getTileByPosition(player.getX1(), player.getY1()).getIntersectRectangle()
                     .contains(chestInteractPoint)) {
                 // Do nothing
