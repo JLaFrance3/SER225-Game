@@ -206,6 +206,10 @@ public class AnimatedSprite implements IntersectableRectangle {
 		currentFrame.moveUp(dy);
 	}
 
+	public void setSpriteSheet(SpriteSheet spriteSheet) {
+		this.animations = loadAnimations(spriteSheet);
+	}
+
 	public float getScale() {
 		return currentFrame.getScale();
 	}

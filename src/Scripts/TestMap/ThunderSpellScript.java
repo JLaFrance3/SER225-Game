@@ -23,8 +23,8 @@ public class ThunderSpellScript extends Script {
 
         ArrayList<ScriptAction> scriptActions = new ArrayList<>();
         scriptActions.add(new LockPlayerScriptAction());
-        scriptActions.add(new TextboxScriptAction("Wow! A Thunder Spell! I can press 'i' to open my inventory."));
-        scriptActions.add(new TextboxScriptAction("I can press 'i' to open my inventory."));
+        scriptActions.add(new TextboxScriptAction("Wow! A Thunder Spell!"));
+        
         
 
         scriptActions.add(new ConditionalScriptAction() {{

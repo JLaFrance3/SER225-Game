@@ -36,12 +36,16 @@ public class TestMap extends Map {
         Gate gate = new Gate(getMapTile(5, 8).getLocation());
         //enhancedMapTiles.add(gate);
 
-        Chest chest1 = new Chest(getMapTile(12, 24).getLocation());
-        chest1.setExistenceFlag("hasInteractedChest1");
-        chest1.setInteractScript(new Chest1Script());
+        Chest chest2 = new Chest(getMapTile(12, 24).getLocation());
+        chest2.setExistenceFlag("hasInteractedChest2");
+        chest2.setInteractScript(new Chest2Script());
+        enhancedMapTiles.add(chest2);
+        
+        
+        Chest chest1 = new Chest(getMapTile(17, 3).getLocation());
         enhancedMapTiles.add(chest1);
 
-        KeyItem key1 = new KeyItem(getMapTile(11, 28).getLocation());
+        KeyItem key1 = new KeyItem(getMapTile(3, 28).getLocation());
         key1.setExistenceFlag("hasInteractedKey1");
         key1.setInteractScript(new Key1Script());
         enhancedMapTiles.add(key1);
@@ -65,18 +69,18 @@ public class TestMap extends Map {
         //this holds the npc's (?)
         ArrayList<NPC> npcs = new ArrayList<>();
 
-        Walrus walrus = new Walrus(1, getMapTile(4, 28).getLocation().subtractY(40));//npc constructor appears to set an id (?) then set location
-        walrus.setInteractScript(new WalrusScript());//used for interaction
-        npcs.add(walrus);//adds the npc to the array
+        // Walrus walrus = new Walrus(1, getMapTile(4, 28).getLocation().subtractY(40));//npc constructor appears to set an id (?) then set location
+        // walrus.setInteractScript(new WalrusScript());//used for interaction
+        // npcs.add(walrus);//adds the npc to the array
 
-        Dinosaur dinosaur = new Dinosaur(2, getMapTile(10, 7).getLocation());
-        dinosaur.setExistenceFlag("hasTalkedToDinosaur");
-        dinosaur.setInteractScript(new DinoScript());
-        npcs.add(dinosaur);
+        // Dinosaur dinosaur = new Dinosaur(2, getMapTile(10, 7).getLocation());
+        // dinosaur.setExistenceFlag("hasTalkedToDinosaur");
+        // dinosaur.setInteractScript(new DinoScript());
+        // npcs.add(dinosaur);
         
-        Bug bug = new Bug(3, getMapTile(7, 12).getLocation().subtractX(20));
-        bug.setInteractScript(new BugScript());
-        npcs.add(bug);
+        // Bug bug = new Bug(3, getMapTile(7, 12).getLocation().subtractX(20));
+        // bug.setInteractScript(new BugScript());
+        // npcs.add(bug);
 
         TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20));
         dummy.setInteractScript(new CombatScript("Uh oh! This bug is evil as hell?"));
@@ -114,6 +118,11 @@ public class TestMap extends Map {
         triggers.add(new Trigger(820, 1200, 150, 10, new TestScript(), "flowerBed"));
         triggers.add(new Trigger(townMapTrigger.x + 20, townMapTrigger.y,10, 128, new StartToTownPathScript(), "startToTownMapPath"));
       //  triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "startToDungeon"));
+       
+      //triggers.add(new Trigger(getMapTile(2, 8).getX(),getMapTile(2, 8).getY(), 30, 30, new TestQuestScript(), "readTestQuest"));
+        triggers.add(new Trigger(getMapTile(1, 6).getX(),getMapTile(1, 6).getY(), 30, 10, new QuestOneScript(), "readQuestOne"));
+        triggers.add(new Trigger(getMapTile(17, 4).getX(),getMapTile(17, 4).getY(), 30, 30, new QuestOneChestScript(), "readQuestOneChest"));
+        triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "startToDungeon"));
 
         //Locked door triggers
         Point[] lockDoorTriggers = new Point[] {

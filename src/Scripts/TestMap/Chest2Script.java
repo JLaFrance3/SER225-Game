@@ -16,7 +16,7 @@ import Utils.Visibility;
 
 // script for talking to dino npc
 // checkout the documentation website for a detailed guide on how this script works
-public class Chest1Script extends Script {
+public class Chest2Script extends Script {
 
     @Override
     public ArrayList<ScriptAction> loadScriptActions() {
@@ -41,7 +41,7 @@ public class Chest1Script extends Script {
                 addScriptAction(new TextboxScriptAction("It's Open! I found a suspicious looking bottle of red liquid... "));
                 addScriptAction(new TextboxScriptAction(" which I am just gonna assume is a health potion because this is an rpg."));
                 addScriptAction(new TextboxScriptAction("Press 'I' to view inventory."));
-                addScriptAction(new ChangeFlagScriptAction("hasInteractedChest1", true));
+                addScriptAction(new ChangeFlagScriptAction("hasInteractedChest2", true));
                 scriptActions.add(new AddInventory(new InventoryItem(ImageLoader.loadSubImage("items.png", 0, 67, 35, 35))));
             }});
         }});
