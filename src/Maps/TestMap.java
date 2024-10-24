@@ -100,7 +100,7 @@ public class TestMap extends Map {
 
         Skeleton skeleton2 = new Skeleton(6, getMapTile(17, 2).getLocation().subtractX(20));
         skeleton1.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell"));
-        npcs.add(skeleton2);
+       // npcs.add(skeleton2);
 
         return npcs;
     }
