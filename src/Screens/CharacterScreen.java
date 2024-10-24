@@ -11,7 +11,6 @@ import Game.ScreenCoordinator;
 import GameObject.SpriteSheet;
 import Level.Map;
 import Maps.TitleScreenMap;
-import SpriteFont.SpriteFont;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -45,27 +44,31 @@ public class CharacterScreen extends Screen {
     private SpriteSheet[] shirtSpritesheet;
     private SpriteSheet[] pantSpritesheet;
     private SpriteSheet[] shoeSpritesheets;
-    private String name;
+    private String[] classSelections;
     private Boolean isMale;
     private int[] spriteSelections;
     private int[] previousSelections;
     private BufferedImage displaySprite, scaleDisplaySprite;
+    private JLabel nameDisplayLabel, classDisplayLabel;
 
     public CharacterScreen(ScreenCoordinator screenCoordinator, JPanel gamePanel) {
         this.screenCoordinator = screenCoordinator;
         this.gamePanel = gamePanel;
         this.buttonListener = new ButtonListener();
-        this.name = "Doug";
         this.isMale = true;
-        this.spriteSelections = new int[8];
+        this.spriteSelections = new int[9];
         this.spriteSelections[2] = 1;
         this.spriteSelections[4] = -1;
-        this.previousSelections = new int[8];
+        this.previousSelections = new int[9];
         this.hairColors = new String[] {
             "/ash", "/black", "/blonde", "/chestnut", "/dark_brown",
-            "/dark_gray", "/ginger", "/gray", "/green", "/light_brown",
-            "/pink", "/platinum", "/raven", "/redhead", "/sandy",
-            "/strawberry", "/white",
+            "/dark_gray", "/gray", "/light_brown", "/platinum", 
+            "/raven", "/redhead", "/sandy", "/strawberry", "/white",
+        };
+        classSelections = new String[] {
+            "Warrior",
+            "Wizard",
+            "Ranger"
         };
         this.displaySprite = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB); 
         this.scaleDisplaySprite = new BufferedImage(128, 128, BufferedImage.TYPE_INT_ARGB);
@@ -78,6 +81,7 @@ public class CharacterScreen extends Screen {
         keyLocker.lockKey(Key.SPACE);
 
         // Character customization menu components
+        gamePanel.setLayout(null);
         menuGUI = ImageLoader.load("CharacterMenuGUI.png", true);
         menuImage = menuGUI.getSubimage(0, 0, 400, 330);
         nameField = new JTextField();
@@ -200,6 +204,22 @@ public class CharacterScreen extends Screen {
         exitButton.setContentAreaFilled(false);
         exitButton.setBorderPainted(false);
         exitButton.addActionListener(buttonListener);
+        nameDisplayLabel = new JLabel();
+        nameDisplayLabel.setLocation(416, 184);
+        nameDisplayLabel.setSize(168, 20);
+        nameDisplayLabel.setBackground(null);
+        nameDisplayLabel.setBorder(null);
+        nameDisplayLabel.setFont(new Font("Serif", Font.BOLD, 20));
+        nameDisplayLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        nameDisplayLabel.setText("");
+        classDisplayLabel = new JLabel();
+        classDisplayLabel.setLocation(416, 350);
+        classDisplayLabel.setSize(168, 20);
+        classDisplayLabel.setBackground(null);
+        classDisplayLabel.setBorder(null);
+        classDisplayLabel.setFont(new Font("Serif", Font.PLAIN, 12));
+        classDisplayLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        classDisplayLabel.setText("");
 
         // Add customization menu components to gamepanel
         gamePanel.add(nameField);
@@ -218,6 +238,8 @@ public class CharacterScreen extends Screen {
         gamePanel.add(confirmButton);
         gamePanel.add(cancelButton);
         gamePanel.add(exitButton);
+        gamePanel.add(nameDisplayLabel);
+        gamePanel.add(classDisplayLabel);
 
         // Arrow selector buttons
         arrowSelectors = new JButton[18];
@@ -242,12 +264,12 @@ public class CharacterScreen extends Screen {
 
         // Load sprite components
         headAndBodySpritesheets = new SpriteSheet[14][2];
-        hairSpritesheets = new SpriteSheet[34][17];
+        hairSpritesheets = new SpriteSheet[24][14];
         eyeSpritesheets = new SpriteSheet[8];
-        faceHairSpritesheets = new SpriteSheet[6][17];
+        faceHairSpritesheets = new SpriteSheet[5][14];
         shirtSpritesheet = new SpriteSheet[16];
         pantSpritesheet = new SpriteSheet[8];
-        shoeSpritesheets = new SpriteSheet[14];
+        shoeSpritesheets = new SpriteSheet[10];
 
         for (int i = 0; i < headAndBodySpritesheets.length; i++) {
             if (i < headAndBodySpritesheets.length / 2) {
@@ -262,7 +284,6 @@ public class CharacterScreen extends Screen {
                 headAndBodySpritesheets[i][1] = new SpriteSheet(ImageLoader.load("PlayerSprite/body/female/body_" +
                         (i - headAndBodySpritesheets.length / 2) + ".png", true), 64, 64);
             }
-            printMemoryUsage();
         }
         for (int i = 0; i < hairSpritesheets.length; i++) {
             if (i < hairSpritesheets.length / 2) {
@@ -273,23 +294,20 @@ public class CharacterScreen extends Screen {
             }
             else {
                 for (int k = 0; k < hairSpritesheets[i].length; k++) {
-                    hairSpritesheets[i][0] = new SpriteSheet(ImageLoader.load("PlayerSprite/hair/female/hair_" + 
+                    hairSpritesheets[i][k] = new SpriteSheet(ImageLoader.load("PlayerSprite/hair/female/hair_" + 
                             (i - hairSpritesheets.length / 2) + hairColors[k] + ".png", true), 64, 64);
                 }
             }
-            printMemoryUsage();
         }
         for (int i = 0; i < eyeSpritesheets.length; i++) {
             eyeSpritesheets[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/eyes/eyes_" + i  + ".png", true), 
                     64, 64);
-            printMemoryUsage();
         }
         for (int i = 0; i < faceHairSpritesheets.length; i++) {
             for (int j = 0; j < faceHairSpritesheets[i].length; j++) {
                 faceHairSpritesheets[i][j] = new SpriteSheet(ImageLoader.load("PlayerSprite/facehair/facehair_" +
                     i  + hairColors[j] + ".png", true), 64, 64);
             }
-            printMemoryUsage();
         }
         for (int i = 0; i < shirtSpritesheet.length; i++) {
             if (i < shirtSpritesheet.length / 2) {
@@ -300,7 +318,6 @@ public class CharacterScreen extends Screen {
                 shirtSpritesheet[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/shirt/female/shirt_" + 
                         (i - shirtSpritesheet.length / 2)  + ".png", true), 64, 64);
             }
-            printMemoryUsage();
         }
         for (int i = 0; i < pantSpritesheet.length; i++) {
             if (i < pantSpritesheet.length / 2) {
@@ -311,7 +328,6 @@ public class CharacterScreen extends Screen {
                 pantSpritesheet[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/pants/female/pants_" + 
                         (i - pantSpritesheet.length / 2)  + ".png", true), 64, 64);
             }
-            printMemoryUsage();
         }
         for (int i = 0; i < shoeSpritesheets.length; i++) {
             if (i < shoeSpritesheets.length / 2) {
@@ -322,7 +338,6 @@ public class CharacterScreen extends Screen {
                 shoeSpritesheets[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/shoes/female/shoes_" + 
                         (i - shoeSpritesheets.length / 2)  + ".png", true), 64, 64);
             }
-            printMemoryUsage();
         }
 
         updateDisplaySprite();
@@ -333,8 +348,11 @@ public class CharacterScreen extends Screen {
             keyLocker.unlockKey(Key.SPACE);
         }
 
+        nameDisplayLabel.setText(nameField.getText());
+        classDisplayLabel.setText(classSelections[spriteSelections[8]]);
+
         Boolean newDisplaySprite = false;
-        for (int i = 0; i < spriteSelections.length; i++) {
+        for (int i = 0; i < spriteSelections.length - 1; i++) {
             if (previousSelections[i] != spriteSelections[i]) {
                 newDisplaySprite = true;
                 previousSelections[i] = spriteSelections[i];
@@ -359,9 +377,9 @@ public class CharacterScreen extends Screen {
         if (isMale && spriteSelections[4] > -1) {
             g.drawImage(faceHairSpritesheets[spriteSelections[4]][spriteSelections[2]].getSubImage(2, 0, false), 0, 0, null);
         }
-        g.drawImage(shirtSpritesheet[spriteSelections[5]].getSubImage(2, 0, false), 0, 0, null);
-        g.drawImage(pantSpritesheet[spriteSelections[6]].getSubImage(2, 0, false), 0, 0, null);
         g.drawImage(shoeSpritesheets[spriteSelections[7]].getSubImage(2, 0, false), 0, 0, null);
+        g.drawImage(pantSpritesheet[spriteSelections[6]].getSubImage(2, 0, false), 0, 0, null);
+        g.drawImage(shirtSpritesheet[spriteSelections[5]].getSubImage(2, 0, false), 0, 0, null);
         g.dispose();
 
         // Scale up display sprite
@@ -370,10 +388,61 @@ public class CharacterScreen extends Screen {
         g2.dispose();
     }
 
+    public SpriteSheet[] getPlayerSpriteComponents() {
+        return new SpriteSheet[] {
+            //Reordering these so the Avatar.java class can draw in numerical order to display properly
+            headAndBodySpritesheets[spriteSelections[0]][1],
+            headAndBodySpritesheets[spriteSelections[0]][0],
+            eyeSpritesheets[spriteSelections[3]],
+            spriteSelections[4] > -1 ? faceHairSpritesheets[spriteSelections[4]][spriteSelections[2]] : null,
+            hairSpritesheets[spriteSelections[1]][spriteSelections[2]],
+            shoeSpritesheets[spriteSelections[7]],
+            pantSpritesheet[spriteSelections[6]],
+            shirtSpritesheet[spriteSelections[5]]
+        };
+    }
+
+    public String getPlayerName() {
+        return nameField.getText();
+    }
+
+    public boolean getPlayerGender() {
+        return isMale;
+    }
+
+    public String getPlayerClass() {
+        return classSelections[spriteSelections[8]];
+    }
+
     private void printMemoryUsage() {
         Runtime runtime = Runtime.getRuntime();
         long usedMemory = runtime.totalMemory() - runtime.freeMemory();
         System.out.println("Used memory: " + usedMemory / 1024 / 1024 + " MB");
+    }
+
+    private void clearMenu() {
+        gamePanel.remove(nameField);
+        gamePanel.remove(nameLabel);
+        gamePanel.remove(skinLabel);
+        gamePanel.remove(hairLabel);
+        gamePanel.remove(hairColorLabel);
+        gamePanel.remove(eyeLabel);
+        gamePanel.remove(faceHairLabel);
+        gamePanel.remove(shirtLabel);
+        gamePanel.remove(pantsLabel);
+        gamePanel.remove(shoesLabel);
+        gamePanel.remove(classLabel);
+        gamePanel.remove(maleRB);
+        gamePanel.remove(femaleRB);
+        gamePanel.remove(confirmButton);
+        gamePanel.remove(cancelButton);
+        gamePanel.remove(exitButton);
+        gamePanel.remove(nameDisplayLabel);
+        gamePanel.remove(classDisplayLabel);
+        for (JButton arrowSelector : arrowSelectors) {
+            gamePanel.remove(arrowSelector);
+        }
+        gamePanel.requestFocus();
     }
 
     public void draw(GraphicsHandler graphicsHandler) {
@@ -387,21 +456,33 @@ public class CharacterScreen extends Screen {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == exitButton) {
+                clearMenu();
                 screenCoordinator.setGameState(GameState.MENU);
             }
             else if (e.getSource() == confirmButton) {
-                //TODO: Add sprite to player
+                //TODO: Add error checking for player name
+                clearMenu();
                 screenCoordinator.setGameState(GameState.LEVEL);
             }
             else if (e.getSource() == cancelButton) {
+                clearMenu();
                 screenCoordinator.setGameState(GameState.MENU);
             }
             else if (e.getSource() == maleRB) {
                 isMale = true;
+                for (int i = 0; i < spriteSelections.length; i++) {spriteSelections[i] = 0;}
+                spriteSelections[4] = -1;
             }
             else if (e.getSource() == femaleRB) {
                 isMale = false;
-                spriteSelections[3] = -1;
+                spriteSelections[0] = headAndBodySpritesheets.length / 2;
+                spriteSelections[1] = hairSpritesheets.length / 2;
+                spriteSelections[2] = 0;
+                spriteSelections[3] = 0;
+                spriteSelections[4] = -1;
+                spriteSelections[5] = shirtSpritesheet.length / 2;
+                spriteSelections[6] = pantSpritesheet.length / 2;
+                spriteSelections[7] = shoeSpritesheets.length / 2;
             }
             else if (e.getSource() == arrowSelectors[0]) {
                 if (isMale) {
@@ -453,12 +534,12 @@ public class CharacterScreen extends Screen {
             }
             else if (e.getSource() == arrowSelectors[8]) {
                 if (isMale) {
-                    spriteSelections[4] = Math.floorMod(spriteSelections[4] - 1, faceHairSpritesheets.length + 1) - 1;
+                    spriteSelections[4] = Math.floorMod(spriteSelections[4] - 1 + (faceHairSpritesheets.length + 2), (faceHairSpritesheets.length + 1)) - 1;
                 }
             }
             else if (e.getSource() == arrowSelectors[9]) {
                 if (isMale) {
-                    spriteSelections[4] = (spriteSelections[4] + 1) % (faceHairSpritesheets.length + 1) - 1;
+                    spriteSelections[4] = (spriteSelections[4] + 2) % (faceHairSpritesheets.length + 1) - 1;
                 }
             }
             else if (e.getSource() == arrowSelectors[10]) {
@@ -516,11 +597,15 @@ public class CharacterScreen extends Screen {
                 }
             }
             else if (e.getSource() == arrowSelectors[16]) {
-
+                spriteSelections[8] = (spriteSelections[8] + 1) % (classSelections.length);
             }
             else if (e.getSource() == arrowSelectors[17]) {
-                
+                spriteSelections[8] = Math.floorMod(spriteSelections[8] - 1, classSelections.length);
             }
+
+            //Ucomment to display selection indices
+            // for(int i = 0; i < spriteSelections.length; i++) {System.out.print(spriteSelections[i] + ", ");}
+            // System.out.println();
         }
     }
 }
