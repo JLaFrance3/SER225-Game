@@ -82,7 +82,7 @@ public class TestMap extends Map {
         bug.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
         npcs.add(bug);
 
-        TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20));
+        TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20)); //null
         dummy.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
         npcs.add(dummy);
 
