@@ -42,7 +42,7 @@ public class TownMap extends Map {
             getPositionByTileIndex(77, 55),
             getPositionByTileIndex(81, 55),
             getPositionByTileIndex(14, 49),
-            getPositionByTileIndex(22, 93),
+            getPositionByTileIndex(22, 92),
         };
 
         //Locked door triggers

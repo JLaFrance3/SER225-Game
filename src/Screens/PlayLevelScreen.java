@@ -4,8 +4,10 @@ import Engine.GraphicsHandler;
 import Engine.Screen;
 import Game.GameState;
 import Game.ScreenCoordinator;
+import GameObject.SpriteSheet;
 import Level.*;
 import Maps.*;
+import Players.Avatar;
 import Players.Doug;
 import Utils.Direction;
 import Utils.Point;
@@ -31,11 +33,29 @@ public class PlayLevelScreen extends Screen {
     protected FlagManager flagManager;
     protected Point lockDoorInteractPoint;
     protected Point chestInteractPoint;
+    protected SpriteSheet[] playerSpriteComponents;
+    protected String playerName;
+    protected boolean player_isMale;
+    protected String playerClass;
 
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
-        lockDoorInteractPoint = null;
-        chestInteractPoint = null;
+        this.lockDoorInteractPoint = null;
+        this.chestInteractPoint = null;
+        this.playerSpriteComponents = null;
+        this.playerName = null;
+        this.player_isMale = false;
+        this.playerClass = null;
+    }
+
+    public PlayLevelScreen(ScreenCoordinator screenCoordinator, SpriteSheet[] spriteComponents, String name, boolean isMale, String playerClass) {
+        this.screenCoordinator = screenCoordinator;
+        this.lockDoorInteractPoint = null;
+        this.chestInteractPoint = null;
+        this.playerSpriteComponents = spriteComponents;
+        this.playerName = name;
+        this.player_isMale = isMale;
+        this.playerClass = playerClass;
     }
 
     public void initialize() {
@@ -120,7 +140,12 @@ public class PlayLevelScreen extends Screen {
         map = startMap;
 
         // setup player
-        player = new Doug(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+        if (playerSpriteComponents != null) {
+            player = new Avatar(playerSpriteComponents, map.getPlayerStartPosition().x, map.getPlayerStartPosition().y, playerName, player_isMale, playerClass); 
+        }
+        else {
+            player = new Doug(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+        }
         player.setMap(map);
         playLevelScreenState = PlayLevelScreenState.RUNNING;
         player.setFacingDirection(Direction.DOWN);
@@ -247,7 +272,7 @@ public class PlayLevelScreen extends Screen {
         if (map.getFlagManager().isFlagSet("townToH1Door")) {
             Point p;
             map = H1Map;
-            p = map.getPositionByTileIndex(10, 11);
+            p = map.getPositionByTileIndex(9, 11);
             player.setMap(map);
             player.setLocation(p.x, p.y);
             player.setFacingDirection(Direction.UP);
