@@ -73,10 +73,7 @@ public abstract class Player extends GameObject {
     /* private boolean isMovingLeft = false; */
     /* private boolean isMovingRight = false; */
     protected boolean isLocked = false;
-
     private ArrayList<InventoryItem> inventoryArrayList = new ArrayList<>();
-
-
 
     // Character customization options
     private String name;
@@ -85,6 +82,7 @@ public abstract class Player extends GameObject {
 
     // Player stats
     protected int strength, dexterity, constitution, intelligence;
+    public static int health = 5;
 
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
