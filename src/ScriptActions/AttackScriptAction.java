@@ -17,7 +17,7 @@ public class AttackScriptAction extends ScriptAction {
 
     public void applyDamage(){
         if (!lockDamage)
-            player.health -= damage;
+            player.health = player.health - damage;
             lockDamage = true;
     }
 
