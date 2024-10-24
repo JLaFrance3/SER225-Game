@@ -43,8 +43,6 @@ public class CombatScript extends Script {
                     @Override
                     public boolean isRequirementMet() {
                         int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
-                        if (player.health <= 0)
-                            answer = 1;
                         return answer == 0;
                     }
                 });
