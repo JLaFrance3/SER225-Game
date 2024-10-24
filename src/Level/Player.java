@@ -7,10 +7,13 @@ import java.awt.Graphics;
 import Engine.Key;
 import Engine.KeyLocker;
 import Engine.Keyboard;
+import EnhancedMapTiles.InventoryItem;
 import GameObject.GameObject;
 import GameObject.Rectangle;
 import GameObject.SpriteSheet;
 import Utils.Direction;
+import java.util.ArrayList;
+import java.awt.image.BufferedImage;
 
 
 //These are found sounds for Motions 
@@ -70,7 +73,15 @@ public abstract class Player extends GameObject {
     /* private boolean isMovingLeft = false; */
     /* private boolean isMovingRight = false; */
     protected boolean isLocked = false;
+    private ArrayList<InventoryItem> inventoryArrayList = new ArrayList<>();
 
+    // Character customization options
+    private String name;
+    private boolean isMale;
+    protected SpriteSheet[] spriteComponents;
+
+    // Player stats
+    protected int strength, dexterity, constitution, intelligence;
     public static int health = 5;
 
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
@@ -80,6 +91,14 @@ public abstract class Player extends GameObject {
         previousPlayerState = playerState;
         this.affectedByTriggers = true;
     }
+    
+
+    public  ArrayList<InventoryItem> getInventoryArrayList(){
+        return inventoryArrayList;
+    }
+
+   
+    
 
     public void update() {
 
