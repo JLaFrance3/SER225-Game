@@ -374,12 +374,12 @@ public class CharacterScreen extends Screen {
         g.drawImage(headAndBodySpritesheets[spriteSelections[0]][0].getSubImage(2, 0, false), 0, 0, null);
         g.drawImage(eyeSpritesheets[spriteSelections[3]].getSubImage(2, 0, false), 0, 0, null);
         g.drawImage(hairSpritesheets[spriteSelections[1]][spriteSelections[2]].getSubImage(2, 0, false), 0, 0, null);
-        if (isMale && spriteSelections[4] > -1) {
-            g.drawImage(faceHairSpritesheets[spriteSelections[4]][spriteSelections[2]].getSubImage(2, 0, false), 0, 0, null);
-        }
         g.drawImage(shoeSpritesheets[spriteSelections[7]].getSubImage(2, 0, false), 0, 0, null);
         g.drawImage(pantSpritesheet[spriteSelections[6]].getSubImage(2, 0, false), 0, 0, null);
         g.drawImage(shirtSpritesheet[spriteSelections[5]].getSubImage(2, 0, false), 0, 0, null);
+        if (isMale && spriteSelections[4] > -1) {
+            g.drawImage(faceHairSpritesheets[spriteSelections[4]][spriteSelections[2]].getSubImage(2, 0, false), 0, 0, null);
+        }
         g.dispose();
 
         // Scale up display sprite
@@ -394,11 +394,11 @@ public class CharacterScreen extends Screen {
             headAndBodySpritesheets[spriteSelections[0]][1],
             headAndBodySpritesheets[spriteSelections[0]][0],
             eyeSpritesheets[spriteSelections[3]],
-            spriteSelections[4] > -1 ? faceHairSpritesheets[spriteSelections[4]][spriteSelections[2]] : null,
             hairSpritesheets[spriteSelections[1]][spriteSelections[2]],
             shoeSpritesheets[spriteSelections[7]],
             pantSpritesheet[spriteSelections[6]],
-            shirtSpritesheet[spriteSelections[5]]
+            shirtSpritesheet[spriteSelections[5]],
+            spriteSelections[4] > -1 ? faceHairSpritesheets[spriteSelections[4]][spriteSelections[2]] : null
         };
     }
 
