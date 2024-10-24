@@ -93,7 +93,7 @@ public class TestMap extends Map {
         triggers.add(new Trigger(townMapTrigger.x + 20, townMapTrigger.y,10, 128, new StartToTownPathScript(), "startToTownMapPath"));
         //triggers.add(new Trigger(getMapTile(2, 8).getX(),getMapTile(2, 8).getY(), 30, 30, new TestQuestScript(), "readTestQuest"));
         triggers.add(new Trigger(getMapTile(1, 6).getX(),getMapTile(1, 6).getY(), 30, 10, new QuestOneScript(), "readQuestOne"));
-        triggers.add(new Trigger(getMapTile(17, 4).getX(),getMapTile(17, 4).getY(), 30, 30, new QuestOneChestScript(), "readQuestOneChest"));
+        triggers.add(new Trigger(getMapTile(17, 4).getX(),getMapTile(17, 4).getY(), 30, 10, new QuestOneChestScript(), "readQuestOneChest"));
         triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "startToDungeon"));
 
         //Locked door triggers
