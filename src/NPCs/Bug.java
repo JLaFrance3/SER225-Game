@@ -17,6 +17,7 @@ public class Bug extends NPC {
     private int totalAmountMoved = 0;
     private Direction direction = Direction.RIGHT;
     private float speed = 1;
+    private int health = 10;
     
     public Bug(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Bug.png"), 24, 15), "WALK_RIGHT");
