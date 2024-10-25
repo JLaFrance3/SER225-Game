@@ -302,7 +302,6 @@ public class CharacterScreen extends Screen {
                         .getSubimage(0, 128, 64, 64), i * 64, 1 * 64, null);
             }
         }
-        printMemoryUsage();
         for (int i = 0; i < spriteComponentSizes[3]; i++) {
             spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/eyes/eyes_" + i  + ".png", true)
                     .getSubimage(0, 128, 64, 64), i * 64, 2 * 64, null);
@@ -317,7 +316,6 @@ public class CharacterScreen extends Screen {
                         .getSubimage(0, 128, 64, 64), i * 64, 3 * 64, null);
             }
         }
-        printMemoryUsage();
         for (int i = 0; i < spriteComponentSizes[6]; i++) {
             if (i < spriteComponentSizes[6] / 2) {
                 spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/pants/male/pants_" + i  + ".png", true)
@@ -328,7 +326,6 @@ public class CharacterScreen extends Screen {
                         .getSubimage(0, 128, 64, 64), i * 64, 4 * 64, null);
             }
         }
-        printMemoryUsage();
         for (int i = 0; i < spriteComponentSizes[7]; i++) {
             if (i < spriteComponentSizes[7] / 2) {
                 spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/shoes/male/shoes_" + i  + ".png", true)
@@ -339,7 +336,6 @@ public class CharacterScreen extends Screen {
                         .getSubimage(0, 128, 64, 64), i * 64, 5 * 64, null);
             }
         }
-        printMemoryUsage();
         for (int i = 0; i < spriteComponentSizes[1]; i++) {
             if (i < spriteComponentSizes[1] / 2) {
                 for (int j = 0; j < spriteComponentSizes[2]; j++) {
@@ -354,7 +350,6 @@ public class CharacterScreen extends Screen {
                 }
             }
         }
-        printMemoryUsage();
         for (int i = 0; i < spriteComponentSizes[4]; i++) {
             for (int j = 0; j < spriteComponentSizes[2]; j++) {
                 spriteHairImageGraphics.drawImage(ImageLoader.load("PlayerSprite/facehair/facehair_" + i  + hairColors[j] + ".png", true)
@@ -362,7 +357,6 @@ public class CharacterScreen extends Screen {
 
             }
         }
-        printMemoryUsage();
         spriteImageGraphics.dispose();
         spriteHairImageGraphics.dispose();
 
@@ -658,8 +652,8 @@ public class CharacterScreen extends Screen {
             }
 
             //Ucomment to display selection indices
-            for(int i = 0; i < spriteSelections.length; i++) {System.out.print(spriteSelections[i] + ", ");}
-            System.out.println();
+            // for(int i = 0; i < spriteSelections.length; i++) {System.out.print(spriteSelections[i] + ", ");}
+            // System.out.println();
         }
     }
 }
