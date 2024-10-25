@@ -19,6 +19,10 @@ import java.awt.image.BufferedImage;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class CharacterScreen extends Screen {
     private ScreenCoordinator screenCoordinator;
@@ -36,17 +40,13 @@ public class CharacterScreen extends Screen {
     private ButtonListener buttonListener;
     private KeyLocker keyLocker = new KeyLocker();
 
-    private SpriteSheet[][] headAndBodySpritesheets;
-    private SpriteSheet[][] hairSpritesheets;
+    private BufferedImage displaySpriteComponents;
+    private BufferedImage displaySpriteHairComponents;
     private String[] hairColors;
-    private SpriteSheet[] eyeSpritesheets;
-    private SpriteSheet[][] faceHairSpritesheets;
-    private SpriteSheet[] shirtSpritesheet;
-    private SpriteSheet[] pantSpritesheet;
-    private SpriteSheet[] shoeSpritesheets;
     private String[] classSelections;
     private Boolean isMale;
     private int[] spriteSelections;
+    private int[] spriteComponentSizes;
     private int[] previousSelections;
     private BufferedImage displaySprite, scaleDisplaySprite;
     private JLabel nameDisplayLabel, classDisplayLabel;
@@ -57,13 +57,14 @@ public class CharacterScreen extends Screen {
         this.buttonListener = new ButtonListener();
         this.isMale = true;
         this.spriteSelections = new int[9];
+        this.spriteComponentSizes = new int[8];
         this.spriteSelections[2] = 1;
         this.spriteSelections[4] = -1;
         this.previousSelections = new int[9];
         this.hairColors = new String[] {
-            "/ash", "/black", "/blonde", "/chestnut", "/dark_brown",
-            "/dark_gray", "/gray", "/light_brown", "/platinum", 
-            "/raven", "/redhead", "/sandy", "/strawberry", "/white",
+            "/ash", "/black", "/blonde", "/blue", "/carrot", "/chestnut", "/dark_brown", "/dark_gray",
+            "/ginger", "/gold", "/gray", "/green", "/light_brown", "/navy", "/orange", "/pink", "/platinum", 
+            "/purple", "/raven", "/red", "/redhead", "/rose", "/sandy", "/strawberry", "/violet", "/white"
         };
         classSelections = new String[] {
             "Warrior",
@@ -262,84 +263,120 @@ public class CharacterScreen extends Screen {
             gamePanel.add(arrowSelectors[i]);
         }
 
-        // Load sprite components
-        headAndBodySpritesheets = new SpriteSheet[14][2];
-        hairSpritesheets = new SpriteSheet[24][14];
-        eyeSpritesheets = new SpriteSheet[8];
-        faceHairSpritesheets = new SpriteSheet[5][14];
-        shirtSpritesheet = new SpriteSheet[16];
-        pantSpritesheet = new SpriteSheet[8];
-        shoeSpritesheets = new SpriteSheet[10];
+        // Determine number of sprite components. Assumes same number of male/female components
+        spriteComponentSizes[0] = new File("Resources/PlayerSprite/head/male").list().length * 2;       //skintone
+        spriteComponentSizes[1] = new File("Resources/PlayerSprite/hair/male").list().length * 2;       //Hair
+        spriteComponentSizes[2] = new File("Resources/PlayerSprite/hair/male/hair_0").list().length;    //Hair color
+        spriteComponentSizes[3] = new File("Resources/PlayerSprite/eyes").list().length;                //Eyes
+        spriteComponentSizes[4] = new File("Resources/PlayerSprite/facehair").list().length;            //Facehair
+        spriteComponentSizes[5] = new File("Resources/PlayerSprite/shirt/male").list().length * 2;      //Shirt
+        spriteComponentSizes[6] = new File("Resources/PlayerSprite/pants/male").list().length * 2;      //Pants
+        spriteComponentSizes[7] = new File("Resources/PlayerSprite/shoes/male").list().length * 2;      //Shoes
 
-        for (int i = 0; i < headAndBodySpritesheets.length; i++) {
-            if (i < headAndBodySpritesheets.length / 2) {
-                headAndBodySpritesheets[i][0] = new SpriteSheet(ImageLoader.load("PlayerSprite/head/male/head_" +
-                        i  + ".png", true), 64, 64);
-                headAndBodySpritesheets[i][1] = new SpriteSheet(ImageLoader.load("PlayerSprite/body/male/body_" +
-                        i + ".png", true), 64, 64);
+        // Create new BufferedImages for use in displaying sprite components to player
+        int max = Math.max(Math.max(Math.max(Math.max(spriteComponentSizes[0],
+                    spriteComponentSizes[3]),
+                    spriteComponentSizes[5]),
+                    spriteComponentSizes[6]),
+                    spriteComponentSizes[7]);
+        displaySpriteComponents = new BufferedImage((max + 1) * 64, 6 * 64, BufferedImage.TYPE_INT_ARGB);
+        displaySpriteHairComponents = new BufferedImage((spriteComponentSizes[1] + spriteComponentSizes[4] + 1) 
+                * 64, (spriteComponentSizes[2] + 1) * 64, BufferedImage.TYPE_INT_ARGB);
+
+        // Get image graphics to draw on
+        Graphics spriteImageGraphics = displaySpriteComponents.getGraphics();
+        Graphics spriteHairImageGraphics = displaySpriteHairComponents.getGraphics();
+
+        // Grab one sprite off of each spritesheet for display
+        for (int i = 0; i < spriteComponentSizes[0]; i++) {
+            if (i < spriteComponentSizes[0] / 2) {
+                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/head/male/head_" + i  + ".png", true)
+                        .getSubimage(0, 128, 64, 64), i * 64, 0 * 64, null);
+                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/body/male/body_" + i + ".png", true)
+                        .getSubimage(0, 128, 64, 64), i * 64, 1 * 64, null);
             }
             else {
-                headAndBodySpritesheets[i][0] = new SpriteSheet(ImageLoader.load("PlayerSprite/head/female/head_" + 
-                        (i - headAndBodySpritesheets.length / 2)  + ".png", true), 64, 64);
-                headAndBodySpritesheets[i][1] = new SpriteSheet(ImageLoader.load("PlayerSprite/body/female/body_" +
-                        (i - headAndBodySpritesheets.length / 2) + ".png", true), 64, 64);
+                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/head/female/head_" + (i - spriteComponentSizes[0] / 2)  + ".png", true)
+                        .getSubimage(0, 128, 64, 64), i * 64, 0 * 64, null);
+                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/body/female/body_" + (i - spriteComponentSizes[0] / 2) + ".png", true)
+                        .getSubimage(0, 128, 64, 64), i * 64, 1 * 64, null);
             }
         }
-        for (int i = 0; i < hairSpritesheets.length; i++) {
-            if (i < hairSpritesheets.length / 2) {
-                for (int j = 0; j < hairSpritesheets[i].length; j++) {
-                    hairSpritesheets[i][j] = new SpriteSheet(ImageLoader.load("PlayerSprite/hair/male/hair_" +
-                        i  + hairColors[j] + ".png", true), 64, 64);
+        printMemoryUsage();
+        for (int i = 0; i < spriteComponentSizes[3]; i++) {
+            spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/eyes/eyes_" + i  + ".png", true)
+                    .getSubimage(0, 128, 64, 64), i * 64, 2 * 64, null);
+        }
+        for (int i = 0; i < spriteComponentSizes[5]; i++) {
+            if (i < spriteComponentSizes[5] / 2) {
+                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/shirt/male/shirt_" + i  + ".png", true)
+                        .getSubimage(0, 128, 64, 64), i * 64, 3 * 64, null);
+            }
+            else {
+                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/shirt/female/shirt_" + (i - spriteComponentSizes[5] / 2)  + ".png", true)
+                        .getSubimage(0, 128, 64, 64), i * 64, 3 * 64, null);
+            }
+        }
+        printMemoryUsage();
+        for (int i = 0; i < spriteComponentSizes[6]; i++) {
+            if (i < spriteComponentSizes[6] / 2) {
+                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/pants/male/pants_" + i  + ".png", true)
+                        .getSubimage(0, 128, 64, 64), i * 64, 4 * 64, null);
+            }
+            else {
+                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/pants/female/pants_" + (i - spriteComponentSizes[6] / 2)  + ".png", true)
+                        .getSubimage(0, 128, 64, 64), i * 64, 4 * 64, null);
+            }
+        }
+        printMemoryUsage();
+        for (int i = 0; i < spriteComponentSizes[7]; i++) {
+            if (i < spriteComponentSizes[7] / 2) {
+                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/shoes/male/shoes_" + i  + ".png", true)
+                        .getSubimage(0, 128, 64, 64), i * 64, 5 * 64, null);
+            }
+            else {
+                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/shoes/female/shoes_" + (i - spriteComponentSizes[7] / 2)  + ".png", true)
+                        .getSubimage(0, 128, 64, 64), i * 64, 5 * 64, null);
+            }
+        }
+        printMemoryUsage();
+        for (int i = 0; i < spriteComponentSizes[1]; i++) {
+            if (i < spriteComponentSizes[1] / 2) {
+                for (int j = 0; j < spriteComponentSizes[2]; j++) {
+                    spriteHairImageGraphics.drawImage(ImageLoader.load("PlayerSprite/hair/male/hair_" + i  + hairColors[j] + ".png", true)
+                            .getSubimage(0, 128, 64, 64), i * 64, j * 64, null);
                 }
             }
             else {
-                for (int k = 0; k < hairSpritesheets[i].length; k++) {
-                    hairSpritesheets[i][k] = new SpriteSheet(ImageLoader.load("PlayerSprite/hair/female/hair_" + 
-                            (i - hairSpritesheets.length / 2) + hairColors[k] + ".png", true), 64, 64);
+                for (int k = 0; k < spriteComponentSizes[2]; k++) {
+                    spriteHairImageGraphics.drawImage(ImageLoader.load("PlayerSprite/hair/female/hair_" + (i - spriteComponentSizes[1] / 2) + hairColors[k] + ".png", true)
+                            .getSubimage(0, 128, 64, 64), i * 64, k * 64, null);
                 }
             }
         }
-        for (int i = 0; i < eyeSpritesheets.length; i++) {
-            eyeSpritesheets[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/eyes/eyes_" + i  + ".png", true), 
-                    64, 64);
-        }
-        for (int i = 0; i < faceHairSpritesheets.length; i++) {
-            for (int j = 0; j < faceHairSpritesheets[i].length; j++) {
-                faceHairSpritesheets[i][j] = new SpriteSheet(ImageLoader.load("PlayerSprite/facehair/facehair_" +
-                    i  + hairColors[j] + ".png", true), 64, 64);
-            }
-        }
-        for (int i = 0; i < shirtSpritesheet.length; i++) {
-            if (i < shirtSpritesheet.length / 2) {
-                shirtSpritesheet[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/shirt/male/shirt_" +
-                        i  + ".png", true), 64, 64);
-            }
-            else {
-                shirtSpritesheet[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/shirt/female/shirt_" + 
-                        (i - shirtSpritesheet.length / 2)  + ".png", true), 64, 64);
-            }
-        }
-        for (int i = 0; i < pantSpritesheet.length; i++) {
-            if (i < pantSpritesheet.length / 2) {
-                pantSpritesheet[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/pants/male/pants_" +
-                        i  + ".png", true), 64, 64);
-            }
-            else {
-                pantSpritesheet[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/pants/female/pants_" + 
-                        (i - pantSpritesheet.length / 2)  + ".png", true), 64, 64);
-            }
-        }
-        for (int i = 0; i < shoeSpritesheets.length; i++) {
-            if (i < shoeSpritesheets.length / 2) {
-                shoeSpritesheets[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/shoes/male/shoes_" +
-                        i  + ".png", true), 64, 64);
-            }
-            else {
-                shoeSpritesheets[i] = new SpriteSheet(ImageLoader.load("PlayerSprite/shoes/female/shoes_" + 
-                        (i - shoeSpritesheets.length / 2)  + ".png", true), 64, 64);
-            }
-        }
+        printMemoryUsage();
+        for (int i = 0; i < spriteComponentSizes[4]; i++) {
+            for (int j = 0; j < spriteComponentSizes[2]; j++) {
+                spriteHairImageGraphics.drawImage(ImageLoader.load("PlayerSprite/facehair/facehair_" + i  + hairColors[j] + ".png", true)
+                        .getSubimage(0, 128, 64, 64), (i + spriteComponentSizes[1]) * 64, j * 64, null);
 
+            }
+        }
+        printMemoryUsage();
+        spriteImageGraphics.dispose();
+        spriteHairImageGraphics.dispose();
+
+        // Uncomment to view display sprite components in .png file
+        // File outputfile = new File("image.png");
+        // File outputfile2 = new File("image2.png");
+        // try {
+        //     ImageIO.write(displaySpriteHairComponents, "png", outputfile);
+        //     ImageIO.write(displaySpriteComponents, "png", outputfile2);
+        // } catch (IOException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }
+        
         updateDisplaySprite();
     }
 
@@ -351,6 +388,7 @@ public class CharacterScreen extends Screen {
         nameDisplayLabel.setText(nameField.getText());
         classDisplayLabel.setText(classSelections[spriteSelections[8]]);
 
+        // Checks if any selections have changed before updating the displayed character sprite
         Boolean newDisplaySprite = false;
         for (int i = 0; i < spriteSelections.length - 1; i++) {
             if (previousSelections[i] != spriteSelections[i]) {
@@ -358,7 +396,6 @@ public class CharacterScreen extends Screen {
                 previousSelections[i] = spriteSelections[i];
             }
         }
-
         if (newDisplaySprite) {
             newDisplaySprite = false;
             updateDisplaySprite();
@@ -366,20 +403,20 @@ public class CharacterScreen extends Screen {
     }
 
     private void updateDisplaySprite() {
-        // Create default display sprite
+        // Create display sprite
         Graphics g = displaySprite.getGraphics();
         g.setColor(Color.decode("#EFE4B0"));
         g.fillRect(0, 0, displaySprite.getWidth(), displaySprite.getHeight());
-        g.drawImage(headAndBodySpritesheets[spriteSelections[0]][1].getSubImage(2, 0, false), 0, 0, null);
-        g.drawImage(headAndBodySpritesheets[spriteSelections[0]][0].getSubImage(2, 0, false), 0, 0, null);
-        g.drawImage(eyeSpritesheets[spriteSelections[3]].getSubImage(2, 0, false), 0, 0, null);
-        g.drawImage(shoeSpritesheets[spriteSelections[7]].getSubImage(2, 0, false), 0, 0, null);
-        g.drawImage(pantSpritesheet[spriteSelections[6]].getSubImage(2, 0, false), 0, 0, null);
-        g.drawImage(shirtSpritesheet[spriteSelections[5]].getSubImage(2, 0, false), 0, 0, null);
+        g.drawImage(displaySpriteComponents.getSubimage(spriteSelections[0] * 64, 64, 64, 64), 0, 0, null);
+        g.drawImage(displaySpriteComponents.getSubimage(spriteSelections[0] * 64, 0, 64, 64), 0, 0, null);
+        g.drawImage(displaySpriteComponents.getSubimage(spriteSelections[3] * 64, 2 * 64, 64, 64), 0, 0, null);
+        g.drawImage(displaySpriteComponents.getSubimage(spriteSelections[7] * 64, 5 * 64, 64, 64), 0, 0, null);
+        g.drawImage(displaySpriteComponents.getSubimage(spriteSelections[6] * 64, 4 * 64, 64, 64), 0, 0, null);
+        g.drawImage(displaySpriteComponents.getSubimage(spriteSelections[5] * 64, 3 * 64, 64, 64), 0, 0, null);
         if (isMale && spriteSelections[4] > -1) {
-            g.drawImage(faceHairSpritesheets[spriteSelections[4]][spriteSelections[2]].getSubImage(2, 0, false), 0, 0, null);
+            g.drawImage(displaySpriteHairComponents.getSubimage((spriteSelections[4] + spriteComponentSizes[1]) * 64, spriteSelections[2] * 64, 64, 64), 0, 0, null);
         }
-        g.drawImage(hairSpritesheets[spriteSelections[1]][spriteSelections[2]].getSubImage(2, 0, false), 0, 0, null);
+        g.drawImage(displaySpriteHairComponents.getSubimage(spriteSelections[1] * 64, spriteSelections[2] * 64, 64, 64), 0, 0, null);
         g.dispose();
 
         // Scale up display sprite
@@ -388,18 +425,34 @@ public class CharacterScreen extends Screen {
         g2.dispose();
     }
 
+    // Return player sprite components
     public SpriteSheet[] getPlayerSpriteComponents() {
-        return new SpriteSheet[] {
-            //Reordering these so the Avatar.java class can draw in numerical order to display properly
-            headAndBodySpritesheets[spriteSelections[0]][1],
-            headAndBodySpritesheets[spriteSelections[0]][0],
-            eyeSpritesheets[spriteSelections[3]],
-            shoeSpritesheets[spriteSelections[7]],
-            pantSpritesheet[spriteSelections[6]],
-            shirtSpritesheet[spriteSelections[5]],
-            spriteSelections[4] > -1 ? faceHairSpritesheets[spriteSelections[4]][spriteSelections[2]] : null,
-            hairSpritesheets[spriteSelections[1]][spriteSelections[2]]
-        };
+        if (isMale) {
+            return new SpriteSheet[] {
+                new SpriteSheet(ImageLoader.load("PlayerSprite/body/male/body_" + spriteSelections[0] + ".png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/head/male/head_" + spriteSelections[0]  + ".png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/eyes/eyes_" + spriteSelections[3]  + ".png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/shoes/male/shoes_" + spriteSelections[7]  + ".png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/pants/male/pants_" + spriteSelections[6]  + ".png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/shirt/male/shirt_" + spriteSelections[5]  + ".png", true), 64, 64),
+                spriteSelections[4] > 1 ? (new SpriteSheet(ImageLoader.load("PlayerSprite/facehair/facehair_" + spriteSelections[4] 
+                        + hairColors[spriteSelections[2]] + ".png", true), 64, 64)) : null,
+                new SpriteSheet(ImageLoader.load("PlayerSprite/hair/male/hair_" + spriteSelections[1]  + hairColors[spriteSelections[2]] 
+                        + ".png", true), 64, 64)
+            };
+        } else {
+            return new SpriteSheet[] {
+                new SpriteSheet(ImageLoader.load("PlayerSprite/body/female/body_" + (spriteSelections[0] - spriteComponentSizes[0] / 2) + ".png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/head/female/head_" + (spriteSelections[0] - spriteComponentSizes[0] / 2)  + ".png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/eyes/eyes_" + spriteSelections[3]  + ".png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/shoes/female/shoes_" + (spriteSelections[7] - spriteComponentSizes[7] / 2)  + ".png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/pants/female/pants_" + (spriteSelections[6] - spriteComponentSizes[6] / 2)  + ".png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/shirt/female/shirt_" + (spriteSelections[5] - spriteComponentSizes[5] / 2)  + ".png", true), 64, 64),
+                null,
+                new SpriteSheet(ImageLoader.load("PlayerSprite/hair/female/hair_" + (spriteSelections[1] - spriteComponentSizes[1] / 2)  + hairColors[spriteSelections[2]] 
+                        + ".png", true), 64, 64)
+            };
+        }
     }
 
     public String getPlayerName() {
@@ -475,125 +528,126 @@ public class CharacterScreen extends Screen {
             }
             else if (e.getSource() == femaleRB) {
                 isMale = false;
-                spriteSelections[0] = headAndBodySpritesheets.length / 2;
-                spriteSelections[1] = hairSpritesheets.length / 2;
+                spriteSelections[0] = 7;
+                spriteSelections[1] = 7;
                 spriteSelections[2] = 0;
                 spriteSelections[3] = 0;
                 spriteSelections[4] = -1;
-                spriteSelections[5] = shirtSpritesheet.length / 2;
-                spriteSelections[6] = pantSpritesheet.length / 2;
-                spriteSelections[7] = shoeSpritesheets.length / 2;
+                spriteSelections[5] = 8;
+                spriteSelections[6] = 4;
+                spriteSelections[7] = 5;
             }
             else if (e.getSource() == arrowSelectors[0]) {
                 if (isMale) {
-                    spriteSelections[0] = Math.floorMod(spriteSelections[0] - 1, headAndBodySpritesheets.length / 2);
+                    spriteSelections[0] = Math.floorMod(spriteSelections[0] - 1, spriteComponentSizes[0] / 2);
                 }
                 else {
-                    spriteSelections[0] = Math.floorMod(spriteSelections[0] - 1, headAndBodySpritesheets.length / 2)
-                            + headAndBodySpritesheets.length / 2;
+                    spriteSelections[0] = Math.floorMod(spriteSelections[0] - 1, spriteComponentSizes[0] / 2)
+                            + spriteComponentSizes[0] / 2;
                 }
             }
             else if (e.getSource() == arrowSelectors[1]) {
                 if (isMale) {
-                    spriteSelections[0] = (spriteSelections[0] + 1) % (headAndBodySpritesheets.length / 2);
+                    spriteSelections[0] = (spriteSelections[0] + 1) % (spriteComponentSizes[0] / 2);
                 }
                 else {
-                    spriteSelections[0] = (spriteSelections[0] + 1) % (headAndBodySpritesheets.length / 2)
-                            + headAndBodySpritesheets.length / 2;
+                    spriteSelections[0] = (spriteSelections[0] + 1) % (spriteComponentSizes[0] / 2) 
+                            + spriteComponentSizes[0] / 2;
                 }
             }
             else if (e.getSource() == arrowSelectors[2]) {
                 if (isMale) {
-                    spriteSelections[1] = Math.floorMod(spriteSelections[1] - 1, hairSpritesheets.length / 2);
+                    spriteSelections[1] = Math.floorMod(spriteSelections[1] - 1, spriteComponentSizes[1] / 2);
                 }
                 else {
-                    spriteSelections[1] = Math.floorMod(spriteSelections[1] - 1, hairSpritesheets.length / 2)
-                            + hairSpritesheets.length / 2;
+                    spriteSelections[1] = Math.floorMod(spriteSelections[1] - 1, spriteComponentSizes[1] / 2) 
+                            + spriteComponentSizes[1] / 2;
                 }
             }
             else if (e.getSource() == arrowSelectors[3]) {
                 if (isMale) {
-                    spriteSelections[1] = (spriteSelections[1] + 1) % (hairSpritesheets.length / 2);
+                    spriteSelections[1] = (spriteSelections[1] + 1) % (spriteComponentSizes[1] / 2);
                 }
                 else {
-                    spriteSelections[1] = (spriteSelections[1] + 1) % (hairSpritesheets.length / 2)
-                            + hairSpritesheets.length / 2;
+                    spriteSelections[1] = (spriteSelections[1] + 1) % (spriteComponentSizes[1] / 2) 
+                            + spriteComponentSizes[1] / 2;
                 }
             }
             else if (e.getSource() == arrowSelectors[4]) {
-                spriteSelections[2] = Math.floorMod(spriteSelections[2] - 1, hairColors.length);
+                spriteSelections[2] = Math.floorMod(spriteSelections[2] - 1, spriteComponentSizes[2]);
             }
             else if (e.getSource() == arrowSelectors[5]) {
-                spriteSelections[2] = (spriteSelections[2] + 1) % (hairColors.length);
+                spriteSelections[2] = (spriteSelections[2] + 1) % (spriteComponentSizes[2]);
             }
             else if (e.getSource() == arrowSelectors[6]) {
-                spriteSelections[3] = Math.floorMod(spriteSelections[3] - 1, eyeSpritesheets.length);
+                spriteSelections[3] = Math.floorMod(spriteSelections[3] - 1, spriteComponentSizes[3]);
             }
             else if (e.getSource() == arrowSelectors[7]) {
-                spriteSelections[3] = (spriteSelections[3] + 1) % (eyeSpritesheets.length);
+                spriteSelections[3] = (spriteSelections[3] + 1) % spriteComponentSizes[3];
             }
             else if (e.getSource() == arrowSelectors[8]) {
                 if (isMale) {
-                    spriteSelections[4] = Math.floorMod(spriteSelections[4] - 1 + (faceHairSpritesheets.length + 2), (faceHairSpritesheets.length + 1)) - 1;
+                    spriteSelections[4] = Math.floorMod(spriteSelections[4] - 1 + (spriteComponentSizes[4] + 2),
+                            (spriteComponentSizes[4] / 2 + 1)) - 1;
                 }
             }
             else if (e.getSource() == arrowSelectors[9]) {
                 if (isMale) {
-                    spriteSelections[4] = (spriteSelections[4] + 2) % (faceHairSpritesheets.length + 1) - 1;
+                    spriteSelections[4] = (spriteSelections[4] + 2) % (spriteComponentSizes[4] + 1) - 1;
                 }
             }
             else if (e.getSource() == arrowSelectors[10]) {
                 if (isMale) {
-                    spriteSelections[5] = Math.floorMod(spriteSelections[5] - 1, shirtSpritesheet.length / 2);
+                    spriteSelections[5] = Math.floorMod(spriteSelections[5] - 1, spriteComponentSizes[5] / 2);
                 }
                 else {
-                    spriteSelections[5] = Math.floorMod(spriteSelections[5] - 1, shirtSpritesheet.length / 2)
-                            + shirtSpritesheet.length / 2;
+                    spriteSelections[5] = Math.floorMod(spriteSelections[5] - 1, spriteComponentSizes[5] / 2) 
+                            + spriteComponentSizes[5] / 2;
                 }
             }
             else if (e.getSource() == arrowSelectors[11]) {
                 if (isMale) {
-                    spriteSelections[5] = (spriteSelections[5] + 1) % (shirtSpritesheet.length / 2);
+                    spriteSelections[5] = (spriteSelections[5] + 1) % (spriteComponentSizes[5] / 2);
                 }
                 else {
-                    spriteSelections[5] = (spriteSelections[5] + 1) % (shirtSpritesheet.length / 2)
-                            + shirtSpritesheet.length / 2;
+                    spriteSelections[5] = (spriteSelections[5] + 1) % (spriteComponentSizes[5] / 2) 
+                            + spriteComponentSizes[5] / 2;
                 }
             }
             else if (e.getSource() == arrowSelectors[12]) {
                 if (isMale) {
-                    spriteSelections[6] = Math.floorMod(spriteSelections[6] - 1, pantSpritesheet.length / 2);
+                    spriteSelections[6] = Math.floorMod(spriteSelections[6] - 1, spriteComponentSizes[6] / 2);
                 }
                 else {
-                    spriteSelections[6] = Math.floorMod(spriteSelections[6] - 1, pantSpritesheet.length / 2)
-                            + pantSpritesheet.length / 2;
+                    spriteSelections[6] = Math.floorMod(spriteSelections[6] - 1, spriteComponentSizes[6] / 2) 
+                            + spriteComponentSizes[6] / 2;
                 }
             }
             else if (e.getSource() == arrowSelectors[13]) {
                 if (isMale) {
-                    spriteSelections[6] = (spriteSelections[6] + 1) % (pantSpritesheet.length / 2);
+                    spriteSelections[6] = (spriteSelections[6] + 1) % (spriteComponentSizes[6] / 2);
                 }
                 else {
-                    spriteSelections[6] = (spriteSelections[6] + 1) % (pantSpritesheet.length / 2)
-                            + pantSpritesheet.length / 2;
+                    spriteSelections[6] = (spriteSelections[6] + 1) % (spriteComponentSizes[6] / 2) 
+                            + spriteComponentSizes[6] / 2;
                 }
             }
             else if (e.getSource() == arrowSelectors[14]) {
                 if (isMale) {
-                    spriteSelections[7] = Math.floorMod(spriteSelections[7] - 1, shoeSpritesheets.length / 2);
+                    spriteSelections[7] = Math.floorMod(spriteSelections[7] - 1, spriteComponentSizes[7] / 2);
                 }
                 else {
-                    spriteSelections[7] = Math.floorMod(spriteSelections[7] - 1, shoeSpritesheets.length / 2)
-                            + shoeSpritesheets.length / 2;
+                    spriteSelections[7] = Math.floorMod(spriteSelections[7] - 1, spriteComponentSizes[7] / 2) 
+                            + spriteComponentSizes[7] / 2;
                 }
             }
             else if (e.getSource() == arrowSelectors[15]) {
                 if (isMale) {
-                    spriteSelections[7] = (spriteSelections[7] + 1) % (shoeSpritesheets.length / 2);
+                    spriteSelections[7] = (spriteSelections[7] + 1) % (spriteComponentSizes[7] / 2);
                 }
                 else {
-                    spriteSelections[7] = (spriteSelections[7] + 1) % (shoeSpritesheets.length / 2)
-                            + shoeSpritesheets.length / 2;
+                    spriteSelections[7] = (spriteSelections[7] + 1) % (spriteComponentSizes[7] / 2) 
+                            + spriteComponentSizes[7] / 2;
                 }
             }
             else if (e.getSource() == arrowSelectors[16]) {
@@ -604,8 +658,8 @@ public class CharacterScreen extends Screen {
             }
 
             //Ucomment to display selection indices
-            // for(int i = 0; i < spriteSelections.length; i++) {System.out.print(spriteSelections[i] + ", ");}
-            // System.out.println();
+            for(int i = 0; i < spriteSelections.length; i++) {System.out.print(spriteSelections[i] + ", ");}
+            System.out.println();
         }
     }
 }
