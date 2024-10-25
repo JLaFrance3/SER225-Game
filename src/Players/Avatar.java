@@ -56,7 +56,7 @@ public class Avatar extends Player {
                 g.drawImage(spriteComponents[3].getImage(), 0, 0, null);
                 g.drawImage(spriteComponents[4].getImage(), 0, 0, null);
                 g.drawImage(spriteComponents[5].getImage(), 0, 0, null);
-                if (isMale && spriteComponents[3] != null) {
+                if (isMale && spriteComponents[6] != null) {
                         g.drawImage(spriteComponents[6].getImage(), 0, 0, null);
                 }
                 g.drawImage(spriteComponents[7].getImage(), 0, 0, null);
