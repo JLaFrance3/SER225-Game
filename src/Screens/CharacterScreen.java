@@ -528,14 +528,14 @@ public class CharacterScreen extends Screen {
             }
             else if (e.getSource() == femaleRB) {
                 isMale = false;
-                spriteSelections[0] = 7;
-                spriteSelections[1] = 7;
+                spriteSelections[0] = spriteComponentSizes[0] / 2;
+                spriteSelections[1] = spriteComponentSizes[1] / 2;
                 spriteSelections[2] = 0;
                 spriteSelections[3] = 0;
                 spriteSelections[4] = -1;
-                spriteSelections[5] = 8;
-                spriteSelections[6] = 4;
-                spriteSelections[7] = 5;
+                spriteSelections[5] = spriteComponentSizes[5] / 2;
+                spriteSelections[6] = spriteComponentSizes[6] / 2;
+                spriteSelections[7] = spriteComponentSizes[7] / 2;
             }
             else if (e.getSource() == arrowSelectors[0]) {
                 if (isMale) {
