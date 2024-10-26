@@ -119,8 +119,25 @@ public abstract class Player extends GameObject {
 
             // move player with respect to map collisions based on how much player needs to
             // move this frame
-            lastAmountMovedY = super.moveYHandleCollision(moveAmountY);
-            lastAmountMovedX = super.moveXHandleCollision(moveAmountX);
+            if (getBounds().getY1() > 0 && getBounds().getY2() < map.getEndBoundY()) {
+                lastAmountMovedY = super.moveYHandleCollision(moveAmountY);
+            } else {
+                if (getBounds().getY2() > map.getEndBoundY()){
+                    setLocation(getX1(), map.getEndBoundY() - getHeight());
+                } else {
+                    setLocation(getX1(), 0);
+                }
+            }
+
+            if (getBounds().getX1() > 0 && getBounds().getX2() < map.getEndBoundX()) {
+                lastAmountMovedX = super.moveXHandleCollision(moveAmountX);
+            } else {
+                if (getBounds().getX2() > map.getEndBoundX()) {
+                    setLocation(map.getEndBoundX() - getWidth(), getY1());
+                } else {
+                    setLocation(0, getY1());
+                }
+            }
 
             handlePlayerAnimation();
             // playSoundEffect(currentAnimationName);
