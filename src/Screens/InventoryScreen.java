@@ -29,7 +29,15 @@ public class InventoryScreen extends Screen {
         this.playLevelScreen = playLevelScreen;
         this.player = player;
         inventory = ImageLoader.load("inventory.png");
-        playerImage = ImageLoader.loadSubImage("Doug.png", 0, 393, 51, 53);
+
+        //Get player image from player sprite animation
+        BufferedImage playerSprite = player.getAnimations().get("STAND_DOWN")[0].getImage();
+
+        //Create a new image to scale up size of sprite 3x
+        playerImage = new BufferedImage(192, 192, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D playerImageGraphics = playerImage.createGraphics();
+        playerImageGraphics.drawImage(playerSprite, 0, 0, 192, 192, null);
+
         initialize();
     }
 
@@ -49,9 +57,9 @@ public class InventoryScreen extends Screen {
     public void draw(GraphicsHandler graphicsHandler) {
         graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), Color.black);
         graphicsHandler.drawImage(inventory, 0, 0, ScreenManager.getScreenWidth(),ScreenManager.getScreenHeight() );
-        graphicsHandler.drawImage(playerImage, 170, 200);
+        graphicsHandler.drawImage(playerImage, 110, 160);
         playerAp.draw(graphicsHandler);
-        System.out.println(player.getInventoryArrayList());
+
         int startX = 400;
         int startY = 95;
         for(int i = 0; i < player.getInventoryArrayList().size(); i++){

@@ -78,7 +78,6 @@ public abstract class Player extends GameObject {
     // Character customization options
     private String name;
     private boolean isMale;
-    protected SpriteSheet[] spriteComponents;
 
     // Player stats
     protected int strength, dexterity, constitution, intelligence;
