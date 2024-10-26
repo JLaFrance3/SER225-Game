@@ -2,11 +2,9 @@ package Screens;
 
 import Engine.*;
 import EnhancedMapTiles.InventoryItem;
-import Level.EnhancedMapTile;
 import Level.FlagManager;
 import Level.Player;
 import SpriteFont.SpriteFont;
-import Players.Doug;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 

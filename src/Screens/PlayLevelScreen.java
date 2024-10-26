@@ -8,13 +8,8 @@ import GameObject.SpriteSheet;
 import Level.*;
 import Maps.*;
 import Players.Avatar;
-import Players.Doug;
 import Utils.Direction;
 import Utils.Point;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.EnumMap;
-import java.util.HashMap;
 
 // these are for intro sound 
 import javax.sound.sampled.AudioSystem;
