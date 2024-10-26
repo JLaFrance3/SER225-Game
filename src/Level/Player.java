@@ -278,9 +278,8 @@ public abstract class Player extends GameObject {
             DeathClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Player Death.wav");
             isDeathSoundPlayed = false;
         }
-        if (facingDirection == Direction.DOWN) {
-            currentAnimationName = "FALL_DOWN";
-        }
+        facingDirection = Direction.DOWN;
+        currentAnimationName = "FALL_DOWN";
         if (playerState != PlayerState.ATTACK) {
             playerState = PlayerState.ATTACK;
         }
