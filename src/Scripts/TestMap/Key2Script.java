@@ -8,7 +8,7 @@ import ScriptActions.*;
 
 // script for talking to dino npc
 // checkout the documentation website for a detailed guide on how this script works
-public class Key1Script extends Script {
+public class Key2Script extends Script {
 
     @Override
     public ArrayList<ScriptAction> loadScriptActions() {
@@ -29,7 +29,7 @@ public class Key1Script extends Script {
             }});
         }});
 
-        scriptActions.add(new AddInventory(new InventoryItem(ImageLoader.loadSubImage("items.png", 241, 338, 26, 35))));
+        scriptActions.add(new AddInventory(new InventoryItem(ImageLoader.loadSubImage("items.png", 241, 338, 26, 35), "Chest Key", 0, "A key that opens a certain chest")));
 
         
 
