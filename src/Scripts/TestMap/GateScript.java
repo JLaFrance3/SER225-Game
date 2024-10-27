@@ -1,8 +1,6 @@
 package Scripts.TestMap;
 
 import java.util.ArrayList;
-
-import Game.GameState;
 import Level.Script;
 import ScriptActions.*;
 

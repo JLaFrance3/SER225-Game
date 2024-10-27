@@ -1,17 +1,7 @@
 package Scripts.TestMap;
 import java.util.ArrayList;
-
-import Builders.FrameBuilder;
-import Builders.MapTileBuilder;
-import GameObject.Frame;
-import Level.MapTile;
 import Level.Script;
-import Level.ScriptState;
-import Level.TileType;
 import ScriptActions.*;
-import Utils.Direction;
-import Utils.Point;
-import Utils.Visibility;
 
 public class QuestOneChestScript extends Script{
     @Override

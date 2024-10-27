@@ -27,6 +27,7 @@ public abstract class Player extends GameObject {
     // values that affect player movement
     // these should be set in a subclass
     protected float walkSpeed = 0;
+    protected float runSpeed = 0;
     protected int interactionRange = 1;
     protected Direction currentWalkingXDirection;
     protected Direction currentWalkingYDirection;
@@ -78,7 +79,6 @@ public abstract class Player extends GameObject {
     // Character customization options
     private String name;
     private boolean isMale;
-    protected SpriteSheet[] spriteComponents;
 
     // Player stats
     protected int strength, dexterity, constitution, intelligence;
@@ -97,13 +97,7 @@ public abstract class Player extends GameObject {
         return inventoryArrayList;
     }
 
-   
-    
-
     public void update() {
-
-        // System.out.println("Udpate Method- CurrentState: " + playerState);
-
         if (!isLocked) {
             moveAmountX = 0;
             moveAmountY = 0;
@@ -119,8 +113,25 @@ public abstract class Player extends GameObject {
 
             // move player with respect to map collisions based on how much player needs to
             // move this frame
-            lastAmountMovedY = super.moveYHandleCollision(moveAmountY);
-            lastAmountMovedX = super.moveXHandleCollision(moveAmountX);
+            if (getBounds().getY1() > 0 && getBounds().getY2() < map.getEndBoundY()) {
+                lastAmountMovedY = super.moveYHandleCollision(moveAmountY);
+            } else {
+                if (getBounds().getY2() > map.getEndBoundY()){
+                    setLocation(getX1(), map.getEndBoundY() - getHeight());
+                } else {
+                    setLocation(getX1(), 0);
+                }
+            }
+
+            if (getBounds().getX1() > 0 && getBounds().getX2() < map.getEndBoundX()) {
+                lastAmountMovedX = super.moveXHandleCollision(moveAmountX);
+            } else {
+                if (getBounds().getX2() > map.getEndBoundX()) {
+                    setLocation(map.getEndBoundX() - getWidth(), getY1());
+                } else {
+                    setLocation(0, getY1());
+                }
+            }
 
             handlePlayerAnimation();
             // playSoundEffect(currentAnimationName);
@@ -261,9 +272,8 @@ public abstract class Player extends GameObject {
             DeathClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Player Death.wav");
             isDeathSoundPlayed = false;
         }
-        if (facingDirection == Direction.DOWN) {
-            currentAnimationName = "FALL_DOWN";
-        }
+        facingDirection = Direction.DOWN;
+        currentAnimationName = "FALL_DOWN";
         if (playerState != PlayerState.ATTACK) {
             playerState = PlayerState.ATTACK;
         }
@@ -336,14 +346,22 @@ public abstract class Player extends GameObject {
         }
         // if walk up key is pressed, move player up
         if (Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(Key.UP)) {
-            moveAmountY -= walkSpeed;
+            if (Keyboard.isKeyDown(Key.SHIFT)) {
+                moveAmountY -= runSpeed;
+            } else {
+                moveAmountY -= walkSpeed;
+            }
             facingDirection = Direction.UP;
             currentWalkingYDirection = Direction.UP;
             lastWalkingYDirection = Direction.UP;
         }
         // if walk down key is pressed, move player down
         else if (Keyboard.isKeyDown(MOVE_DOWN_KEY) || Keyboard.isKeyDown(Key.DOWN)) {
-            moveAmountY += walkSpeed;
+            if (Keyboard.isKeyDown(Key.SHIFT)) {
+                moveAmountY += runSpeed;
+            } else {
+                moveAmountY += walkSpeed;
+            }
             facingDirection = Direction.DOWN;
             currentWalkingYDirection = Direction.DOWN;
             lastWalkingYDirection = Direction.DOWN;
@@ -351,14 +369,22 @@ public abstract class Player extends GameObject {
 
         // if walk left key is pressed, move player to the left
         if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(Key.LEFT)) {
-            moveAmountX -= walkSpeed;
+            if (Keyboard.isKeyDown(Key.SHIFT)) {
+                moveAmountX -= runSpeed;
+            } else {
+                moveAmountX -= walkSpeed;
+            }
             facingDirection = Direction.LEFT;
             currentWalkingXDirection = Direction.LEFT;
             lastWalkingXDirection = Direction.LEFT;
         }
         // if walk right key is pressed, move player to the right
         else if (Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(Key.RIGHT)) {
-            moveAmountX += walkSpeed;
+            if (Keyboard.isKeyDown(Key.SHIFT)) {
+                moveAmountX += runSpeed;
+            } else {
+                moveAmountX += walkSpeed;
+            }
             facingDirection = Direction.RIGHT;
             currentWalkingXDirection = Direction.RIGHT;
             lastWalkingXDirection = Direction.RIGHT;
@@ -406,15 +432,21 @@ public abstract class Player extends GameObject {
             }
         }
         // sets animation to a WALK animation based on which way player is facing
-        else {
+        else if (playerState == PlayerState.RUNNING) {
+            switch (this.facingDirection) {
+                case UP -> currentAnimationName = "RUN_UP";
+                case LEFT -> currentAnimationName = "RUN_LEFT";
+                case DOWN -> currentAnimationName = "RUN_DOWN";
+                case RIGHT -> currentAnimationName = "RUN_RIGHT";
+            }
+        } else {
             switch (this.facingDirection) {
                 case UP -> currentAnimationName = "WALK_UP";
                 case LEFT -> currentAnimationName = "WALK_LEFT";
                 case DOWN -> currentAnimationName = "WALK_DOWN";
                 case RIGHT -> currentAnimationName = "WALK_RIGHT";
             }
-        } // debug
-          // System.out.println("CurrentANimation:" + currentAnimationName);
+        }
     }
 
     @Override

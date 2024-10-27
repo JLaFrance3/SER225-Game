@@ -8,13 +8,8 @@ import GameObject.SpriteSheet;
 import Level.*;
 import Maps.*;
 import Players.Avatar;
-import Players.Doug;
 import Utils.Direction;
 import Utils.Point;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.EnumMap;
-import java.util.HashMap;
 
 // these are for intro sound 
 import javax.sound.sampled.AudioSystem;
@@ -163,7 +158,17 @@ public class PlayLevelScreen extends Screen {
             player = new Avatar(playerSpriteComponents, map.getPlayerStartPosition().x, map.getPlayerStartPosition().y, playerName, player_isMale, playerClass); 
         }
         else {
-            player = new Doug(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+            SpriteSheet[] dougSheets = new SpriteSheet[] {
+                new SpriteSheet(ImageLoader.load("PlayerSprite/body/male/body_0.png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/head/male/head_0.png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/eyes/eyes_0.png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/shoes/male/shoes_1.png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/pants/male/pants_2.png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/shirt/male/shirt_3.png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/facehair/facehair_2/dark_brown.png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/hair/male/hair_16/dark_brown.png", true), 64, 64),
+            };
+            player = new Avatar(dougSheets, map.getPlayerStartPosition().x, map.getPlayerStartPosition().y, "Doug", true, "Warrior");
         }
         player.setMap(map);
         playLevelScreenState = PlayLevelScreenState.RUNNING;

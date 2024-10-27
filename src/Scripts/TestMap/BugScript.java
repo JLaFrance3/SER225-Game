@@ -40,7 +40,7 @@ public class BugScript extends Script {
 
                 addScriptAction(new TextboxScriptAction() {{
                     addText("yap alert time hehehehehehehehehehehehehehehehe");
-                    addText("I'm going to stroke my shit i got lotion on my shit im over here stroking my shit rn");
+                    addText("yap");
                 }});
             }});
 

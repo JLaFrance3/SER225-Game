@@ -8,7 +8,6 @@ import Level.*;
 import Maps.DungeonMap;
 import Players.Doug;
 import Utils.Direction;
-import Utils.Point;
 
 // This class is for when the RPG game is actually being played
 public class DungeonScreen extends Screen {

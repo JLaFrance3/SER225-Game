@@ -6,7 +6,6 @@ import Level.Map;
 import Level.Trigger;
 import Level.Script;
 import Scripts.LockedDoorScript;
-import Scripts.SimpleTextScript;
 import Scripts.TownMap.*;
 import Tilesets.TownTileset;
 import Utils.Point;

@@ -5,7 +5,6 @@ import Engine.ImageLoader;
 import GameObject.Sprite;
 import Level.Map;
 import Tilesets.FarmlandTileset;
-import Utils.Colors;
 import Utils.Point;
 
 // Represents the map that is used as a background for the main menu and credits menu screen
