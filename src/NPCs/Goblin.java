@@ -6,7 +6,6 @@ import Builders.FrameBuilder;
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
 import GameObject.Frame;
-import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.NPC;
 import Level.Player;
@@ -23,7 +22,9 @@ public class Goblin extends NPC {
     private int attackPower = 30; // moster attack power
 
     public Goblin(int id, Point location) {
-        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("fixedGoblin.png"), 33, 35), "WALK_RIGHT");
+        super(id, location.x, location.y, new SpriteSheet(
+                ImageLoader.load("goblin.png", true),
+                64, 64), "WALK_RIGHT");
         this.health = health;
         this.attackPower = attackPower;
     }
@@ -75,41 +76,74 @@ public class Goblin extends NPC {
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
         return new HashMap<String, Frame[]>() {{
             put("STAND_LEFT", new Frame[] {
-                    new FrameBuilder(spriteSheet.getSprite(0, 0))
-                            .withScale(2)
-                            .withBounds(4, 5, 5, 10)
+                    new FrameBuilder(spriteSheet.getSprite(1, 0, false))
+                            .withBounds(24, 26, 16, 32)
                             .build()
             });
             put("STAND_RIGHT", new Frame[] {
-                   new FrameBuilder(spriteSheet.getSprite(0, 0))
-                           .withScale(2)
-                           .withBounds(4, 5, 5, 10)
-                           .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                           .build()
+                   new FrameBuilder(spriteSheet.getSprite(3, 0, false))
+                            .withBounds(24, 26, 16, 32)
+                            .build()
            });
 
             put("WALK_LEFT", new Frame[] {
-                    new FrameBuilder(spriteSheet.getSprite(10, 1), 14)
-                            .withScale(2)
-                            .withBounds(4, 5, 5, 10)
+                    new FrameBuilder(spriteSheet.getSprite(9, 0, false), 14)
+                            .withBounds(24, 26, 16, 32)
                             .build(),
-                    new FrameBuilder(spriteSheet.getSprite(1, 1), 14)
-                            .withScale(2)
-                            .withBounds(4, 5, 5, 10)
-                            .build()
+                    new FrameBuilder(spriteSheet.getSprite(9, 1, false), 14)
+                            .withBounds(24, 26, 16, 32)
+                            .build(),
+                    new FrameBuilder(spriteSheet.getSprite(9, 2, false), 14)
+                            .withBounds(24, 26, 16, 32)
+                            .build(),
+                    new FrameBuilder(spriteSheet.getSprite(9, 3, false), 14)
+                            .withBounds(24, 26, 16, 32)
+                            .build(),
+                    new FrameBuilder(spriteSheet.getSprite(9, 4, false), 14)
+                            .withBounds(24, 26, 16, 32)
+                            .build(),
+                    new FrameBuilder(spriteSheet.getSprite(9, 5, false), 14)
+                            .withBounds(24, 26, 16, 32)
+                            .build(),
+                    new FrameBuilder(spriteSheet.getSprite(9, 6, false), 14)
+                            .withBounds(24, 26, 16, 32)
+                            .build(),
+                    new FrameBuilder(spriteSheet.getSprite(9, 7, false), 14)
+                            .withBounds(24, 26, 16, 32)
+                            .build(),
+                    new FrameBuilder(spriteSheet.getSprite(9, 8, false), 14)
+                            .withBounds(24, 26, 16, 32)
+                            .build(),
             });
 
             put("WALK_RIGHT", new Frame[] {
-                    new FrameBuilder(spriteSheet.getSprite(1, 0), 14)
-                            .withScale(2)
-                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                            .withBounds(4, 5, 5, 10)
-                            .build(),
-                    new FrameBuilder(spriteSheet.getSprite(1, 1), 14)
-                            .withScale(2)
-                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                            .withBounds(4, 5, 5, 10)
-                            .build()
+                new FrameBuilder(spriteSheet.getSprite(11, 0, false), 14)
+                        .withBounds(24, 26, 16, 32)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(11, 1, false), 14)
+                        .withBounds(24, 26, 16, 32)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(11, 2, false), 14)
+                        .withBounds(24, 26, 16, 32)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(11, 3, false), 14)
+                        .withBounds(24, 26, 16, 32)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(11, 4, false), 14)
+                        .withBounds(24, 26, 16, 32)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(11, 5, false), 14)
+                        .withBounds(24, 26, 16, 32)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(11, 6, false), 14)
+                        .withBounds(24, 26, 16, 32)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(11, 7, false), 14)
+                        .withBounds(24, 26, 16, 32)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(11, 8, false), 14)
+                        .withBounds(24, 26, 16, 32)
+                        .build(),
             });
         }};
     }

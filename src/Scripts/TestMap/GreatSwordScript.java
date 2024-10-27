@@ -1,18 +1,10 @@
 package Scripts.TestMap;
 
 import java.util.ArrayList;
-
-import Builders.FrameBuilder;
-import Builders.MapTileBuilder;
 import Engine.ImageLoader;
 import EnhancedMapTiles.InventoryItem;
-import GameObject.Frame;
 import Level.*;
 import ScriptActions.*;
-
-import Utils.Direction;
-import Utils.Point;
-import Utils.Visibility;
 
 // script for talking to dino npc
 // checkout the documentation website for a detailed guide on how this script works

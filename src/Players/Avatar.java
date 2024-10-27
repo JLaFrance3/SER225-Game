@@ -24,7 +24,8 @@ public class Avatar extends Player {
 
         public Avatar(float x, float y) {
                 super(new SpriteSheet(ImageLoader.load("Doug.png", true), 64, 64), x, y, "STAND_DOWN");
-                walkSpeed = 2.3f;
+                this.walkSpeed = 1.9f;
+                this.runSpeed = 3.3f;
                 this.name = "Doug";
                 this.isMale = true;
                 this.playerClass = "Warrior";
@@ -37,7 +38,8 @@ public class Avatar extends Player {
 
         public Avatar(SpriteSheet[] spriteComponents, float x, float y, String name, boolean isMale, String playerClass) {
                 super(spriteComponents[0], x, y, "STAND_DOWN");
-                walkSpeed = 2.3f;
+                this.walkSpeed = 1.9f;
+                this.runSpeed = 3.3f;
                 this.name = name;
                 this.isMale = isMale;
                 this.playerClass = playerClass;
@@ -120,252 +122,204 @@ public class Avatar extends Player {
                                 });
 
                                 put("WALK_UP", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 0, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 0, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 1, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 1, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 2, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 2, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 3, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 3, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 4, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 4, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 5, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 5, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 6, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 6, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 7, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 7, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 8, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 8, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build()
                                 });
                                 put("WALK_LEFT", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 0, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 0, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 1, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 1, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 2, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 2, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 3, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 3, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 4, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 4, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 5, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 5, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 6, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 6, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 7, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 7, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 8, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 8, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
                                 });
 
                                 put("WALK_DOWN", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 0, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 0, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 1, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 1, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 2, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 2, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 3, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 3, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 4, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 4, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 5, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 5, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 6, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 6, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 7, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 7, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 8, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 8, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build()
                                 });
 
                                 put("WALK_RIGHT", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 0, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 0, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 1, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 1, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 2, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 2, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 3, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 3, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 4, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 4, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 5, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 5, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 6, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 6, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 7, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 7, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 8, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 8, false), 20)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build()
                                 });
 
                                 put("SWORD_UP", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 0, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(12, 0, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 1, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(12, 1, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 2, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(12, 2, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 3, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(12, 3, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 4, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(12, 4, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 5, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(12, 5, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 6, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 7, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 8, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 9, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
+                                                                .build()
 
                                 });
                                 put("SWORD_DOWN", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 0, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(14, 0, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 1, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(14, 1, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 2, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(14, 2, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 3, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(14, 3, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 4, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(14, 4, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 5, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(14, 5, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 6, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 7, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 8, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 9, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
+                                                                .build()
                                 });
                                 put("SWORD_RIGHT", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 0, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(15, 0, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 1, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(15, 1, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 2, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(15, 2, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 3, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(15, 3, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 4, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(15, 4, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 5, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 6, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 7, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 8, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 9, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(15, 5, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build()
                                 });
                                 put("SWORD_LEFT", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 0, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(13, 0, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 1, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(13, 1, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 2, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(13, 2, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 3, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(13, 3, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 4, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(13, 4, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 5, false), 14)
+                                                new FrameBuilder(spriteSheet.getSubImage(13, 5, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 6, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 7, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 8, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 9, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
+                                                                .build()
                                 });
                                 // Bow and Arrow Motion for Doug
                                 put("ARROW_UP", new Frame[] {
@@ -553,10 +507,7 @@ public class Avatar extends Player {
                                                                 .build(),
                                                 new FrameBuilder(spriteSheet.getSubImage(0, 6, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(0, 7, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
+                                                                .build()
                                 });
                                 put("MAGIC_DOWN", new Frame[] {
                                                 new FrameBuilder(spriteSheet.getSubImage(2, 0, false), 14)
@@ -579,10 +530,7 @@ public class Avatar extends Player {
                                                                 .build(),
                                                 new FrameBuilder(spriteSheet.getSubImage(2, 6, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(2, 7, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
+                                                                .build()
                                 });
                                 put("MAGIC_RIGHT", new Frame[] {
                                                 new FrameBuilder(spriteSheet.getSubImage(3, 0, false), 14)
@@ -604,9 +552,6 @@ public class Avatar extends Player {
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
                                                 new FrameBuilder(spriteSheet.getSubImage(3, 6, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(3, 7, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
                                 });
@@ -632,9 +577,6 @@ public class Avatar extends Player {
                                                 new FrameBuilder(spriteSheet.getSubImage(1, 6, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(1, 7, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
                                 });
                                 put("FALL_DOWN", new Frame[] {
                                                 new FrameBuilder(spriteSheet.getSubImage(20, 0, false), 14)
@@ -655,9 +597,123 @@ public class Avatar extends Player {
                                                 new FrameBuilder(spriteSheet.getSubImage(20, 5, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(20, 6, false), 14)
+                                });
+                                put("RUN_UP", new Frame[] {
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 0, false), 1)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 1, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 2, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 3, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 4, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 5, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 6, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 7, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 8, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build()
+                                });
+                                put("RUN_LEFT", new Frame[] {
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 0, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 1, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 2, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 3, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 4, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 5, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 6, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 7, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 8, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                });
+
+                                put("RUN_DOWN", new Frame[] {
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 0, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 1, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 2, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 3, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 4, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 5, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 6, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 7, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 8, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build()
+                                });
+                                put("RUN_RIGHT", new Frame[] {
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 0, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 1, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 2, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 3, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 4, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 5, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 6, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 7, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build(),
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 8, false), 1)
+                                                                .withBounds(17, 14, 30, 48)
+                                                                .build()
                                 });
                         }
                 };
