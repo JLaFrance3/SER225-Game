@@ -7,13 +7,9 @@ import EnhancedMapTiles.KeyItem;
 import EnhancedMapTiles.Spells.Thunder;
 import Level.*;
 import NPCs.Bug;
-import NPCs.Dinosaur;
 import NPCs.Goblin;
 import NPCs.Skeleton;
 import NPCs.TestDummy;
-import NPCs.Walrus;
-import Scripts.LockedDoorScript;
-import Scripts.SimpleTextScript;
 import Scripts.TestMap.*;
 import Tilesets.FarmlandTileset;
 import Utils.Point;
@@ -68,15 +64,6 @@ public class TestMap extends Map {
     public ArrayList<NPC> loadNPCs() {
         //this holds the npc's (?)
         ArrayList<NPC> npcs = new ArrayList<>();
-
-        // Walrus walrus = new Walrus(1, getMapTile(4, 28).getLocation().subtractY(40));//npc constructor appears to set an id (?) then set location
-        // walrus.setInteractScript(new WalrusScript());//used for interaction
-        // npcs.add(walrus);//adds the npc to the array
-
-        // Dinosaur dinosaur = new Dinosaur(2, getMapTile(10, 7).getLocation());
-        // dinosaur.setExistenceFlag("hasTalkedToDinosaur");
-        // dinosaur.setInteractScript(new DinoScript());
-        // npcs.add(dinosaur);
         
         Bug bug = new Bug(3, getMapTile(7, 12).getLocation().subtractX(20));
         bug.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
@@ -125,15 +112,15 @@ public class TestMap extends Map {
         triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "startToDungeon"));
 
         //Locked door triggers
-        Point[] lockDoorTriggers = new Point[] {
-            getPositionByTileIndex(5, 26),
-            getPositionByTileIndex(17, 18),
-            getPositionByTileIndex(13, 5)
-        };
-        Script lockedDoorScript = new LockedDoorScript();
-        triggers.add(new Trigger(lockDoorTriggers[0].x, lockDoorTriggers[0].y + 24, 32, 10, lockedDoorScript,"lockedDoor"));
-        triggers.add(new Trigger(lockDoorTriggers[1].x, lockDoorTriggers[1].y + 24, 32, 10, lockedDoorScript,"lockedDoor"));
-        triggers.add(new Trigger(lockDoorTriggers[2].x, lockDoorTriggers[2].y + 24, 32, 10, lockedDoorScript,"lockedDoor"));
+        // Point[] lockDoorTriggers = new Point[] {
+        //     getPositionByTileIndex(5, 26),
+        //     getPositionByTileIndex(17, 18),
+        //     getPositionByTileIndex(13, 5)
+        // };
+        // Script lockedDoorScript = new LockedDoorScript();
+        // triggers.add(new Trigger(lockDoorTriggers[0].x, lockDoorTriggers[0].y + 24, 32, 10, lockedDoorScript,"lockedDoor"));
+        // triggers.add(new Trigger(lockDoorTriggers[1].x, lockDoorTriggers[1].y + 24, 32, 10, lockedDoorScript,"lockedDoor"));
+        // triggers.add(new Trigger(lockDoorTriggers[2].x, lockDoorTriggers[2].y + 24, 32, 10, lockedDoorScript,"lockedDoor"));
 
         //Sign triggers
         Point walrusHouseSign = getMapTile(7, 26).getLocation();
