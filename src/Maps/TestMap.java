@@ -41,10 +41,10 @@ public class TestMap extends Map {
         Chest chest1 = new Chest(getMapTile(17, 3).getLocation());
         enhancedMapTiles.add(chest1);
 
-        KeyItem key1 = new KeyItem(getMapTile(3, 28).getLocation());
-        key1.setExistenceFlag("hasInteractedKey1");
-        key1.setInteractScript(new Key1Script());
-        enhancedMapTiles.add(key1);
+        KeyItem key2 = new KeyItem(getMapTile(3, 28).getLocation());
+        key2.setExistenceFlag("hasInteractedKey1");
+        key2.setInteractScript(new Key2Script());
+        enhancedMapTiles.add(key2);
 
         Thunder thunderSpell = new Thunder(getMapTile(10,10).getLocation());
         thunderSpell.setExistenceFlag("hasInteractedThunder");
@@ -69,7 +69,7 @@ public class TestMap extends Map {
         bug.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
         npcs.add(bug);
 
-        TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20));
+        TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20)); 
         dummy.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
         npcs.add(dummy);
 

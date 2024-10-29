@@ -31,7 +31,7 @@ public class GreatSwordScript extends Script {
             }});
         }});
 
-        scriptActions.add(new AddInventory(new InventoryItem(ImageLoader.loadSubImage("items.png", 135, 100, 37, 38))));
+        scriptActions.add(new AddInventory(new InventoryItem(ImageLoader.loadSubImage("items.png", 135, 100, 37, 38), "Great-Sword", 10, "A Weapon that deals more damage but it may impede your speed")));
 
         
 

@@ -30,7 +30,7 @@ public class ThunderSpellScript extends Script {
             }});
         }});
 
-        scriptActions.add(new AddInventory(new InventoryItem(ImageLoader.loadSubImage("items.png", 68, 439, 35, 35))));
+        scriptActions.add(new AddInventory(new InventoryItem(ImageLoader.loadSubImage("items.png", 68, 439, 35, 35), "Thunderstrike", 12, "A powerful spell that deals massive lightning damage")));
 
         
 

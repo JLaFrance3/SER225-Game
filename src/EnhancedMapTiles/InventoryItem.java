@@ -20,10 +20,30 @@ import Utils.Point;
 
 public class InventoryItem{
     protected BufferedImage inventoryItem;
+    private String itemName;
+    private float itemDamage;
+    private String itemDescription;
 
-    public InventoryItem(BufferedImage inventoryItem){
+    public InventoryItem(BufferedImage inventoryItem, String itemName, float itemDamage, String itemDescription ){
         this.inventoryItem = inventoryItem;
+        this.itemName = itemName;
+        this.itemDamage = itemDamage;
+        this.itemDescription = itemDescription;
     }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public float getItemDamage() {
+        return itemDamage;
+    }
+
+    public String getItemDescription() {
+        return itemDescription;
+    }
+
+
 
     public void draw(GraphicsHandler graphicsHandlerr, int x, int y){
         graphicsHandlerr.drawImage(inventoryItem, x, y);

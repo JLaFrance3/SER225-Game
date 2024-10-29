@@ -34,7 +34,7 @@ public class Chest2Script extends Script {
                 addScriptAction(new TextboxScriptAction(" ...which I am just gonna assume is a health potion because this is an rpg."));
                 addScriptAction(new TextboxScriptAction("Press 'I' to view inventory."));
                 addScriptAction(new ChangeFlagScriptAction("hasInteractedChest2", true));
-                scriptActions.add(new AddInventory(new InventoryItem(ImageLoader.loadSubImage("items.png", 0, 67, 35, 35))));
+                scriptActions.add(new AddInventory(new InventoryItem(ImageLoader.loadSubImage("items.png", 0, 67, 35, 35), "Health Potion", 0, "A potion that one can use to increase his health")));
             }});
         }});
         
