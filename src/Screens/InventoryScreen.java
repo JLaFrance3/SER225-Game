@@ -83,10 +83,10 @@ public class InventoryScreen extends Screen {
         }
 
         //if mouse is hovering over item/ display some item info
-        // if(MouseInfo.getPointerInfo().getLocation().getX() < 400 && MouseInfo.getPointerInfo().getLocation().getX() > 360 && MouseInfo.getPointerInfo().getLocation().getY() < 105 && MouseInfo.getPointerInfo().getLocation().getY() > 70 ){
-        //    System.out.println("works");
+        if(MouseInfo.getPointerInfo().getLocation().getX() < 400 && MouseInfo.getPointerInfo().getLocation().getX() > 360 && MouseInfo.getPointerInfo().getLocation().getY() < 105 && MouseInfo.getPointerInfo().getLocation().getY() > 70 ){
+           System.out.println("works");
            
-        // }
+        }
        
         playerAp.draw(graphicsHandler);
         playerHealth.draw(graphicsHandler);
