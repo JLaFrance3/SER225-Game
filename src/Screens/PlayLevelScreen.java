@@ -92,6 +92,9 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("readTestQuest", false);
         flagManager.addFlag("readQuestOne", false);
         flagManager.addFlag("readQuestOneChest", false);
+        flagManager.addFlag("talkedToOldMan1", false);
+        flagManager.addFlag("talkedToOldMan2", false);
+        flagManager.addFlag("talkedToOldMan3", false);
 
         // Map change flags
         mapChangeFlags = new String[] {
