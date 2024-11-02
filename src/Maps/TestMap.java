@@ -8,6 +8,7 @@ import EnhancedMapTiles.Spells.Thunder;
 import Level.*;
 import NPCs.Bug;
 import NPCs.Goblin;
+import NPCs.GoldDragon;
 import NPCs.Skeleton;
 import NPCs.TestDummy;
 import Scripts.TestMap.*;
@@ -67,23 +68,26 @@ public class TestMap extends Map {
         
         Bug bug = new Bug(3, getMapTile(7, 12).getLocation().subtractX(20));
         bug.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
-        npcs.add(bug);
+      //  npcs.add(bug);
 
         TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20)); 
         dummy.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
-        npcs.add(dummy);
+       // npcs.add(dummy);
 
         Goblin goblin1 = new Goblin(5, getMapTile(5, 15).getLocation().subtractX(20));
         goblin1.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell"));
-        npcs.add(goblin1);
+        //npcs.add(goblin1);
 
         Goblin goblin2 = new Goblin(5, getMapTile(17, 9).getLocation().subtractX(20));
         goblin2.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell"));
-        npcs.add(goblin2);
+       // npcs.add(goblin2);
+
+        GoldDragon goldDragon1 = new GoldDragon(5, getMapTile(5,14).getLocation().subtractX(20));
+       // npcs.add(goldDragon1);
 
         Skeleton skeleton1 = new Skeleton(6, getMapTile(9, 26).getLocation().subtractX(20));
         skeleton1.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell"));
-        npcs.add(skeleton1);
+      //  npcs.add(skeleton1);
 
         Skeleton skeleton2 = new Skeleton(6, getMapTile(17, 2).getLocation().subtractX(20));
         skeleton1.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell"));
