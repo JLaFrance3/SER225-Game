@@ -2,7 +2,7 @@ package Level;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
+import java.awt.event.KeyEvent;
 
 import Engine.Key;
 import Engine.KeyLocker;
@@ -14,7 +14,6 @@ import GameObject.SpriteSheet;
 import Utils.Direction;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
-
 
 //These are found sounds for Motions 
 import javax.sound.sampled.AudioSystem;
@@ -50,6 +49,7 @@ public abstract class Player extends GameObject {
     private static Key MOVE_RIGHT_KEY = Key.D; // Right Movement for D
     private static Key MOVE_UP_KEY = Key.W; // Up Movement for D
     private static Key MOVE_DOWN_KEY = Key.S; // Down Movement for S
+    private static Key isKeyUp;
     protected Key INTERACT_KEY = Key.SPACE;
 
     // attack mode for Sprite
@@ -73,6 +73,7 @@ public abstract class Player extends GameObject {
     // private boolean isWieldingSword = false;// tracking if weapon is there
     /* private boolean isMovingLeft = false; */
     /* private boolean isMovingRight = false; */
+    boolean[] attackkeysPressed = new boolean[4];
     protected boolean isLocked = false;
     private ArrayList<InventoryItem> inventoryArrayList = new ArrayList<>();
 
@@ -91,9 +92,8 @@ public abstract class Player extends GameObject {
         previousPlayerState = playerState;
         this.affectedByTriggers = true;
     }
-    
 
-    public  ArrayList<InventoryItem> getInventoryArrayList(){
+    public ArrayList<InventoryItem> getInventoryArrayList() {
         return inventoryArrayList;
     }
 
@@ -116,7 +116,7 @@ public abstract class Player extends GameObject {
             if (getBounds().getY1() > 0 && getBounds().getY2() < map.getEndBoundY()) {
                 lastAmountMovedY = super.moveYHandleCollision(moveAmountY);
             } else {
-                if (getBounds().getY2() > map.getEndBoundY()){
+                if (getBounds().getY2() > map.getEndBoundY()) {
                     setLocation(getX1(), map.getEndBoundY() - getHeight());
                 } else {
                     setLocation(getX1(), 0);
@@ -147,7 +147,7 @@ public abstract class Player extends GameObject {
             } else if (Keyboard.isKeyDown(Key.K)) {
                 handleMagicAttack(); // Magic attack
             }
-            // update player's animation
+
             super.update();
         }
     }
@@ -155,11 +155,7 @@ public abstract class Player extends GameObject {
     // based on player's current state, call appropriate player state handling
     // method
     protected void handlePlayerState() {
-        if (Keyboard.isKeyDown(Key.U) || Keyboard.isKeyDown(Key.H) || Keyboard.isKeyDown(Key.J)
-                || Keyboard.isKeyDown(Key.K)) {
-            // If any attack key is pressed, set player to ATTACK state
-            playerState = PlayerState.ATTACK;
-        } else if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY)
+        if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY)
                 || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY) || Keyboard.isKeyDown(Key.UP)
                 || Keyboard.isKeyDown(Key.DOWN) || Keyboard.isKeyDown(Key.LEFT) || Keyboard.isKeyDown(Key.RIGHT)) {
             // If movement keys are pressed, set player to WALKING state
@@ -213,18 +209,7 @@ public abstract class Player extends GameObject {
         } else if (Keyboard.isKeyDown(ATTACK_RIGHT_KEY)) {
             handleMagicAttack();
         } else {
-            if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY)
-                    || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY)
-                    || Keyboard.isKeyDown(Key.UP)
-                    || Keyboard.isKeyDown(Key.DOWN) || Keyboard.isKeyDown(Key.LEFT) || Keyboard.isKeyDown(Key.RIGHT)) {
-                playerState = PlayerState.WALKING; // Move back to WALKING state if movement keys are presse
-            } else {
-                playerState = PlayerState.STANDING;
-                // if no AtTACK KEYS are pressed then revert back to walking
-            }
-            if (swordClip != null) {
-                System.out.println(" SwordClip Stops");
-            }
+            playerState = PlayerState.STANDING;// Returning to standing if no attack keys are pressed
         }
     }
 
@@ -245,6 +230,8 @@ public abstract class Player extends GameObject {
 
     private void handleSwordAttack() {
         System.out.println("Player is in SWORD STATE ");
+        // figure out how sounds can be pressed once to played sound within this if
+        // statement
         if (swordClip == null || !swordClip.isActive()) {
             swordClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Sword.wav");
             isSwordSoundPlayed = false;
@@ -318,7 +305,7 @@ public abstract class Player extends GameObject {
             currentAnimationName = "MAGIC_RIGHT";
         }
         if (playerState != PlayerState.ATTACK) {
-            playerState = PlayerState.ATTACK;
+            playerState = PlayerState.ATTACK;// shouldnt this is walking?
         }
 
     }
