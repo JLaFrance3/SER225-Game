@@ -6,6 +6,7 @@ import Level.FlagManager;
 import Level.Player;
 import SpriteFont.SpriteFont;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 // This class is for the win level screen
@@ -47,6 +48,14 @@ public class InventoryScreen extends Screen {
 
     }
 
+   //@Override
+    // public void mouseMoved(MouseEvent e) {
+    //     int mouseX = e.getX();  // Get the x-coordinate of the mouse
+    //     int mouseY = e.getY();  // Get the y-coordinate of the mouse
+    //     System.out.println("Mouse X: " + mouseX + ", Mouse Y: " + mouseY);
+    // }
+
+
     @Override
     public void update() {
         
@@ -59,7 +68,7 @@ public class InventoryScreen extends Screen {
         playerAp.draw(graphicsHandler);
 
         int startX = 400;
-        int startY = 95;
+        int startY = 95; 
         for(int i = 0; i < player.getInventoryArrayList().size(); i++){
             InventoryItem item1 = player.getInventoryArrayList().get(i);
             if(startX < 720){
@@ -72,6 +81,13 @@ public class InventoryScreen extends Screen {
             }
             
         }
+
+        //if mouse is hovering over item/ display some item info
+        if(MouseInfo.getPointerInfo().getLocation().getX() < 400 && MouseInfo.getPointerInfo().getLocation().getX() > 360 && MouseInfo.getPointerInfo().getLocation().getY() < 105 && MouseInfo.getPointerInfo().getLocation().getY() > 70 ){
+           System.out.println("works");
+           
+        }
+       
         playerAp.draw(graphicsHandler);
         playerHealth.draw(graphicsHandler);
         playerName.draw(graphicsHandler);

@@ -12,8 +12,8 @@ public class StartToDungeonScript extends Script {
         scriptActions.add(new LockPlayerScriptAction());
 
         scriptActions.add(new TextboxScriptAction() {{
-            addText("A large Gate?");
-            addText("Wonder where it leads?");
+            addText("Yo!! Free Corn!? Say Less?");
+           
             
         }});
 

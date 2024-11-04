@@ -41,10 +41,10 @@ public class TestMap extends Map {
         Chest chest1 = new Chest(getMapTile(17, 3).getLocation());
         enhancedMapTiles.add(chest1);
 
-        KeyItem key1 = new KeyItem(getMapTile(3, 28).getLocation());
-        key1.setExistenceFlag("hasInteractedKey1");
-        key1.setInteractScript(new Key1Script());
-        enhancedMapTiles.add(key1);
+        KeyItem key2 = new KeyItem(getMapTile(3, 28).getLocation());
+        key2.setExistenceFlag("hasInteractedKey1");
+        key2.setInteractScript(new Key2Script());
+        enhancedMapTiles.add(key2);
 
         Thunder thunderSpell = new Thunder(getMapTile(10,10).getLocation());
         thunderSpell.setExistenceFlag("hasInteractedThunder");
@@ -69,7 +69,7 @@ public class TestMap extends Map {
         bug.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
         npcs.add(bug);
 
-        TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20));
+        TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20)); 
         dummy.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
         npcs.add(dummy);
 
@@ -107,9 +107,10 @@ public class TestMap extends Map {
       //  triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "startToDungeon"));
        
       //triggers.add(new Trigger(getMapTile(2, 8).getX(),getMapTile(2, 8).getY(), 30, 30, new TestQuestScript(), "readTestQuest"));
-        triggers.add(new Trigger(getMapTile(1, 6).getX(),getMapTile(1, 6).getY(), 30, 10, new QuestOneScript(), "readQuestOne"));
-        triggers.add(new Trigger(getMapTile(17, 4).getX(),getMapTile(17, 4).getY(), 30, 30, new QuestOneChestScript(), "readQuestOneChest"));
+        //triggers.add(new Trigger(getMapTile(1, 6).getX(),getMapTile(1, 6).getY(), 30, 10, new QuestOneScript(), "readQuestOne"));
+        //triggers.add(new Trigger(getMapTile(17, 4).getX(),getMapTile(17, 4).getY(), 30, 10, new QuestOneChestScript(), "readQuestOneChest"));
         triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "startToDungeon"));
+        triggers.add(new Trigger(getMapTile(25,28).getX(),getMapTile(25,28).getY(), width, height, new OldMan1Script(), "talkedToOldMan1"));
 
         //Locked door triggers
         // Point[] lockDoorTriggers = new Point[] {
