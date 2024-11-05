@@ -144,44 +144,73 @@ public class Avatar extends Player {
                                 break;
                         case ARMS:
                                 fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "arms.png", true);
-                                if (fg != null) {
-                                        armor[1] = fg;
-                                }
                                 armor[1] = fg;
                                 break;
                         case LEGS:
                                 fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "legs.png", true);
-                                if (fg != null) {
-                                        armor[2] = fg;
-                                }
+                                armor[2] = fg;
                                 break;
                         case SHOULDER:
                                 fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "shoulder.png", true);
-                                if (fg != null) {
-                                        armor[3] = fg;
-                                }
+                                armor[3] = fg;
                                 break;
                         case HEAD:
                                 fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "head.png", true);
-                                if (fg != null) {
-                                        armor[4] = fg;
-                                }
+                                armor[4] = fg;
                                 break;
                         case FEET:
                                 fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "feet.png", true);
-                                if (fg != null) {
-                                        armor[5] = fg;
-                                }
+                                armor[5] = fg;
                                 break;
                         case HANDS:
                                 fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "hand.png", true);
-                                if (fg != null) {
-                                        armor[6] = fg;
-                                }
+                                armor[6] = fg;
                                 break;
                 }
 
                 updateSprite();
+        }
+
+        public void unequip(InventoryItem.EQUIP_TYPE equipType) {
+                switch (equipType) {
+                        case SWORD, STAFF, DAGGER, BOW:
+                                weapon[0][0] = null;
+                                weapon[0][1] = null;
+                                break;
+                        case SHIELD:
+                                weapon[1][0] = null;
+                                weapon[1][1] = null;
+                                break;
+                        case TORSO:
+                                armor[0] = null;
+                                break;
+                        case ARMS:
+                                armor[1] = null;
+                                break;
+                        case LEGS:
+                                armor[2] = null;
+                                break;
+                        case SHOULDER:
+                                armor[3] = null;
+                                break;
+                        case HEAD:
+                                armor[4] = null;
+                                break;
+                        case FEET:
+                                armor[5] = null;
+                                break;
+                        case HANDS:
+                                armor[6] = null;
+                                break;
+                        default:
+                                //Unequip all
+                                weapon[0][0] = null;
+                                weapon[0][1] = null;
+                                weapon[1][0] = null;
+                                weapon[1][1] = null;
+                                for(BufferedImage armorPiece : armor) {armorPiece = null;}
+                                break;
+                }
         }
 
         public void update() {

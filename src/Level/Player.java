@@ -541,6 +541,7 @@ public abstract class Player extends GameObject {
     }
 
     public abstract void equip(InventoryItem item);
+    public abstract void unequip(InventoryItem.EQUIP_TYPE equipType);
     public abstract void setStrength(int strength);
     public abstract void setDexterity(int dexterity);
     public abstract void setConstitution(int constitution);
