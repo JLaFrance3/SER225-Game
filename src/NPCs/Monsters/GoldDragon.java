@@ -1,4 +1,4 @@
-package NPCs;
+package NPCs.Monsters;
 
 import java.util.HashMap;
 
@@ -50,25 +50,61 @@ public class GoldDragon extends NPC {
 
     @Override
     public void performAction(Player player) {
-        // Move the goblin in the current direction until it reaches the specified distance
+        // Move the GoldDragon in the current direction until it reaches the specified distance
         if (totalAmountMoved < moveDistance) {
-            float amountMoved = moveXHandleCollision(speed * direction.getVelocity());
-            totalAmountMoved += Math.abs(amountMoved);
+            float amountMovedX = 0;
+            float amountMovedY = 0;
+
+            // Handle movement and collisions based on the current direction
+            switch (direction) {
+                case RIGHT:
+                    amountMovedX = moveXHandleCollision(speed);
+                    break;
+                case DOWN:
+                    amountMovedY = moveYHandleCollision(speed);
+                    break;
+                case LEFT:
+                    amountMovedX = moveXHandleCollision(-speed);
+                    break;
+                case UP:
+                    amountMovedY = moveYHandleCollision(-speed);
+                    break;
+            }
+
+            totalAmountMoved += Math.abs(amountMovedX) + Math.abs(amountMovedY);
         } else {
-            // If the goblin has moved 50 pixels, reset the counter and change direction
+            // Reset the counter and change direction in the square pattern
             totalAmountMoved = 0;
-            if (direction == Direction.RIGHT) {
-                direction = Direction.LEFT;
-            } else {
-                direction = Direction.RIGHT;
+            switch (direction) {
+                case RIGHT:
+                    direction = Direction.DOWN;
+                    break;
+                case DOWN:
+                    direction = Direction.LEFT;
+                    break;
+                case LEFT:
+                    direction = Direction.UP;
+                    break;
+                case UP:
+                    direction = Direction.RIGHT;
+                    break;
             }
         }
 
         // Set animation based on the current direction
-        if (direction == Direction.RIGHT) {
-            currentAnimationName = "WALK_RIGHT";
-        } else {
-            currentAnimationName = "WALK_LEFT";
+        switch (direction) {
+            case RIGHT:
+                currentAnimationName = "WALK_RIGHT";
+                break;
+            case DOWN:
+                currentAnimationName = "WALK_DOWN";
+                break;
+            case LEFT:
+                currentAnimationName = "WALK_LEFT";
+                break;
+            case UP:
+                currentAnimationName = "WALK_UP";
+                break;
         }
     }
 
@@ -78,44 +114,44 @@ public class GoldDragon extends NPC {
             put("STAND_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(3, 1, false))
                             .withBounds(24, 26, 16, 32)
-                            .withScale(2)
+                            .withScale(3)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(3, 2, false))
                             .withBounds(24, 26, 16, 32)
-                            .withScale(2)
+                            .withScale(3)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(3, 0, false))
                             .withBounds(24, 26, 16, 32)
-                            .withScale(2)
+                            .withScale(3)
                             .build(),
             });
             put("STAND_RIGHT", new Frame[] {
                    new FrameBuilder(spriteSheet.getSprite(1, 1, false))
                             .withBounds(24, 26, 16, 32)
-                            .withScale(2)
+                            .withScale(3)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 2, false))
                             .withBounds(24, 26, 16, 32)
-                            .withScale(2)
+                            .withScale(3)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 0, false))
                             .withBounds(24, 26, 16, 32)
-                            .withScale(2)
+                            .withScale(3)
                             .build(),
            });
 
             put("WALK_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(3, 2, false), 14)
                             .withBounds(24, 26, 16, 32)
-                            .withScale(2)
+                            .withScale(3)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(3, 1, false), 14)
                             .withBounds(24, 26, 16, 32)
-                            .withScale(2)
+                            .withScale(3)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(3, 0, false), 14)
                             .withBounds(24, 26, 16, 32)
-                            .withScale(2)
+                            .withScale(3)
                             .build(),
                     
             });
@@ -123,15 +159,43 @@ public class GoldDragon extends NPC {
             put("WALK_RIGHT", new Frame[] {
                 new FrameBuilder(spriteSheet.getSprite(1, 0, false), 14)
                         .withBounds(24, 26, 16, 32)
-                        .withScale(2)
+                        .withScale(3)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(1, 1, false), 14)
                         .withBounds(24, 26, 16, 32)
-                        .withScale(2)
+                        .withScale(3)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(1, 2, false), 14)
                         .withBounds(24, 26, 16, 32)
-                        .withScale(2)
+                        .withScale(3)
+                        .build(),
+            });
+            put("WALK_UP", new Frame[] {
+                new FrameBuilder(spriteSheet.getSprite(0, 1, false), 14)
+                        .withBounds(24, 26, 16, 32)
+                        .withScale(3)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(0, 1, false), 14)
+                        .withBounds(24, 26, 16, 32)
+                        .withScale(3)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(0, 2, false), 14)
+                        .withBounds(24, 26, 16, 32)
+                        .withScale(3)
+                        .build(),
+            });
+            put("WALK_DOWN", new Frame[] {
+                new FrameBuilder(spriteSheet.getSprite(2, 0, false), 14)
+                        .withBounds(24, 26, 16, 32)
+                        .withScale(3)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(2, 1, false), 14)
+                        .withBounds(24, 26, 16, 32)
+                        .withScale(3)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(2, 2, false), 14)
+                        .withBounds(24, 26, 16, 32)
+                        .withScale(3)
                         .build(),
             });
         }};

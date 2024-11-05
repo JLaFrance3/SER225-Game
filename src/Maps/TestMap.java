@@ -7,11 +7,17 @@ import EnhancedMapTiles.KeyItem;
 import EnhancedMapTiles.Spells.Thunder;
 import Level.*;
 import NPCs.Bug;
-import NPCs.Goblin;
-import NPCs.GoldDragon;
-import NPCs.Skeleton;
+import NPCs.OldMan1;
+import NPCs.OldMan2;
+import NPCs.OldMan3;
 import NPCs.TestDummy;
+import NPCs.Monsters.BadFlower;
+import NPCs.Monsters.Goblin;
+import NPCs.Monsters.GoldDragon;
+import NPCs.Monsters.Skeleton;
 import Scripts.TestMap.*;
+import Scripts.TownMap.OldMan2Script;
+import Scripts.TownMap.OldMan3Script;
 import Tilesets.FarmlandTileset;
 import Utils.Point;
 import java.util.ArrayList;
@@ -36,11 +42,11 @@ public class TestMap extends Map {
         Chest chest2 = new Chest(getMapTile(12, 24).getLocation());
         chest2.setExistenceFlag("hasInteractedChest2");
         chest2.setInteractScript(new Chest2Script());
-        enhancedMapTiles.add(chest2);
+        //enhancedMapTiles.add(chest2);
         
         
         Chest chest1 = new Chest(getMapTile(17, 3).getLocation());
-        enhancedMapTiles.add(chest1);
+       // enhancedMapTiles.add(chest1);
 
         KeyItem key2 = new KeyItem(getMapTile(3, 28).getLocation());
         key2.setExistenceFlag("hasInteractedKey1");
@@ -55,7 +61,7 @@ public class TestMap extends Map {
         GreatSword greatsword = new GreatSword(getMapTile(11,20).getLocation());
         greatsword.setExistenceFlag("hasInteractedGreatSword");
         greatsword.setInteractScript(new GreatSwordScript());
-        enhancedMapTiles.add(greatsword);
+       // enhancedMapTiles.add(greatsword);
         
         return enhancedMapTiles;
     }
@@ -70,6 +76,8 @@ public class TestMap extends Map {
         bug.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
       //  npcs.add(bug);
 
+
+
         TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20)); 
         dummy.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
        // npcs.add(dummy);
@@ -82,8 +90,8 @@ public class TestMap extends Map {
         goblin2.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell"));
        // npcs.add(goblin2);
 
-        GoldDragon goldDragon1 = new GoldDragon(5, getMapTile(5,14).getLocation().subtractX(20));
-       // npcs.add(goldDragon1);
+        GoldDragon goldDragon1 = new GoldDragon(5, getMapTile(5,12).getLocation().subtractX(20));
+        //npcs.add(goldDragon1);
 
         Skeleton skeleton1 = new Skeleton(6, getMapTile(9, 26).getLocation().subtractX(20));
         skeleton1.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell"));
@@ -93,6 +101,16 @@ public class TestMap extends Map {
         skeleton1.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell"));
        // npcs.add(skeleton2);
 
+
+       BadFlower flower1 = new BadFlower(5, getMapTile(6,13).getLocation().subtractX(20));
+       npcs.add(flower1);
+
+       OldMan1 oldman1 = new OldMan1(5, getMapTile(5,27).getLocation().subtractX(20));
+       oldman1.setInteractScript(new OldMan1Script());
+       npcs.add(oldman1);
+
+
+         
         return npcs;
     }
 

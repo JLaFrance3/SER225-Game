@@ -1,4 +1,4 @@
-package NPCs;
+package NPCs.Monsters;
 
 import java.util.HashMap;
 
@@ -12,50 +12,51 @@ import Level.Player;
 import Utils.Direction;
 import Utils.Point;
 
-public class Skeleton extends NPC {
+public class Goblin extends NPC {
 
     private int totalAmountMoved = 0;
     private Direction direction = Direction.RIGHT;
     private float speed = 1;
-    private int moveDistance = 200;  // Distance to move before turning around
-    private int health = 50; //monster health
-    private int attackPower = 10; // moster attack power
+    private int moveDistance = 150;  // Distance to move before turning around
+    private int health = 40; //monster health
+    private int attackPower = 30; // moster attack power
 
-    public Skeleton(int id, Point location) {
+    public Goblin(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(
-            ImageLoader.load("Skelington.png", true),
-            64, 64), "WALK_RIGHT");        this.health = health;
+                ImageLoader.load("goblin.png", true),
+                64, 64), "WALK_RIGHT");
+        this.health = health;
         this.attackPower = attackPower;
-
     }
 
-    public int getSkeletonHealth() {
+    public int getGoblinHealth(){
         return health;
     }
 
-    public int getSkeletonAttackpower(){
-        return attackPower;
-    }
-
-    public void setSkeletonAttackPower(int attackPower){
-        this.attackPower = attackPower;
-    }
-
-    public void setSkeletonHealth(int health){
+    public void setGoblinHealth(int health){
         this.health = health;
     }
 
+    public int getGoblinAttackPower(){
+        return attackPower;
+    }
+
+    public void setGoblinAttackPower(int attackPower){
+        this.attackPower = attackPower;
+    }
+
+    
+
+
     @Override
     public void performAction(Player player) {
-        // Move the skeleton in the current direction until it reaches the specified distance
+        // Move the goblin in the current direction until it reaches the specified distance
         if (totalAmountMoved < moveDistance) {
             float amountMoved = moveXHandleCollision(speed * direction.getVelocity());
             totalAmountMoved += Math.abs(amountMoved);
         } else {
-            // If the skeleton has moved 50 pixels, reset the counter and change direction
+            // If the goblin has moved 50 pixels, reset the counter and change direction
             totalAmountMoved = 0;
-            
-            // Simplified if-statement to toggle direction
             if (direction == Direction.RIGHT) {
                 direction = Direction.LEFT;
             } else {
