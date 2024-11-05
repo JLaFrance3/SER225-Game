@@ -3,7 +3,6 @@ package Level;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-
 import Engine.Key;
 import Engine.KeyLocker;
 import Engine.Keyboard;
@@ -14,8 +13,6 @@ import GameObject.SpriteSheet;
 import Utils.Direction;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
-
-//These are found sounds for Motions 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.AudioInputStream;
@@ -77,10 +74,6 @@ public abstract class Player extends GameObject {
     protected boolean isLocked = false;
     private ArrayList<InventoryItem> inventoryArrayList = new ArrayList<>();
 
-    // Character customization options
-    private String name;
-    private boolean isMale;
-
     // Player stats
     protected int strength, dexterity, constitution, intelligence;
     public static int health = 5;
@@ -113,24 +106,24 @@ public abstract class Player extends GameObject {
 
             // move player with respect to map collisions based on how much player needs to
             // move this frame
-            if (getBounds().getY1() > 0 && getBounds().getY2() < map.getEndBoundY()) {
-                lastAmountMovedY = super.moveYHandleCollision(moveAmountY);
-            } else {
-                if (getBounds().getY2() > map.getEndBoundY()) {
-                    setLocation(getX1(), map.getEndBoundY() - getHeight());
+            if (getY1() > 0) {
+                if (getY2() < map.getEndBoundY()) {
+                    lastAmountMovedY = super.moveYHandleCollision(moveAmountY);
                 } else {
-                    setLocation(getX1(), 0);
+                    setLocation(getX1(), map.getEndBoundY() - getHeight() - 1);
                 }
+            } else {
+                setLocation(getX1(), 1);
             }
 
-            if (getBounds().getX1() > 0 && getBounds().getX2() < map.getEndBoundX()) {
-                lastAmountMovedX = super.moveXHandleCollision(moveAmountX);
-            } else {
-                if (getBounds().getX2() > map.getEndBoundX()) {
-                    setLocation(map.getEndBoundX() - getWidth(), getY1());
+            if (getBounds().getX1() > 0) {
+                if (getBounds().getX2() < map.getEndBoundX()) {
+                    lastAmountMovedX = super.moveXHandleCollision(moveAmountX);
                 } else {
-                    setLocation(0, getY1());
+                    setLocation(map.getEndBoundX() - getWidth() + 17, getY1());
                 }
+            } else {
+                setLocation(-16, getY1());
             }
 
             handlePlayerAnimation();
@@ -147,7 +140,7 @@ public abstract class Player extends GameObject {
             } else if (Keyboard.isKeyDown(Key.K)) {
                 handleMagicAttack(); // Magic attack
             }
-
+            // update player's animation
             super.update();
         }
     }
@@ -164,8 +157,6 @@ public abstract class Player extends GameObject {
             // If no keys are pressed, set player to STANDING state
             playerState = PlayerState.STANDING;
         }
-        // System.out.println("Transitioned to PlayerState: " + playerState);
-        // After deciding the state, call the appropriate method for the state
 
         switch (playerState) {
             case STANDING:
@@ -178,7 +169,6 @@ public abstract class Player extends GameObject {
                 break;
 
             case ATTACK:
-                // System.out.println("Player is in ATTACK");
                 playerAttack();
                 break;
         }
@@ -233,13 +223,9 @@ public abstract class Player extends GameObject {
     }
 
     private void handleSwordAttack() {
-        System.out.println("Player is in SWORD STATE ");
-        // figure out how sounds can be pressed once to played sound within this if
-        // statement
         if (swordClip == null || !swordClip.isActive()) {
             swordClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Sword.wav");
             isSwordSoundPlayed = false;
-
         }
 
         if (facingDirection == Direction.UP) {
@@ -253,12 +239,10 @@ public abstract class Player extends GameObject {
         }
         if (playerState != PlayerState.ATTACK) {
             playerState = PlayerState.ATTACK;
-
         }
     }
 
     private void handleDeathAttack() {
-        System.out.println("Player is in DEATH State");
         if (DeathClip == null || !DeathClip.isActive()) {
             DeathClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Player Death.wav");
             isDeathSoundPlayed = false;
@@ -272,7 +256,6 @@ public abstract class Player extends GameObject {
     }
 
     private void handleArrowAttack() {
-        System.out.println("Player is in ARROW State");
         if (ArrowClip == null || !ArrowClip.isActive()) {
             ArrowClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Arrow2.wav");
             isArrowSoundPlayed = false;
@@ -294,7 +277,6 @@ public abstract class Player extends GameObject {
     }
 
     private void handleMagicAttack() {
-        System.out.println("Player is in MAGIC State");
         if (MagicClip == null || !MagicClip.isActive()) {
             MagicClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Magic.wav");
             isMagicSoundPlayed = false;
@@ -549,6 +531,19 @@ public abstract class Player extends GameObject {
                 break;
         }
     }
+
+    public abstract void equip(InventoryItem item);
+    public abstract void unequip(InventoryItem.EQUIP_TYPE equipType);
+    public abstract void setStrength(int strength);
+    public abstract void setDexterity(int dexterity);
+    public abstract void setConstitution(int constitution);
+    public abstract void setIntelligence(int intelligence);
+    public abstract int getStrength();
+    public abstract int getDexterity();
+    public abstract int getConstitution();
+    public abstract int getIntelligence();
+    public abstract String getPlayerClass();
+    public abstract String getPlayerName();
 
     // Uncomment this to have game draw player's bounds to make it easier to
     // visualize
