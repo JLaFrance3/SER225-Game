@@ -2,6 +2,7 @@ package Level;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import Engine.Key;
 import Engine.KeyLocker;
 import Engine.Keyboard;
@@ -45,6 +46,7 @@ public abstract class Player extends GameObject {
     private static Key MOVE_RIGHT_KEY = Key.D; // Right Movement for D
     private static Key MOVE_UP_KEY = Key.W; // Up Movement for D
     private static Key MOVE_DOWN_KEY = Key.S; // Down Movement for S
+    private static Key isKeyUp;
     protected Key INTERACT_KEY = Key.SPACE;
 
     // attack mode for Sprite
@@ -68,6 +70,7 @@ public abstract class Player extends GameObject {
     // private boolean isWieldingSword = false;// tracking if weapon is there
     /* private boolean isMovingLeft = false; */
     /* private boolean isMovingRight = false; */
+    boolean[] attackkeysPressed = new boolean[4];
     protected boolean isLocked = false;
     private ArrayList<InventoryItem> inventoryArrayList = new ArrayList<>();
 
@@ -83,7 +86,7 @@ public abstract class Player extends GameObject {
         this.affectedByTriggers = true;
     }
 
-    public  ArrayList<InventoryItem> getInventoryArrayList(){
+    public ArrayList<InventoryItem> getInventoryArrayList() {
         return inventoryArrayList;
     }
 
@@ -145,11 +148,7 @@ public abstract class Player extends GameObject {
     // based on player's current state, call appropriate player state handling
     // method
     protected void handlePlayerState() {
-        if (Keyboard.isKeyDown(Key.U) || Keyboard.isKeyDown(Key.H) || Keyboard.isKeyDown(Key.J)
-                || Keyboard.isKeyDown(Key.K)) {
-            // If any attack key is pressed, set player to ATTACK state
-            playerState = PlayerState.ATTACK;
-        } else if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY)
+        if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY)
                 || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY) || Keyboard.isKeyDown(Key.UP)
                 || Keyboard.isKeyDown(Key.DOWN) || Keyboard.isKeyDown(Key.LEFT) || Keyboard.isKeyDown(Key.RIGHT)) {
             // If movement keys are pressed, set player to WALKING state
@@ -200,18 +199,11 @@ public abstract class Player extends GameObject {
         } else if (Keyboard.isKeyDown(ATTACK_RIGHT_KEY)) {
             handleMagicAttack();
         } else {
-            if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY)
-                    || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY)
-                    || Keyboard.isKeyDown(Key.UP)
-                    || Keyboard.isKeyDown(Key.DOWN) || Keyboard.isKeyDown(Key.LEFT) || Keyboard.isKeyDown(Key.RIGHT)) {
-                playerState = PlayerState.WALKING; // Move back to WALKING state if movement keys are presse
-            } else {
-                playerState = PlayerState.STANDING;
-                // if no AtTACK KEYS are pressed then revert back to walking
-            }
-            if (swordClip != null) {
-                System.out.println(" SwordClip Stops");
-            }
+            playerState = PlayerState.STANDING;// Returning to standing if no attack keys are pressed
+        }
+
+        if (!Keyboard.isKeyDown(ATTACK_UP_KEY)) {
+            swordClip.stop();
         }
     }
 
@@ -299,7 +291,7 @@ public abstract class Player extends GameObject {
             currentAnimationName = "MAGIC_RIGHT";
         }
         if (playerState != PlayerState.ATTACK) {
-            playerState = PlayerState.ATTACK;
+            playerState = PlayerState.ATTACK;// shouldnt this is walking?
         }
 
     }
