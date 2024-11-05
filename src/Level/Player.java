@@ -211,6 +211,10 @@ public abstract class Player extends GameObject {
         } else {
             playerState = PlayerState.STANDING;// Returning to standing if no attack keys are pressed
         }
+
+        if (!Keyboard.isKeyDown(ATTACK_UP_KEY)) {
+            swordClip.stop();
+        }
     }
 
     protected Clip playSoundEffect(String sounndFilePath) {
