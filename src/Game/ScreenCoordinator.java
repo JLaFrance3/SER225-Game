@@ -6,6 +6,8 @@ import Engine.Screen;
 import Screens.CharacterScreen;
 import Screens.CreditsScreen;
 import Screens.DungeonScreen;
+import Screens.LoadingScreen1;
+import Screens.LoadingScreen2;
 import Screens.MenuScreen;
 import Screens.PlayLevelScreen;
 import javax.swing.JPanel;
@@ -23,7 +25,7 @@ public class ScreenCoordinator extends Screen {
 	protected GameState gameState;
 	protected GameState previousGameState;
 
-	//GamePanel used by some screens to access swing components
+	// GamePanel used by some screens to access swing components
 	protected JPanel gamePanel;
 
 	public ScreenCoordinator(JPanel gp) {
@@ -34,7 +36,8 @@ public class ScreenCoordinator extends Screen {
 		return gameState;
 	}
 
-	// Other Screens can set the gameState of this class to force it to change the currentScreen
+	// Other Screens can set the gameState of this class to force it to change the
+	// currentScreen
 	public void setGameState(GameState gameState) {
 		this.gameState = gameState;
 	}
@@ -48,24 +51,33 @@ public class ScreenCoordinator extends Screen {
 	@Override
 	public void update() {
 		do {
-			// if previousGameState does not equal gameState, it means there was a change in gameState
-			// this triggers ScreenCoordinator to bring up a new Screen based on what the gameState is
+			// if previousGameState does not equal gameState, it means there was a change in
+			// gameState
+			// this triggers ScreenCoordinator to bring up a new Screen based on what the
+			// gameState is
 			if (previousGameState != gameState) {
-				switch(gameState) {
+				switch (gameState) {
 					case MENU:
 						currentScreen = new MenuScreen(this);
 						break;
+					case LOADING:
+						currentScreen = new LoadingScreen1(this);
+						break;
 					case LEVEL:
 						if (previousGameState == GameState.CHARACTER) {
-							SpriteSheet[] playerSpriteComponents = ((CharacterScreen)currentScreen).getPlayerSpriteComponents();
-							String playerName = ((CharacterScreen)currentScreen).getPlayerName();
-							boolean player_isMale = ((CharacterScreen)currentScreen).getPlayerGender();
-							String playerClass = ((CharacterScreen)currentScreen).getPlayerClass();
-							currentScreen = new PlayLevelScreen(this, playerSpriteComponents, playerName, player_isMale, playerClass);
-						}
-						else {
+							SpriteSheet[] playerSpriteComponents = ((CharacterScreen) currentScreen)
+									.getPlayerSpriteComponents();
+							String playerName = ((CharacterScreen) currentScreen).getPlayerName();
+							boolean player_isMale = ((CharacterScreen) currentScreen).getPlayerGender();
+							String playerClass = ((CharacterScreen) currentScreen).getPlayerClass();
+							currentScreen = new PlayLevelScreen(this, playerSpriteComponents, playerName, player_isMale,
+									playerClass);
+						} else {
 							currentScreen = new PlayLevelScreen(this);
 						}
+						break;
+					case LOADING2:
+						currentScreen = new LoadingScreen2(this);
 						break;
 					case CHARACTER:
 						currentScreen = new CharacterScreen(this, gamePanel);
@@ -73,8 +85,8 @@ public class ScreenCoordinator extends Screen {
 					case CREDITS:
 						currentScreen = new CreditsScreen(this);
 						break;
-					case DUNGEON: 
-						currentScreen =  new DungeonScreen(this);
+					case DUNGEON:
+						currentScreen = new DungeonScreen(this);
 						break;
 				}
 				currentScreen.initialize();
@@ -87,10 +99,10 @@ public class ScreenCoordinator extends Screen {
 	}
 
 	private void printMemoryUsage() {
-        Runtime runtime = Runtime.getRuntime();
-        long usedMemory = runtime.totalMemory() - runtime.freeMemory();
-        System.out.println("Used memory: " + usedMemory / 1024 / 1024 + " MB");
-    }
+		Runtime runtime = Runtime.getRuntime();
+		long usedMemory = runtime.totalMemory() - runtime.freeMemory();
+		System.out.println("Used memory: " + usedMemory / 1024 / 1024 + " MB");
+	}
 
 	@Override
 	public void draw(GraphicsHandler graphicsHandler) {
