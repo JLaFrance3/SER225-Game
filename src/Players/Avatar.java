@@ -11,8 +11,11 @@ import Level.Player;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+
+import javax.imageio.ImageIO;
 
 // This is the class for the player avatar
 public class Avatar extends Player {
@@ -20,8 +23,11 @@ public class Avatar extends Player {
         private boolean isMale;
         private String playerClass;
         private SpriteSheet[] spriteComponents; //Holds character customization options
-        private BufferedImage[][] weapon;         //Holds both weapon primary and shield
-        private BufferedImage[] armor;            //torso, arms, legs, shoulder, head, feet, hands
+        private BufferedImage[][] weapon;       //Holds both weapon primary and shield
+        private BufferedImage[] armor;          //torso, arms, legs, shoulder, head, feet, hands
+        private boolean longWeapon;             //Long weapons need a larger sprite image
+        private String longWeaponFilePath;      //Larger sprite image loaded separately
+        private SpriteSheet slashAnimations;    //Slash animation spritesheet to account for longweapons
 
         // Player stats
         private int strength, dexterity, constitution, intelligence;
@@ -40,6 +46,10 @@ public class Avatar extends Player {
                 this.intelligence = 0;
                 this.weapon = new BufferedImage[2][2];
                 this.armor = new BufferedImage[7];
+                this.longWeapon = false;
+                this.longWeaponFilePath = null;
+                this.slashAnimations = new SpriteSheet(ImageLoader.load("Doug.png", true)
+                        .getSubimage(0, 768, 384, 256), 64, 64);
         }
 
         public Avatar(SpriteSheet[] spriteComponents, float x, float y, String name, boolean isMale, String playerClass) {
@@ -56,6 +66,10 @@ public class Avatar extends Player {
                 this.intelligence = 0;
                 this.weapon = new BufferedImage[2][2];
                 this.armor = new BufferedImage[7];
+                this.longWeapon = false;
+                this.longWeaponFilePath = null;
+                this.slashAnimations = new SpriteSheet(spriteComponents[0].getImage()
+                        .getSubimage(0, 768, 384, 256), 64, 64);
 
                 updateSprite();
         }
@@ -93,8 +107,9 @@ public class Avatar extends Player {
                 if (weapon[1] != null) {g.drawImage(weapon[0][0], 0, 0, null);}
                 
                 g.dispose();
-                
+
                 setSpriteSheet(new SpriteSheet(customSprite, 64, 64));
+                updateSlashAnimation(customSprite);
         }
 
         //Adds equipment to character, the bg parameter is optional
@@ -110,6 +125,11 @@ public class Avatar extends Player {
                                 bg = ImageLoader.load(filePath + "bg.png", true);
                                 weapon[0][0] = fg;
                                 weapon[0][1] = bg;
+                                if (equipType == InventoryItem.EQUIP_TYPE.SWORD) {
+                                        longWeapon = true;
+                                        longWeaponFilePath = filePath + "slash/";
+                                }
+                                else longWeapon = false;
                                 break;
                         case BOW:
                                 fg = ImageLoader.load(filePath + "fg.png", true);
@@ -129,6 +149,7 @@ public class Avatar extends Player {
 
                                 weapon[0][0] = fg;
                                 weapon[0][1] = bg;
+                                longWeapon = false;
                                 break;
                         case SHIELD: 
                                 if (equipType != InventoryItem.EQUIP_TYPE.STAFF || equipType != InventoryItem.EQUIP_TYPE.BOW) {
@@ -176,6 +197,7 @@ public class Avatar extends Player {
                         case SWORD, STAFF, DAGGER, BOW:
                                 weapon[0][0] = null;
                                 weapon[0][1] = null;
+                                longWeapon = false;
                                 break;
                         case SHIELD:
                                 weapon[1][0] = null;
@@ -236,7 +258,137 @@ public class Avatar extends Player {
         public String getPlayerName() {return name;}
 
         public void draw(GraphicsHandler graphicsHandler) {
-                super.draw(graphicsHandler);
+                if (currentFrame.getWidth() < 192) {
+                        super.draw(graphicsHandler);  
+                } else {
+                        graphicsHandler.drawImage(
+				currentFrame.getImage(),				
+				Math.round(getCalibratedXLocation()) - 64,
+				Math.round(getCalibratedYLocation()) - 64,
+				currentFrame.getWidth(),
+				currentFrame.getHeight(),
+				currentFrame.getImageEffect()
+			);
+                }
+        }
+
+        //Builds a new slashAnimation SpriteSheet for regular or long weapons
+        private void updateSlashAnimation(BufferedImage customSprite) {
+                if (!longWeapon) {
+                        //When not a longweapon, just re-use normal slash animations
+                        slashAnimations = new SpriteSheet(customSprite.getSubimage(0, 768, 384, 256), 64, 64);
+                } else {
+                        //Otherwise, create large sprite animations to fit the sword swings
+                        BufferedImage largeSpriteSheet = ImageLoader.load(longWeaponFilePath + "bg.png", true);
+                        Graphics largeSpriteGraphics = largeSpriteSheet.getGraphics();
+
+                        //Add player sprite components on top of slash animation background
+                        for (int i = 0; i < spriteComponents.length; i++) {
+                                if (i == 5 && armor[0] != null) {}
+                                else if (i == 6 && spriteComponents[6] == null) {}
+                                else if (i == 7 && armor[4] != null) {}
+                                else {
+                                        for(int j = 0; j < 4; j++) {
+                                                for(int k = 0; k < 6; k++) {
+                                                        largeSpriteGraphics.drawImage(spriteComponents[i]
+                                                                .getSubImage(j+12, k, false), 64+192*k, 64+192*j, null);
+                                                }
+                                        }
+                                }
+                        }
+
+                        //Add slash animation foreground over image
+                        largeSpriteGraphics.drawImage(ImageLoader.load(longWeaponFilePath + "fg.png", true), 
+                                0, 0, null);
+                        largeSpriteGraphics.dispose();
+                        slashAnimations = new SpriteSheet(largeSpriteSheet, 192, 192);
+                }
+
+                int animationX, animationY;
+                animationX = (slashAnimations.getSpriteWidth() > 64) ? 81 : 17;
+                animationY = (slashAnimations.getSpriteWidth() > 64) ? 78 : 14;
+
+                //Add animations
+                animations.put("SWORD_UP", new Frame[] {
+                        new FrameBuilder(slashAnimations.getSubImage(0, 0, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(0, 1, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(0, 2, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(0, 3, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(0, 4, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(0, 5, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build()
+                });
+                animations.put("SWORD_LEFT", new Frame[] {
+                        new FrameBuilder(slashAnimations.getSubImage(1, 0, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(1, 1, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(1, 2, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(1, 3, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(1, 4, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(1, 5, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build()
+                });
+                animations.put("SWORD_DOWN", new Frame[] {
+                        new FrameBuilder(slashAnimations.getSubImage(2, 0, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(2, 1, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(2, 2, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(2, 3, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(2, 4, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(2, 5, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build()
+                });
+                animations.put("SWORD_RIGHT", new Frame[] {
+                        new FrameBuilder(slashAnimations.getSubImage(3, 0, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(3, 1, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(3, 2, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(3, 3, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(3, 4, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build(),
+                        new FrameBuilder(slashAnimations.getSubImage(3, 5, false), 14)
+                                        .withBounds(animationX, animationY, 30, 48)
+                                        .build()
+                });
         }
 
         @Override
@@ -382,88 +534,6 @@ public class Avatar extends Player {
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
                                                 new FrameBuilder(spriteSheet.getSubImage(11, 8, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build()
-                                });
-
-                                put("SWORD_UP", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(12, 0, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(12, 1, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(12, 2, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(12, 3, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(12, 4, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(12, 5, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build()
-
-                                });
-                                put("SWORD_DOWN", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(14, 0, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(14, 1, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(14, 2, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(14, 3, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(14, 4, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(14, 5, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build()
-                                });
-                                put("SWORD_RIGHT", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(15, 0, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(15, 1, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(15, 2, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(15, 3, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(15, 4, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(15, 5, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build()
-                                });
-                                put("SWORD_LEFT", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(13, 0, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(13, 1, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(13, 2, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(13, 3, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(13, 4, false), 14)
-                                                                .withBounds(17, 14, 30, 48)
-                                                                .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(13, 5, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build()
                                 });

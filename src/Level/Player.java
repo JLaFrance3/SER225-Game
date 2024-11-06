@@ -12,12 +12,10 @@ import GameObject.Rectangle;
 import GameObject.SpriteSheet;
 import Utils.Direction;
 import java.util.ArrayList;
-import java.awt.image.BufferedImage;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.AudioInputStream;
 import java.io.File;
-import java.io.IOException;
 
 public abstract class Player extends GameObject {
     // values that affect player movement
