@@ -499,7 +499,7 @@ public class PlayLevelScreen extends Screen {
         }
         if(invToggle){
             inventoryScreen.draw(graphicsHandler);
-        }   
+        }  
         if(questToggle){
             questLogScreen.draw(graphicsHandler);
         }
