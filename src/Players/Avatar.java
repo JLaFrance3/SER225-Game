@@ -3,11 +3,13 @@ package Players;
 import Builders.FrameBuilder;
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
+import EnhancedMapTiles.InventoryItem;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
 import Level.Player;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import java.util.HashMap;
@@ -17,7 +19,9 @@ public class Avatar extends Player {
         private String name;
         private boolean isMale;
         private String playerClass;
-        private SpriteSheet[] spriteComponents;
+        private SpriteSheet[] spriteComponents; //Holds character customization options
+        private BufferedImage[][] weapon;         //Holds both weapon primary and shield
+        private BufferedImage[] armor;            //torso, arms, legs, shoulder, head, feet, hands
 
         // Player stats
         private int strength, dexterity, constitution, intelligence;
@@ -34,6 +38,8 @@ public class Avatar extends Player {
                 this.dexterity = 0;
                 this.constitution = 0;
                 this.intelligence = 0;
+                this.weapon = new BufferedImage[2][2];
+                this.armor = new BufferedImage[7];
         }
 
         public Avatar(SpriteSheet[] spriteComponents, float x, float y, String name, boolean isMale, String playerClass) {
@@ -43,29 +49,168 @@ public class Avatar extends Player {
                 this.name = name;
                 this.isMale = isMale;
                 this.playerClass = playerClass;
-                this.spriteComponents = new SpriteSheet[7];
+                this.spriteComponents = spriteComponents;
                 this.strength = 0;
                 this.dexterity = 0;
                 this.constitution = 0;
                 this.intelligence = 0;
+                this.weapon = new BufferedImage[2][2];
+                this.armor = new BufferedImage[7];
 
-                // Create new spritesheet by combing component layers onto one buffered image
+                updateSprite();
+        }
+
+        // Create new spritesheet by combing component layers onto one buffered image
+        public void updateSprite() {
                 BufferedImage customSprite = new BufferedImage(832, 1344, BufferedImage.TYPE_INT_ARGB);
                 Graphics g = customSprite.getGraphics();
+
+                //Add weapon background
+                if (weapon[0] != null) {g.drawImage(weapon[0][1], 0, 0, null);}
+                if (weapon[1] != null) {g.drawImage(weapon[1][1], 0, 0, null);}
+
+                //Add character customization sprite selections
                 g.drawImage(spriteComponents[0].getImage(), 0, 0, null);
                 g.drawImage(spriteComponents[1].getImage(), 0, 0, null);
                 g.drawImage(spriteComponents[2].getImage(), 0, 0, null);
                 g.drawImage(spriteComponents[3].getImage(), 0, 0, null);
                 g.drawImage(spriteComponents[4].getImage(), 0, 0, null);
-                g.drawImage(spriteComponents[5].getImage(), 0, 0, null);
+                if (armor[0] == null) {
+                        g.drawImage(spriteComponents[5].getImage(), 0, 0, null);
+                }
                 if (isMale && spriteComponents[6] != null) {
                         g.drawImage(spriteComponents[6].getImage(), 0, 0, null);
                 }
-                g.drawImage(spriteComponents[7].getImage(), 0, 0, null);
+                if (armor[4] == null) {
+                        g.drawImage(spriteComponents[7].getImage(), 0, 0, null);
+                }
+
+                //Add any weapons/armor
+                for(BufferedImage armorPiece : armor) {
+                        if (armorPiece != null) {g.drawImage(armorPiece, 0, 0, null);}
+                }
+                if (weapon[0] != null) {g.drawImage(weapon[1][0], 0, 0, null);}
+                if (weapon[1] != null) {g.drawImage(weapon[0][0], 0, 0, null);}
                 
                 g.dispose();
                 
                 setSpriteSheet(new SpriteSheet(customSprite, 64, 64));
+        }
+
+        //Adds equipment to character, the bg parameter is optional
+        public void equip(InventoryItem item) {
+                String filePath = item.getFilePath();
+                InventoryItem.EQUIP_TYPE equipType = item.getType();
+                BufferedImage fg;
+                BufferedImage bg;
+
+                switch (equipType) {
+                        case SWORD, STAFF, DAGGER:
+                                fg = ImageLoader.load(filePath + "fg.png", true);
+                                bg = ImageLoader.load(filePath + "bg.png", true);
+                                weapon[0][0] = fg;
+                                weapon[0][1] = bg;
+                                break;
+                        case BOW:
+                                fg = ImageLoader.load(filePath + "fg.png", true);
+                                bg = ImageLoader.load(filePath + "bg.png", true);
+
+                                //Add arrow sprites and bow to fg
+                                Graphics fgGraphics = fg.getGraphics();
+                                String arrowPath = "Equipment/weapon/bow/accessory/arrow.png";
+                                fgGraphics.drawImage(ImageLoader.load(arrowPath, true), 0, 0, null);
+                                fgGraphics.dispose();
+
+                                //Add quiver to bg
+                                Graphics bgGraphics = bg.getGraphics();
+                                String quiverPath = "Equipment/weapon/bow/accessory/quiver.png";
+                                bgGraphics.drawImage(ImageLoader.load(quiverPath, true), 0, 0, null);
+                                bgGraphics.dispose();
+
+                                weapon[0][0] = fg;
+                                weapon[0][1] = bg;
+                                break;
+                        case SHIELD: 
+                                if (equipType != InventoryItem.EQUIP_TYPE.STAFF || equipType != InventoryItem.EQUIP_TYPE.BOW) {
+                                        fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "fg.png", true);
+                                        weapon[1][0] = fg;
+                                }
+                                break;
+                        case TORSO:
+                                fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "torso.png", true);
+                                if (fg != null) {
+                                        armor[0] = fg;
+                                }
+                                break;
+                        case ARMS:
+                                fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "arms.png", true);
+                                armor[1] = fg;
+                                break;
+                        case LEGS:
+                                fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "legs.png", true);
+                                armor[2] = fg;
+                                break;
+                        case SHOULDER:
+                                fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "shoulder.png", true);
+                                armor[3] = fg;
+                                break;
+                        case HEAD:
+                                fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "head.png", true);
+                                armor[4] = fg;
+                                break;
+                        case FEET:
+                                fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "feet.png", true);
+                                armor[5] = fg;
+                                break;
+                        case HANDS:
+                                fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "hand.png", true);
+                                armor[6] = fg;
+                                break;
+                }
+
+                updateSprite();
+        }
+
+        public void unequip(InventoryItem.EQUIP_TYPE equipType) {
+                switch (equipType) {
+                        case SWORD, STAFF, DAGGER, BOW:
+                                weapon[0][0] = null;
+                                weapon[0][1] = null;
+                                break;
+                        case SHIELD:
+                                weapon[1][0] = null;
+                                weapon[1][1] = null;
+                                break;
+                        case TORSO:
+                                armor[0] = null;
+                                break;
+                        case ARMS:
+                                armor[1] = null;
+                                break;
+                        case LEGS:
+                                armor[2] = null;
+                                break;
+                        case SHOULDER:
+                                armor[3] = null;
+                                break;
+                        case HEAD:
+                                armor[4] = null;
+                                break;
+                        case FEET:
+                                armor[5] = null;
+                                break;
+                        case HANDS:
+                                armor[6] = null;
+                                break;
+                        default:
+                                //Unequip all
+                                weapon[0][0] = null;
+                                weapon[0][1] = null;
+                                weapon[1][0] = null;
+                                weapon[1][1] = null;
+                                for(BufferedImage armorPiece : armor) {armorPiece = null;}
+                                break;
+                }
         }
 
         public void update() {
@@ -79,15 +224,16 @@ public class Avatar extends Player {
             setConstitution(constitution);
             setIntelligence(intelligence);
         }
-        protected void setStrength(int strength) {this.strength = strength;}
-        protected void setDexterity(int dexterity) {this.dexterity = dexterity;}
-        protected void setConstitution(int constitution) {this.constitution = constitution;}
-        protected void setIntelligence(int intelligence) {this.intelligence = intelligence;}
-        protected int getStrength() {return strength;}
-        protected int getDexterity() {return dexterity;}
-        protected int getConstitution() {return constitution;}
-        protected int getIntelligence() {return intelligence;}
-
+        public void setStrength(int strength) {this.strength = strength;}
+        public void setDexterity(int dexterity) {this.dexterity = dexterity;}
+        public void setConstitution(int constitution) {this.constitution = constitution;}
+        public void setIntelligence(int intelligence) {this.intelligence = intelligence;}
+        public int getStrength() {return strength;}
+        public int getDexterity() {return dexterity;}
+        public int getConstitution() {return constitution;}
+        public int getIntelligence() {return intelligence;}
+        public String getPlayerClass() {return playerClass;}
+        public String getPlayerName() {return name;}
 
         public void draw(GraphicsHandler graphicsHandler) {
                 super.draw(graphicsHandler);
@@ -122,120 +268,120 @@ public class Avatar extends Player {
                                 });
 
                                 put("WALK_UP", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 0, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 0, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 1, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 1, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 2, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 2, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 3, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 3, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 4, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 4, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 5, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 5, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 6, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 6, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 7, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 7, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(8, 8, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(8, 8, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build()
                                 });
                                 put("WALK_LEFT", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 0, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 0, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 1, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 1, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 2, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 2, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 3, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 3, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 4, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 4, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 5, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 5, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 6, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 6, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 7, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 7, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(9, 8, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(9, 8, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
                                 });
 
                                 put("WALK_DOWN", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 0, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 0, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 1, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 1, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 2, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 2, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 3, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 3, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 4, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 4, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 5, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 5, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 6, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 6, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 7, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 7, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(10, 8, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(10, 8, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build()
                                 });
 
                                 put("WALK_RIGHT", new Frame[] {
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 0, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 0, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 1, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 1, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 2, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 2, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 3, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 3, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 4, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 4, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 5, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 5, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 6, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 6, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 7, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 7, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build(),
-                                                new FrameBuilder(spriteSheet.getSubImage(11, 8, false), 20)
+                                                new FrameBuilder(spriteSheet.getSubImage(11, 8, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
                                                                 .build()
                                 });

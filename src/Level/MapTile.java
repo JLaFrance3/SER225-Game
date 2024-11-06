@@ -27,6 +27,7 @@ public class MapTile extends MapEntity {
 
     // Collision bounds allowing for small collision size inside MapTile
     private Rectangle collisionBounds;
+    
 
     public MapTile(float x, float y, GameObject bottomLayer, GameObject topLayer, GameObject midLayer, TileType tileType, int[] tileIndices) {
         super(x, y);

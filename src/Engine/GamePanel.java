@@ -6,6 +6,7 @@ import Utils.Colors;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseListener;
 
 /*
  * This is where the game loop process and render back buffer is setup
@@ -37,6 +38,11 @@ public class GamePanel extends JPanel {
 
 		// attaches Keyboard class's keyListener to this JPanel
 		this.addKeyListener(Keyboard.getKeyListener());
+
+		//add mouse Listner
+		this.addMouseListener(null);
+
+	
 
 		graphicsHandler = new GraphicsHandler();
 
