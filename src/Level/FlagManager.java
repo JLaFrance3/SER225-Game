@@ -38,4 +38,8 @@ public class FlagManager {
         }
         return false;
     }
+
+    public boolean getFlagState(String flagName){
+        return flags.get(flagName);
+    }
 }
