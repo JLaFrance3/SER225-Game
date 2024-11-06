@@ -23,6 +23,8 @@ public class PlayLevelScreen extends Screen {
     protected ScreenCoordinator screenCoordinator;
     protected Map map;
     protected BufferedImage inventory;
+    // i added here
+    protected BufferedImage questLog;
     protected Map startMap, townMap, generalStoreMap, H1Map, H2Map, H3Map, H3_1Map, dungeonMap;
     protected Map innMap, manorMap, smithMap, townHallMap;
     protected String[] mapChangeFlags;
@@ -31,10 +33,14 @@ public class PlayLevelScreen extends Screen {
     protected PlayLevelScreenState playLevelScreenState;
     protected WinScreen winScreen;
     protected InventoryScreen inventoryScreen;
+    // i added here
+    protected QuestLogScreen questLogScreen;
     protected FlagManager flagManager;
     protected Point lockDoorInteractPoint;
     protected KeyLocker keyLocker = new KeyLocker();
     protected boolean invToggle = false;
+    // i added here
+    protected boolean questToggle = false;
     protected int keyPressTimer = 0;
     protected Point chestInteractPoint;
     protected SpriteSheet[] playerSpriteComponents;
@@ -46,6 +52,8 @@ public class PlayLevelScreen extends Screen {
         this.screenCoordinator = screenCoordinator;
         lockDoorInteractPoint = null;
         inventory = ImageLoader.load("inventory.png");
+        // i added here
+        questLog = ImageLoader.load("QuestLog.png");
         keyPressTimer = 0;
 
         chestInteractPoint = null;
@@ -188,6 +196,8 @@ public class PlayLevelScreen extends Screen {
 
         winScreen = new WinScreen(this);
         inventoryScreen = new InventoryScreen(this, player);
+        // i added here
+        questLogScreen = new QuestLogScreen(this, flagManager);
 
         
 
@@ -219,6 +229,9 @@ public class PlayLevelScreen extends Screen {
                 break;
         }
 
+        // i added here
+        questLogScreen.update();
+
         if (Keyboard.isKeyDown(Key.I) && keyPressTimer == 0) {
             keyPressTimer = 14;
             invToggle = ! invToggle;
@@ -228,6 +241,15 @@ public class PlayLevelScreen extends Screen {
             }
         }
 
+        // i added here
+        if (Keyboard.isKeyDown(Key.Q) && keyPressTimer == 0) {
+            keyPressTimer = 14;
+            questToggle = ! questToggle;
+        } else {
+            if (keyPressTimer > 0) {
+                keyPressTimer--;
+            }
+        }
         
         
 
@@ -485,6 +507,10 @@ public class PlayLevelScreen extends Screen {
         if(invToggle){
             inventoryScreen.draw(graphicsHandler);
         }   
+        // i added here
+        if(questToggle){
+            questLogScreen.draw(graphicsHandler);
+        }
     }
 
     
