@@ -2,6 +2,15 @@ package Maps;
 
 import java.util.ArrayList;
 
+import EnhancedMapTiles.Chest;
+import EnhancedMapTiles.Gate;
+import EnhancedMapTiles.KeyItem;
+import EnhancedMapTiles.Armor.DemoLeatherarmour;
+import EnhancedMapTiles.Armor.DemoMagicarmour;
+import EnhancedMapTiles.Armor.DemoPlatearmor;
+import EnhancedMapTiles.Spells.Thunder;
+import EnhancedMapTiles.Swords.GreatSword;
+import Level.EnhancedMapTile;
 import Level.Map;
 import Level.NPC;
 import Level.Trigger;
@@ -17,7 +26,11 @@ import NPCs.Monsters.Skeleton;
 import Level.Script;
 import Scripts.LockedDoorScript;
 import Scripts.TestMap.CombatScript;
+import Scripts.TestMap.Chest2Script;
+import Scripts.TestMap.GreatSwordScript;
+import Scripts.TestMap.Key2Script;
 import Scripts.TestMap.OldMan1Script;
+import Scripts.TestMap.ThunderSpellScript;
 import Scripts.TownMap.*;
 import Tilesets.TownTileset;
 import Utils.Point;
@@ -61,21 +74,30 @@ public class TownMap extends Map {
         skeleton1.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell"));
         npcs.add(skeleton1);
 
-        Skeleton skeleton2 = new Skeleton(6, getMapTile(17, 2).getLocation().subtractX(20));
+        Skeleton skeleton2 = new Skeleton(6, getMapTile(11, 115).getLocation().subtractX(20));
         skeleton1.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell"));
-       // npcs.add(skeleton2);
+        npcs.add(skeleton2);
 
 
        BadFlower flower1 = new BadFlower(5, getMapTile(6,13).getLocation().subtractX(20));
       // flower1.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell"));
       // npcs.add(flower1);
 
-      Bat bat1 = new Bat(5, getMapTile(6,13).getLocation().subtractX(20));
-    //   npcs.add(bat1);
+       Bat bat1 = new Bat(5, getMapTile(17,96).getLocation().subtractX(20));
+       bat1.setInteractScript(new CombatScript("Uh oh, this bat is evil as hell"));
+       npcs.add(bat1);
 
-        Pumpkin pumpkin1 = new Pumpkin(5, getMapTile(8,101).getLocation().subtractX(20));
+       Bat bat2 = new Bat(5, getMapTile(15,117).getLocation().subtractX(20));
+       bat2.setInteractScript(new CombatScript("Uh oh, this bat is evil as hell"));
+       npcs.add(bat2);
+
+        Pumpkin pumpkin1 = new Pumpkin(5, getMapTile(14,97).getLocation().subtractX(20));
         pumpkin1.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell"));
         npcs.add(pumpkin1);
+
+        Pumpkin pumpkin2 = new Pumpkin(5, getMapTile(2,117).getLocation().subtractX(20));
+        pumpkin2.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell"));
+        npcs.add(pumpkin2);
 
 
          
@@ -83,6 +105,26 @@ public class TownMap extends Map {
     }
 
     
+    public ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
+        ArrayList<EnhancedMapTile> enhancedMapTiles = new ArrayList<>();
+
+        DemoPlatearmor demoPlate = new DemoPlatearmor(getMapTile(11, 101).getLocation());
+        demoPlate.setExistenceFlag("hasInteractedDemoPlatearmor");
+        demoPlate.setInteractScript(new DemoPlateScript());
+        enhancedMapTiles.add(demoPlate);
+
+        DemoLeatherarmour demoLeather = new DemoLeatherarmour(getMapTile(12,98).getLocation());
+        demoLeather.setExistenceFlag("hasInteractedDemoLeatherarmor");
+        demoLeather.setInteractScript(new DemoLeatherScript());
+        enhancedMapTiles.add(demoLeather);
+
+        DemoMagicarmour demoMagic = new DemoMagicarmour(getMapTile(10,99).getLocation());
+        demoMagic.setExistenceFlag("hasInteractedDemoMagicarmor");
+        demoMagic.setInteractScript(new DemoMagicScript());
+        enhancedMapTiles.add(demoMagic);
+        
+        return enhancedMapTiles;
+    }
 
     @Override
     public ArrayList<Trigger> loadTriggers() {
