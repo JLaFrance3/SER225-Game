@@ -2,11 +2,24 @@ package Maps;
 
 import java.util.ArrayList;
 
+import EnhancedMapTiles.Chest;
+import EnhancedMapTiles.Gate;
+import EnhancedMapTiles.KeyItem;
+import EnhancedMapTiles.Armor.DemoLeatherarmour;
+import EnhancedMapTiles.Armor.DemoMagicarmour;
+import EnhancedMapTiles.Armor.DemoPlatearmor;
+import EnhancedMapTiles.Spells.Thunder;
+import EnhancedMapTiles.Swords.GreatSword;
+import Level.EnhancedMapTile;
 import Level.Map;
 import Level.Trigger;
 import Level.Script;
 import Scripts.LockedDoorScript;
+import Scripts.TestMap.Chest2Script;
+import Scripts.TestMap.GreatSwordScript;
+import Scripts.TestMap.Key2Script;
 import Scripts.TestMap.OldMan1Script;
+import Scripts.TestMap.ThunderSpellScript;
 import Scripts.TownMap.*;
 import Tilesets.TownTileset;
 import Utils.Point;
@@ -20,7 +33,27 @@ public class TownMap extends Map {
         this.playerStartPosition = new Point(500, 3000);
     }
 
-    
+    @Override
+    public ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
+        ArrayList<EnhancedMapTile> enhancedMapTiles = new ArrayList<>();
+
+        DemoPlatearmor demoPlate = new DemoPlatearmor(getMapTile(11, 101).getLocation());
+        demoPlate.setExistenceFlag("hasInteractedDemoPlatearmor");
+        demoPlate.setInteractScript(new DemoPlateScript());
+        enhancedMapTiles.add(demoPlate);
+
+        DemoLeatherarmour demoLeather = new DemoLeatherarmour(getMapTile(12,98).getLocation());
+        demoLeather.setExistenceFlag("hasInteractedDemoLeatherarmor");
+        demoLeather.setInteractScript(new DemoLeatherScript());
+        enhancedMapTiles.add(demoLeather);
+
+        DemoMagicarmour demoMagic = new DemoMagicarmour(getMapTile(10,99).getLocation());
+        demoMagic.setExistenceFlag("hasInteractedDemoMagicarmor");
+        demoMagic.setInteractScript(new DemoMagicScript());
+        enhancedMapTiles.add(demoMagic);
+        
+        return enhancedMapTiles;
+    }
 
     @Override
     public ArrayList<Trigger> loadTriggers() {
