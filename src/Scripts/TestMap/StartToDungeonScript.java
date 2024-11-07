@@ -9,22 +9,45 @@ public class StartToDungeonScript extends Script {
     public ArrayList<ScriptAction> loadScriptActions() {
         ArrayList<ScriptAction> scriptActions = new ArrayList<>();
 
-        scriptActions.add(new LockPlayerScriptAction());
+        
 
+        // Present the "Steal Corn?" choice
         scriptActions.add(new TextboxScriptAction() {{
-            addText("Yo!! Free Corn!? Say Less?");
-           
-            
+            addText("Steal Corn?", new String[] { "Yes", "No" });
         }});
 
-        scriptActions.add(new UnlockPlayerScriptAction());
+        // Check the player's response
+        scriptActions.add(new ConditionalScriptAction() {{
+            addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{
+                addRequirement(new CustomRequirement() {
+                    @Override
+                    public boolean isRequirementMet() {
+                        int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
+                        return answer == 0; // Yes
+                    }
+                });
+                
+                // Set startToDungeon flag to true if the player chooses to steal corn
+                addScriptAction(new TextboxScriptAction("You chose to steal the corn!"));
+                addScriptAction(new ChangeFlagScriptAction("startToDungeon", true));
+            }});
 
-        scriptActions.add(new ChangeFlagScriptAction("startToDungeon", true));
+            addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{
+                addRequirement(new CustomRequirement() {
+                    @Override
+                    public boolean isRequirementMet() {
+                        int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
+                        return answer == 1; // No
+                    }
+                });
+
+                addScriptAction(new TextboxScriptAction("You chose not to steal the corn."));
+                addScriptAction(new ChangeFlagScriptAction("notStealCorn", true));
+            }});
+        }});
 
         
 
         return scriptActions;
-    }   
+    }
 }
-
-  

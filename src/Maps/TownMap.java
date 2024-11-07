@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import EnhancedMapTiles.Chest;
 import EnhancedMapTiles.Gate;
+import EnhancedMapTiles.Gold;
 import EnhancedMapTiles.KeyItem;
 import EnhancedMapTiles.Armor.DemoLeatherarmour;
 import EnhancedMapTiles.Armor.DemoMagicarmour;
 import EnhancedMapTiles.Armor.DemoPlatearmor;
+import EnhancedMapTiles.Spells.Fire;
 import EnhancedMapTiles.Spells.Thunder;
 import EnhancedMapTiles.Swords.GreatSword;
 import Level.EnhancedMapTile;
@@ -26,6 +28,8 @@ import NPCs.Monsters.Skeleton;
 import Level.Script;
 import Scripts.LockedDoorScript;
 import Scripts.TestMap.CombatScript;
+import Scripts.TestMap.FireSpellScript;
+import Scripts.TestMap.GoldScript;
 import Scripts.TestMap.Chest2Script;
 import Scripts.TestMap.GreatSwordScript;
 import Scripts.TestMap.Key2Script;
@@ -53,19 +57,27 @@ public class TownMap extends Map {
         bug.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
       //  npcs.add(bug);
 
-
+//32,107), 25, 114), 36,114), 27, 118)
 
         TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20)); 
         dummy.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
        // npcs.add(dummy);
 
-        Goblin goblin1 = new Goblin(5, getMapTile(5, 15).getLocation().subtractX(20));
+        Goblin goblin1 = new Goblin(5, getMapTile(90, 106).getLocation().subtractX(20));
         goblin1.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell"));
-        //npcs.add(goblin1);
+        npcs.add(goblin1);
 
-        Goblin goblin2 = new Goblin(5, getMapTile(17, 9).getLocation().subtractX(20));
+        Goblin goblin2 = new Goblin(5, getMapTile(86, 109).getLocation().subtractX(20));
         goblin2.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell"));
-       // npcs.add(goblin2);
+        npcs.add(goblin2);
+
+        Goblin goblin3 = new Goblin(5, getMapTile(71, 102).getLocation().subtractX(20));
+        goblin3.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell"));
+        npcs.add(goblin3);
+
+        Goblin goblin4 = new Goblin(5, getMapTile(66, 112).getLocation().subtractX(20));
+        goblin4.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell"));
+        npcs.add(goblin4);
 
         //GoldDragon goldDragon1 = new GoldDragon(5, getMapTile(5,12).getLocation().subtractX(20));
         //npcs.add(goldDragon1);
@@ -78,12 +90,28 @@ public class TownMap extends Map {
         skeleton1.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell"));
         npcs.add(skeleton2);
 
+        Skeleton skeleton3 = new Skeleton(6, getMapTile(32, 107).getLocation().subtractX(20));
+        skeleton3.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell"));
+        npcs.add(skeleton3);
 
-       BadFlower flower1 = new BadFlower(5, getMapTile(6,13).getLocation().subtractX(20));
-      // flower1.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell"));
-      // npcs.add(flower1);
+        Skeleton skeleton4 = new Skeleton(6, getMapTile(30, 111).getLocation().subtractX(20));
+        skeleton4.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell"));
+        npcs.add(skeleton4);
 
-       Bat bat1 = new Bat(5, getMapTile(17,96).getLocation().subtractX(20));
+
+       BadFlower flower1 = new BadFlower(5, getMapTile(78,116).getLocation().subtractX(20));
+       flower1.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell"));
+       npcs.add(flower1);
+
+       BadFlower flower2 = new BadFlower(5, getMapTile(74,106).getLocation().subtractX(20));
+       flower2.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell"));
+       npcs.add(flower2);
+
+       BadFlower flower3 = new BadFlower(5, getMapTile(76,109).getLocation().subtractX(20));
+       flower3.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell"));
+       npcs.add(flower3);
+
+       Bat bat1 = new Bat(5, getMapTile(17,94).getLocation().subtractX(20));
        bat1.setInteractScript(new CombatScript("Uh oh, this bat is evil as hell"));
        npcs.add(bat1);
 
@@ -91,13 +119,21 @@ public class TownMap extends Map {
        bat2.setInteractScript(new CombatScript("Uh oh, this bat is evil as hell"));
        npcs.add(bat2);
 
-        Pumpkin pumpkin1 = new Pumpkin(5, getMapTile(14,97).getLocation().subtractX(20));
+       Bat bat3 = new Bat(5, getMapTile(25,114).getLocation().subtractX(20));
+       bat3.setInteractScript(new CombatScript("Uh oh, this bat is evil as hell"));
+       npcs.add(bat3);
+
+        Pumpkin pumpkin1 = new Pumpkin(5, getMapTile(21,108).getLocation().subtractX(20));
         pumpkin1.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell"));
         npcs.add(pumpkin1);
 
         Pumpkin pumpkin2 = new Pumpkin(5, getMapTile(2,117).getLocation().subtractX(20));
         pumpkin2.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell"));
         npcs.add(pumpkin2);
+
+        Pumpkin pumpkin3 = new Pumpkin(5, getMapTile(36,114).getLocation().subtractX(20));
+        pumpkin3.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell"));
+        npcs.add(pumpkin3);
 
 
          
@@ -122,6 +158,16 @@ public class TownMap extends Map {
         demoMagic.setExistenceFlag("hasInteractedDemoMagicarmor");
         demoMagic.setInteractScript(new DemoMagicScript());
         enhancedMapTiles.add(demoMagic);
+
+        Gold gold1 = new Gold(getMapTile(33,59).getLocation());
+        gold1.setExistenceFlag("gotGold1");
+        gold1.setInteractScript(new GoldScript());
+       enhancedMapTiles.add(gold1);
+
+       Fire fireSpell1 = new Fire(getMapTile(64,61).getLocation());
+        fireSpell1.setExistenceFlag("gotFire");
+        fireSpell1.setInteractScript(new FireSpellScript());
+        enhancedMapTiles.add(fireSpell1);
         
         return enhancedMapTiles;
     }
