@@ -2,6 +2,8 @@ package Scripts.TestMap;
 
 import java.util.ArrayList;
 import Level.Script;
+import Players.Avatar;
+import Players.PlayerAction;
 import ScriptActions.*;
 
 // script for talking to bug npc
@@ -44,6 +46,7 @@ public class CombatScript extends Script {
                 }});
 
                 addScriptAction(new ConditionalScriptAction() {{
+                    //attack
                     addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{    
                         addRequirement(new CustomRequirement() {
                             @Override
@@ -54,30 +57,27 @@ public class CombatScript extends Script {
                         });
 
                         addScriptAction(new TextboxScriptAction() {{
-                            addText("you slash your opponent dealing " + (int)(Math.random()*6) + " damage");
+                            addText("How will you strike? ", Avatar.meleeAction.getActions());
                         }});
 
-                        switch ((int)(Math.random()*6)%3) {
-                            case 0:
-                                addScriptAction(new TextboxScriptAction() {{
-                                    addText("it appears bloodied");
-                                }});
-                                break;
-                            case 1:
-                                addScriptAction(new TextboxScriptAction() {{
-                                    addText("it appears healthy");
-                                }});
-                                break;
-                            case 2:
-                                addScriptAction(new TextboxScriptAction() {{
-                                    addText("it is near death");
-                                }});
-                                break;
-                            default:
-                                break;
-                        }
+                        addScriptAction(new TextboxScriptAction() {{
+                            int omInt = 0;
+                            try {
+                                omInt = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
+                            } catch (Exception e) {
+                                // TODO: handle exception
+                            }
+                            PlayerAction temp = Avatar.meleeAction.getAction(omInt);
+                            System.out.println(temp.attack());
+                            if (temp.getValue() >= 0)
+                                addText("you deal " + temp.attack() + "Damage");
+                            else {
+                                addText("you heal " + temp.attack() + "health");
+                            }
+                        }});
+                        
                         addScriptAction(new AttackScriptAction(){{
-                            updateDamage();
+                            updateDamage((int)(Math.random() * 4));
                             applyDamage();
                             addText("you get bit for " + getDamage() + " damage");
                         }});
@@ -100,10 +100,30 @@ public class CombatScript extends Script {
                         });
 
                         addScriptAction(new TextboxScriptAction() {{
-                            addText("you heal for " + (int)(Math.random()*6) + " HP");
+                            addText("How will you strike? ", Avatar.spellAction.getActions());
                         }});
+
+                        addScriptAction(new TextboxScriptAction() {{
+                            int omInt = 0;
+                            try {
+                                omInt = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
+                            } catch (Exception e) {
+                                // TODO: handle exception
+                            }
+                            PlayerAction temp = Avatar.meleeAction.getAction(omInt);
+                            System.out.println(temp.attack());
+                            if (temp.getValue() >= 0)
+                                addText("you deal " + temp.attack() + "Damage");
+                            else {
+                                addText("you heal " + temp.attack() + "health");
+                            }
+                        }});
+
+
                         addScriptAction(new AttackScriptAction(){{
-                            updateDamage();
+                            updateDamage((int)(Math.random() * 4));
+                            Avatar.health -= 2;
+                            System.out.println("health= " + Avatar.health);
                             applyDamage();
                             addText("you get bit for " + getDamage() + " damage");
                         }});
@@ -113,7 +133,7 @@ public class CombatScript extends Script {
                         }});
 
                         addScriptAction(new TextboxScriptAction() {{
-                            addText(player.health + " HP left");
+                            addText(Avatar.health + " HP left");
                         }});
                     }});
 
@@ -127,8 +147,11 @@ public class CombatScript extends Script {
                         });
         
                         addScriptAction(new TextboxScriptAction() {{
-                            addText("inventoru",new String[] { "item", "itemer"});
+                            addText("inventory",new String[] { "bug repelent"});
+                            
                         }});
+
+                        addScriptAction(new ChangeFlagScriptAction("dummyAlive", true));
 ;
                     }});
                 }});

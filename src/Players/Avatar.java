@@ -16,8 +16,11 @@ import java.util.HashMap;
 public class Avatar extends Player {
         private String name;
         private boolean isMale;
-        private String playerClass;
+        public static String playerClass;
         private SpriteSheet[] spriteComponents;
+        public static PlayerActionCollection meleeAction = new PlayerActionCollection();
+        public static PlayerActionCollection spellAction = new PlayerActionCollection();
+        public static int health = 10;
 
         // Player stats
         private int strength, dexterity, constitution, intelligence;
@@ -66,6 +69,7 @@ public class Avatar extends Player {
                 g.dispose();
                 
                 setSpriteSheet(new SpriteSheet(customSprite, 64, 64));
+
         }
 
         public void update() {
@@ -719,4 +723,13 @@ public class Avatar extends Player {
                 };
 
         }
+
+        public void addMeleeAction(PlayerAction pa){
+                meleeAction.addAction(pa);
+        }
+
+        public void addSpellAction(PlayerAction pa){
+                spellAction.addAction(pa);
+        }
+        
 }
