@@ -2,11 +2,14 @@ package Maps;
 
 import EnhancedMapTiles.Chest;
 import EnhancedMapTiles.Gate;
+import EnhancedMapTiles.Gold;
 import EnhancedMapTiles.Swords.GreatSword;
 import EnhancedMapTiles.KeyItem;
+import EnhancedMapTiles.Spells.Fire;
 import EnhancedMapTiles.Spells.Thunder;
 import Level.*;
 import NPCs.Bug;
+import NPCs.FarmerGirl;
 import NPCs.OldMan1;
 import NPCs.OldMan2;
 import NPCs.OldMan3;
@@ -60,11 +63,14 @@ public class TestMap extends Map {
         thunderSpell.setInteractScript(new ThunderSpellScript());
         enhancedMapTiles.add(thunderSpell);
 
+
         GreatSword greatsword = new GreatSword(getMapTile(11,20).getLocation());
         greatsword.setExistenceFlag("hasInteractedGreatSword");
         greatsword.setInteractScript(new GreatSwordScript());
         enhancedMapTiles.add(greatsword);
-        
+
+
+
         return enhancedMapTiles;
     }
 
@@ -117,8 +123,9 @@ public class TestMap extends Map {
        oldman1.setInteractScript(new OldMan1Script());
        npcs.add(oldman1);
 
-
-         
+      FarmerGirl farmerGirl1 = new FarmerGirl(5,getMapTile(7,8).getLocation().subtractX(20));
+      farmerGirl1.setInteractScript(new FarmerGirlScript());
+      npcs.add(farmerGirl1);  
         return npcs;
     }
 
@@ -132,15 +139,17 @@ public class TestMap extends Map {
         triggers.add(new Trigger(600, 580, 10, 80, new backgroundScript(), "readBackground"));
         // triggers.add(new Trigger(getMapTile(5, 17).getX(),getMapTile(5, 17).getY(),100,10,new CombatScript("Uh oh! This bug is evil as hell?"),"hasfought"));
        // triggers.add(new Trigger(tileLocation1.x, tileLocation1.y, width, height, new GateScript(), "gateInteract")); //putting the gate script in associated location
-        triggers.add(new Trigger(820, 1200, 150, 10, new TestScript(), "flowerBed"));
+        //triggers.add(new Trigger(820, 1200, 150, 10, new TestScript(), "flowerBed"));
         triggers.add(new Trigger(townMapTrigger.x + 20, townMapTrigger.y,10, 128, new StartToTownPathScript(), "startToTownMapPath"));
       //  triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "startToDungeon"));
        
       //triggers.add(new Trigger(getMapTile(2, 8).getX(),getMapTile(2, 8).getY(), 30, 30, new TestQuestScript(), "readTestQuest"));
         //triggers.add(new Trigger(getMapTile(1, 6).getX(),getMapTile(1, 6).getY(), 30, 10, new QuestOneScript(), "readQuestOne"));
         //triggers.add(new Trigger(getMapTile(17, 4).getX(),getMapTile(17, 4).getY(), 30, 10, new QuestOneChestScript(), "readQuestOneChest"));
-        triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "startToDungeon"));
+        triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "notStealCorn"));
         triggers.add(new Trigger(getMapTile(25,28).getX(),getMapTile(25,28).getY(), width, height, new OldMan1Script(), "talkedToOldMan1"));
+        triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "startToDungeon"));
+        //triggers.add(new Trigger(getMapTile(25,28).getX(),getMapTile(25,28).getY(), width, height, new OldMan1Script(), "talkedToOldMan1"));
 
         //Locked door triggers
         // Point[] lockDoorTriggers = new Point[] {

@@ -97,6 +97,12 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("hasInteractedDemoPlatearmor", false);
         flagManager.addFlag("hasInteractedDemoLeatherarmor", false);
         flagManager.addFlag("hasInteractedDemoMagicarmor", false);
+        flagManager.addFlag("talkedToFarmerGirl", false);
+        flagManager.addFlag("notStealCorn", false);
+        flagManager.addFlag("gotGold1", false);
+        flagManager.addFlag("gotFire", false);
+
+
 
         //Quest flags
         flagManager.addFlag("readTestQuest", false);

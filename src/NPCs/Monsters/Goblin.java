@@ -89,60 +89,78 @@ public class Goblin extends NPC {
             put("WALK_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(9, 0, false), 14)
                             .withBounds(24, 26, 16, 32)
+                            .withScale(2)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(9, 1, false), 14)
                             .withBounds(24, 26, 16, 32)
+                            .withScale(2)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(9, 2, false), 14)
                             .withBounds(24, 26, 16, 32)
+                            .withScale(2)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(9, 3, false), 14)
                             .withBounds(24, 26, 16, 32)
+                            .withScale(2)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(9, 4, false), 14)
                             .withBounds(24, 26, 16, 32)
+                            .withScale(2)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(9, 5, false), 14)
                             .withBounds(24, 26, 16, 32)
+                            .withScale(2)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(9, 6, false), 14)
                             .withBounds(24, 26, 16, 32)
+                            .withScale(2)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(9, 7, false), 14)
                             .withBounds(24, 26, 16, 32)
+                            .withScale(2)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(9, 8, false), 14)
                             .withBounds(24, 26, 16, 32)
+                            .withScale(2)
                             .build(),
             });
 
             put("WALK_RIGHT", new Frame[] {
                 new FrameBuilder(spriteSheet.getSprite(11, 0, false), 14)
                         .withBounds(24, 26, 16, 32)
+                        .withScale(2)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(11, 1, false), 14)
                         .withBounds(24, 26, 16, 32)
+                        .withScale(2)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(11, 2, false), 14)
                         .withBounds(24, 26, 16, 32)
+                        .withScale(2)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(11, 3, false), 14)
                         .withBounds(24, 26, 16, 32)
+                        .withScale(2)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(11, 4, false), 14)
                         .withBounds(24, 26, 16, 32)
+                        .withScale(2)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(11, 5, false), 14)
                         .withBounds(24, 26, 16, 32)
+                        .withScale(2)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(11, 6, false), 14)
                         .withBounds(24, 26, 16, 32)
+                        .withScale(2)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(11, 7, false), 14)
                         .withBounds(24, 26, 16, 32)
+                        .withScale(2)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(11, 8, false), 14)
                         .withBounds(24, 26, 16, 32)
+                        .withScale(2)
                         .build(),
             });
         }};
