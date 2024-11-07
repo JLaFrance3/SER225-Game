@@ -3,6 +3,8 @@ package Players;
 import Builders.FrameBuilder;
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
+import EnhancedMapTiles.InventoryItem;
+import EnhancedMapTiles.InventoryItem.EQUIP_TYPE;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
 import Level.Player;
@@ -594,5 +596,77 @@ public class Doug extends Player {
                         }
                 };
 
+        }
+
+        @Override
+        public void equip(InventoryItem item) {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'equip'");
+        }
+
+        @Override
+        public void unequip(EQUIP_TYPE equipType) {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'unequip'");
+        }
+
+        @Override
+        public void setStrength(int strength) {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'setStrength'");
+        }
+
+        @Override
+        public void setDexterity(int dexterity) {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'setDexterity'");
+        }
+
+        @Override
+        public void setConstitution(int constitution) {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'setConstitution'");
+        }
+
+        @Override
+        public void setIntelligence(int intelligence) {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'setIntelligence'");
+        }
+
+        @Override
+        public int getStrength() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'getStrength'");
+        }
+
+        @Override
+        public int getDexterity() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'getDexterity'");
+        }
+
+        @Override
+        public int getConstitution() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'getConstitution'");
+        }
+
+        @Override
+        public int getIntelligence() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'getIntelligence'");
+        }
+
+        @Override
+        public String getPlayerClass() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'getPlayerClass'");
+        }
+
+        @Override
+        public String getPlayerName() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'getPlayerName'");
         }
 }
