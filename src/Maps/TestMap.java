@@ -12,8 +12,10 @@ import NPCs.OldMan2;
 import NPCs.OldMan3;
 import NPCs.TestDummy;
 import NPCs.Monsters.BadFlower;
+import NPCs.Monsters.Bat;
 import NPCs.Monsters.Goblin;
 import NPCs.Monsters.GoldDragon;
+import NPCs.Monsters.Pumpkin;
 import NPCs.Monsters.Skeleton;
 import Scripts.TestMap.*;
 import Scripts.TownMap.OldMan2Script;
@@ -103,7 +105,13 @@ public class TestMap extends Map {
 
 
        BadFlower flower1 = new BadFlower(5, getMapTile(6,13).getLocation().subtractX(20));
-       npcs.add(flower1);
+      // npcs.add(flower1);
+
+      Bat bat1 = new Bat(5, getMapTile(6,13).getLocation().subtractX(20));
+    //   npcs.add(bat1);
+
+        Pumpkin pumpkin1 = new Pumpkin(5, getMapTile(6,13).getLocation().subtractX(20));
+       // npcs.add(pumpkin1);
 
        OldMan1 oldman1 = new OldMan1(5, getMapTile(5,27).getLocation().subtractX(20));
        oldman1.setInteractScript(new OldMan1Script());

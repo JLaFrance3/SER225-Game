@@ -23,6 +23,7 @@ public class PlayLevelScreen extends Screen {
     protected ScreenCoordinator screenCoordinator;
     protected Map map;
     protected BufferedImage inventory;
+    protected BufferedImage itemDescript;
     protected Map startMap, townMap, generalStoreMap, H1Map, H2Map, H3Map, H3_1Map, dungeonMap;
     protected Map innMap, manorMap, smithMap, townHallMap;
     protected String[] mapChangeFlags;
@@ -46,6 +47,7 @@ public class PlayLevelScreen extends Screen {
         this.screenCoordinator = screenCoordinator;
         lockDoorInteractPoint = null;
         inventory = ImageLoader.load("inventory.png");
+        itemDescript = ImageLoader.load("itemDescribe.png");
         keyPressTimer = 0;
 
         chestInteractPoint = null;
@@ -226,6 +228,8 @@ public class PlayLevelScreen extends Screen {
             if (keyPressTimer > 0) {
                 keyPressTimer--;
             }
+        }if(invToggle == true){
+            inventoryScreen.update();
         }
 
         

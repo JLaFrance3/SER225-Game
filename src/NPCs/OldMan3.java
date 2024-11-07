@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class OldMan3 extends NPC {
 
     public OldMan3(int id, Point location) {
-        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("OldMan3.png"), 64, 64), "STAND_UP");
+        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("OldMan3.png", true), 64, 64), "STAND_UP");
     }
 
     @Override

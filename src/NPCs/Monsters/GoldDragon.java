@@ -29,21 +29,7 @@ public class GoldDragon extends NPC {
         this.attackPower = attackPower;
     }
 
-    public int getGoblinHealth(){
-        return health;
-    }
-
-    public void setGoblinHealth(int health){
-        this.health = health;
-    }
-
-    public int getGoblinAttackPower(){
-        return attackPower;
-    }
-
-    public void setGoblinAttackPower(int attackPower){
-        this.attackPower = attackPower;
-    }
+    
 
     
 

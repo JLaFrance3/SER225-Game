@@ -22,12 +22,17 @@ public class InventoryScreen extends Screen {
     protected BufferedImage playerImage;
     protected Player player; 
     protected FlagManager flagManager;
-
+    protected int keyPressTimer;
+    protected boolean itemDescriptToggle = false;
+    protected BufferedImage itemDescript;
+    protected SpriteFont itemDescription;
+    protected int counter = 0;
 
     public InventoryScreen(PlayLevelScreen playLevelScreen, Player player) {
         this.playLevelScreen = playLevelScreen;
         this.player = player;
         inventory = ImageLoader.load("inventory.png");
+        itemDescript = ImageLoader.load("itemDescribe.png");
 
         //Get player image from player sprite animation
         BufferedImage playerSprite = player.getAnimations().get("STAND_DOWN")[0].getImage();
@@ -45,20 +50,35 @@ public class InventoryScreen extends Screen {
         playerAp = new SpriteFont("Attack Power", 50, 435, "Arial",20, Color.black);
         playerHealth = new SpriteFont("Health", 50, 409, "Arial",20, Color.black);
         playerName = new SpriteFont("Doug", 175, 90, "Arial",20, Color.black);
-
     }
-
-   //@Override
-    // public void mouseMoved(MouseEvent e) {
-    //     int mouseX = e.getX();  // Get the x-coordinate of the mouse
-    //     int mouseY = e.getY();  // Get the y-coordinate of the mouse
-    //     System.out.println("Mouse X: " + mouseX + ", Mouse Y: " + mouseY);
-    // }
 
 
     @Override
     public void update() {
-        
+        System.out.println("reached"); //make it so that if d is pressed, counter is incremented
+       // if(if array is not empty)
+
+        if (Keyboard.isKeyDown(Key.O) && keyPressTimer == 0) {
+            itemDescription = new SpriteFont(player.getInventoryArrayList().get(counter).getItemDescription(), 370, 400,"Arial", 20, Color.black);
+            keyPressTimer = 14;
+            itemDescriptToggle = ! itemDescriptToggle;
+        } else {
+            if (keyPressTimer > 0) {
+                keyPressTimer--;
+            }
+        }
+        if (Keyboard.isKeyDown(Key.D) && keyPressTimer == 0){
+            keyPressTimer = 14;
+            counter++;
+            itemDescription = new SpriteFont(player.getInventoryArrayList().get(counter).getItemDescription(), 370, 400,"Arial", 20, Color.black);
+            
+        }
+        if (Keyboard.isKeyDown(Key.A) && keyPressTimer == 0){
+            keyPressTimer = 14;
+            counter--;
+            itemDescription = new SpriteFont(player.getInventoryArrayList().get(counter).getItemDescription(), 370, 400,"Arial", 20, Color.black);
+            
+        }
     }
 
     public void draw(GraphicsHandler graphicsHandler) {
@@ -82,11 +102,11 @@ public class InventoryScreen extends Screen {
             
         }
 
-        //if mouse is hovering over item/ display some item info
-        // if(MouseInfo.getPointerInfo().getLocation().getX() < 400 && MouseInfo.getPointerInfo().getLocation().getX() > 360 && MouseInfo.getPointerInfo().getLocation().getY() < 105 && MouseInfo.getPointerInfo().getLocation().getY() > 70 ){
-        //    System.out.println("works");
-           
-        // }
+        if(itemDescriptToggle){
+            graphicsHandler.drawImage(itemDescript, 370, 395, 390, 140);
+            itemDescription.draw(graphicsHandler);
+            //based on value of conuter change color
+        }
        
         playerAp.draw(graphicsHandler);
         playerHealth.draw(graphicsHandler);
@@ -95,7 +115,7 @@ public class InventoryScreen extends Screen {
 
 
        
-        
+        // System.out.println(player.getInventoryArrayList().get(0).getItemDescription())
         // winMessage.draw(graphicsHandler);
         // instructions.draw(graphicsHandler);
     }
