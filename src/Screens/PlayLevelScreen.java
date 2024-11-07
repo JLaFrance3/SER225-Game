@@ -534,13 +534,16 @@ public class PlayLevelScreen extends Screen {
             questLogScreen.draw(graphicsHandler);
         }
     }
-
-    
             
-
     public PlayLevelScreenState getPlayLevelScreenState() {
         return playLevelScreenState;
     }
+
+    private void printMemoryUsage() {
+		Runtime runtime = Runtime.getRuntime();
+		long usedMemory = runtime.totalMemory() - runtime.freeMemory();
+		System.out.println("Used memory: " + usedMemory / 1024 / 1024 + " MB");
+	}
 
     public void resetLevel() {
         initialize();
