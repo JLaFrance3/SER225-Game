@@ -12,17 +12,17 @@ import Utils.Point;
 import java.util.HashMap;
 
 // This class is for the walrus NPC
-public class OldMan2 extends NPC {
+public class FarmerGirl extends NPC {
 
-    public OldMan2(int id, Point location) {
-        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Oldman2.png", true), 64, 64), "STAND_UP");
+    public FarmerGirl(int id, Point location) {
+        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("FarmerGirl.png"), 64, 64), "STAND_UP");
     }
 
     @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
         return new HashMap<String, Frame[]>() {{
             put("STAND_UP", new Frame[] {
-                    new FrameBuilder(spriteSheet.getSprite(2, 0))
+                    new FrameBuilder(spriteSheet.getSprite(10, 0))
                             .withScale(1)
                             .withBounds(17, 14, 30, 48)
                             .build()
