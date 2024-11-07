@@ -103,8 +103,8 @@ public class Avatar extends Player {
                 for(BufferedImage armorPiece : armor) {
                         if (armorPiece != null) {g.drawImage(armorPiece, 0, 0, null);}
                 }
-                if (weapon[0] != null) {g.drawImage(weapon[1][0], 0, 0, null);}
-                if (weapon[1] != null) {g.drawImage(weapon[0][0], 0, 0, null);}
+                if (weapon[1] != null) {g.drawImage(weapon[1][0], 0, 0, null);}
+                if (weapon[0] != null) {g.drawImage(weapon[0][0], 0, 0, null);}
                 
                 g.dispose();
 
@@ -230,7 +230,7 @@ public class Avatar extends Player {
                                 weapon[0][1] = null;
                                 weapon[1][0] = null;
                                 weapon[1][1] = null;
-                                for(BufferedImage armorPiece : armor) {armorPiece = null;}
+                                for (int i = 0; i < 7; i++) {armor[i] = null;}
                                 break;
                 }
         }
@@ -292,6 +292,18 @@ public class Avatar extends Player {
                                                 for(int k = 0; k < 6; k++) {
                                                         largeSpriteGraphics.drawImage(spriteComponents[i]
                                                                 .getSubImage(j+12, k, false), 64+192*k, 64+192*j, null);
+                                                }
+                                        }
+                                }
+                        }
+
+                        //Add armor components on top of slash animation background
+                        for(BufferedImage armorPiece : armor) {
+                                if (armorPiece != null) {
+                                        for(int j = 0; j < 4; j++) {
+                                                for(int k = 0; k < 6; k++) {
+                                                        largeSpriteGraphics.drawImage(armorPiece
+                                                                .getSubimage(k*64, (j+12)*64, 64, 64), 64+192*k, 64+192*j, null);
                                                 }
                                         }
                                 }
