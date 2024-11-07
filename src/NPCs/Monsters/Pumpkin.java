@@ -17,7 +17,7 @@ public class Pumpkin extends NPC {
     private int totalAmountMoved = 0;
     private Direction direction = Direction.RIGHT;
     private float speed = 1;
-    private int moveDistance = 200;  // Distance to move before turning around
+    private int moveDistance = 100;  // Distance to move before turning around
     private int health = 40; //monster health
     private int attackPower = 30; // monster attack power
 
@@ -62,93 +62,93 @@ public class Pumpkin extends NPC {
             put("STAND_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(1, 1,false))
                             .withBounds(10, 8, 43, 45)
-                            .withScale(2)
+                            .withScale(1)
                             .build(),
             });
             put("STAND_RIGHT", new Frame[] {
                    new FrameBuilder(spriteSheet.getSprite(3, 1, false))
                             .withBounds(10, 8, 43, 45)
-                            .withScale(2)
+                            .withScale(1)
                             .build(),
            });
 
             put("WALK_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(1, 0, false), 14)
                             .withBounds(10, 8, 43, 45)
-                            .withScale(2)
+                            .withScale(1)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 1, false), 14)
                             .withBounds(10, 8, 43, 45)
-                            .withScale(2)
+                            .withScale(1)
                             .build(),
-                    new FrameBuilder(spriteSheet.getSprite(1, 2, false), 14)
+                    new FrameBuilder(spriteSheet.getSprite(1, 1, false), 14)
                             .withBounds(10, 8, 43, 45)
-                            .withScale(2)
+                            .withScale(1)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 3, false), 14)
                             .withBounds(10, 8, 43, 45)
-                            .withScale(2)
+                            .withScale(1)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 4, false), 14)
                             .withBounds(10, 8, 43, 45)
-                            .withScale(2)
+                            .withScale(1)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 5, false), 14)
                             .withBounds(10, 8, 43, 45)
-                            .withScale(2)
+                            .withScale(1)
                             .build(),
             });
 
             put("WALK_RIGHT", new Frame[] {
                 new FrameBuilder(spriteSheet.getSprite(3, 0, false), 14)
                         .withBounds(10, 8, 43, 45)
-                        .withScale(2)
+                        .withScale(1)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(3, 1, false), 14)
                         .withBounds(10, 8, 43, 45)
-                        .withScale(2)
+                        .withScale(1)
                         .build(),
-                new FrameBuilder(spriteSheet.getSprite(3, 2, false), 14)
+                new FrameBuilder(spriteSheet.getSprite(3, 1, false), 14)
                         .withBounds(10, 8, 43, 45)
-                        .withScale(2)
+                        .withScale(1)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(3, 3, false), 14)
                         .withBounds(10, 8, 43, 45)
-                        .withScale(2)
+                        .withScale(1)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(3, 4, false), 14)
                         .withBounds(10, 8, 43, 45)
-                        .withScale(2)
+                        .withScale(1)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(3, 5, false), 14)
                         .withBounds(10, 8, 43, 45)
-                        .withScale(2)
+                        .withScale(1)
                         .build(),
             });
             put("WALK_UP", new Frame[] {
                 new FrameBuilder(spriteSheet.getSprite(0, 1, false), 14)
                         .withBounds(10, 8, 43, 45)
-                        .withScale(2)
+                        .withScale(1)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(0, 1, false), 14)
                         .withBounds(10, 8, 43, 45)
-                        .withScale(2)
+                        .withScale(1)
                         .build(),
-                new FrameBuilder(spriteSheet.getSprite(0, 2, false), 14)
+                new FrameBuilder(spriteSheet.getSprite(0, 1, false), 14)
                         .withBounds(10, 8, 43, 45)
-                        .withScale(2)
+                        .withScale(1)
                         .build(),
             });
             put("WALK_DOWN", new Frame[] {
-                new FrameBuilder(spriteSheet.getSprite(2, 0, false), 14)
+                new FrameBuilder(spriteSheet.getSprite(1, 0, false), 14)
                         .withBounds(10, 8, 43, 45)
                         .withScale(1)
                         .build(),
-                new FrameBuilder(spriteSheet.getSprite(2, 1, false), 14)
+                new FrameBuilder(spriteSheet.getSprite(1, 1, false), 14)
                         .withBounds(10, 8, 43, 45)
                         .withScale(1)
                         .build(),
-                new FrameBuilder(spriteSheet.getSprite(2, 2, false), 14)
+                new FrameBuilder(spriteSheet.getSprite(1, 1, false), 14)
                         .withBounds(10, 8, 43, 45)
                         .withScale(1)
                         .build(),

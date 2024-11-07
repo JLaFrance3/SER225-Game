@@ -44,11 +44,11 @@ public class TestMap extends Map {
         Chest chest2 = new Chest(getMapTile(12, 24).getLocation());
         chest2.setExistenceFlag("hasInteractedChest2");
         chest2.setInteractScript(new Chest2Script());
-        //enhancedMapTiles.add(chest2);
+        enhancedMapTiles.add(chest2);
         
         
         Chest chest1 = new Chest(getMapTile(17, 3).getLocation());
-       // enhancedMapTiles.add(chest1);
+        enhancedMapTiles.add(chest1);
 
         KeyItem key2 = new KeyItem(getMapTile(3, 28).getLocation());
         key2.setExistenceFlag("hasInteractedKey1");
@@ -63,7 +63,7 @@ public class TestMap extends Map {
         GreatSword greatsword = new GreatSword(getMapTile(11,20).getLocation());
         greatsword.setExistenceFlag("hasInteractedGreatSword");
         greatsword.setInteractScript(new GreatSwordScript());
-       // enhancedMapTiles.add(greatsword);
+        enhancedMapTiles.add(greatsword);
         
         return enhancedMapTiles;
     }

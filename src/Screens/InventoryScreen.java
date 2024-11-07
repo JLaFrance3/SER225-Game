@@ -26,6 +26,9 @@ public class InventoryScreen extends Screen {
     protected boolean itemDescriptToggle = false;
     protected BufferedImage itemDescript;
     protected SpriteFont itemDescription;
+    protected SpriteFont itemName;
+    protected int pointerLocationX = 400;
+    protected int pointerLocationY = 139;
     protected int counter = 0;
 
     public InventoryScreen(PlayLevelScreen playLevelScreen, Player player) {
@@ -56,10 +59,11 @@ public class InventoryScreen extends Screen {
     @Override
     public void update() {
         System.out.println("reached"); //make it so that if d is pressed, counter is incremented
-       // if(if array is not empty)
-
+        if(player.getInventoryArrayList().isEmpty() == false){
+            
         if (Keyboard.isKeyDown(Key.O) && keyPressTimer == 0) {
-            itemDescription = new SpriteFont(player.getInventoryArrayList().get(counter).getItemDescription(), 370, 400,"Arial", 20, Color.black);
+            itemName = new SpriteFont(player.getInventoryArrayList().get(counter).getItemName(), 340, 409,"Arial", 20, Color.black);
+            itemDescription = new SpriteFont(player.getInventoryArrayList().get(counter).getItemDescription(), 340, 450,"Arial", 15, Color.black);
             keyPressTimer = 14;
             itemDescriptToggle = ! itemDescriptToggle;
         } else {
@@ -67,19 +71,22 @@ public class InventoryScreen extends Screen {
                 keyPressTimer--;
             }
         }
-        if (Keyboard.isKeyDown(Key.D) && keyPressTimer == 0){
+        if (Keyboard.isKeyDown(Key.D) && keyPressTimer == 0 && counter < player.getInventoryArrayList().size() - 1 && pointerLocationX > 0){
+            pointerLocationX += 75;
             keyPressTimer = 14;
             counter++;
-            itemDescription = new SpriteFont(player.getInventoryArrayList().get(counter).getItemDescription(), 370, 400,"Arial", 20, Color.black);
-            
+            itemName = new SpriteFont(player.getInventoryArrayList().get(counter).getItemName(), 340, 409,"Arial", 20, Color.black);
+            itemDescription = new SpriteFont(player.getInventoryArrayList().get(counter).getItemDescription(), 340, 450,"Arial", 15, Color.black);            
         }
-        if (Keyboard.isKeyDown(Key.A) && keyPressTimer == 0){
+        if (Keyboard.isKeyDown(Key.A) && keyPressTimer == 0 && counter > 0 && pointerLocationX > 0){
+            pointerLocationX -= 75;
             keyPressTimer = 14;
             counter--;
-            itemDescription = new SpriteFont(player.getInventoryArrayList().get(counter).getItemDescription(), 370, 400,"Arial", 20, Color.black);
-            
+            itemName = new SpriteFont(player.getInventoryArrayList().get(counter).getItemName(), 340, 409,"Arial", 20, Color.black);
+            itemDescription = new SpriteFont(player.getInventoryArrayList().get(counter).getItemDescription(), 340, 450,"Arial", 15, Color.black);            
         }
-    }
+     }
+ }
 
     public void draw(GraphicsHandler graphicsHandler) {
         graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), Color.black);
@@ -103,10 +110,14 @@ public class InventoryScreen extends Screen {
         }
 
         if(itemDescriptToggle){
-            graphicsHandler.drawImage(itemDescript, 370, 395, 390, 140);
+            graphicsHandler.drawImage(itemDescript, 330, 398, 500, 140);
             itemDescription.draw(graphicsHandler);
-            //based on value of conuter change color
+            itemName.draw(graphicsHandler);
+            graphicsHandler.drawFilledRectangleWithBorder(pointerLocationX, pointerLocationY, 20, 20, new Color(49, 207, 240), Color.black, 2);
+            //based on value of counter change color
         }
+
+        
        
         playerAp.draw(graphicsHandler);
         playerHealth.draw(graphicsHandler);
