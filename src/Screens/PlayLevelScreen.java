@@ -8,6 +8,7 @@ import GameObject.SpriteSheet;
 import Level.*;
 import Maps.*;
 import Players.Avatar;
+import Players.PlayerAction;
 import Utils.Direction;
 import Utils.Point;
 
@@ -83,6 +84,7 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("gateInteract", false);
         flagManager.addFlag("flowerBed", false);
         flagManager.addFlag("readBackground", false);
+        flagManager.addFlag("dummyAlive", false);
         flagManager.addFlag("hasfought", false);
         flagManager.addFlag("lockedDoor", false);
         flagManager.addFlag("walrusHouseSign", false);
@@ -187,7 +189,62 @@ public class PlayLevelScreen extends Screen {
                 new SpriteSheet(ImageLoader.load("PlayerSprite/facehair/facehair_2/dark_brown.png", true), 64, 64),
                 new SpriteSheet(ImageLoader.load("PlayerSprite/hair/male/hair_16/dark_brown.png", true), 64, 64),
             };
+            playerClass = "Warrior";
             player = new Avatar(dougSheets, map.getPlayerStartPosition().x, map.getPlayerStartPosition().y, "Doug", true, "Warrior");
+        }
+        switch (playerClass) {
+            case "Warrior":
+                Avatar.meleeAction.addAction(new PlayerAction("Cleave", 10) {
+                    @Override
+                    public int attack(){
+                        this.setLastAttack(this.getValue());
+                        return this.getLastAttack();
+                    }
+                });
+                Avatar.meleeAction.addAction(new PlayerAction("Get Angy", 10){
+                    @Override
+                    public int attack(){
+                        this.setLastAttack(this.getValue());
+                        return this.getLastAttack();
+                    }
+                });
+                Avatar.meleeAction.addAction(new PlayerAction("Kick", 4){
+                    @Override
+                    public int attack(){
+                        this.setLastAttack(this.getValue());
+                        return this.getLastAttack();
+                    }
+                });
+                break;
+            case "Wizard":
+                Avatar.meleeAction.addAction(new PlayerAction("club", 4){
+                    @Override
+                    public int attack(){
+                        this.setLastAttack(this.getValue());
+                        return this.getLastAttack();
+                    }
+                });
+                Avatar.spellAction.addAction(new PlayerAction("Harm", 8){
+                    @Override
+                    public int attack(){
+                        this.setLastAttack(this.getValue());
+                        return this.getLastAttack();
+                    }
+                });
+                Avatar.spellAction.addAction(new PlayerAction("Heal", -6){
+                    @Override
+                    public int attack(){
+                        this.setLastAttack(this.getValue());
+                        return this.getLastAttack();
+                    }
+                });
+                break;
+            case "Ranger":
+                
+                break;
+        
+            default:
+                break;
         }
         player.setMap(map);
         playLevelScreenState = PlayLevelScreenState.RUNNING;
