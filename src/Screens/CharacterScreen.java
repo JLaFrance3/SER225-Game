@@ -43,7 +43,6 @@ public class CharacterScreen extends Screen {
     public CharacterScreen(ScreenCoordinator screenCoordinator, JPanel gamePanel) {
         this.screenCoordinator = screenCoordinator;
         this.gamePanel = gamePanel;
-        this.gender = Gender.MALE;
         classSelections = new String[] {
             "Warrior",
             "Wizard",
@@ -272,10 +271,11 @@ public class CharacterScreen extends Screen {
             new CharacterPart(Part.FACEHAIR, 7, 26),
             new CharacterPart(Part.HAIR, 20, 26)
         };
+        gender = Gender.MALE;
 
         partImages = new BufferedImage[8];
         for (int i = 0; i < partImages.length; i++) {
-            partImages[i] = characterParts[i].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+            partImages[i] = characterParts[i].loadImage(gender).getSubimage(0, 128, 64, 64);
         }
         classDisplayLabel.setText(classSelections[currentClassIndex]);
 
@@ -286,8 +286,8 @@ public class CharacterScreen extends Screen {
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.HEAD.ordinal()].decrementCurrentIndex();
                 characterParts[Part.BODY.ordinal()].decrementCurrentIndex();
-                partImages[Part.HEAD.ordinal()] = characterParts[Part.HEAD.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
-                partImages[Part.BODY.ordinal()] = characterParts[Part.BODY.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.HEAD.ordinal()] = characterParts[Part.HEAD.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
+                partImages[Part.BODY.ordinal()] = characterParts[Part.BODY.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(skinLeftArrowButton);
@@ -296,8 +296,8 @@ public class CharacterScreen extends Screen {
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.HEAD.ordinal()].incrementCurrentIndex();
                 characterParts[Part.BODY.ordinal()].incrementCurrentIndex();
-                partImages[Part.HEAD.ordinal()] = characterParts[Part.HEAD.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
-                partImages[Part.BODY.ordinal()] = characterParts[Part.BODY.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.HEAD.ordinal()] = characterParts[Part.HEAD.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
+                partImages[Part.BODY.ordinal()] = characterParts[Part.BODY.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(skinRightArrowButton);
@@ -305,7 +305,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.HAIR.ordinal()].decrementCurrentIndex();
-                partImages[Part.HAIR.ordinal()] = characterParts[Part.HAIR.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.HAIR.ordinal()] = characterParts[Part.HAIR.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(hairLeftArrowButton);
@@ -313,7 +313,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.HAIR.ordinal()].incrementCurrentIndex();
-                partImages[Part.HAIR.ordinal()] = characterParts[Part.HAIR.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.HAIR.ordinal()] = characterParts[Part.HAIR.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(hairRightArrowButton);
@@ -321,7 +321,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.HAIR.ordinal()].decrementCurrentColorIndex();
-                partImages[Part.HAIR.ordinal()] = characterParts[Part.HAIR.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);;
+                partImages[Part.HAIR.ordinal()] = characterParts[Part.HAIR.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);;
             }
         });
         gamePanel.add(hairColorLeftArrowButton);
@@ -329,7 +329,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.HAIR.ordinal()].incrementCurrentColorIndex();
-                partImages[Part.HAIR.ordinal()] = characterParts[Part.HAIR.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.HAIR.ordinal()] = characterParts[Part.HAIR.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(hairColorRightArrowButton);
@@ -337,7 +337,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.EYES.ordinal()].decrementCurrentIndex();
-                partImages[Part.EYES.ordinal()] = characterParts[Part.EYES.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.EYES.ordinal()] = characterParts[Part.EYES.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(eyesLeftArrowButton);
@@ -345,7 +345,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.EYES.ordinal()].incrementCurrentIndex();
-                partImages[Part.EYES.ordinal()] = characterParts[Part.EYES.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.EYES.ordinal()] = characterParts[Part.EYES.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(eyesRightArrowButton);
@@ -353,7 +353,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.FACEHAIR.ordinal()].decrementCurrentIndex();
-                partImages[Part.FACEHAIR.ordinal()] = characterParts[Part.FACEHAIR.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.FACEHAIR.ordinal()] = characterParts[Part.FACEHAIR.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(faceHairLeftArrowButton);
@@ -361,7 +361,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.FACEHAIR.ordinal()].incrementCurrentIndex();
-                partImages[Part.FACEHAIR.ordinal()] = characterParts[Part.FACEHAIR.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.FACEHAIR.ordinal()] = characterParts[Part.FACEHAIR.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(faceHairRightArrowButton);
@@ -369,7 +369,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.FACEHAIR.ordinal()].decrementCurrentColorIndex();
-                partImages[Part.FACEHAIR.ordinal()] = characterParts[Part.FACEHAIR.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.FACEHAIR.ordinal()] = characterParts[Part.FACEHAIR.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(faceHairColorLeftArrowButton);
@@ -377,7 +377,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.FACEHAIR.ordinal()].incrementCurrentColorIndex();
-                partImages[Part.FACEHAIR.ordinal()] = characterParts[Part.FACEHAIR.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.FACEHAIR.ordinal()] = characterParts[Part.FACEHAIR.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(faceHairColorRightArrowButton);
@@ -385,7 +385,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.SHIRT.ordinal()].decrementCurrentIndex();
-                partImages[Part.SHIRT.ordinal()] = characterParts[Part.SHIRT.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.SHIRT.ordinal()] = characterParts[Part.SHIRT.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(shirtLeftArrowButton);
@@ -393,7 +393,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.SHIRT.ordinal()].incrementCurrentIndex();
-                partImages[Part.SHIRT.ordinal()] = characterParts[Part.SHIRT.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.SHIRT.ordinal()] = characterParts[Part.SHIRT.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(shirtRightArrowButton);
@@ -401,7 +401,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.PANTS.ordinal()].decrementCurrentIndex();
-                partImages[Part.PANTS.ordinal()] = characterParts[Part.PANTS.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.PANTS.ordinal()] = characterParts[Part.PANTS.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(pantsLeftArrowButton);
@@ -409,7 +409,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.PANTS.ordinal()].incrementCurrentIndex();
-                partImages[Part.PANTS.ordinal()] = characterParts[Part.PANTS.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.PANTS.ordinal()] = characterParts[Part.PANTS.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(pantsRightArrowButton);
@@ -417,7 +417,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.SHOES.ordinal()].decrementCurrentIndex();
-                partImages[Part.SHOES.ordinal()] = characterParts[Part.SHOES.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.SHOES.ordinal()] = characterParts[Part.SHOES.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(shoesLeftArrowButton);
@@ -425,7 +425,7 @@ public class CharacterScreen extends Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 characterParts[Part.SHOES.ordinal()].incrementCurrentIndex();
-                partImages[Part.SHOES.ordinal()] = characterParts[Part.SHOES.ordinal()].loadImage(Gender.MALE).getSubimage(0, 128, 64, 64);
+                partImages[Part.SHOES.ordinal()] = characterParts[Part.SHOES.ordinal()].loadImage(gender).getSubimage(0, 128, 64, 64);
             }
         });
         gamePanel.add(shoesRightArrowButton);
