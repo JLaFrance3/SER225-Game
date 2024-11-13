@@ -80,46 +80,46 @@ public class TestMap extends Map {
         //this holds the npc's (?)
         ArrayList<NPC> npcs = new ArrayList<>();
         
-        Bug bug = new Bug(3, getMapTile(7, 12).getLocation().subtractX(20));
-        bug.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell", 4));
+        // Bug bug = new Bug(3, getMapTile(7, 12).getLocation().subtractX(20));
+        // bug.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell", 4));
       //  npcs.add(bug);
 
 
 
         TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20)); 
-        dummy.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell", 4, 20, "bite", 5));
+        dummy.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell", 4, 5, "CHOMP!!! you are bit by the bug", 100, "dummyAlive"));
        // npcs.add(dummy);
         dummy.setExistenceFlag("dummyAlive");
         npcs.add(dummy);
 
-        Goblin goblin1 = new Goblin(5, getMapTile(5, 15).getLocation().subtractX(20));
-        goblin1.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell", 4));
-        //npcs.add(goblin1);
+    //     Goblin goblin1 = new Goblin(5, getMapTile(5, 15).getLocation().subtractX(20));
+    //     goblin1.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell", 4));
+    //     //npcs.add(goblin1);
 
-        Goblin goblin2 = new Goblin(5, getMapTile(17, 9).getLocation().subtractX(20));
-        goblin2.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell", 4));
-       // npcs.add(goblin2);
+    //     Goblin goblin2 = new Goblin(5, getMapTile(17, 9).getLocation().subtractX(20));
+    //     goblin2.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell", 4));
+    //    // npcs.add(goblin2);
 
-        GoldDragon goldDragon1 = new GoldDragon(5, getMapTile(5,12).getLocation().subtractX(20));
-        //npcs.add(goldDragon1);
+    //     GoldDragon goldDragon1 = new GoldDragon(5, getMapTile(5,12).getLocation().subtractX(20));
+    //     //npcs.add(goldDragon1);
 
-        Skeleton skeleton1 = new Skeleton(6, getMapTile(9, 26).getLocation().subtractX(20));
-        skeleton1.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell", 4));
-      //  npcs.add(skeleton1);
+    //     Skeleton skeleton1 = new Skeleton(6, getMapTile(9, 26).getLocation().subtractX(20));
+    //     skeleton1.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell", 4));
+    //   //  npcs.add(skeleton1);
 
-        Skeleton skeleton2 = new Skeleton(6, getMapTile(17, 2).getLocation().subtractX(20));
-        skeleton1.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell", 4));
-       // npcs.add(skeleton2);
+    //     Skeleton skeleton2 = new Skeleton(6, getMapTile(17, 2).getLocation().subtractX(20));
+    //     skeleton1.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell", 4));
+    //    // npcs.add(skeleton2);
 
 
-       BadFlower flower1 = new BadFlower(5, getMapTile(6,13).getLocation().subtractX(20));
-      // npcs.add(flower1);
+    //    BadFlower flower1 = new BadFlower(5, getMapTile(6,13).getLocation().subtractX(20));
+    //   // npcs.add(flower1);
 
-      Bat bat1 = new Bat(5, getMapTile(6,13).getLocation().subtractX(20));
-    //   npcs.add(bat1);
+    //   Bat bat1 = new Bat(5, getMapTile(6,13).getLocation().subtractX(20));
+    // //   npcs.add(bat1);
 
-        Pumpkin pumpkin1 = new Pumpkin(5, getMapTile(6,13).getLocation().subtractX(20));
-       // npcs.add(pumpkin1);
+    //     Pumpkin pumpkin1 = new Pumpkin(5, getMapTile(6,13).getLocation().subtractX(20));
+    //    // npcs.add(pumpkin1);
 
        OldMan1 oldman1 = new OldMan1(5, getMapTile(5,27).getLocation().subtractX(20));
        oldman1.setInteractScript(new OldMan1Script());

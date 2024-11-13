@@ -78,6 +78,11 @@ public class PlayLevelScreen extends Screen {
     public void initialize() {
         // setup state
         flagManager = new FlagManager();
+        flagManager.addFlag("goblin1Flag", false);
+        flagManager.addFlag("goblin2Flag", false);
+        flagManager.addFlag("goblin3Flag", false);
+        flagManager.addFlag("goblin4Flag", false);
+        flagManager.addFlag("BossAlive", false);
         flagManager.addFlag("hasLostBall", false);
         flagManager.addFlag("hasTalkedToWalrus", false);
         flagManager.addFlag("hasTalkedToDinosaur", false);

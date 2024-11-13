@@ -33,6 +33,7 @@ public class Avatar extends Player {
         public static PlayerActionCollection meleeAction = new PlayerActionCollection();
         public static PlayerActionCollection spellAction = new PlayerActionCollection();
         public static int health = 10;
+        public static int healthInitial = 10;
         public static int xp = 0;
 
         // Player stats
@@ -87,6 +88,7 @@ public class Avatar extends Player {
                 meleeAction = new PlayerActionCollection();
                 spellAction = new PlayerActionCollection();
                 health = 10;
+                healthInitial = 10;
                 strength = 0;
                 dexterity = 0;
                 constitution = 0;
@@ -99,13 +101,15 @@ public class Avatar extends Player {
                         dexterity ++;
                         constitution += 2;
                         intelligence ++;
-                        health += 7;
+                        healthInitial += 7;
+                        health = healthInitial;
                 } else if (playerClass.equals("Wizard")){
                         strength += 1;
                         dexterity ++;
                         constitution += 1;
                         intelligence += 2;
-                        health += 4;
+                        healthInitial += 4;
+                        health = healthInitial;
                 }
                 System.out.println("stenght: " + strength);
                 System.out.println("int: " + intelligence);

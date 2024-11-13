@@ -33,17 +33,16 @@ public class CombatScript extends Script {
     private String enemyAttackString = "";
     private boolean combat = true;
     private double playerArmor = 1;
-    public CombatScript(String combatAlertText, int d){
-        this.combatAlertText = combatAlertText;
-        attack = d;
-    }
+    private boolean hasLeveled = false;
+    private String existanceFlag;
 
-    public CombatScript(String combatAlertText, int d, int h, String ea, int xp){
+    public CombatScript(String combatAlertText, int d, int h, String ea, int xp, String ef){
         this.combatAlertText = combatAlertText;
         npcHealth = h;
         attack = d;
         enemyAttackString = ea;
         this.xp = xp;
+        existanceFlag = ef;
     }
 
     public void setAttack(int x){
@@ -251,7 +250,8 @@ public class CombatScript extends Script {
                                     lastHit = (int) (Math.random() * Avatar.spellAction.getAction(answer).getValue()) + Avatar.intelligence;
                                     npcHealth = npcHealth - lastHit;
                                 } else if (Avatar.spellAction.getAction(answer).getValue() == 0){
-                                    Avatar.levelUp();
+                                    System.out.println("you have " + xp);
+                                    System.out.println("you have " + xp);
                                 } else {
                                     lastHit = (int) (Math.random() * Avatar.spellAction.getAction(answer).getValue()) + Avatar.intelligence;
                                     Avatar.health = Avatar.health - lastHit;
@@ -325,29 +325,18 @@ public class CombatScript extends Script {
                         addScriptAction(new ScriptAction(){
                             @Override
                             public ScriptState execute() {
+                                Avatar.xp += xp;
+                                if (xp >= 100){
+                                    hasLeveled = true;
+                                    Avatar.xp -= 100;
+                                    Avatar.levelUp();
+                                }
                                 combat = false;
                                 return ScriptState.COMPLETED;
                             }
                         });
-                        addScriptAction(new TextboxScriptAction("you win!! you earn " + xp + "experience"));
-                        addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{
-                            addRequirement(new CustomRequirement() {
-                                @Override
-                                public boolean isRequirementMet() {
-                                    return Avatar.xp >= 100;
-                                }
-                            });
-
-                            addScriptAction(new ScriptAction(){
-                                @Override
-                                public ScriptState execute() {
-                                    Avatar.levelUp();
-                                    Avatar.xp -= 100;
-                                    return ScriptState.COMPLETED;
-                                }
-                            });
-                        }});
-                        addScriptAction(new ChangeFlagScriptAction("dummyAlive", true));
+                        addScriptAction(new ChangeFlagScriptAction(existanceFlag, true));
+                        addScriptAction(new TextboxScriptAction("You slay your foe!!!!"));
                     }});
                 }});
 
@@ -410,6 +399,29 @@ public class CombatScript extends Script {
             }});
             
             
+        }});
+
+        scriptActions.add(new ConditionalScriptAction() {{
+            addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{
+                addRequirement(new CustomRequirement() {
+                    @Override
+                    public boolean isRequirementMet() {
+                        return hasLeveled;
+                    }
+                });
+
+                addScriptAction(new TextboxScriptAction() {{
+                    addText("You Leveled up!!! Your stats have increased and your health is restored.");
+                }});
+
+                addScriptAction(new ScriptAction(){
+                    @Override
+                    public ScriptState execute() {
+                        hasLeveled = false;
+                        return ScriptState.COMPLETED;
+                    }
+                });
+            }});
         }});
 
         
