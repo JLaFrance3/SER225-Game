@@ -56,6 +56,15 @@ public class CharacterScreen extends Screen {
     private BufferedImage displaySprite, scaleDisplaySprite;
     private JLabel nameDisplayLabel, classDisplayLabel;
 
+    private BufferedImage head;
+    private BufferedImage body;
+    private BufferedImage eyes;
+    private BufferedImage facehair;
+    private BufferedImage hair;
+    private BufferedImage pants;
+    private BufferedImage shirt;
+    private BufferedImage shoes;
+
     public CharacterScreen(ScreenCoordinator screenCoordinator, JPanel gamePanel) {
         this.screenCoordinator = screenCoordinator;
         this.gamePanel = gamePanel;
@@ -288,82 +297,103 @@ public class CharacterScreen extends Screen {
         displaySpriteHairComponents = new BufferedImage((spriteComponentSizes[1] + spriteComponentSizes[4] + 1) 
                 * 64, (spriteComponentSizes[2] + 1) * 64, BufferedImage.TYPE_INT_ARGB);
 
-        // Get image graphics to draw on
-        Graphics spriteImageGraphics = displaySpriteComponents.getGraphics();
-        Graphics spriteHairImageGraphics = displaySpriteHairComponents.getGraphics();
 
-        // Grab one sprite off of each spritesheet for display
-        for (int i = 0; i < spriteComponentSizes[0]; i++) {
-            if (i < spriteComponentSizes[0] / 2) {
-                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/head/male/head_" + i  + ".png", true)
-                        .getSubimage(0, 128, 64, 64), i * 64, 0 * 64, null);
-                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/body/male/body_" + i + ".png", true)
-                        .getSubimage(0, 128, 64, 64), i * 64, 1 * 64, null);
-            }
-            else {
-                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/head/female/head_" + (i - spriteComponentSizes[0] / 2)  + ".png", true)
-                        .getSubimage(0, 128, 64, 64), i * 64, 0 * 64, null);
-                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/body/female/body_" + (i - spriteComponentSizes[0] / 2) + ".png", true)
-                        .getSubimage(0, 128, 64, 64), i * 64, 1 * 64, null);
-            }
-        }
-        for (int i = 0; i < spriteComponentSizes[3]; i++) {
-            spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/eyes/eyes_" + i  + ".png", true)
-                    .getSubimage(0, 128, 64, 64), i * 64, 2 * 64, null);
-        }
-        for (int i = 0; i < spriteComponentSizes[5]; i++) {
-            if (i < spriteComponentSizes[5] / 2) {
-                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/shirt/male/shirt_" + i  + ".png", true)
-                        .getSubimage(0, 128, 64, 64), i * 64, 3 * 64, null);
-            }
-            else {
-                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/shirt/female/shirt_" + (i - spriteComponentSizes[5] / 2)  + ".png", true)
-                        .getSubimage(0, 128, 64, 64), i * 64, 3 * 64, null);
-            }
-        }
-        for (int i = 0; i < spriteComponentSizes[6]; i++) {
-            if (i < spriteComponentSizes[6] / 2) {
-                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/pants/male/pants_" + i  + ".png", true)
-                        .getSubimage(0, 128, 64, 64), i * 64, 4 * 64, null);
-            }
-            else {
-                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/pants/female/pants_" + (i - spriteComponentSizes[6] / 2)  + ".png", true)
-                        .getSubimage(0, 128, 64, 64), i * 64, 4 * 64, null);
-            }
-        }
-        for (int i = 0; i < spriteComponentSizes[7]; i++) {
-            if (i < spriteComponentSizes[7] / 2) {
-                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/shoes/male/shoes_" + i  + ".png", true)
-                        .getSubimage(0, 128, 64, 64), i * 64, 5 * 64, null);
-            }
-            else {
-                spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/shoes/female/shoes_" + (i - spriteComponentSizes[7] / 2)  + ".png", true)
-                        .getSubimage(0, 128, 64, 64), i * 64, 5 * 64, null);
-            }
-        }
-        for (int i = 0; i < spriteComponentSizes[1]; i++) {
-            if (i < spriteComponentSizes[1] / 2) {
-                for (int j = 0; j < spriteComponentSizes[2]; j++) {
-                    spriteHairImageGraphics.drawImage(ImageLoader.load("PlayerSprite/hair/male/hair_" + i  + hairColors[j] + ".png", true)
-                            .getSubimage(0, 128, 64, 64), i * 64, j * 64, null);
-                }
-            }
-            else {
-                for (int k = 0; k < spriteComponentSizes[2]; k++) {
-                    spriteHairImageGraphics.drawImage(ImageLoader.load("PlayerSprite/hair/female/hair_" + (i - spriteComponentSizes[1] / 2) + hairColors[k] + ".png", true)
-                            .getSubimage(0, 128, 64, 64), i * 64, k * 64, null);
-                }
-            }
-        }
-        for (int i = 0; i < spriteComponentSizes[4]; i++) {
-            for (int j = 0; j < spriteComponentSizes[2]; j++) {
-                spriteHairImageGraphics.drawImage(ImageLoader.load("PlayerSprite/facehair/facehair_" + i  + hairColors[j] + ".png", true)
-                        .getSubimage(0, 128, 64, 64), (i + spriteComponentSizes[1]) * 64, j * 64, null);
 
-            }
-        }
-        spriteImageGraphics.dispose();
-        spriteHairImageGraphics.dispose();
+
+
+        // private BufferedImage head;
+        // private BufferedImage body;
+        // private BufferedImage eyes;
+        // private BufferedImage facehair;
+        // private BufferedImage hair;
+        // private BufferedImage pants;
+        // private BufferedImage shirt;
+        // private BufferedImage shoes;
+        head = ImageLoader.load("PlayerSprite/head/male/head_0.png", true).getSubimage(0, 128, 64, 64);
+        body = ImageLoader.load("PlayerSprite/body/male/body_0.png", true).getSubimage(0, 128, 64, 64);
+        eyes = ImageLoader.load("PlayerSprite/eyes/eyes_0.png", true).getSubimage(0, 128, 64, 64);
+        shirt = ImageLoader.load("PlayerSprite/shirt/male/shirt_0.png", true).getSubimage(0, 128, 64, 64);
+        pants = ImageLoader.load("PlayerSprite/pants/male/pants_0.png", true).getSubimage(0, 128, 64, 64);
+        shoes = ImageLoader.load("PlayerSprite/shoes/male/shoes_0.png", true).getSubimage(0, 128, 64, 64);
+        hair = ImageLoader.load("PlayerSprite/hair/male/hair_0/black.png", true).getSubimage(0, 128, 64, 64);
+        facehair = ImageLoader.load("PlayerSprite/facehair/facehair_0/black.png", true).getSubimage(0, 128, 64, 64);
+
+        // // Get image graphics to draw on
+        // Graphics spriteImageGraphics = displaySpriteComponents.getGraphics();
+        // Graphics spriteHairImageGraphics = displaySpriteHairComponents.getGraphics();
+
+        // // Grab one sprite off of each spritesheet for display
+        // for (int i = 0; i < spriteComponentSizes[0]; i++) {
+        //     if (i < spriteComponentSizes[0] / 2) {
+        //         spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/head/male/head_" + i  + ".png", true)
+        //                 .getSubimage(0, 128, 64, 64), i * 64, 0 * 64, null);
+        //         spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/body/male/body_" + i + ".png", true)
+        //                 .getSubimage(0, 128, 64, 64), i * 64, 1 * 64, null);
+        //     }
+        //     else {
+        //         spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/head/female/head_" + (i - spriteComponentSizes[0] / 2)  + ".png", true)
+        //                 .getSubimage(0, 128, 64, 64), i * 64, 0 * 64, null);
+        //         spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/body/female/body_" + (i - spriteComponentSizes[0] / 2) + ".png", true)
+        //                 .getSubimage(0, 128, 64, 64), i * 64, 1 * 64, null);
+        //     }
+        // }
+        // for (int i = 0; i < spriteComponentSizes[3]; i++) {
+        //     spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/eyes/eyes_" + i  + ".png", true)
+        //             .getSubimage(0, 128, 64, 64), i * 64, 2 * 64, null);
+        // }
+        // for (int i = 0; i < spriteComponentSizes[5]; i++) {
+        //     if (i < spriteComponentSizes[5] / 2) {
+        //         spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/shirt/male/shirt_" + i  + ".png", true)
+        //                 .getSubimage(0, 128, 64, 64), i * 64, 3 * 64, null);
+        //     }
+        //     else {
+        //         spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/shirt/female/shirt_" + (i - spriteComponentSizes[5] / 2)  + ".png", true)
+        //                 .getSubimage(0, 128, 64, 64), i * 64, 3 * 64, null);
+        //     }
+        // }
+        // for (int i = 0; i < spriteComponentSizes[6]; i++) {
+        //     if (i < spriteComponentSizes[6] / 2) {
+        //         spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/pants/male/pants_" + i  + ".png", true)
+        //                 .getSubimage(0, 128, 64, 64), i * 64, 4 * 64, null);
+        //     }
+        //     else {
+        //         spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/pants/female/pants_" + (i - spriteComponentSizes[6] / 2)  + ".png", true)
+        //                 .getSubimage(0, 128, 64, 64), i * 64, 4 * 64, null);
+        //     }
+        // }
+        // for (int i = 0; i < spriteComponentSizes[7]; i++) {
+        //     if (i < spriteComponentSizes[7] / 2) {
+        //         spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/shoes/male/shoes_" + i  + ".png", true)
+        //                 .getSubimage(0, 128, 64, 64), i * 64, 5 * 64, null);
+        //     }
+        //     else {
+        //         spriteImageGraphics.drawImage(ImageLoader.load("PlayerSprite/shoes/female/shoes_" + (i - spriteComponentSizes[7] / 2)  + ".png", true)
+        //                 .getSubimage(0, 128, 64, 64), i * 64, 5 * 64, null);
+        //     }
+        // }
+        // for (int i = 0; i < spriteComponentSizes[1]; i++) {
+        //     if (i < spriteComponentSizes[1] / 2) {
+        //         for (int j = 0; j < spriteComponentSizes[2]; j++) {
+        //             spriteHairImageGraphics.drawImage(ImageLoader.load("PlayerSprite/hair/male/hair_" + i  + hairColors[j] + ".png", true)
+        //                     .getSubimage(0, 128, 64, 64), i * 64, j * 64, null);
+        //         }
+        //     }
+        //     else {
+        //         for (int k = 0; k < spriteComponentSizes[2]; k++) {
+        //             spriteHairImageGraphics.drawImage(ImageLoader.load("PlayerSprite/hair/female/hair_" + (i - spriteComponentSizes[1] / 2) + hairColors[k] + ".png", true)
+        //                     .getSubimage(0, 128, 64, 64), i * 64, k * 64, null);
+        //         }
+        //     }
+        // }
+        // for (int i = 0; i < spriteComponentSizes[4]; i++) {
+        //     for (int j = 0; j < spriteComponentSizes[2]; j++) {
+        //         spriteHairImageGraphics.drawImage(ImageLoader.load("PlayerSprite/facehair/facehair_" + i  + hairColors[j] + ".png", true)
+        //                 .getSubimage(0, 128, 64, 64), (i + spriteComponentSizes[1]) * 64, j * 64, null);
+
+        //     }
+        // }
+        // spriteImageGraphics.dispose();
+        // spriteHairImageGraphics.dispose();
 
         // Uncomment to view display sprite components in .png file
         // File outputfile = new File("image.png");
@@ -376,7 +406,7 @@ public class CharacterScreen extends Screen {
         //     e.printStackTrace();
         // }
         
-        updateDisplaySprite();
+        //updateDisplaySprite();
     }
 
     public void update() {
@@ -500,7 +530,15 @@ public class CharacterScreen extends Screen {
     public void draw(GraphicsHandler graphicsHandler) {
         background.draw(graphicsHandler);
         graphicsHandler.drawImage(menuImage, 200, 100);
-        graphicsHandler.drawImage(scaleDisplaySprite, 434, 199);
+        graphicsHandler.drawImage(body, 434, 199);
+        graphicsHandler.drawImage(head, 434, 199);
+        graphicsHandler.drawImage(hair, 434, 199);
+        graphicsHandler.drawImage(pants, 434, 199);
+        graphicsHandler.drawImage(shirt, 434, 199);
+        graphicsHandler.drawImage(eyes, 434, 199);
+        graphicsHandler.drawImage(facehair, 434, 199);
+
+        //graphicsHandler.drawImage(scaleDisplaySprite, 434, 199);
     }
 
     private class ButtonListener implements ActionListener{
