@@ -269,8 +269,8 @@ public class CharacterScreen extends Screen {
             new CharacterPart(Part.SHOES, 5),
             new CharacterPart(Part.PANTS, 4),
             new CharacterPart(Part.SHIRT, 8),
-            new CharacterPart(Part.FACEHAIR, 6, 26),
-            new CharacterPart(Part.HAIR, 19, 26)
+            new CharacterPart(Part.FACEHAIR, 7, 26),
+            new CharacterPart(Part.HAIR, 20, 26)
         };
 
         partImages = new BufferedImage[8];
