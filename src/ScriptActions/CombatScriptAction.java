@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import Level.ScriptState;
 import Level.TextboxItem;
+import Players.Avatar;
 
 public class CombatScriptAction extends ScriptAction {
     private ArrayList<TextboxItem> textboxItems;
@@ -35,6 +36,10 @@ public class CombatScriptAction extends ScriptAction {
         for (String text : textItems) {
             textboxItems.add(new TextboxItem(text));
         }
+    }
+
+    public void test(){
+        System.out.println((int) outputManager.getFlagData("TEXTBOX_OPTION_SELECTION"));
     }
 
     public void addText(String text) {
