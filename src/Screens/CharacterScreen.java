@@ -65,6 +65,20 @@ public class CharacterScreen extends Screen {
     private BufferedImage shirt;
     private BufferedImage shoes;
 
+    private int skinIndex = 0;
+    private int skinCount = 7;
+    private int eyesIndex = 0;
+    private int eyesCount = 8;
+    private int facehairIndex = 0;
+    private int faceHairCount = 5;
+    private int faceHairColorIndex = 0;
+    private int faceHairColorCount = 
+    private int hairIndex = 0;
+    private String hairColor = "black";
+    private int pantsIndex = 0;
+    private int shirtIndex = 0;
+    private int shoesIndex = 0;
+
     public CharacterScreen(ScreenCoordinator screenCoordinator, JPanel gamePanel) {
         this.screenCoordinator = screenCoordinator;
         this.gamePanel = gamePanel;
@@ -530,13 +544,14 @@ public class CharacterScreen extends Screen {
     public void draw(GraphicsHandler graphicsHandler) {
         background.draw(graphicsHandler);
         graphicsHandler.drawImage(menuImage, 200, 100);
-        graphicsHandler.drawImage(body, 434, 199);
-        graphicsHandler.drawImage(head, 434, 199);
-        graphicsHandler.drawImage(hair, 434, 199);
-        graphicsHandler.drawImage(pants, 434, 199);
-        graphicsHandler.drawImage(shirt, 434, 199);
-        graphicsHandler.drawImage(eyes, 434, 199);
-        graphicsHandler.drawImage(facehair, 434, 199);
+        graphicsHandler.drawImage(body, 434, 199, body.getWidth() * 2, body.getHeight() * 2);
+        graphicsHandler.drawImage(head, 434, 199, body.getWidth() * 2, body.getHeight() * 2);
+        graphicsHandler.drawImage(pants, 434, 199, body.getWidth() * 2, body.getHeight() * 2);
+        graphicsHandler.drawImage(shirt, 434, 199, body.getWidth() * 2, body.getHeight() * 2);
+        graphicsHandler.drawImage(eyes, 434, 199, body.getWidth() * 2, body.getHeight() * 2);
+        graphicsHandler.drawImage(hair, 434, 199, body.getWidth() * 2, body.getHeight() * 2);
+        graphicsHandler.drawImage(facehair, 434, 199, body.getWidth() * 2, body.getHeight() * 2);
+        graphicsHandler.drawImage(shoes, 434, 199, body.getWidth() * 2, body.getHeight() * 2);
 
         //graphicsHandler.drawImage(scaleDisplaySprite, 434, 199);
     }
