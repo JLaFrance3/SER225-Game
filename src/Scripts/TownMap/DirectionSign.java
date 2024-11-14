@@ -11,7 +11,7 @@ public class DirectionSign extends Script {
 
         scriptActions.add(new ChangeFlagScriptAction("directionSign", true));
         scriptActions.add(new TextboxScriptAction() {{
-            addText("Northeast: Lumina City\nWest: WIP\nSouth: Hamlet");
+            addText("Northeast: Lumina City\nSouth: Hamlet");
         }});
 
         return scriptActions;
