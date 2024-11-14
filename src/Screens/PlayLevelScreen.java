@@ -186,8 +186,8 @@ public class PlayLevelScreen extends Screen {
                 new SpriteSheet(ImageLoader.load("PlayerSprite/shoes/male/shoes_1.png", true), 64, 64),
                 new SpriteSheet(ImageLoader.load("PlayerSprite/pants/male/pants_2.png", true), 64, 64),
                 new SpriteSheet(ImageLoader.load("PlayerSprite/shirt/male/shirt_3.png", true), 64, 64),
-                new SpriteSheet(ImageLoader.load("PlayerSprite/facehair/facehair_2/dark_brown.png", true), 64, 64),
-                new SpriteSheet(ImageLoader.load("PlayerSprite/hair/male/hair_16/dark_brown.png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/facehair/facehair_2/color_6.png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/hair/male/hair_16/color_6.png", true), 64, 64),
             };
             playerClass = "Warrior";
             player = new Avatar(dougSheets, map.getPlayerStartPosition().x, map.getPlayerStartPosition().y, "Doug", true, "Warrior");
@@ -597,13 +597,16 @@ public class PlayLevelScreen extends Screen {
             questLogScreen.draw(graphicsHandler);
         }
     }
-
-    
             
-
     public PlayLevelScreenState getPlayLevelScreenState() {
         return playLevelScreenState;
     }
+
+    private void printMemoryUsage() {
+		Runtime runtime = Runtime.getRuntime();
+		long usedMemory = runtime.totalMemory() - runtime.freeMemory();
+		System.out.println("Used memory: " + usedMemory / 1024 / 1024 + " MB");
+	}
 
     public void resetLevel() {
         initialize();

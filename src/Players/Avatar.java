@@ -95,9 +95,7 @@ public class Avatar extends Player {
                 if (armor[0] == null) {
                         g.drawImage(spriteComponents[5].getImage(), 0, 0, null);
                 }
-                if (isMale && spriteComponents[6] != null) {
-                        g.drawImage(spriteComponents[6].getImage(), 0, 0, null);
-                }
+                g.drawImage(spriteComponents[6].getImage(), 0, 0, null);
                 if (armor[4] == null) {
                         g.drawImage(spriteComponents[7].getImage(), 0, 0, null);
                 }
@@ -289,7 +287,6 @@ public class Avatar extends Player {
                         //Add player sprite components on top of slash animation background
                         for (int i = 0; i < spriteComponents.length; i++) {
                                 if (i == 5 && armor[0] != null) {}
-                                else if (i == 6 && spriteComponents[6] == null) {}
                                 else if (i == 7 && armor[4] != null) {}
                                 else {
                                         for(int j = 0; j < 4; j++) {

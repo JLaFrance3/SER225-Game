@@ -59,7 +59,7 @@ public class CharacterScreen extends Screen {
         // Character customization menu components
         gamePanel.setLayout(null);
         menuGUI = ImageLoader.load("CharacterMenuGUI.png", true);
-        menuImage = menuGUI.getSubimage(0, 0, 400, 352);
+        menuImage = menuGUI.getSubimage(0, 0, 400, 353);
         nameField = new JTextField();
         nameField.setLocation(372, 139);
         nameField.setSize(102, 12);
@@ -154,7 +154,7 @@ public class CharacterScreen extends Screen {
             public void actionPerformed(ActionEvent e) {
                 gender = Gender.MALE;
                 for (int i = 0; i < partImages.length; i++) {
-                    partImages[i] = characterParts[i].loadImage(gender).getSubimage(0, 128, 64, 64);
+                    partImages[i] = characterParts[i].loadImage(gender);
                 }
             }
         });
@@ -169,7 +169,7 @@ public class CharacterScreen extends Screen {
             public void actionPerformed(ActionEvent e) {
                 gender = Gender.FEMALE;
                 for (int i = 0; i < partImages.length; i++) {
-                    partImages[i] = characterParts[i].loadImage(gender).getSubimage(0, 128, 64, 64);
+                    partImages[i] = characterParts[i].loadImage(gender);
                 }
             }
         });        
