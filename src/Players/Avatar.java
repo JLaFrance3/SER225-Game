@@ -28,8 +28,6 @@ public class Avatar extends Player {
         private boolean longWeapon;             //Long weapons need a larger sprite image
         private String longWeaponFilePath;      //Larger sprite image loaded separately
         private SpriteSheet slashAnimations;    //Slash animation spritesheet to account for longweapons
-        public static String playerClass;
-        private SpriteSheet[] spriteComponents;
         public static PlayerActionCollection meleeAction = new PlayerActionCollection();
         public static PlayerActionCollection spellAction = new PlayerActionCollection();
         public static int health = 10;
