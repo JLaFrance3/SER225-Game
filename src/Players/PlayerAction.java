@@ -30,7 +30,7 @@ public abstract class PlayerAction {
         return value;
     }
 
-    public abstract int attack();
+    public abstract double attack();
 
     public int getLastAttack(){
         return lastAttack;

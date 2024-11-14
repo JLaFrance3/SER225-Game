@@ -26,13 +26,13 @@ import Screens.PlayLevelScreen;
 public class CombatScript extends Script {
     private String combatAlertText;
     private int attack = 0;
-    private int npcHealth = 0;
+    private double npcHealth = 0;
     private int lastHit = 0;
     private int xp = 0;
     private String playerAttackSCString = "";
     private String enemyAttackString = "";
     private boolean combat = true;
-    private double playerArmor = 1;
+    private double playerArmor = 0;
     private boolean hasLeveled = false;
     private String existanceFlag;
 
@@ -97,7 +97,8 @@ public class CombatScript extends Script {
                         addScriptAction(new ScriptAction(){
                             @Override
                             public ScriptState execute() {
-                                lastHit = (int) (Math.random() * attack);
+                                lastHit = (int)(Math.random() * attack);
+                                lastHit = (int)(lastHit * (1 - playerArmor));
                                 Avatar.health = Avatar.health - lastHit;
                                 System.out.println(Avatar.health);
                                 return ScriptState.COMPLETED;
@@ -121,7 +122,7 @@ public class CombatScript extends Script {
                                 }else {
                                     textboxItems.set(1, new TextboxItem("you stand strong through the pain"));
                                 }
-                                textboxItems.set(2, new TextboxItem("you have " + Avatar.health + " Health left"));
+                                textboxItems.set(2, new TextboxItem("you have " + Math.floor(Avatar.health) + " Health left"));
                                 TextboxItem[] textboxItemsArray = textboxItems.toArray(new TextboxItem[0]);
                                 this.map.getTextbox().addText(textboxItemsArray);
                                 this.map.getTextbox().setIsActive(true);
@@ -140,7 +141,7 @@ public class CombatScript extends Script {
                             @Override
                             public ScriptState execute() {
                                 int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
-                                lastHit = (int) (Math.random() * Avatar.meleeAction.getAction(answer).getValue()) + Avatar.strength;
+                                lastHit = (int)((Math.random() * Avatar.meleeAction.getAction(answer).getValue()) + Avatar.strength);
                                 npcHealth = npcHealth - lastHit;
                                 playerAttackSCString = Avatar.meleeAction.getAction(answer).getDescription();
                                 System.out.println(npcHealth);
@@ -203,7 +204,8 @@ public class CombatScript extends Script {
                         addScriptAction(new ScriptAction(){
                             @Override
                             public ScriptState execute() {
-                                lastHit = (int) (Math.random() * attack);
+                                lastHit = (int)(Math.random() * attack);
+                                lastHit = (int)(lastHit * (1 - playerArmor));
                                 Avatar.health = Avatar.health - lastHit;
                                 System.out.println(Avatar.health);
                                 return ScriptState.COMPLETED;
@@ -227,7 +229,7 @@ public class CombatScript extends Script {
                                 }else {
                                     textboxItems.set(1, new TextboxItem("you stand strong through the pain"));
                                 }
-                                textboxItems.set(2, new TextboxItem("you have " + Avatar.health + " Health left"));
+                                textboxItems.set(2, new TextboxItem("you have " + Math.floor(Avatar.health) + " Health left"));
                                 TextboxItem[] textboxItemsArray = textboxItems.toArray(new TextboxItem[0]);
                                 this.map.getTextbox().addText(textboxItemsArray);
                                 this.map.getTextbox().setIsActive(true);
@@ -250,8 +252,7 @@ public class CombatScript extends Script {
                                     lastHit = (int) (Math.random() * Avatar.spellAction.getAction(answer).getValue()) + Avatar.intelligence;
                                     npcHealth = npcHealth - lastHit;
                                 } else if (Avatar.spellAction.getAction(answer).getValue() == 0){
-                                    System.out.println("you have " + xp);
-                                    System.out.println("you have " + xp);
+                                    playerArmor = Avatar.spellAction.getAction(answer).attack();
                                 } else {
                                     lastHit = (int) (Math.random() * Avatar.spellAction.getAction(answer).getValue()) + Avatar.intelligence;
                                     Avatar.health = Avatar.health - lastHit;
@@ -268,7 +269,7 @@ public class CombatScript extends Script {
 
                             @Override
                             public void setup() {
-                                textboxItems.set(0, new TextboxItem("you " + playerAttackSCString + " for " + Math.abs(lastHit)));
+                                textboxItems.set(0, new TextboxItem("you " + playerAttackSCString + " for " + (int)Math.abs(lastHit)));
                                 if (npcHealth <= 12 && npcHealth > 6){
                                     textboxItems.set(1, new TextboxItem("your enemy appears bloody"));
                                 } else if (npcHealth <= 6 && npcHealth > 2){

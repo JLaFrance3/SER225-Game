@@ -82,6 +82,10 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("goblin2Flag", false);
         flagManager.addFlag("goblin3Flag", false);
         flagManager.addFlag("goblin4Flag", false);
+        flagManager.addFlag("skeleton1Flag", false);
+        flagManager.addFlag("skeleton2Flag", false);
+        flagManager.addFlag("skeleton3Flag", false);
+        flagManager.addFlag("skeleton4Flag", false);
         flagManager.addFlag("BossAlive", false);
         flagManager.addFlag("hasLostBall", false);
         flagManager.addFlag("hasTalkedToWalrus", false);
@@ -203,28 +207,20 @@ public class PlayLevelScreen extends Screen {
             case "Warrior":
                 Avatar.meleeAction.addAction(new PlayerAction("Cleave", 10, "you cleave your foe") {
                     @Override
-                    public int attack(){
+                    public double attack(){
                         this.setLastAttack(this.getValue());
                         return this.getLastAttack();
                     }
                 });
-                Avatar.spellAction.addAction(new PlayerAction("Get Angy", 10, "you brace your self"){
+                Avatar.spellAction.addAction(new PlayerAction("Get Angy", 0, "you brace your self"){
                     @Override
-                    public int attack(){
-                        this.setLastAttack(this.getValue());
-                        return this.getLastAttack();
+                    public double attack(){
+                        return 0.10;
                     }
                 });
                 Avatar.meleeAction.addAction(new PlayerAction("Kick", 4, "You kick at your foe"){
                     @Override
-                    public int attack(){
-                        this.setLastAttack(this.getValue());
-                        return this.getLastAttack();
-                    }
-                });
-                Avatar.spellAction.addAction(new PlayerAction("Level UP", 0, "you mend your wounds with blessed words"){
-                    @Override
-                    public int attack(){
+                    public double attack(){
                         this.setLastAttack(this.getValue());
                         return this.getLastAttack();
                     }
@@ -233,21 +229,21 @@ public class PlayLevelScreen extends Screen {
             case "Wizard":
                 Avatar.meleeAction.addAction(new PlayerAction("club", 4, "you bonk your foe"){
                     @Override
-                    public int attack(){
+                    public double attack(){
                         this.setLastAttack(this.getValue());
                         return this.getLastAttack();
                     }
                 });
                 Avatar.spellAction.addAction(new PlayerAction("Harm", 8, "waving your hands you cast harm, battering your foe"){
                     @Override
-                    public int attack(){
+                    public double attack(){
                         this.setLastAttack(this.getValue());
                         return this.getLastAttack();
                     }
                 });
                 Avatar.spellAction.addAction(new PlayerAction("Heal", -6, "you mend your wounds with blessed words"){
                     @Override
-                    public int attack(){
+                    public double attack(){
                         this.setLastAttack(this.getValue());
                         return this.getLastAttack();
                     }

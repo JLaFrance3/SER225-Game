@@ -32,9 +32,10 @@ public class Avatar extends Player {
         public static String playerClass;
         public static PlayerActionCollection meleeAction = new PlayerActionCollection();
         public static PlayerActionCollection spellAction = new PlayerActionCollection();
-        public static int health = 10;
+        public static double health = 10;
         public static int healthInitial = 10;
         public static int xp = 0;
+        private boolean amuletOfLifeSteal = false;
 
         // Player stats
         public static int strength, dexterity, constitution, intelligence;
@@ -997,6 +998,14 @@ public class Avatar extends Player {
 
         public void addSpellAction(PlayerAction pa){
                 spellAction.addAction(pa);
+        }
+
+        public boolean hasAmulet(){
+                return amuletOfLifeSteal;
+        }
+
+        public void setAmulet(){
+                amuletOfLifeSteal = true;
         }
         
 }
