@@ -107,41 +107,50 @@ public class TownMap extends Map {
         npcs.add(skeleton4);
 
 
-    //    BadFlower flower1 = new BadFlower(5, getMapTile(78,116).getLocation().subtractX(20));
-    //    flower1.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell"));
-    //    npcs.add(flower1);
+       BadFlower flower1 = new BadFlower(5, getMapTile(78,116).getLocation().subtractX(20));
+       flower1.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell",3,10,"tendrils lash at you and thorns cut your skin",10,"flower1Flag"));
+       flower1.setExistenceFlag("flower1Flag");
+       npcs.add(flower1);
 
-    //    BadFlower flower2 = new BadFlower(5, getMapTile(74,106).getLocation().subtractX(20));
-    //    flower2.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell"));
-    //    npcs.add(flower2);
+       BadFlower flower2 = new BadFlower(5, getMapTile(74,106).getLocation().subtractX(20));
+       flower2.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell",3,10,"tendrils lash at you and thorns cut your skin",10,"flower2Flag"));
+       flower2.setExistenceFlag("flower2Flag");
+       npcs.add(flower2);
 
-    //    BadFlower flower3 = new BadFlower(5, getMapTile(76,109).getLocation().subtractX(20));
-    //    flower3.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell"));
-    //    npcs.add(flower3);
+       BadFlower flower3 = new BadFlower(5, getMapTile(76,109).getLocation().subtractX(20));
+       flower3.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell",3,10,"tendrils lash at you and thorns cut your skin",10,"flower3Flag"));
+       flower3.setExistenceFlag("flower3Flag");
+       npcs.add(flower3);
 
-    //    Bat bat1 = new Bat(5, getMapTile(17,94).getLocation().subtractX(20));
-    //    bat1.setInteractScript(new CombatScript("Uh oh, this bat is evil as hell"));
-    //    npcs.add(bat1);
+       Bat bat1 = new Bat(5, getMapTile(17,94).getLocation().subtractX(20));
+       bat1.setInteractScript(new CombatScript("Uh oh, this bat is evil as hell",8,22,"the bat chomps into you",50,"bat1Flag"));
+       bat1.setExistenceFlag("bat1Flag");
+       npcs.add(bat1);
 
-    //    Bat bat2 = new Bat(5, getMapTile(15,117).getLocation().subtractX(20));
-    //    bat2.setInteractScript(new CombatScript("Uh oh, this bat is evil as hell"));
-    //    npcs.add(bat2);
+       Bat bat2 = new Bat(5, getMapTile(15,117).getLocation().subtractX(20));
+       bat2.setInteractScript(new CombatScript("Uh oh, this bat is evil as hell",8,22,"the bat chomps into you",50,"bat2Flag"));
+       bat2.setExistenceFlag("bat2Flag");
+       npcs.add(bat2);
 
-    //    Bat bat3 = new Bat(5, getMapTile(25,114).getLocation().subtractX(20));
-    //    bat3.setInteractScript(new CombatScript("Uh oh, this bat is evil as hell"));
-    //    npcs.add(bat3);
+       Bat bat3 = new Bat(5, getMapTile(25,114).getLocation().subtractX(20));
+       bat3.setInteractScript(new CombatScript("Uh oh, this bat is evil as hell",8,22,"the bat chomps into you",50,"bat3Flag"));
+       bat3.setExistenceFlag("bat3Flag");
+       npcs.add(bat3);
 
-    //     Pumpkin pumpkin1 = new Pumpkin(5, getMapTile(21,108).getLocation().subtractX(20));
-    //     pumpkin1.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell"));
-    //     npcs.add(pumpkin1);
+        Pumpkin pumpkin1 = new Pumpkin(5, getMapTile(21,108).getLocation().subtractX(20));
+        pumpkin1.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell",22,59,"the evil pumpkin rolls into you", 150,"pumkin1FLag"));
+        pumpkin1.setExistenceFlag("pumpkin1FLag");
+        npcs.add(pumpkin1);
 
-    //     Pumpkin pumpkin2 = new Pumpkin(5, getMapTile(2,117).getLocation().subtractX(20));
-    //     pumpkin2.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell"));
-    //     npcs.add(pumpkin2);
+        Pumpkin pumpkin2 = new Pumpkin(5, getMapTile(2,117).getLocation().subtractX(20));
+        pumpkin2.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell",22,59,"the evil pumpkin rolls into you", 150,"pumpkin2FLag"));
+        pumpkin1.setExistenceFlag("pumpkin2FLag");
+        npcs.add(pumpkin2);
 
-    //     Pumpkin pumpkin3 = new Pumpkin(5, getMapTile(36,114).getLocation().subtractX(20));
-    //     pumpkin3.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell"));
-    //     npcs.add(pumpkin3);
+        Pumpkin pumpkin3 = new Pumpkin(5, getMapTile(36,114).getLocation().subtractX(20));
+        pumpkin3.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell",22,59,"the evil pumpkin rolls into you", 150,"pumpkin3FLag"));
+        pumpkin3.setExistenceFlag("pumpkin3FLag");
+        npcs.add(pumpkin3);
 
 
          

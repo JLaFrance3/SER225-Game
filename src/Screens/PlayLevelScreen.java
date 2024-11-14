@@ -86,6 +86,15 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("skeleton2Flag", false);
         flagManager.addFlag("skeleton3Flag", false);
         flagManager.addFlag("skeleton4Flag", false);
+        flagManager.addFlag("flower1Flag", false);
+        flagManager.addFlag("flower2Flag", false);
+        flagManager.addFlag("flower3Flag", false);
+        flagManager.addFlag("pumpkin1Flag", false);
+        flagManager.addFlag("pumpkin2Flag", false);
+        flagManager.addFlag("pumpkin3Flag", false);
+        flagManager.addFlag("bat1Flag", false);
+        flagManager.addFlag("bat2Flag", false);
+        flagManager.addFlag("bat3Flag", false);
         flagManager.addFlag("BossAlive", false);
         flagManager.addFlag("hasLostBall", false);
         flagManager.addFlag("hasTalkedToWalrus", false);
