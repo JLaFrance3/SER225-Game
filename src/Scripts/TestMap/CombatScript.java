@@ -327,7 +327,7 @@ public class CombatScript extends Script {
                             @Override
                             public ScriptState execute() {
                                 Avatar.xp += xp;
-                                if (xp >= 100){
+                                if (Avatar.xp >= 100){
                                     hasLeveled = true;
                                     Avatar.xp -= 100;
                                     Avatar.levelUp();
