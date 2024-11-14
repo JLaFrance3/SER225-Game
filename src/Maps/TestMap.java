@@ -89,6 +89,8 @@ public class TestMap extends Map {
         TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20)); 
         dummy.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
        // npcs.add(dummy);
+        dummy.setExistenceFlag("dummyAlive");
+        npcs.add(dummy);
 
         Goblin goblin1 = new Goblin(5, getMapTile(5, 15).getLocation().subtractX(20));
         goblin1.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell"));
