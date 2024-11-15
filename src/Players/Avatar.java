@@ -21,16 +21,24 @@ import javax.imageio.ImageIO;
 public class Avatar extends Player {
         private String name;
         private boolean isMale;
-        private String playerClass;
+        //private String playerClass;
         private SpriteSheet[] spriteComponents; //Holds character customization options
         private BufferedImage[][] weapon;       //Holds both weapon primary and shield
         private BufferedImage[] armor;          //torso, arms, legs, shoulder, head, feet, hands
         private boolean longWeapon;             //Long weapons need a larger sprite image
         private String longWeaponFilePath;      //Larger sprite image loaded separately
         private SpriteSheet slashAnimations;    //Slash animation spritesheet to account for longweapons
+        public static int hitDice;
+        public static String playerClass;
+        public static PlayerActionCollection meleeAction = new PlayerActionCollection();
+        public static PlayerActionCollection spellAction = new PlayerActionCollection();
+        public static double health = 10;
+        public static int healthInitial = 10;
+        public static int xp = 0;
+        private boolean amuletOfLifeSteal = false;
 
         // Player stats
-        private int strength, dexterity, constitution, intelligence;
+        public static int strength, dexterity, constitution, intelligence;
 
         public Avatar(float x, float y) {
                 super(new SpriteSheet(ImageLoader.load("Doug.png", true), 64, 64), x, y, "STAND_DOWN");
@@ -44,6 +52,7 @@ public class Avatar extends Player {
                 this.dexterity = 0;
                 this.constitution = 0;
                 this.intelligence = 0;
+                this.hitDice = 10;
                 this.weapon = new BufferedImage[2][2];
                 this.armor = new BufferedImage[7];
                 this.longWeapon = false;
@@ -64,6 +73,7 @@ public class Avatar extends Player {
                 this.dexterity = 0;
                 this.constitution = 0;
                 this.intelligence = 0;
+                this.health = 10;
                 this.weapon = new BufferedImage[2][2];
                 this.armor = new BufferedImage[7];
                 this.longWeapon = false;
@@ -72,6 +82,39 @@ public class Avatar extends Player {
                         .getSubimage(0, 768, 384, 256), 64, 64);
 
                 updateSprite();
+        }
+
+        public static void resetPlayer(){
+                playerClass = null;
+                meleeAction = new PlayerActionCollection();
+                spellAction = new PlayerActionCollection();
+                health = 10;
+                healthInitial = 10;
+                strength = 0;
+                dexterity = 0;
+                constitution = 0;
+                intelligence = 0;
+        }
+
+        public static void levelUp(){
+                if (playerClass.equals("Warrior")){
+                        strength += 2;
+                        dexterity ++;
+                        constitution += 2;
+                        intelligence ++;
+                        healthInitial += 7;
+                        health = healthInitial;
+                } else if (playerClass.equals("Wizard")){
+                        strength += 1;
+                        dexterity ++;
+                        constitution += 1;
+                        intelligence += 2;
+                        healthInitial += 4;
+                        health = healthInitial;
+                }
+                System.out.println("stenght: " + strength);
+                System.out.println("int: " + intelligence);
+                System.out.println("health: " + health);
         }
 
         // Create new spritesheet by combing component layers onto one buffered image
@@ -92,9 +135,7 @@ public class Avatar extends Player {
                 if (armor[0] == null) {
                         g.drawImage(spriteComponents[5].getImage(), 0, 0, null);
                 }
-                if (isMale && spriteComponents[6] != null) {
-                        g.drawImage(spriteComponents[6].getImage(), 0, 0, null);
-                }
+                g.drawImage(spriteComponents[6].getImage(), 0, 0, null);
                 if (armor[4] == null) {
                         g.drawImage(spriteComponents[7].getImage(), 0, 0, null);
                 }
@@ -233,6 +274,7 @@ public class Avatar extends Player {
                                 for (int i = 0; i < 7; i++) {armor[i] = null;}
                                 break;
                 }
+
         }
 
         public void update() {
@@ -285,7 +327,6 @@ public class Avatar extends Player {
                         //Add player sprite components on top of slash animation background
                         for (int i = 0; i < spriteComponents.length; i++) {
                                 if (i == 5 && armor[0] != null) {}
-                                else if (i == 6 && spriteComponents[6] == null) {}
                                 else if (i == 7 && armor[4] != null) {}
                                 else {
                                         for(int j = 0; j < 4; j++) {
@@ -947,4 +988,21 @@ public class Avatar extends Player {
                 };
 
         }
+
+        public void addMeleeAction(PlayerAction pa){
+                meleeAction.addAction(pa);
+        }
+
+        public void addSpellAction(PlayerAction pa){
+                spellAction.addAction(pa);
+        }
+
+        public boolean hasAmulet(){
+                return amuletOfLifeSteal;
+        }
+
+        public void setAmulet(){
+                amuletOfLifeSteal = true;
+        }
+        
 }

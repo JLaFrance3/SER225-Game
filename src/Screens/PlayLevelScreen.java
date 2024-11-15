@@ -8,6 +8,8 @@ import GameObject.SpriteSheet;
 import Level.*;
 import Maps.*;
 import Players.Avatar;
+import Players.PlayerAction;
+import ScriptActions.AttackGenerator;
 import Utils.Direction;
 import Utils.Point;
 
@@ -76,13 +78,33 @@ public class PlayLevelScreen extends Screen {
     public void initialize() {
         // setup state
         flagManager = new FlagManager();
+        flagManager.addFlag("goblin1Flag", false);
+        flagManager.addFlag("goblin2Flag", false);
+        flagManager.addFlag("goblin3Flag", false);
+        flagManager.addFlag("goblin4Flag", false);
+        flagManager.addFlag("skeleton1Flag", false);
+        flagManager.addFlag("skeleton2Flag", false);
+        flagManager.addFlag("skeleton3Flag", false);
+        flagManager.addFlag("skeleton4Flag", false);
+        flagManager.addFlag("flower1Flag", false);
+        flagManager.addFlag("flower2Flag", false);
+        flagManager.addFlag("flower3Flag", false);
+        flagManager.addFlag("pumpkin1Flag", false);
+        flagManager.addFlag("pumpkin2Flag", false);
+        flagManager.addFlag("pumpkin3Flag", false);
+        flagManager.addFlag("bat1Flag", false);
+        flagManager.addFlag("bat2Flag", false);
+        flagManager.addFlag("bat3Flag", false);
+        flagManager.addFlag("BossAlive", false);
         flagManager.addFlag("hasLostBall", false);
         flagManager.addFlag("hasTalkedToWalrus", false);
         flagManager.addFlag("hasTalkedToDinosaur", false);
+        flagManager.addFlag("hasDied", false);
         flagManager.addFlag("hasFoundBall", false);
         flagManager.addFlag("gateInteract", false);
         flagManager.addFlag("flowerBed", false);
         flagManager.addFlag("readBackground", false);
+        flagManager.addFlag("dummyAlive", false);
         flagManager.addFlag("hasfought", false);
         flagManager.addFlag("lockedDoor", false);
         flagManager.addFlag("walrusHouseSign", false);
@@ -184,10 +206,64 @@ public class PlayLevelScreen extends Screen {
                 new SpriteSheet(ImageLoader.load("PlayerSprite/shoes/male/shoes_1.png", true), 64, 64),
                 new SpriteSheet(ImageLoader.load("PlayerSprite/pants/male/pants_2.png", true), 64, 64),
                 new SpriteSheet(ImageLoader.load("PlayerSprite/shirt/male/shirt_3.png", true), 64, 64),
-                new SpriteSheet(ImageLoader.load("PlayerSprite/facehair/facehair_2/dark_brown.png", true), 64, 64),
-                new SpriteSheet(ImageLoader.load("PlayerSprite/hair/male/hair_16/dark_brown.png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/facehair/facehair_2/color_6.png", true), 64, 64),
+                new SpriteSheet(ImageLoader.load("PlayerSprite/hair/male/hair_16/color_6.png", true), 64, 64),
             };
+            playerClass = "Warrior";
             player = new Avatar(dougSheets, map.getPlayerStartPosition().x, map.getPlayerStartPosition().y, "Doug", true, "Warrior");
+        }
+        switch (playerClass) {
+            case "Warrior":
+                Avatar.meleeAction.addAction(new PlayerAction("Cleave", 10, "you cleave your foe") {
+                    @Override
+                    public double attack(){
+                        this.setLastAttack(this.getValue());
+                        return this.getLastAttack();
+                    }
+                });
+                Avatar.spellAction.addAction(new PlayerAction("Get Angy", 0, "you brace your self"){
+                    @Override
+                    public double attack(){
+                        return 0.10;
+                    }
+                });
+                Avatar.meleeAction.addAction(new PlayerAction("Kick", 4, "You kick at your foe"){
+                    @Override
+                    public double attack(){
+                        this.setLastAttack(this.getValue());
+                        return this.getLastAttack();
+                    }
+                });
+                break;
+            case "Wizard":
+                Avatar.meleeAction.addAction(new PlayerAction("club", 4, "you bonk your foe"){
+                    @Override
+                    public double attack(){
+                        this.setLastAttack(this.getValue());
+                        return this.getLastAttack();
+                    }
+                });
+                Avatar.spellAction.addAction(new PlayerAction("Harm", 8, "waving your hands you cast harm, battering your foe"){
+                    @Override
+                    public double attack(){
+                        this.setLastAttack(this.getValue());
+                        return this.getLastAttack();
+                    }
+                });
+                Avatar.spellAction.addAction(new PlayerAction("Heal", -6, "you mend your wounds with blessed words"){
+                    @Override
+                    public double attack(){
+                        this.setLastAttack(this.getValue());
+                        return this.getLastAttack();
+                    }
+                });
+                break;
+            case "Ranger":
+                
+                break;
+        
+            default:
+                break;
         }
         player.setMap(map);
         playLevelScreenState = PlayLevelScreenState.RUNNING;
@@ -263,6 +339,9 @@ public class PlayLevelScreen extends Screen {
         // Gamestate changes
         if (map.getFlagManager().isFlagSet("hasFoundBall")) {
             playLevelScreenState = PlayLevelScreenState.LEVEL_COMPLETED;
+        }
+        if (map.getFlagManager().isFlagSet("hasDied")) {
+            playLevelScreenState = PlayLevelScreenState.GAME_OVER;
         }
 
         if (map.getFlagManager().isFlagSet("lockedDoor")) {
@@ -532,6 +611,10 @@ public class PlayLevelScreen extends Screen {
             case LEVEL_COMPLETED:
                 winScreen.draw(graphicsHandler);
                 break;
+            case GAME_OVER:
+                Avatar.resetPlayer();
+                this.goBackToMenu();
+                break;
         }
         if(invToggle){
             inventoryScreen.draw(graphicsHandler);
@@ -540,13 +623,16 @@ public class PlayLevelScreen extends Screen {
             questLogScreen.draw(graphicsHandler);
         }
     }
-
-    
             
-
     public PlayLevelScreenState getPlayLevelScreenState() {
         return playLevelScreenState;
     }
+
+    private void printMemoryUsage() {
+		Runtime runtime = Runtime.getRuntime();
+		long usedMemory = runtime.totalMemory() - runtime.freeMemory();
+		System.out.println("Used memory: " + usedMemory / 1024 / 1024 + " MB");
+	}
 
     public void resetLevel() {
         initialize();
@@ -559,6 +645,7 @@ public class PlayLevelScreen extends Screen {
 
     // This enum represents the different states this screen can be in
     private enum PlayLevelScreenState {
-        RUNNING, LEVEL_COMPLETED,
+        RUNNING, LEVEL_COMPLETED, GAME_OVER,
     }
+
 }

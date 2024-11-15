@@ -5,14 +5,15 @@ import java.util.Arrays;
 
 import Level.ScriptState;
 import Level.TextboxItem;
+import Utils.MathUtils;
 
 public class AttackScriptAction extends ScriptAction {
     private ArrayList<TextboxItem> textboxItems;
     private int damage;
     public static boolean lockDamage = false;
 
-    public void updateDamage(){
-        damage = (int)(Math.random()*6);
+    public void updateDamage(int dice){
+        damage = (int) (Math.random() * dice);
     }
 
     public void applyDamage(){
