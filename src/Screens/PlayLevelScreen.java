@@ -22,12 +22,10 @@ import java.io.IOException;
 // This class is for when the RPG game is actually being played
 public class PlayLevelScreen extends Screen {
     protected ScreenCoordinator screenCoordinator;
-    protected Map map;
+    protected Map map, townMap;
     protected BufferedImage inventory;
     protected BufferedImage itemDescript;
     protected BufferedImage questLog;
-    protected Map startMap, townMap, generalStoreMap, H1Map, H2Map, H3Map, H3_1Map, dungeonMap;
-    protected Map innMap, manorMap, smithMap, townHallMap;
     protected String[] mapChangeFlags;
     protected DungeonScreen dungeon;
     protected Player player;
