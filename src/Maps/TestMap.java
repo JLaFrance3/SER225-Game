@@ -131,7 +131,7 @@ public class TestMap extends Map {
       npcs.add(farmerGirl1);  
 
       Eye eye1 = new Eye(5, getMapTile(5,12).getLocation().subtractX(20));
-      //npcs.add(eye1);
+      npcs.add(eye1);
         return npcs;
 
 

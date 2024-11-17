@@ -17,7 +17,7 @@ public class Eye extends NPC {
     private int totalAmountMoved = 0;
     private Direction direction = Direction.RIGHT;
     private float speed = 1;
-    private int moveDistance = 200;  // Distance to move before turning around
+    private int moveDistance = 150;  // Distance to move before turning around
     private int health = 50; //monster health
     private int attackPower = 10; // moster attack power
 
