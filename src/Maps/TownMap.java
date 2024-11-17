@@ -161,27 +161,12 @@ public class TownMap extends Map {
     public ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
         ArrayList<EnhancedMapTile> enhancedMapTiles = new ArrayList<>();
 
-        DemoPlatearmor demoPlate = new DemoPlatearmor(getMapTile(11, 101).getLocation());
-        demoPlate.setExistenceFlag("hasInteractedDemoPlatearmor");
-        demoPlate.setInteractScript(new DemoPlateScript());
-        enhancedMapTiles.add(demoPlate);
-
-        DemoLeatherarmour demoLeather = new DemoLeatherarmour(getMapTile(12,98).getLocation());
-        demoLeather.setExistenceFlag("hasInteractedDemoLeatherarmor");
-        demoLeather.setInteractScript(new DemoLeatherScript());
-        enhancedMapTiles.add(demoLeather);
-
-        DemoMagicarmour demoMagic = new DemoMagicarmour(getMapTile(10,99).getLocation());
-        demoMagic.setExistenceFlag("hasInteractedDemoMagicarmor");
-        demoMagic.setInteractScript(new DemoMagicScript());
-        enhancedMapTiles.add(demoMagic);
-
         Gold gold1 = new Gold(getMapTile(33,59).getLocation());
         gold1.setExistenceFlag("gotGold1");
         gold1.setInteractScript(new GoldScript());
        enhancedMapTiles.add(gold1);
 
-       Fire fireSpell1 = new Fire(getMapTile(64,61).getLocation());
+        Fire fireSpell1 = new Fire(getMapTile(64,61).getLocation());
         fireSpell1.setExistenceFlag("gotFire");
         fireSpell1.setInteractScript(new FireSpellScript());
         enhancedMapTiles.add(fireSpell1);

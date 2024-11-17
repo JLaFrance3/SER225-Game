@@ -121,7 +121,7 @@ public class TestMap extends Map {
     //     Pumpkin pumpkin1 = new Pumpkin(5, getMapTile(6,13).getLocation().subtractX(20));
     //    // npcs.add(pumpkin1);
 
-       OldMan1 oldman1 = new OldMan1(5, getMapTile(5,27).getLocation().subtractX(20));
+       OldMan1 oldman1 = new OldMan1(40, getMapTile(5,27).getLocation().subtractX(20));
        oldman1.setInteractScript(new OldMan1Script());
        npcs.add(oldman1);
 

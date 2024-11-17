@@ -23,10 +23,12 @@ import java.io.IOException;
 // This class is for when the RPG game is actually being played
 public class PlayLevelScreen extends Screen {
     protected ScreenCoordinator screenCoordinator;
-    protected Map map, townMap;
+    protected Map map;
     protected BufferedImage inventory;
     protected BufferedImage itemDescript;
     protected BufferedImage questLog;
+    protected Map startMap, townMap, generalStoreMap, H1Map, H2Map, H3Map, H3_1Map, dungeonMap;
+    protected Map innMap, manorMap, smithMap, townHallMap;
     protected String[] mapChangeFlags;
     protected DungeonScreen dungeon;
     protected Player player;
@@ -161,11 +163,34 @@ public class PlayLevelScreen extends Screen {
             flagManager.addFlag(s, false);
         }
 
-        // set current map to startMap
+        // game maps
+        startMap = new TestMap();
+        startMap.setFlagManager(flagManager);
         townMap = new TownMap();
         townMap.setFlagManager(flagManager);
-        map = new TestMap();
-        map.setFlagManager(flagManager);
+        generalStoreMap = new GeneralStoreMap();
+        generalStoreMap.setFlagManager(flagManager);
+        H1Map = new House1Map();
+        H1Map.setFlagManager(flagManager);
+        H2Map = new House2Map();
+        H2Map.setFlagManager(flagManager);
+        H3Map = new House3Map();
+        H3Map.setFlagManager(flagManager);
+        H3_1Map = new House3_1Map();
+        H3_1Map.setFlagManager(flagManager);
+        innMap = new InnMap();
+        innMap.setFlagManager(flagManager);
+        manorMap = new ManorMap();
+        manorMap.setFlagManager(flagManager);
+        smithMap = new SmithMap();
+        smithMap.setFlagManager(flagManager);
+        townHallMap = new TownHallMap();
+        townHallMap.setFlagManager(flagManager);
+        dungeonMap = new DungeonMap();
+        dungeonMap.setFlagManager(flagManager);
+
+        // set current map to startMap
+        map = startMap;
 
         // setup player
         if (playerSpriteComponents != null) {
@@ -255,8 +280,6 @@ public class PlayLevelScreen extends Screen {
         inventoryScreen = new InventoryScreen(this, player);
         questLogScreen = new QuestLogScreen(this, flagManager);
 
-        
-
         try {
             AudioInputStream AIS = AudioSystem
                     .getAudioInputStream(new File("Resources/SoundEffects_AttackMotions/intro to rpg2.wav"));
@@ -334,6 +357,7 @@ public class PlayLevelScreen extends Screen {
             }
         }
 
+        // Quests
         if (map.getFlagManager().isFlagSet("readQuestOneChest")) {
             // Attempting to not spam player with chest textboxes
             if (chestInteractPoint == null) {
@@ -351,6 +375,10 @@ public class PlayLevelScreen extends Screen {
                 chestInteractPoint = null;
             }
         }
+        if (map.getFlagManager().isFlagSet("talkedToOldMan1")) {
+            startMap.getNPCById(40).setQuestIndicator(false);
+            generalStoreMap.getNPCById(41).setQuestIndicator(true);
+        }
 
         // Map change triggers
         if (map.getFlagManager().isFlagSet("startToTownMapPath")) {
@@ -365,8 +393,7 @@ public class PlayLevelScreen extends Screen {
         }
         if (map.getFlagManager().isFlagSet("townToStartMapPath")) {
             Point p;
-            map = new TestMap();
-            map.setFlagManager(flagManager);
+            map = startMap;
             p = map.getPositionByTileIndex(23, 7);
             player.setMap(map);
             player.setLocation(p.x, p.y);
@@ -376,8 +403,7 @@ public class PlayLevelScreen extends Screen {
         }
         if (map.getFlagManager().isFlagSet("townToStoreDoor")) {
             Point p;
-            map = new GeneralStoreMap();
-            map.setFlagManager(flagManager);
+            map = generalStoreMap;
             p = map.getPositionByTileIndex(9, 12);
             player.setMap(map);
             player.setLocation(p.x, p.y);
@@ -397,8 +423,7 @@ public class PlayLevelScreen extends Screen {
         }
         if (map.getFlagManager().isFlagSet("townToH1Door")) {
             Point p;
-            map = new House1Map();
-            map.setFlagManager(flagManager);
+            map = H1Map;
             p = map.getPositionByTileIndex(9, 11);
             player.setMap(map);
             player.setLocation(p.x, p.y);
@@ -418,8 +443,7 @@ public class PlayLevelScreen extends Screen {
         }
         if (map.getFlagManager().isFlagSet("townToH2Door")) {
             Point p;
-            map = new House2Map();
-            map.setFlagManager(flagManager);
+            map = H2Map;
             p = map.getPositionByTileIndex(9, 11);
             player.setMap(map);
             player.setLocation(p.x, p.y);
@@ -439,8 +463,7 @@ public class PlayLevelScreen extends Screen {
         }
         if (map.getFlagManager().isFlagSet("townToH3Door")) {
             Point p;
-            map = new House3Map();
-            map.setFlagManager(flagManager);
+            map = H3Map;
             p = map.getPositionByTileIndex(10, 11);
             player.setMap(map);
             player.setLocation(p.x, p.y);
@@ -460,8 +483,7 @@ public class PlayLevelScreen extends Screen {
         }
         if (map.getFlagManager().isFlagSet("townToH3_1Door")) {
             Point p;
-            map = new House3_1Map();
-            map.setFlagManager(flagManager);
+            map = H3_1Map;
             p = map.getPositionByTileIndex(10, 11);
             player.setMap(map);
             player.setLocation(p.x, p.y);
@@ -481,8 +503,7 @@ public class PlayLevelScreen extends Screen {
         }
         if (map.getFlagManager().isFlagSet("townToInnDoor")) {
             Point p;
-            map = new InnMap();
-            map.setFlagManager(flagManager);
+            map = innMap;
             p = map.getPositionByTileIndex(9, 11);
             player.setMap(map);
             player.setLocation(p.x, p.y);
@@ -502,8 +523,7 @@ public class PlayLevelScreen extends Screen {
         }
         if (map.getFlagManager().isFlagSet("townToManorDoor")) {
             Point p;
-            map = new ManorMap();
-            map.setFlagManager(flagManager);
+            map = manorMap;
             p = map.getPositionByTileIndex(15, 23);
             player.setMap(map);
             player.setLocation(p.x, p.y);
@@ -523,8 +543,7 @@ public class PlayLevelScreen extends Screen {
         }
         if (map.getFlagManager().isFlagSet("townToSmithDoor")) {
             Point p;
-            map = new SmithMap();
-            map.setFlagManager(flagManager);
+            map = smithMap;
             p = map.getPositionByTileIndex(10, 11);
             player.setMap(map);
             player.setLocation(p.x, p.y);
@@ -544,8 +563,7 @@ public class PlayLevelScreen extends Screen {
         }
         if (map.getFlagManager().isFlagSet("townToHallDoor")) {
             Point p;
-            map = new TownHallMap();
-            map.setFlagManager(flagManager);
+            map = townHallMap;
             p = map.getPositionByTileIndex(10, 12);
             player.setMap(map);
             player.setLocation(p.x, p.y);
@@ -565,8 +583,7 @@ public class PlayLevelScreen extends Screen {
         }
         if (map.getFlagManager().isFlagSet("startToDungeon")) {
             Point p;
-            map = new DungeonMap();
-            map.setFlagManager(flagManager);
+            map = dungeonMap;
             p = map.getPositionByTileIndex(8, 5);
             player.setMap(map);
             player.setLocation(p.x, p.y);
@@ -576,8 +593,7 @@ public class PlayLevelScreen extends Screen {
         }
         if (map.getFlagManager().isFlagSet("dungeonToStart")) {
             Point p;
-            map = new TestMap();
-            map.setFlagManager(flagManager);
+            map = startMap;
             p = map.getPositionByTileIndex(17, 20);
             player.setMap(map);
             player.setLocation(p.x, p.y);
@@ -632,5 +648,4 @@ public class PlayLevelScreen extends Screen {
     private enum PlayLevelScreenState {
         RUNNING, LEVEL_COMPLETED, GAME_OVER,
     }
-
 }

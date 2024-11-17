@@ -29,7 +29,7 @@ public class GeneralStoreMap extends Map {
         //this holds the npc's (?)
         ArrayList<NPC> npcs = new ArrayList<>();
 
-       OldMan2 oldman2 = new OldMan2(5, getMapTile(12,9).getLocation().subtractX(20));
+       OldMan2 oldman2 = new OldMan2(41, getMapTile(12,9).getLocation().subtractX(20));
        oldman2.setInteractScript(new OldMan2Script());
        npcs.add(oldman2);
         return npcs;

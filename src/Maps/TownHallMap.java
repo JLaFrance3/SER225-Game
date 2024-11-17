@@ -28,7 +28,7 @@ public class TownHallMap extends Map {
         //this holds the npc's (?)
         ArrayList<NPC> npcs = new ArrayList<>();
         
-       OldMan3 oldman3 = new OldMan3(5, getMapTile(10,9).getLocation());
+       OldMan3 oldman3 = new OldMan3(42, getMapTile(10,9).getLocation());
        oldman3.setInteractScript(new OldMan3Script());
        npcs.add(oldman3);
        System.out.println("works");

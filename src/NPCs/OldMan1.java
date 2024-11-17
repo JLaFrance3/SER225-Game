@@ -16,6 +16,7 @@ public class OldMan1 extends NPC {
 
     public OldMan1(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("OldMan1.png", true), 64, 64), "STAND_UP");
+        drawQuestIndicator = true;
     }
 
     @Override
