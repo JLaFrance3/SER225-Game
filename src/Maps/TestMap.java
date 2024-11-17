@@ -62,7 +62,7 @@ public class TestMap extends Map {
         Chest chest1 = new Chest(getMapTile(17, 3).getLocation());
         enhancedMapTiles.add(chest1);
 
-        KeyItem key2 = new KeyItem(getMapTile(1, 1).getLocation());
+        KeyItem key2 = new KeyItem(getMapTile(1, 7).getLocation());
         key2.setExistenceFlag("hasInteractedKey1");
         key2.setInteractScript(new Key2Script());
         enhancedMapTiles.add(key2);

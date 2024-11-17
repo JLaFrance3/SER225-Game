@@ -29,7 +29,7 @@ public class QuestLogScreen extends Screen {
             "Find the old man's sword",
             "Return the sword to the old man",
             "Kill the evil bug",                                                             
-            "Find the merchant in the market and talk to him.",
+            "Travel northeast to town and find the merchant in the market.",
             "Find the mysterious man by the Town Hall \nfor more information.",
             "Make your way to the southeast outskirts \nof town where the big forest is located."
         };

@@ -5,7 +5,6 @@ import Engine.GraphicsHandler;
 import Engine.Screen;
 import Screens.CharacterScreen;
 import Screens.CreditsScreen;
-import Screens.DungeonScreen;
 import Screens.LoadingScreen1;
 import Screens.LoadingScreen2;
 import Screens.MenuScreen;
@@ -84,9 +83,6 @@ public class ScreenCoordinator extends Screen {
 						break;
 					case CREDITS:
 						currentScreen = new CreditsScreen(this);
-						break;
-					case DUNGEON:
-						currentScreen = new DungeonScreen(this);
 						break;
 				}
 				currentScreen.initialize();

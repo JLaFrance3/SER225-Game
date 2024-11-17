@@ -2,6 +2,7 @@ package Maps;
 
 import java.util.ArrayList;
 
+import Engine.ImageLoader;
 import EnhancedMapTiles.Chest;
 import EnhancedMapTiles.Gate;
 import EnhancedMapTiles.Gold;
@@ -12,11 +13,13 @@ import EnhancedMapTiles.Armor.DemoPlatearmor;
 import EnhancedMapTiles.Spells.Fire;
 import EnhancedMapTiles.Spells.Thunder;
 import EnhancedMapTiles.Swords.GreatSword;
+import GameObject.SpriteSheet;
 import Level.EnhancedMapTile;
 import Level.Map;
 import Level.NPC;
 import Level.Trigger;
 import NPCs.Bug;
+import NPCs.GenericNPC;
 import NPCs.OldMan1;
 import NPCs.OldMan2;
 import NPCs.OldMan3;
@@ -39,6 +42,7 @@ import Scripts.TestMap.OldMan1Script;
 import Scripts.TestMap.ThunderSpellScript;
 import Scripts.TownMap.*;
 import Tilesets.TownTileset;
+import Utils.Direction;
 import Utils.Point;
 
 //this class represents the Dungeon map I am building
@@ -55,7 +59,7 @@ public class TownMap extends Map {
         //this holds the npc's (?)
         ArrayList<NPC> npcs = new ArrayList<>();
         
-        OldMan2 oldman2 = new OldMan2(41, getMapTile(49,80).getLocation().subtractX(20));
+        OldMan2 oldman2 = new OldMan2(41, getMapTile(50,82).getLocation().subtractX(10));
         oldman2.setInteractScript(new OldMan2Script());
         npcs.add(oldman2);
 
@@ -153,6 +157,44 @@ public class TownMap extends Map {
         pumpkin3.setExistenceFlag("pumpkin3FLag");
         npcs.add(pumpkin3);
 
+        GenericNPC kid = new GenericNPC(10, getMapTile(98,56).getLocation(), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_2.png", true), 64, 64),
+            Direction.RIGHT, 350, true);
+        kid.setSpeed(4);
+        kid.toggleDelay();
+        npcs.add(kid);
+        GenericNPC citizen1 = new GenericNPC(11, getMapTile(92,48).getLocation(), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_3.png", true), 64, 64),
+            Direction.LEFT, 2000, true);
+        npcs.add(citizen1);
+        GenericNPC citizen2 = new GenericNPC(12, getMapTile(13,78).getLocation(), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_4.png", true), 64, 64),
+            Direction.RIGHT, 2500, true);
+        npcs.add(citizen2);
+        GenericNPC citizen3 = new GenericNPC(13, getMapTile(16,60).getLocation(), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_6.png", true), 64, 64),
+            Direction.LEFT, 300, true);
+        npcs.add(citizen3);
+        GenericNPC citizen4 = new GenericNPC(14, getMapTile(61,92).getLocation(), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_7.png", true), 64, 64),
+            Direction.UP, 1400, false);
+        npcs.add(citizen4);
+        GenericNPC citizen5 = new GenericNPC(15, getMapTile(46,75).getLocation().subtractY(24).subtractX(20), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_8.png", true), 64, 64), Direction.DOWN);
+        npcs.add(citizen5);
+        GenericNPC citizen6 = new GenericNPC(16, getMapTile(70,44).getLocation().subtractY(20), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_9.png", true), 64, 64), Direction.DOWN);
+        npcs.add(citizen6);
+        GenericNPC citizen7 = new GenericNPC(17, getMapTile(8,78).getLocation().subtractX(10), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_10.png", true), 64, 64), Direction.DOWN);
+        npcs.add(citizen7);
+        GenericNPC citizen8 = new GenericNPC(18, getMapTile(45,69).getLocation().subtractY(20), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_11.png", true), 64, 64), Direction.DOWN);
+        npcs.add(citizen8);
+        GenericNPC citizen9 = new GenericNPC(19, getMapTile(42,80).getLocation().subtractY(10), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_12.png", true), 64, 64),
+            Direction.RIGHT, 1600, true);
+        npcs.add(citizen9);
 
          
         return npcs;

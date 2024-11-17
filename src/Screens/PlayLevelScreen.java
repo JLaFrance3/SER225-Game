@@ -31,7 +31,6 @@ public class PlayLevelScreen extends Screen {
     protected Map startMap, townMap, generalStoreMap, H1Map, H2Map, H3Map, H3_1Map, dungeonMap;
     protected Map innMap, manorMap, smithMap, townHallMap;
     protected String[] mapChangeFlags;
-    protected DungeonScreen dungeon;
     protected Player player;
     protected PlayLevelScreenState playLevelScreenState;
     protected WinScreen winScreen;

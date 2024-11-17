@@ -1,26 +1,33 @@
 package Maps;
 
 import java.util.ArrayList;
-
+import Engine.ImageLoader;
+import GameObject.SpriteSheet;
 import Level.Map;
 import Level.NPC;
 import Level.Trigger;
-import NPCs.Bug;
-import NPCs.OldMan2;
-import NPCs.TestDummy;
-import NPCs.Monsters.Goblin;
-import NPCs.Monsters.GoldDragon;
-import NPCs.Monsters.Skeleton;
+import NPCs.GenericNPC;
+import Scripts.GenericResponseScript;
 import Scripts.IndoorMaps.StoreToTownDoorScript;
-import Scripts.TestMap.CombatScript;
-import Scripts.TownMap.OldMan2Script;
 import Tilesets.IndoorTileset;
+import Utils.Direction;
 import Utils.Point;
 
 public class GeneralStoreMap extends Map {
     
     public GeneralStoreMap() {
         super("GeneralStore.txt", new IndoorTileset());
+    }
+
+    @Override
+    public ArrayList<NPC> loadNPCs() {
+        ArrayList<NPC> npcs = new ArrayList<>();
+
+        GenericNPC merchant = new GenericNPC(1, getMapTile(8,9).getLocation().subtractY(20), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_5.png", true), 64, 64), Direction.DOWN);
+        npcs.add(merchant);
+        
+        return npcs;
     }
 
     @Override
