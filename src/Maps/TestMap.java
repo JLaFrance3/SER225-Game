@@ -16,6 +16,7 @@ import NPCs.OldMan3;
 import NPCs.TestDummy;
 import NPCs.Monsters.BadFlower;
 import NPCs.Monsters.Bat;
+import NPCs.Monsters.Eye;
 import NPCs.Monsters.Goblin;
 import NPCs.Monsters.GoldDragon;
 import NPCs.Monsters.Pumpkin;
@@ -128,7 +129,12 @@ public class TestMap extends Map {
       FarmerGirl farmerGirl1 = new FarmerGirl(5,getMapTile(7,8).getLocation().subtractX(20));
       farmerGirl1.setInteractScript(new FarmerGirlScript());
       npcs.add(farmerGirl1);  
+
+      Eye eye1 = new Eye(5, getMapTile(5,12).getLocation().subtractX(20));
+      //npcs.add(eye1);
         return npcs;
+
+
     }
 
     @Override
