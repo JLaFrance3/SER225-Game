@@ -66,12 +66,22 @@ public class NPC extends MapEntity {
         this.drawQuestIndicator = drawQuestIndicator;
     }
 
+    public void toggleQuestIndicator() {
+        setQuestIndicator(!drawQuestIndicator);
+    }
+
     public void stand(Direction direction) {
         if (direction == Direction.RIGHT) {
             this.currentAnimationName = "STAND_RIGHT";
         }
         else if (direction == Direction.LEFT) {
             this.currentAnimationName = "STAND_LEFT";
+        }
+        else if (direction == Direction.DOWN) {
+            this.currentAnimationName = "STAND_DOWN";
+        }
+        else if (direction == Direction.UP) {
+            this.currentAnimationName = "STAND_UP";
         }
     }
 

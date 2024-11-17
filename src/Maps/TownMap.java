@@ -18,6 +18,8 @@ import Level.NPC;
 import Level.Trigger;
 import NPCs.Bug;
 import NPCs.OldMan1;
+import NPCs.OldMan2;
+import NPCs.OldMan3;
 import NPCs.TestDummy;
 import NPCs.Monsters.BadFlower;
 import NPCs.Monsters.Bat;
@@ -53,15 +55,14 @@ public class TownMap extends Map {
         //this holds the npc's (?)
         ArrayList<NPC> npcs = new ArrayList<>();
         
-//         Bug bug = new Bug(3, getMapTile(7, 12).getLocation().subtractX(20));
-//         bug.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
-//       //  npcs.add(bug);
+        OldMan2 oldman2 = new OldMan2(41, getMapTile(49,80).getLocation().subtractX(20));
+        oldman2.setInteractScript(new OldMan2Script());
+        npcs.add(oldman2);
 
-// //32,107), 25, 114), 36,114), 27, 118)
-
-//         TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20)); 
-//         dummy.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
-//        // npcs.add(dummy);
+        OldMan3 oldman3 = new OldMan3(42, getMapTile(78,59).getLocation().subtractX(20));
+        oldman3.setCurrentAnimationName("STAND_RIGHT");
+        oldman3.setInteractScript(new OldMan3Script());
+        npcs.add(oldman3);
 
         Goblin goblin1 = new Goblin(5, getMapTile(90, 106).getLocation().subtractX(20));
         goblin1.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,8,"the goblin slashes at you with its claws",15,"goblin1Flag"));

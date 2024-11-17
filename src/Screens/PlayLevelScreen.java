@@ -19,6 +19,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.AudioInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 // This class is for when the RPG game is actually being played
 public class PlayLevelScreen extends Screen {
@@ -35,7 +36,6 @@ public class PlayLevelScreen extends Screen {
     protected PlayLevelScreenState playLevelScreenState;
     protected WinScreen winScreen;
     protected InventoryScreen inventoryScreen;
-    protected QuestLogScreen questLogScreen;
     protected FlagManager flagManager;
     protected Point lockDoorInteractPoint;
     protected KeyLocker keyLocker = new KeyLocker();
@@ -47,6 +47,10 @@ public class PlayLevelScreen extends Screen {
     protected String playerName;
     protected boolean player_isMale;
     protected String playerClass;
+
+    protected QuestLogScreen questLogScreen;
+    private HashMap<String, Integer> mainQuestFlags;
+    private int currentMainQuest;
 
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
@@ -63,6 +67,7 @@ public class PlayLevelScreen extends Screen {
         this.playerName = null;
         this.player_isMale = false;
         this.playerClass = null;
+        this.currentMainQuest = 1;
     }
 
     public PlayLevelScreen(ScreenCoordinator screenCoordinator, SpriteSheet[] spriteComponents, String name, boolean isMale, String playerClass) {
@@ -73,6 +78,7 @@ public class PlayLevelScreen extends Screen {
         this.playerName = name;
         this.player_isMale = isMale;
         this.playerClass = playerClass;
+        this.currentMainQuest = 1;
     }
 
     public void initialize() {
@@ -104,7 +110,6 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("gateInteract", false);
         flagManager.addFlag("flowerBed", false);
         flagManager.addFlag("readBackground", false);
-        flagManager.addFlag("dummyAlive", false);
         flagManager.addFlag("hasfought", false);
         flagManager.addFlag("lockedDoor", false);
         flagManager.addFlag("walrusHouseSign", false);
@@ -115,10 +120,6 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("hasInteractedKey1", false);
         flagManager.addFlag("hasInteractedThunder", false);
         flagManager.addFlag("hasInteractedChest2", false);
-        flagManager.addFlag("hasInteractedGreatSword", false);
-        flagManager.addFlag("hasInteractedDemoPlatearmor", false);
-        flagManager.addFlag("hasInteractedDemoLeatherarmor", false);
-        flagManager.addFlag("hasInteractedDemoMagicarmor", false);
         flagManager.addFlag("talkedToFarmerGirl", false);
         flagManager.addFlag("notStealCorn", false);
         flagManager.addFlag("gotGold1", false);
@@ -128,9 +129,19 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("readTestQuest", false);
         flagManager.addFlag("readQuestOne", false);
         flagManager.addFlag("readQuestOneChest", false);
-        flagManager.addFlag("talkedToOldMan1", false);
-        flagManager.addFlag("talkedToOldMan2", false);
-        flagManager.addFlag("talkedToOldMan3", false);
+
+        //Main quest flags array. Easier to update questlog
+        mainQuestFlags = new HashMap<>();
+        mainQuestFlags.put("canHaveWeapon", 2);
+        mainQuestFlags.put("hasInteractedGreatSword", 3);
+        mainQuestFlags.put("returnedSword", 4);
+        mainQuestFlags.put("dummyAlive", 5);
+        mainQuestFlags.put("talkedToOldMan1", 6);
+        mainQuestFlags.put("talkedToOldMan2", 7);
+        mainQuestFlags.put("talkedToOldMan3", 8);
+        for (String mainQuestFlag : mainQuestFlags.keySet()) {
+            flagManager.addFlag(mainQuestFlag, false);
+        }
 
         // Map change flags
         mapChangeFlags = new String[] {
@@ -272,13 +283,12 @@ public class PlayLevelScreen extends Screen {
         // let pieces of map know which button to listen for as the "interact" button
         map.getTextbox().setInteractKey(player.getInteractKey());
 
-        // preloads all scripts ahead of time rather than loading them dynamically
-        // both are supported, however preloading is recommended
-        map.preloadScripts();
-
         winScreen = new WinScreen(this);
         inventoryScreen = new InventoryScreen(this, player);
         questLogScreen = new QuestLogScreen(this, flagManager);
+
+        //Give player the quest log so scripts can update
+        player.setQuestLog(questLogScreen, mainQuestFlags);
 
         try {
             AudioInputStream AIS = AudioSystem
@@ -375,9 +385,20 @@ public class PlayLevelScreen extends Screen {
                 chestInteractPoint = null;
             }
         }
-        if (map.getFlagManager().isFlagSet("talkedToOldMan1")) {
+        if (flagManager.isFlagSet("talkedToOldMan1")) {
             startMap.getNPCById(40).setQuestIndicator(false);
-            generalStoreMap.getNPCById(41).setQuestIndicator(true);
+            townMap.getNPCById(41).setQuestIndicator(true);
+        } 
+        if (flagManager.isFlagSet("dummyAlive") && !flagManager.isFlagSet("talkedToOldMan1")) {
+            startMap.getNPCById(40).setQuestIndicator(true);
+            player.setMainQuest("dummyAlive");
+        }
+        if (flagManager.isFlagSet("talkedToOldMan2")) {
+            townMap.getNPCById(41).setQuestIndicator(false);
+            townMap.getNPCById(42).setQuestIndicator(true);
+        } 
+        if (flagManager.isFlagSet("talkedToOldMan3")) {
+            townMap.getNPCById(42).setQuestIndicator(false);
         }
 
         // Map change triggers

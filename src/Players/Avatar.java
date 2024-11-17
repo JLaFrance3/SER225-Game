@@ -7,6 +7,7 @@ import EnhancedMapTiles.InventoryItem;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
 import Level.Player;
+import Screens.QuestLogScreen;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -29,7 +30,7 @@ public class Avatar extends Player {
         private String longWeaponFilePath;      //Larger sprite image loaded separately
         private SpriteSheet slashAnimations;    //Slash animation spritesheet to account for longweapons
         public static int hitDice;
-        public static String playerClass;
+        public static String playerClass;       //"Warrior", "Wizard", "Ranger"
         public static PlayerActionCollection meleeAction = new PlayerActionCollection();
         public static PlayerActionCollection spellAction = new PlayerActionCollection();
         public static double health = 10;
@@ -1003,6 +1004,17 @@ public class Avatar extends Player {
 
         public void setAmulet(){
                 amuletOfLifeSteal = true;
+        }
+
+        @Override
+        public void setQuestLog(QuestLogScreen questLog, HashMap<String, Integer> mainQuestFlags) {
+                this.questLog = questLog; 
+                this.mainQuestFlags = mainQuestFlags;
+        }
+
+        @Override
+        public void setMainQuest(String flag) {
+                questLog.setMainQuest(mainQuestFlags.get(flag));
         }
         
 }

@@ -3,7 +3,10 @@ package Maps;
 import EnhancedMapTiles.Chest;
 import EnhancedMapTiles.Gate;
 import EnhancedMapTiles.Gold;
+import EnhancedMapTiles.InventoryItem;
+import EnhancedMapTiles.InventoryItem.EQUIP_TYPE;
 import EnhancedMapTiles.Swords.GreatSword;
+import GameObject.SpriteSheet;
 import EnhancedMapTiles.KeyItem;
 import EnhancedMapTiles.Spells.Fire;
 import EnhancedMapTiles.Spells.Thunder;
@@ -26,7 +29,12 @@ import Scripts.TownMap.OldMan2Script;
 import Scripts.TownMap.OldMan3Script;
 import Tilesets.FarmlandTileset;
 import Utils.Point;
+
+import GameObject.Frame;
 import java.util.ArrayList;
+
+import Builders.FrameBuilder;
+import Engine.ImageLoader;
 
 
 
@@ -54,7 +62,7 @@ public class TestMap extends Map {
         Chest chest1 = new Chest(getMapTile(17, 3).getLocation());
         enhancedMapTiles.add(chest1);
 
-        KeyItem key2 = new KeyItem(getMapTile(3, 28).getLocation());
+        KeyItem key2 = new KeyItem(getMapTile(1, 1).getLocation());
         key2.setExistenceFlag("hasInteractedKey1");
         key2.setInteractScript(new Key2Script());
         enhancedMapTiles.add(key2);
@@ -64,13 +72,10 @@ public class TestMap extends Map {
         thunderSpell.setInteractScript(new ThunderSpellScript());
         enhancedMapTiles.add(thunderSpell);
 
-
         GreatSword greatsword = new GreatSword(getMapTile(11,20).getLocation());
         greatsword.setExistenceFlag("hasInteractedGreatSword");
         greatsword.setInteractScript(new GreatSwordScript());
         enhancedMapTiles.add(greatsword);
-
-
 
         return enhancedMapTiles;
     }

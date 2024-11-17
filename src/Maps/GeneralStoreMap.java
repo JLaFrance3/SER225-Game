@@ -23,18 +23,6 @@ public class GeneralStoreMap extends Map {
         super("GeneralStore.txt", new IndoorTileset());
     }
 
-     //array to load npc's
-    @Override
-    public ArrayList<NPC> loadNPCs() {
-        //this holds the npc's (?)
-        ArrayList<NPC> npcs = new ArrayList<>();
-
-       OldMan2 oldman2 = new OldMan2(41, getMapTile(12,9).getLocation().subtractX(20));
-       oldman2.setInteractScript(new OldMan2Script());
-       npcs.add(oldman2);
-        return npcs;
-    }
-
     @Override
     public ArrayList<Trigger> loadTriggers() {
         ArrayList<Trigger> triggers = new ArrayList<>();
