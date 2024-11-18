@@ -9,7 +9,7 @@ public class OldMan1Script extends Script{
     @Override
     public ArrayList<ScriptAction> loadScriptActions() {
         ArrayList<ScriptAction> scriptActions = new ArrayList<>();
-        // scriptActions.add(new LockPlayerScriptAction());
+        scriptActions.add(new LockPlayerScriptAction());
         
         
         scriptActions.add(new TextboxScriptAction() {{
@@ -19,7 +19,7 @@ public class OldMan1Script extends Script{
         }});
 
         scriptActions.add(new ChangeFlagScriptAction("talkedToOldMan1", true));
-        // scriptActions.add(new UnlockPlayerScriptAction());
+        scriptActions.add(new UnlockPlayerScriptAction());
 
         return scriptActions;
     }

@@ -1,9 +1,14 @@
 package Screens;
 
 import Engine.*;
+import GameObject.Sprite;
+import SpriteFont.SpriteFont;
+import Game.ScreenCoordinator;
+import GameObject.Sprite;
 import SpriteFont.SpriteFont;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 // This class is for the win level screen
 public class WinScreen extends Screen {
@@ -11,6 +16,8 @@ public class WinScreen extends Screen {
     protected SpriteFont instructions;
     protected KeyLocker keyLocker = new KeyLocker();
     protected PlayLevelScreen playLevelScreen;
+    private BufferedImage backgroundImage;
+    private Sprite sprite;
 
     public WinScreen(PlayLevelScreen playLevelScreen) {
         this.playLevelScreen = playLevelScreen;
@@ -23,6 +30,15 @@ public class WinScreen extends Screen {
         instructions = new SpriteFont("Press Space to play again or Escape to go back to the main menu", 120, 279,"Arial", 20, Color.white);
         keyLocker.lockKey(Key.SPACE);
         keyLocker.lockKey(Key.ESC);
+
+        try {
+            backgroundImage = ImageLoader.load("WinScreenImage.png", false);
+            sprite = new Sprite(backgroundImage);// taking in image as sprite
+            sprite.setScale(0.7f);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -43,7 +59,13 @@ public class WinScreen extends Screen {
     }
 
     public void draw(GraphicsHandler graphicsHandler) {
-        graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), Color.black);
+        if (backgroundImage != null) {
+            sprite.draw(graphicsHandler);
+        } else {
+            graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(),
+                    Color.black);
+        }
+        
         winMessage.draw(graphicsHandler);
         instructions.draw(graphicsHandler);
     }
