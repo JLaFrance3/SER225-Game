@@ -58,7 +58,6 @@ public class InventoryScreen extends Screen {
 
     @Override
     public void update() {
-        System.out.println("reached"); //make it so that if d is pressed, counter is incremented
         if(player.getInventoryArrayList().isEmpty() == false){
             
         if (Keyboard.isKeyDown(Key.O) && keyPressTimer == 0) {

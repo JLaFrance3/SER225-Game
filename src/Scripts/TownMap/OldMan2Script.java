@@ -28,7 +28,7 @@ public class OldMan2Script extends Script{
 
                 addScriptAction(new TextboxScriptAction () {{
                     addText("Hello. \nI've heard whisperings of this group called \"The Uncanny\", and rumors that they \nare the ones who stole The Forseeable Eye.");
-                    addText("They live somewhere deep in the woods. Supposedly, \nthere is a man who lives by the Town Hall who knows how to get there.");
+                    addText("They live somewhere deep in the woods. Supposedly, \nthere is a man who lives behind the Town Hall who knows how to get there.");
                 }});
                 
                 addScriptAction(new ChangeFlagScriptAction("talkedToOldMan2", true));
