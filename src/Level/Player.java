@@ -93,6 +93,16 @@ public abstract class Player extends GameObject {
         return inventoryArrayList;
     }
 
+    public boolean inventoryContains(String itemName) {
+        for (InventoryItem item : inventoryArrayList) {
+            if (item.getItemName() == itemName) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void update() {
         if (!isLocked) {
             moveAmountX = 0;
