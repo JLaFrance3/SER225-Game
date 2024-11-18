@@ -9,7 +9,7 @@ public class OldMan2Script extends Script{
     @Override
     public ArrayList<ScriptAction> loadScriptActions() {
         ArrayList<ScriptAction> scriptActions = new ArrayList<>();
-        scriptActions.add(new LockPlayerScriptAction());
+         scriptActions.add(new LockPlayerScriptAction());
         
         scriptActions.add(new ConditionalScriptAction() {{
             
@@ -36,7 +36,7 @@ public class OldMan2Script extends Script{
 
         }});
 
-        scriptActions.add(new UnlockPlayerScriptAction());
+         scriptActions.add(new UnlockPlayerScriptAction());
 
         return scriptActions;
     }
