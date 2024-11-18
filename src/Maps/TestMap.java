@@ -160,7 +160,6 @@ public class TestMap extends Map {
         //triggers.add(new Trigger(getMapTile(1, 6).getX(),getMapTile(1, 6).getY(), 30, 10, new QuestOneScript(), "readQuestOne"));
         //triggers.add(new Trigger(getMapTile(17, 4).getX(),getMapTile(17, 4).getY(), 30, 10, new QuestOneChestScript(), "readQuestOneChest"));
         triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "notStealCorn"));
-        triggers.add(new Trigger(getMapTile(25,28).getX(),getMapTile(25,28).getY(), width, height, new OldMan1Script(), "talkedToOldMan1"));
         triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "startToDungeon"));
         //triggers.add(new Trigger(getMapTile(25,28).getX(),getMapTile(25,28).getY(), width, height, new OldMan1Script(), "talkedToOldMan1"));
 

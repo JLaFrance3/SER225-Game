@@ -270,10 +270,6 @@ public class TownMap extends Map {
         triggers.add(new Trigger(directionSign.x, directionSign.y, 32, 32, new DirectionSign(),"directionSign"));
         triggers.add(new Trigger(startAreaSign.x, startAreaSign.y, 32, 32, new StartAreaSign(),"startAreaSign"));
 
-        //Old Men triggers 
-        //triggers.add(new Trigger(getMapTile(40,102).getX(),getMapTile(40,102).getY(), 32, 32, new OldMan2Script(), "talkedToOldMan2"));
-        //triggers.add(new Trigger(getMapTile(66,103).getX(),getMapTile(66,103).getY(), 32, 32, new OldMan3Script(), "talkedToOldMan3"));
-
         return triggers;
     }
 }
