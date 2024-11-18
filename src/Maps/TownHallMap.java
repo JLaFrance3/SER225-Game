@@ -2,10 +2,13 @@ package Maps;
 
 import java.util.ArrayList;
 
+import Engine.ImageLoader;
+import GameObject.SpriteSheet;
 import Level.Map;
 import Level.NPC;
 import Level.Trigger;
 import NPCs.Bug;
+import NPCs.GenericNPC;
 import NPCs.OldMan3;
 import NPCs.TestDummy;
 import NPCs.Monsters.Goblin;
@@ -15,6 +18,7 @@ import Scripts.IndoorMaps.HallToTownDoorScript;
 import Scripts.TestMap.CombatScript;
 import Scripts.TownMap.OldMan3Script;
 import Tilesets.IndoorTileset;
+import Utils.Direction;
 import Utils.Point;
 
 public class TownHallMap extends Map {
@@ -23,16 +27,14 @@ public class TownHallMap extends Map {
         super("TownHall.txt", new IndoorTileset());
     }
 
-     @Override
+    @Override
     public ArrayList<NPC> loadNPCs() {
-        //this holds the npc's (?)
         ArrayList<NPC> npcs = new ArrayList<>();
-        
-       OldMan3 oldman3 = new OldMan3(5, getMapTile(10,9).getLocation());
-       oldman3.setInteractScript(new OldMan3Script());
-       npcs.add(oldman3);
-       System.out.println("works");
 
+        GenericNPC administrator = new GenericNPC(1, getMapTile(5,8).getLocation().subtractY(20), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_0.png", true), 64, 64), Direction.DOWN);
+        npcs.add(administrator);
+        
         return npcs;
     }
 

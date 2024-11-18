@@ -10,8 +10,11 @@ import EnhancedMapTiles.InventoryItem;
 import GameObject.GameObject;
 import GameObject.Rectangle;
 import GameObject.SpriteSheet;
+import Screens.QuestLogScreen;
 import Utils.Direction;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.AudioInputStream;
@@ -71,6 +74,8 @@ public abstract class Player extends GameObject {
     boolean[] attackkeysPressed = new boolean[4];
     protected boolean isLocked = false;
     private ArrayList<InventoryItem> inventoryArrayList = new ArrayList<>();
+    protected QuestLogScreen questLog;
+    protected HashMap<String, Integer> mainQuestFlags;
 
     // Player stats
     protected int strength, dexterity, constitution, intelligence;
@@ -86,6 +91,16 @@ public abstract class Player extends GameObject {
 
     public ArrayList<InventoryItem> getInventoryArrayList() {
         return inventoryArrayList;
+    }
+
+    public boolean inventoryContains(String itemName) {
+        for (InventoryItem item : inventoryArrayList) {
+            if (item.getItemName() == itemName) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void update() {
@@ -542,6 +557,8 @@ public abstract class Player extends GameObject {
     public abstract int getIntelligence();
     public abstract String getPlayerClass();
     public abstract String getPlayerName();
+    public abstract void setQuestLog(QuestLogScreen questLog, HashMap<String, Integer> mainQuestFlags);
+    public abstract void setMainQuest(String flag);
 
     // Uncomment this to have game draw player's bounds to make it easier to
     // visualize

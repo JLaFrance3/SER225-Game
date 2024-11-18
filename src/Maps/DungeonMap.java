@@ -4,7 +4,6 @@ import EnhancedMapTiles.Chest;
 import EnhancedMapTiles.Gate;
 import Level.*;
 import NPCs.Bug;
-import NPCs.Dinosaur;
 import NPCs.OldMan3;
 import NPCs.TestDummy;
 import NPCs.Walrus;

@@ -2,6 +2,7 @@ package Maps;
 
 import java.util.ArrayList;
 
+import Engine.ImageLoader;
 import EnhancedMapTiles.Chest;
 import EnhancedMapTiles.Gate;
 import EnhancedMapTiles.Gold;
@@ -12,12 +13,16 @@ import EnhancedMapTiles.Armor.DemoPlatearmor;
 import EnhancedMapTiles.Spells.Fire;
 import EnhancedMapTiles.Spells.Thunder;
 import EnhancedMapTiles.Swords.GreatSword;
+import GameObject.SpriteSheet;
 import Level.EnhancedMapTile;
 import Level.Map;
 import Level.NPC;
 import Level.Trigger;
 import NPCs.Bug;
+import NPCs.GenericNPC;
 import NPCs.OldMan1;
+import NPCs.OldMan2;
+import NPCs.OldMan3;
 import NPCs.TestDummy;
 import NPCs.Monsters.BadFlower;
 import NPCs.Monsters.Bat;
@@ -37,6 +42,7 @@ import Scripts.TestMap.OldMan1Script;
 import Scripts.TestMap.ThunderSpellScript;
 import Scripts.TownMap.*;
 import Tilesets.TownTileset;
+import Utils.Direction;
 import Utils.Point;
 
 //this class represents the Dungeon map I am building
@@ -53,15 +59,14 @@ public class TownMap extends Map {
         //this holds the npc's (?)
         ArrayList<NPC> npcs = new ArrayList<>();
         
-//         Bug bug = new Bug(3, getMapTile(7, 12).getLocation().subtractX(20));
-//         bug.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
-//       //  npcs.add(bug);
+        OldMan2 oldman2 = new OldMan2(41, getMapTile(50,82).getLocation().subtractX(10));
+        oldman2.setInteractScript(new OldMan2Script());
+        npcs.add(oldman2);
 
-// //32,107), 25, 114), 36,114), 27, 118)
-
-//         TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20)); 
-//         dummy.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell"));
-//        // npcs.add(dummy);
+        OldMan3 oldman3 = new OldMan3(42, getMapTile(78,59).getLocation().subtractX(20));
+        oldman3.setCurrentAnimationName("STAND_RIGHT");
+        oldman3.setInteractScript(new OldMan3Script());
+        npcs.add(oldman3);
 
         Goblin goblin1 = new Goblin(5, getMapTile(90, 106).getLocation().subtractX(20));
         goblin1.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,8,"the goblin slashes at you with its claws",15,"goblin1Flag"));
@@ -152,6 +157,44 @@ public class TownMap extends Map {
         pumpkin3.setExistenceFlag("pumpkin3FLag");
         npcs.add(pumpkin3);
 
+        GenericNPC kid = new GenericNPC(10, getMapTile(98,56).getLocation(), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_2.png", true), 64, 64),
+            Direction.RIGHT, 350, true);
+        kid.setSpeed(4);
+        kid.toggleDelay();
+        npcs.add(kid);
+        GenericNPC citizen1 = new GenericNPC(11, getMapTile(92,48).getLocation(), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_3.png", true), 64, 64),
+            Direction.LEFT, 2000, true);
+        npcs.add(citizen1);
+        GenericNPC citizen2 = new GenericNPC(12, getMapTile(13,78).getLocation(), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_4.png", true), 64, 64),
+            Direction.RIGHT, 2500, true);
+        npcs.add(citizen2);
+        GenericNPC citizen3 = new GenericNPC(13, getMapTile(16,60).getLocation(), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_6.png", true), 64, 64),
+            Direction.LEFT, 300, true);
+        npcs.add(citizen3);
+        GenericNPC citizen4 = new GenericNPC(14, getMapTile(61,92).getLocation(), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_7.png", true), 64, 64),
+            Direction.UP, 1400, false);
+        npcs.add(citizen4);
+        GenericNPC citizen5 = new GenericNPC(15, getMapTile(46,75).getLocation().subtractY(24).subtractX(20), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_8.png", true), 64, 64), Direction.DOWN);
+        npcs.add(citizen5);
+        GenericNPC citizen6 = new GenericNPC(16, getMapTile(70,44).getLocation().subtractY(20), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_9.png", true), 64, 64), Direction.DOWN);
+        npcs.add(citizen6);
+        GenericNPC citizen7 = new GenericNPC(17, getMapTile(8,78).getLocation().subtractX(10), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_10.png", true), 64, 64), Direction.DOWN);
+        npcs.add(citizen7);
+        GenericNPC citizen8 = new GenericNPC(18, getMapTile(45,69).getLocation().subtractY(20), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_11.png", true), 64, 64), Direction.DOWN);
+        npcs.add(citizen8);
+        GenericNPC citizen9 = new GenericNPC(19, getMapTile(42,80).getLocation().subtractY(10), 
+            new SpriteSheet(ImageLoader.load("NPCSprites/NPC_12.png", true), 64, 64),
+            Direction.RIGHT, 1600, true);
+        npcs.add(citizen9);
 
          
         return npcs;
@@ -161,27 +204,12 @@ public class TownMap extends Map {
     public ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
         ArrayList<EnhancedMapTile> enhancedMapTiles = new ArrayList<>();
 
-        DemoPlatearmor demoPlate = new DemoPlatearmor(getMapTile(11, 101).getLocation());
-        demoPlate.setExistenceFlag("hasInteractedDemoPlatearmor");
-        demoPlate.setInteractScript(new DemoPlateScript());
-        enhancedMapTiles.add(demoPlate);
-
-        DemoLeatherarmour demoLeather = new DemoLeatherarmour(getMapTile(12,98).getLocation());
-        demoLeather.setExistenceFlag("hasInteractedDemoLeatherarmor");
-        demoLeather.setInteractScript(new DemoLeatherScript());
-        enhancedMapTiles.add(demoLeather);
-
-        DemoMagicarmour demoMagic = new DemoMagicarmour(getMapTile(10,99).getLocation());
-        demoMagic.setExistenceFlag("hasInteractedDemoMagicarmor");
-        demoMagic.setInteractScript(new DemoMagicScript());
-        enhancedMapTiles.add(demoMagic);
-
         Gold gold1 = new Gold(getMapTile(33,59).getLocation());
         gold1.setExistenceFlag("gotGold1");
         gold1.setInteractScript(new GoldScript());
        enhancedMapTiles.add(gold1);
 
-       Fire fireSpell1 = new Fire(getMapTile(64,61).getLocation());
+        Fire fireSpell1 = new Fire(getMapTile(64,61).getLocation());
         fireSpell1.setExistenceFlag("gotFire");
         fireSpell1.setInteractScript(new FireSpellScript());
         enhancedMapTiles.add(fireSpell1);
