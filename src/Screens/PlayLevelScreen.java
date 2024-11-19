@@ -11,6 +11,7 @@ import Players.Avatar;
 import Players.PlayerAction;
 import ScriptActions.AddSideQuestNote;
 import ScriptActions.AttackGenerator;
+import ScriptActions.ChangeFlagScriptAction;
 import Scripts.TestMap.CombatScript;
 import Utils.Direction;
 import Utils.Point;
@@ -42,6 +43,7 @@ public class PlayLevelScreen extends Screen {
     protected KeyLocker keyLocker = new KeyLocker();
     protected boolean invToggle = false;
     protected boolean questToggle = false;
+    protected boolean winScreenToggle = false;
     protected int keyPressTimer = 0;
     protected Point chestInteractPoint;
     protected SpriteSheet[] playerSpriteComponents;
@@ -118,6 +120,7 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("townHallSign", false);
         flagManager.addFlag("directionSign", false);
         flagManager.addFlag("startAreaSign", false);
+        flagManager.addFlag("house0112Sign", false);
         flagManager.addFlag("hasInteractedKey1", false);
         flagManager.addFlag("hasInteractedThunder", false);
         flagManager.addFlag("hasInteractedChest2", false);
@@ -149,6 +152,9 @@ public class PlayLevelScreen extends Screen {
         mainQuestFlags.put("foughtSusCharacter", 8);
         mainQuestFlags.put("talkedToOldMan2", 9);
         mainQuestFlags.put("talkedToOldMan3", 10);
+        mainQuestFlags.put("seenMaps", 11);
+        mainQuestFlags.put("seenAncientScript", 12);
+        mainQuestFlags.put("foughtEnemiesToEnterForest", 13);
         for (String mainQuestFlag : mainQuestFlags.keySet()) {
             flagManager.addFlag(mainQuestFlag, false);
         }
@@ -349,7 +355,6 @@ public class PlayLevelScreen extends Screen {
                 keyPressTimer--;
             }
         }
-        
         
 
         // Gamestate changes

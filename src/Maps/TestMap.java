@@ -160,6 +160,7 @@ public class TestMap extends Map {
         //triggers.add(new Trigger(getMapTile(1, 6).getX(),getMapTile(1, 6).getY(), 30, 10, new QuestOneScript(), "readQuestOne"));
         //triggers.add(new Trigger(getMapTile(17, 4).getX(),getMapTile(17, 4).getY(), 30, 10, new QuestOneChestScript(), "readQuestOneChest"));
         triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "notStealCorn"));
+        
         triggers.add(new Trigger(getMapTile(6,10).getX(),getMapTile(3,6).getY(), width, height, new StartToDungeonScript(), "startToDungeon"));
         //triggers.add(new Trigger(getMapTile(25,28).getX(),getMapTile(25,28).getY(), width, height, new OldMan1Script(), "talkedToOldMan1"));
 
@@ -179,6 +180,9 @@ public class TestMap extends Map {
         Point leaveStartAreaSign = getMapTile(22, 8).getLocation();
         triggers.add(new Trigger(walrusHouseSign.x, walrusHouseSign.y, 32, 32, new WalrusHouseSign(),"walrusHouseSign"));
         triggers.add(new Trigger(leaveStartAreaSign.x, leaveStartAreaSign.y, 32, 32, new LeaveStartAreaSign(),"leaveStartAreaSign"));
+
+        //test trigger for win screen
+        triggers.add(new Trigger(getMapTile(25,1).getX(),getMapTile(25,1).getY(), 20, 20, new winScreenTestScript(), "hasFoundBall"));
 
         return triggers;
     }

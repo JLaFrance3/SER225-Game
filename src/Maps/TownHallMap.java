@@ -15,6 +15,7 @@ import NPCs.Monsters.Goblin;
 import NPCs.Monsters.GoldDragon;
 import NPCs.Monsters.Skeleton;
 import Scripts.IndoorMaps.HallToTownDoorScript;
+import Scripts.TownMap.SeenMapsScript;
 import Scripts.TestMap.CombatScript;
 import Scripts.TownMap.OldMan3Script;
 import Tilesets.IndoorTileset;
@@ -44,6 +45,8 @@ public class TownHallMap extends Map {
 
         Point townMapTrigger = getPositionByTileIndex(10, 14);
         triggers.add(new Trigger(townMapTrigger.x, townMapTrigger.y + 26,64, 6, new HallToTownDoorScript(), "hallToTownDoor"));
+        Point townMapTrigger2 = getPositionByTileIndex(9, 8);
+        triggers.add(new Trigger(townMapTrigger2.x, townMapTrigger2.y, 32, 16, new SeenMapsScript(), "seenMaps"));
  
         return triggers;
     }
