@@ -19,6 +19,10 @@ public class Human extends NPC {
         super(id, location.x, location.y, ss, "STAND_DOWN");
     }
 
+    public Human(int id, Point location, SpriteSheet ss, Direction dir) {
+        super(id, location.x, location.y, ss, "STAND_" + dir.toString());
+    }
+
     @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
         return new HashMap<String, Frame[]>() {{

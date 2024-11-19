@@ -9,6 +9,7 @@ import Level.*;
 import Maps.*;
 import Players.Avatar;
 import Players.PlayerAction;
+import ScriptActions.AddSideQuestNote;
 import ScriptActions.AttackGenerator;
 import Scripts.TestMap.CombatScript;
 import Utils.Direction;
@@ -132,6 +133,10 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("fisherguyInitiate", false);
         flagManager.addFlag("clearedEnemies", false);
         flagManager.addFlag("fisherguyComplete", false);
+        flagManager.addFlag("sickDogInitiate", false);
+        flagManager.addFlag("foundHealthPotion", false);
+        flagManager.addFlag("healDog", false);
+        flagManager.addFlag("sickDogComplete", false);
 
         //Main quest flags array. Easier to update questlog
         mainQuestFlags = new HashMap<>();
@@ -412,6 +417,12 @@ public class PlayLevelScreen extends Screen {
             if (enemyAlive < 5) {
                 flagManager.setFlag("clearedEnemies");
                 townMap.getNPCById(43).toggleQuestIndicator();
+            }
+        }
+        if (flagManager.isFlagSet("sickDogInitiate") && !flagManager.isFlagSet("foundHealthPotion")) {
+            if (player.inventoryContains("Health Potion")) {
+                townMap.getNPCById(46).setQuestIndicator(true);
+                flagManager.setFlag("foundHealthPotion");
             }
         }
         if (flagManager.isFlagSet("investigateSusCharacter") && !flagManager.isFlagSet("foughtSusCharacter")) {

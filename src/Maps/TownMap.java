@@ -19,7 +19,9 @@ import Level.Map;
 import Level.NPC;
 import Level.Trigger;
 import NPCs.Bug;
+import NPCs.Dog;
 import NPCs.GenericNPC;
+import NPCs.Goat;
 import NPCs.Human;
 import NPCs.OldMan1;
 import NPCs.OldMan2;
@@ -78,6 +80,21 @@ public class TownMap extends Map {
         suspiciousGuy.setInteractScript(new SimpleTextScript("Go away"));
         suspiciousGuy.setExistenceFlag("foughtSusCharacter");
         npcs.add(suspiciousGuy);
+
+        Human dogOwner = new Human(45, getMapTile(98, 73).getLocation(), new SpriteSheet(ImageLoader.load("/NPCSprites/DogOwner.png", true), 64, 64), Direction.LEFT);
+        dogOwner.setInteractScript(new DogOwnerScript());
+        dogOwner.setQuestIndicator(true);
+        npcs.add(dogOwner);
+
+        Dog dog = new Dog(46, getMapTile(100, 74).getLocation());
+        dog.setInteractScript(new SickDogScript(dogOwner));
+        npcs.add(dog);
+
+        Goat goat1 = new Goat(60, getMapTile(22, 70).getLocation(), Direction.LEFT);
+        npcs.add(goat1);
+
+        Goat goat2 = new Goat(60, getMapTile(24, 66).getLocation(), Direction.DOWN);
+        npcs.add(goat2);
 
         Goblin goblin1 = new Goblin(5, getMapTile(90, 106).getLocation().subtractX(20));
         goblin1.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,8,"the goblin slashes at you with its claws",15,"goblin1Flag"));

@@ -65,7 +65,7 @@ public class FisherGuyScript extends Script{
                     "Equipment/armor/magic/", EQUIP_TYPE.HEAD);
                 }
                 else if (playerClass == "Ranger") {
-                    armor = new InventoryItem(ImageLoader.loadSubImage("items.png", 32, 374, 37, 37, true), 
+                    armor = new InventoryItem(ImageLoader.loadSubImage("items.png", 32, 374, 37, 37), 
                     "Kettle Helm", 6, "A disk hat to protect your noggin",
                     "Equipment/armor/leatherarmor/", EQUIP_TYPE.HEAD);
                 } else {

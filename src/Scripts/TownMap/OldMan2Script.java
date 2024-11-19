@@ -75,9 +75,9 @@ public class OldMan2Script extends Script{
                     addScriptAction(new AddInventory(armor));
                     addScriptAction(new Equip(armor));
 
-                    addScriptAction(new Equip(new InventoryItem(ImageLoader.loadSubImage("items.png", 0, 0, 32, 32, true), 
+                    addScriptAction(new Equip(new InventoryItem(ImageLoader.loadSubImage("items.png", 0, 0, 32, 32), 
                     "", 0, "", "Equipment/armor/leatherarmor/", EQUIP_TYPE.SHOULDER)));
-                    addScriptAction(new Equip(new InventoryItem(ImageLoader.loadSubImage("items.png", 0, 0, 32, 32, true), 
+                    addScriptAction(new Equip(new InventoryItem(ImageLoader.loadSubImage("items.png", 0, 0, 32, 32), 
                     "", 0, "", "Equipment/armor/leatherarmor/", EQUIP_TYPE.HANDS)));
                 } else {
                     armor = new InventoryItem(ImageLoader.loadSubImage("IndoorTileset.png", 0, 832, 32, 32, true), 
@@ -86,11 +86,11 @@ public class OldMan2Script extends Script{
                     addScriptAction(new AddInventory(armor));
                     addScriptAction(new Equip(armor));
 
-                    addScriptAction(new Equip(new InventoryItem(ImageLoader.loadSubImage("items.png", 0, 0, 32, 32, true), 
+                    addScriptAction(new Equip(new InventoryItem(ImageLoader.loadSubImage("items.png", 0, 0, 32, 32), 
                     "", 0, "", "Equipment/armor/platearmor/", EQUIP_TYPE.SHOULDER)));
-                    addScriptAction(new Equip(new InventoryItem(ImageLoader.loadSubImage("items.png", 0, 0, 32, 32, true), 
+                    addScriptAction(new Equip(new InventoryItem(ImageLoader.loadSubImage("items.png", 0, 0, 32, 32), 
                     "", 0, "", "Equipment/armor/platearmor/", EQUIP_TYPE.HANDS)));
-                    addScriptAction(new Equip(new InventoryItem(ImageLoader.loadSubImage("items.png", 0, 0, 32, 32, true), 
+                    addScriptAction(new Equip(new InventoryItem(ImageLoader.loadSubImage("items.png", 0, 0, 32, 32), 
                     "", 0, "", "Equipment/armor/platearmor/", EQUIP_TYPE.ARMS)));
                 }
                 
