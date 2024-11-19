@@ -31,6 +31,7 @@ public class OldMan2Script extends Script{
                     addText("They live somewhere deep in the woods. Supposedly, \nthere is a man who lives behind the Town Hall who knows how to get there.");
                 }});
                 
+                addScriptAction(new SetMainQuest("talkedToOldMan2"));
                 addScriptAction(new ChangeFlagScriptAction("talkedToOldMan2", true));
             }});
 

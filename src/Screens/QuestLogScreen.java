@@ -28,10 +28,14 @@ public class QuestLogScreen extends Screen {
             "Talk to the old man in front of one of the \nhouses where you started.",
             "Find the old man's sword",
             "Return the sword to the old man",
-            "Kill the evil bug",                                                             
-            "Travel northeast to town and find the merchant in the market.",
+            "Kill the evil bug",  
+            "Talk to the old man again",                                                           
+            "Travel northeast to town and find the merchant \nin the market.",
             "Find the mysterious man by the Town Hall \nfor more information.",
-            "Make your way to the southeast outskirts \nof town where the big forest is located."
+            "Make your way into the Town Hall to \nlook at the maps.",
+            "Find house 0112 in the town for \n another clue.",
+            "Go down to the southeast outskirts \nof town to find the forest of the Uncanny.",
+            "Kill the Goblins to enter the forest."
         };
 
         currentQuest = questList[1];

@@ -68,23 +68,23 @@ public class TownMap extends Map {
         oldman3.setInteractScript(new OldMan3Script());
         npcs.add(oldman3);
 
-        Goblin goblin1 = new Goblin(5, getMapTile(90, 106).getLocation().subtractX(20));
-        goblin1.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,8,"the goblin slashes at you with its claws",15,"goblin1Flag"));
+        Goblin goblin1 = new Goblin(5, getMapTile(79, 112).getLocation().subtractX(20));
+        goblin1.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,2,"the goblin slashes at you with its claws",15,"goblin1Flag"));
         goblin1.setExistenceFlag("goblin1Flag");
         npcs.add(goblin1);
 
         Goblin goblin2 = new Goblin(5, getMapTile(86, 109).getLocation().subtractX(20));
-        goblin2.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,8,"the goblin slashes at you with its claws",15,"goblin2Flag"));
+        goblin2.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,2,"the goblin slashes at you with its claws",15,"goblin2Flag"));
         goblin2.setExistenceFlag("goblin2Flag");
         npcs.add(goblin2);
 
         Goblin goblin3 = new Goblin(5, getMapTile(71, 102).getLocation().subtractX(20));
-        goblin3.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,8,"the goblin slashes at you with its claws",15,"goblin3Flag"));
+        goblin3.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,2,"the goblin slashes at you with its claws",15,"goblin3Flag"));
         goblin3.setExistenceFlag("goblin3Flag");
         npcs.add(goblin3);
 
         Goblin goblin4 = new Goblin(5, getMapTile(66, 112).getLocation().subtractX(20));
-        goblin4.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,8,"the goblin slashes at you with its claws",50,"goblin4Flag"));
+        goblin4.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,2,"the goblin slashes at you with its claws",50,"goblin4Flag"));
         goblin4.setExistenceFlag("goblin4Flag");
         npcs.add(goblin4);
 
@@ -266,13 +266,18 @@ public class TownMap extends Map {
         Point townHallSign = getMapTile(76, 77).getLocation();
         Point directionSign = getMapTile(26, 107).getLocation();
         Point startAreaSign = getMapTile(30, 121).getLocation();
+        Point house0112Sign = getMapTile(108,69).getLocation();
         triggers.add(new Trigger(townHallSign.x, townHallSign.y, 32, 32, new TownHallSign(),"townHallSign"));
         triggers.add(new Trigger(directionSign.x, directionSign.y, 32, 32, new DirectionSign(),"directionSign"));
         triggers.add(new Trigger(startAreaSign.x, startAreaSign.y, 32, 32, new StartAreaSign(),"startAreaSign"));
+        triggers.add(new Trigger(house0112Sign.x, house0112Sign.y, 32, 32, new House0112Sign(),"house0112Sign"));
 
         //Old Men triggers 
         //triggers.add(new Trigger(getMapTile(40,102).getX(),getMapTile(40,102).getY(), 32, 32, new OldMan2Script(), "talkedToOldMan2"));
         //triggers.add(new Trigger(getMapTile(66,103).getX(),getMapTile(66,103).getY(), 32, 32, new OldMan3Script(), "talkedToOldMan3"));
+
+        //Other Triggers
+        triggers.add(new Trigger(getMapTile(89,100).getX(),getMapTile(89,100).getY(), 20, 900, new EnterForestScript(), "foughtEnemiesToEnterForest"));
 
         return triggers;
     }

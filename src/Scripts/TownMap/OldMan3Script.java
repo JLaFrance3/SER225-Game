@@ -29,9 +29,10 @@ public class OldMan3Script extends Script {
                 addScriptAction(new TextboxScriptAction () {{
                     addText("So you want to know about The Uncanny? \nHeed my warning when I say to explore at your own risk and be careful.");
                     addText("This group has existed for many, many years. \nThey keep to themselves, but it is not hard to find where they reside.");
-                    addText("Follow the path outside of town to the lower right outskirts. \nThis is the forest they have claimed for decades. \nHere, you may explore and find your answers.");
+                    addText("If you go into the Town Hall, there are some old maps on the \nwall. These may give you a hint about where to go.");
                 }});
                 
+                addScriptAction(new SetMainQuest("talkedToOldMan3"));
                 addScriptAction(new ChangeFlagScriptAction("talkedToOldMan3", true));
             }});
 
