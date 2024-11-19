@@ -133,7 +133,7 @@ public class Avatar extends Player {
                 g.drawImage(spriteComponents[2].getImage(), 0, 0, null);
                 g.drawImage(spriteComponents[3].getImage(), 0, 0, null);
                 g.drawImage(spriteComponents[4].getImage(), 0, 0, null);
-                if (armor[0] == null) {
+                if (armor[0] == null || playerClass == "Wizard") {
                         g.drawImage(spriteComponents[5].getImage(), 0, 0, null);
                 }
                 g.drawImage(spriteComponents[6].getImage(), 0, 0, null);
@@ -299,6 +299,10 @@ public class Avatar extends Player {
         public int getIntelligence() {return intelligence;}
         public String getPlayerClass() {return playerClass;}
         public String getPlayerName() {return name;}
+        public String getPlayerGender() {
+                if (isMale) return "male";
+                else return "female";
+        }
 
         public void draw(GraphicsHandler graphicsHandler) {
                 if (currentFrame.getWidth() < 192) {
@@ -1016,5 +1020,14 @@ public class Avatar extends Player {
         public void setMainQuest(String flag) {
                 questLog.setMainQuest(mainQuestFlags.get(flag));
         }
-        
+
+        @Override
+        public void setSideQuestNote(String note) {
+                questLog.setSideQuestNote(note);
+        }
+
+        @Override
+        public void removeSideQuestNote(String note) {
+                questLog.removeSideQuestNote(note);
+        }
 }

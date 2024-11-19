@@ -64,7 +64,7 @@ public class OldMan1Script extends Script{
                     weaponName = "staff";
                     addScriptAction(new Unequip(InventoryItem.EQUIP_TYPE.SWORD));
                     addScriptAction(new RemoveInventory("Great-Sword"));
-                    weapon = new InventoryItem(ImageLoader.loadSubImage("IndoorTileset.png", 224, 928, 32, 32), 
+                    weapon = new InventoryItem(ImageLoader.loadSubImage("IndoorTileset.png", 640, 800, 32, 32, true), 
                     "Simple Staff", 10, "A staff that does magic",
                     "Equipment/weapon/magic/simple/", EQUIP_TYPE.STAFF);
                     addScriptAction(new AddInventory(weapon));
@@ -74,7 +74,7 @@ public class OldMan1Script extends Script{
                     weaponName = "bow";
                     addScriptAction(new Unequip(InventoryItem.EQUIP_TYPE.SWORD));
                     addScriptAction(new RemoveInventory("Great-Sword"));
-                    weapon = new InventoryItem(ImageLoader.loadSubImage("IndoorTileset.png", 224, 928, 32, 32), 
+                    weapon = new InventoryItem(ImageLoader.loadSubImage("IndoorTileset.png", 128, 768, 32, 32, true), 
                     "Simple Bow", 10, "A simple stick launcher",
                     "Equipment/weapon/bow/normal/", EQUIP_TYPE.BOW);
                     addScriptAction(new AddInventory(weapon));
@@ -125,16 +125,16 @@ public class OldMan1Script extends Script{
                 addRequirement(new FlagRequirement("hasInteractedGreatSword", true));
                 addRequirement(new FlagRequirement("returnedSword", true));
                 addRequirement(new FlagRequirement("dummyAlive", true));
+                addRequirement(new FlagRequirement("talkedToOldMan1", false));
 
                 addScriptAction(new TextboxScriptAction() {{
                     addText("You seem pretty strong " + playerName + ", you might be interested in a bounty\nthe King put out for a stolen artifact.");
                     addText("There have been some rumors around the kingdom about the group who stole it.\nTry talking to one of the merchants in the market.");;
                 }});
         
-                addScriptAction(new SetMainQuest("talkedToOldMan1"));
                 addScriptAction(new ChangeFlagScriptAction("talkedToOldMan1", true));
+                addScriptAction(new SetMainQuest("talkedToOldMan1"));
             }});
-
         }});
         
         scriptActions.add(new NPCUnlockScriptAction());
