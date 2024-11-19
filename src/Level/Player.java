@@ -557,8 +557,11 @@ public abstract class Player extends GameObject {
     public abstract int getIntelligence();
     public abstract String getPlayerClass();
     public abstract String getPlayerName();
+    public abstract String getPlayerGender();
     public abstract void setQuestLog(QuestLogScreen questLog, HashMap<String, Integer> mainQuestFlags);
     public abstract void setMainQuest(String flag);
+    public abstract void setSideQuestNote(String note);
+    public abstract void removeSideQuestNote(String note);
 
     // Uncomment this to have game draw player's bounds to make it easier to
     // visualize

@@ -9,7 +9,9 @@ import Level.*;
 import Maps.*;
 import Players.Avatar;
 import Players.PlayerAction;
+import ScriptActions.AddSideQuestNote;
 import ScriptActions.AttackGenerator;
+import Scripts.TestMap.CombatScript;
 import Utils.Direction;
 import Utils.Point;
 
@@ -128,6 +130,13 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("readTestQuest", false);
         flagManager.addFlag("readQuestOne", false);
         flagManager.addFlag("readQuestOneChest", false);
+        flagManager.addFlag("fisherguyInitiate", false);
+        flagManager.addFlag("clearedEnemies", false);
+        flagManager.addFlag("fisherguyComplete", false);
+        flagManager.addFlag("sickDogInitiate", false);
+        flagManager.addFlag("foundHealthPotion", false);
+        flagManager.addFlag("healDog", false);
+        flagManager.addFlag("sickDogComplete", false);
 
         //Main quest flags array. Easier to update questlog
         mainQuestFlags = new HashMap<>();
@@ -136,12 +145,14 @@ public class PlayLevelScreen extends Screen {
         mainQuestFlags.put("returnedSword", 4);
         mainQuestFlags.put("dummyAlive", 5);
         mainQuestFlags.put("talkedToOldMan1", 6);
-        mainQuestFlags.put("talkedToOldMan2", 7);
-        mainQuestFlags.put("talkedToOldMan3", 8);
+        mainQuestFlags.put("investigateSusCharacter", 7);
+        mainQuestFlags.put("foughtSusCharacter", 8);
+        mainQuestFlags.put("talkedToOldMan2", 9);
+        mainQuestFlags.put("talkedToOldMan3", 10);
         for (String mainQuestFlag : mainQuestFlags.keySet()) {
             flagManager.addFlag(mainQuestFlag, false);
         }
-
+        
         // Map change flags
         mapChangeFlags = new String[] {
                 "startToTownMapPath",
@@ -384,15 +395,46 @@ public class PlayLevelScreen extends Screen {
                 chestInteractPoint = null;
             }
         }
-        if (flagManager.isFlagSet("talkedToOldMan1")) {
-            startMap.getNPCById(40).setQuestIndicator(false);
-            townMap.getNPCById(41).setQuestIndicator(true);
-        } 
         if (flagManager.isFlagSet("dummyAlive") && !flagManager.isFlagSet("talkedToOldMan1")) {
             startMap.getNPCById(40).setQuestIndicator(true);
             player.setMainQuest("dummyAlive");
         }
-        if (flagManager.isFlagSet("talkedToOldMan2")) {
+        if (flagManager.isFlagSet("talkedToOldMan1") && !flagManager.isFlagSet("investigateSusCharacter")) {
+            startMap.getNPCById(40).setQuestIndicator(false);
+            townMap.getNPCById(41).setQuestIndicator(true);
+        } 
+        if (!flagManager.isFlagSet("fisherguyInitiate") && flagManager.isFlagSet("talkedToOldMan1")) {
+            townMap.getNPCById(43).setQuestIndicator(true);
+        }
+        if (!flagManager.isFlagSet("clearedEnemies") && flagManager.isFlagSet("fisherguyInitiate")) {
+            // Check the status of enemies for fisherguy side quest
+            int enemyAlive = 0;
+            for (int i = 10; i <= 19; i++) {
+                if (townMap.getNPCById(i).exists() == true) {
+                    enemyAlive++;
+                }
+            }
+            if (enemyAlive < 5) {
+                flagManager.setFlag("clearedEnemies");
+                townMap.getNPCById(43).toggleQuestIndicator();
+            }
+        }
+        if (flagManager.isFlagSet("sickDogInitiate") && !flagManager.isFlagSet("foundHealthPotion")) {
+            if (player.inventoryContains("Health Potion")) {
+                townMap.getNPCById(46).setQuestIndicator(true);
+                flagManager.setFlag("foundHealthPotion");
+            }
+        }
+        if (flagManager.isFlagSet("investigateSusCharacter") && !flagManager.isFlagSet("foughtSusCharacter")) {
+            townMap.getNPCById(44).setQuestIndicator(true);
+            townMap.getNPCById(44).setInteractScript(new CombatScript("So you want to know about The Uncanny?",
+                4,8,"The suspicious individual stabs at you",30,"foughtSusCharacter"));
+        }
+        if (flagManager.isFlagSet("foughtSusCharacter") && !flagManager.isFlagSet("talkedToOldMan2")) {
+            player.setMainQuest("foughtSusCharacter");
+            townMap.getNPCById(41).setQuestIndicator(true);
+        }
+        if (flagManager.isFlagSet("talkedToOldMan2") && !flagManager.isFlagSet("talkedToOldMan3")) {
             townMap.getNPCById(41).setQuestIndicator(false);
             townMap.getNPCById(42).setQuestIndicator(true);
         } 

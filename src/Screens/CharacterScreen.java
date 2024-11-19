@@ -188,8 +188,12 @@ public class CharacterScreen extends Screen {
         confirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                clearMenu();
-                screenCoordinator.setGameState(GameState.LEVEL);
+                if (!nameField.getText().isEmpty()) {
+                    clearMenu();
+                    screenCoordinator.setGameState(GameState.LEVEL);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please enter name");
+                }
             }
         });
         cancelButton = new JButton();
