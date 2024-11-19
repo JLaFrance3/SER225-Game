@@ -321,26 +321,39 @@ public class Avatar extends Player {
 
         //Builds a new slashAnimation SpriteSheet for regular or long weapons
         private void updateSlashAnimation(BufferedImage customSprite) {
+                SpriteSheet customSpriteSheet = new SpriteSheet(customSprite.getSubimage(0, 768, 384, 256), 64, 64);
                 if (!longWeapon) {
                         //When not a longweapon, just re-use normal slash animations
-                        slashAnimations = new SpriteSheet(customSprite.getSubimage(0, 768, 384, 256), 64, 64);
+                        slashAnimations = customSpriteSheet;
                 } else {
                         //Otherwise, create large sprite animations to fit the sword swings
                         BufferedImage largeSpriteSheet = ImageLoader.load(longWeaponFilePath + "bg.png", true);
                         Graphics largeSpriteGraphics = largeSpriteSheet.getGraphics();
 
                         //Add player sprite components on top of slash animation background
-                        for (int i = 0; i < spriteComponents.length; i++) {
-                                if (i == 5 && armor[0] != null) {}
-                                else if (i == 7 && armor[4] != null) {}
-                                else {
-                                        for(int j = 0; j < 4; j++) {
-                                                for(int k = 0; k < 6; k++) {
-                                                        largeSpriteGraphics.drawImage(spriteComponents[i]
-                                                                .getSubImage(j+12, k, false), 64+192*k, 64+192*j, null);
-                                                }
-                                        }
-                                }
+                        // for (int i = 0; i < spriteComponents.length; i++) {
+                        //         if (i == 5 && armor[0] != null) {}
+                        //         else if (i == 7 && armor[4] != null) {}
+                        //         else {
+                        //                 for(int j = 0; j < 4; j++) {
+                        //                         for(int k = 0; k < 6; k++) {
+                        //                                 largeSpriteGraphics.drawImage(spriteComponents[i]
+                        //                                         .getSubImage(j+12, k, false), 64+192*k, 64+192*j, null);
+                        //                         }
+                        //                 }
+                        //         }
+                        // }
+                        for(int i = 0; i < 6; i++) {
+                                largeSpriteGraphics.drawImage(customSpriteSheet.getSubImage(0, i, false), 64+192*i, 64, null);
+                        }
+                        for(int i = 0; i < 6; i++) {
+                                largeSpriteGraphics.drawImage(customSpriteSheet.getSubImage(1, i, false), 64+192*i, 256, null);
+                        }
+                        for(int i = 0; i < 6; i++) {
+                                largeSpriteGraphics.drawImage(customSpriteSheet.getSubImage(2, i, false), 64+192*i, 448, null);
+                        }
+                        for(int i = 0; i < 6; i++) {
+                                largeSpriteGraphics.drawImage(customSpriteSheet.getSubImage(3, i, false), 64+192*i, 640, null);
                         }
 
                         //Add armor components on top of slash animation background
