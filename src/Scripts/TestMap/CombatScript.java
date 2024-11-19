@@ -24,7 +24,7 @@ import Screens.PlayLevelScreen;
 // script for talking to bug npc
 // checkout the documentation website for a detailed guide on how this script works
 public class CombatScript extends Script {
-    public final boolean godMode = true;    //Used for debugging combat and testing quests
+    public final boolean godMode = false;    //Used for debugging combat and testing quests
 
     private String combatAlertText;
     private int attack = 0;

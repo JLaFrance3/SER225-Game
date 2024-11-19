@@ -27,25 +27,25 @@ public class Human extends NPC {
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
         return new HashMap<String, Frame[]>() {{
             put("STAND_UP", new Frame[] {
-                    new FrameBuilder(spriteSheet.getSprite(2, 0))
+                    new FrameBuilder(spriteSheet.getSprite(0, 0, false))
                             .withScale(1)
                             .withBounds(17, 14, 30, 48)
                             .build()
             });
             put("STAND_RIGHT", new Frame[] {
-                   new FrameBuilder(spriteSheet.getSprite(3, 0))
+                   new FrameBuilder(spriteSheet.getSprite(3, 0, false))
                            .withScale(1)
                            .withBounds(17, 14, 30, 48)
                            .build()
             });
             put("STAND_LEFT", new Frame[] {
-            new FrameBuilder(spriteSheet.getSprite(5, 0))
+            new FrameBuilder(spriteSheet.getSprite(1, 0, false))
                     .withScale(1)
                     .withBounds(17, 14, 30, 48)
                     .build()
             });
             put("STAND_DOWN", new Frame[] {
-                new FrameBuilder(spriteSheet.getSubImage(10, 0, false))
+                new FrameBuilder(spriteSheet.getSubImage(2, 0, false))
                                 .withBounds(17, 14, 30, 48)
                                 .build()
             });
