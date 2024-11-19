@@ -254,7 +254,7 @@ public class CombatScript extends Script {
                                 } else if (Avatar.spellAction.getAction(answer).getValue() == 0){
                                     playerArmor = Avatar.spellAction.getAction(answer).attack();
                                 } else {
-                                    lastHit = (int) (Math.random() * Avatar.spellAction.getAction(answer).getValue()) + Avatar.intelligence;
+                                    lastHit = (int) (Math.random() * Avatar.spellAction.getAction(answer).getValue()) - Avatar.intelligence;
                                     Avatar.health = Avatar.health - lastHit;
                                 }
                                 playerAttackSCString = Avatar.spellAction.getAction(answer).getDescription();
