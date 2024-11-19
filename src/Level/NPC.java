@@ -52,13 +52,28 @@ public class NPC extends MapEntity {
     public void facePlayer(Player player) {
         // if npc's center point is to the right of the player's center point, npc needs to face left
         // else if npc's center point is to the left of the player's center point, npc needs to face right
-        float centerPoint = getBounds().getX() + (getBounds().getWidth() / 2);
-        float playerCenterPoint = player.getBounds().getX() + (player.getBounds().getWidth() / 2);
-        if (centerPoint < playerCenterPoint) {
-            this.currentAnimationName = "STAND_RIGHT";
+        float centerPointX = getBounds().getX() + (getBounds().getWidth() / 2);
+        float playerCenterPointX = player.getBounds().getX() + (player.getBounds().getWidth() / 2);
+        float centerPointY = getBounds().getY() + (getBounds().getHeight() / 2);
+        float playerCenterPointY = player.getBounds().getY() + (player.getBounds().getHeight() / 2);
+        float xDiff = centerPointX - playerCenterPointX;
+        float yDiff = centerPointY - playerCenterPointY;
+        
+        if (Math.abs(xDiff) > Math.abs(yDiff)) {
+            if (centerPointX < playerCenterPointX) {
+                this.currentAnimationName = "STAND_RIGHT";
+            }
+            else if (centerPointX >= playerCenterPointX) {
+                this.currentAnimationName = "STAND_LEFT";
+            }
         }
-        else if (centerPoint >= playerCenterPoint) {
-            this.currentAnimationName = "STAND_LEFT";
+        else {
+            if (centerPointY < playerCenterPointY) {
+                this.currentAnimationName = "STAND_DOWN";
+            }
+            else if (centerPointY >= playerCenterPointY) {
+                this.currentAnimationName = "STAND_UP";
+            }
         }
     }
 
@@ -92,12 +107,24 @@ public class NPC extends MapEntity {
         else if (direction == Direction.LEFT) {
             this.currentAnimationName = "WALK_LEFT";
         }
+        else if (direction == Direction.UP) {
+            this.currentAnimationName = "WALK_UP";
+        }
+        else if (direction == Direction.DOWN) {
+            this.currentAnimationName = "WALK_DOWN";
+        }
         else {
             if (this.currentAnimationName.contains("RIGHT")) {
                 this.currentAnimationName = "WALK_RIGHT";
             }
-            else {
+            else if (this.currentAnimationName.contains("LEFT")) {
                 this.currentAnimationName = "WALK_LEFT";
+            }
+            else if (this.currentAnimationName.contains("UP")) {
+                this.currentAnimationName = "WALK_UP";
+            }
+            else {
+                this.currentAnimationName = "WALK_DOWN";
             }
         }
         if (direction == Direction.UP) {

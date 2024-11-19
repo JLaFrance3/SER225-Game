@@ -19,7 +19,10 @@ import Level.Map;
 import Level.NPC;
 import Level.Trigger;
 import NPCs.Bug;
+import NPCs.Dog;
 import NPCs.GenericNPC;
+import NPCs.Goat;
+import NPCs.Human;
 import NPCs.OldMan1;
 import NPCs.OldMan2;
 import NPCs.OldMan3;
@@ -32,6 +35,7 @@ import NPCs.Monsters.Pumpkin;
 import NPCs.Monsters.Skeleton;
 import Level.Script;
 import Scripts.LockedDoorScript;
+import Scripts.SimpleTextScript;
 import Scripts.TestMap.CombatScript;
 import Scripts.TestMap.FireSpellScript;
 import Scripts.TestMap.GoldScript;
@@ -68,8 +72,33 @@ public class TownMap extends Map {
         oldman3.setInteractScript(new OldMan3Script());
         npcs.add(oldman3);
 
+        Human fisherGuy = new Human(43, getMapTile(31, 122).getLocation(), new SpriteSheet(ImageLoader.load("/NPCSprites/Fisherguy.png", true), 64, 64));
+        fisherGuy.setInteractScript(new FisherGuyScript());
+        npcs.add(fisherGuy);
+
+        Human suspiciousGuy = new Human(44, getMapTile(34, 82).getLocation(), new SpriteSheet(ImageLoader.load("/NPCSprites/MysteriousGuy.png", true), 64, 64));
+        suspiciousGuy.setInteractScript(new SimpleTextScript("Go away"));
+        suspiciousGuy.setExistenceFlag("foughtSusCharacter");
+        npcs.add(suspiciousGuy);
+
+        Human dogOwner = new Human(45, getMapTile(98, 73).getLocation(), new SpriteSheet(ImageLoader.load("/NPCSprites/DogOwner.png", true), 64, 64), Direction.LEFT);
+        dogOwner.setInteractScript(new DogOwnerScript());
+        dogOwner.setQuestIndicator(true);
+        npcs.add(dogOwner);
+
+        Dog dog = new Dog(46, getMapTile(100, 74).getLocation());
+        dog.setInteractScript(new SickDogScript(dogOwner));
+        npcs.add(dog);
+
+        Goat goat1 = new Goat(60, getMapTile(22, 70).getLocation(), Direction.LEFT);
+        npcs.add(goat1);
+
+        Goat goat2 = new Goat(60, getMapTile(24, 66).getLocation(), Direction.DOWN);
+        npcs.add(goat2);
+
         Goblin goblin1 = new Goblin(5, getMapTile(79, 112).getLocation().subtractX(20));
-        goblin1.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,2,"the goblin slashes at you with its claws",15,"goblin1Flag"));
+        goblin1.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,8,"the goblin slashes at you with its claws",15,"goblin1Flag"));
+
         goblin1.setExistenceFlag("goblin1Flag");
         npcs.add(goblin1);
 
@@ -91,71 +120,70 @@ public class TownMap extends Map {
         //GoldDragon goldDragon1 = new GoldDragon(5, getMapTile(5,12).getLocation().subtractX(20));
         //npcs.add(goldDragon1);
 
-        Skeleton skeleton1 = new Skeleton(6, getMapTile(2, 110).getLocation().subtractX(20));
+        Skeleton skeleton1 = new Skeleton(10, getMapTile(2, 110).getLocation().subtractX(20));
         skeleton1.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell",6,13,"the skeleton hacks at you with his shortsword",50,"skeleton1Flag"));
         skeleton1.setExistenceFlag("skeleton1Flag");
         npcs.add(skeleton1);
 
-        Skeleton skeleton2 = new Skeleton(6, getMapTile(11, 115).getLocation().subtractX(20));
+        Skeleton skeleton2 = new Skeleton(11, getMapTile(11, 115).getLocation().subtractX(20));
         skeleton2.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell",6,13,"the skeleton hacks at you with his shortsword",50,"skeleton2Flag"));
         skeleton2.setExistenceFlag("skeleton2Flag");
         npcs.add(skeleton2);
 
-        Skeleton skeleton3 = new Skeleton(6, getMapTile(32, 107).getLocation().subtractX(20));
+        Skeleton skeleton3 = new Skeleton(12, getMapTile(32, 107).getLocation().subtractX(20));
         skeleton3.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell",6,13,"the skeleton hacks at you with his shortsword",50,"skeleton3Flag"));
         skeleton3.setExistenceFlag("skeleton3Flag");
         npcs.add(skeleton3);
 
-        Skeleton skeleton4 = new Skeleton(6, getMapTile(30, 111).getLocation().subtractX(20));
+        Skeleton skeleton4 = new Skeleton(13, getMapTile(30, 111).getLocation().subtractX(20));
         skeleton4.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell",6,13,"the skeleton hacks at you with his shortsword",50,"skeleton4Flag"));
         skeleton4.setExistenceFlag("skeleton4Flag");
         npcs.add(skeleton4);
 
-
-       BadFlower flower1 = new BadFlower(5, getMapTile(78,116).getLocation().subtractX(20));
-       flower1.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell",3,10,"tendrils lash at you and thorns cut your skin",10,"flower1Flag"));
-       flower1.setExistenceFlag("flower1Flag");
-       npcs.add(flower1);
-
-       BadFlower flower2 = new BadFlower(5, getMapTile(74,106).getLocation().subtractX(20));
-       flower2.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell",3,10,"tendrils lash at you and thorns cut your skin",10,"flower2Flag"));
-       flower2.setExistenceFlag("flower2Flag");
-       npcs.add(flower2);
-
-       BadFlower flower3 = new BadFlower(5, getMapTile(76,109).getLocation().subtractX(20));
-       flower3.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell",3,10,"tendrils lash at you and thorns cut your skin",10,"flower3Flag"));
-       flower3.setExistenceFlag("flower3Flag");
-       npcs.add(flower3);
-
-       Bat bat1 = new Bat(5, getMapTile(17,94).getLocation().subtractX(20));
+       Bat bat1 = new Bat(14, getMapTile(17,94).getLocation().subtractX(20));
        bat1.setInteractScript(new CombatScript("Uh oh, this bat is evil as hell",8,22,"the bat chomps into you",50,"bat1Flag"));
        bat1.setExistenceFlag("bat1Flag");
        npcs.add(bat1);
 
-       Bat bat2 = new Bat(5, getMapTile(15,117).getLocation().subtractX(20));
+       Bat bat2 = new Bat(15, getMapTile(15,117).getLocation().subtractX(20));
        bat2.setInteractScript(new CombatScript("Uh oh, this bat is evil as hell",8,22,"the bat chomps into you",50,"bat2Flag"));
        bat2.setExistenceFlag("bat2Flag");
        npcs.add(bat2);
 
-       Bat bat3 = new Bat(5, getMapTile(25,114).getLocation().subtractX(20));
+       Bat bat3 = new Bat(16, getMapTile(25,114).getLocation().subtractX(20));
        bat3.setInteractScript(new CombatScript("Uh oh, this bat is evil as hell",8,22,"the bat chomps into you",50,"bat3Flag"));
        bat3.setExistenceFlag("bat3Flag");
        npcs.add(bat3);
 
-        Pumpkin pumpkin1 = new Pumpkin(5, getMapTile(21,108).getLocation().subtractX(20));
+        Pumpkin pumpkin1 = new Pumpkin(17, getMapTile(21,108).getLocation().subtractX(20));
         pumpkin1.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell",22,59,"the evil pumpkin rolls into you", 150,"pumkin1FLag"));
         pumpkin1.setExistenceFlag("pumpkin1FLag");
         npcs.add(pumpkin1);
 
-        Pumpkin pumpkin2 = new Pumpkin(5, getMapTile(2,117).getLocation().subtractX(20));
+        Pumpkin pumpkin2 = new Pumpkin(18, getMapTile(2,117).getLocation().subtractX(20));
         pumpkin2.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell",22,59,"the evil pumpkin rolls into you", 150,"pumpkin2FLag"));
         pumpkin1.setExistenceFlag("pumpkin2FLag");
         npcs.add(pumpkin2);
 
-        Pumpkin pumpkin3 = new Pumpkin(5, getMapTile(36,114).getLocation().subtractX(20));
+        Pumpkin pumpkin3 = new Pumpkin(19, getMapTile(36,114).getLocation().subtractX(20));
         pumpkin3.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell",22,59,"the evil pumpkin rolls into you", 150,"pumpkin3FLag"));
         pumpkin3.setExistenceFlag("pumpkin3FLag");
         npcs.add(pumpkin3);
+
+        BadFlower flower1 = new BadFlower(20, getMapTile(78,116).getLocation().subtractX(20));
+        flower1.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell",3,10,"tendrils lash at you and thorns cut your skin",10,"flower1Flag"));
+        flower1.setExistenceFlag("flower1Flag");
+        npcs.add(flower1);
+
+        BadFlower flower2 = new BadFlower(21, getMapTile(74,106).getLocation().subtractX(20));
+        flower2.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell",3,10,"tendrils lash at you and thorns cut your skin",10,"flower2Flag"));
+        flower2.setExistenceFlag("flower2Flag");
+        npcs.add(flower2);
+
+        BadFlower flower3 = new BadFlower(22, getMapTile(76,109).getLocation().subtractX(20));
+        flower3.setInteractScript(new CombatScript("Uh oh, this flower is evil as hell",3,10,"tendrils lash at you and thorns cut your skin",10,"flower3Flag"));
+        flower3.setExistenceFlag("flower3Flag");
+        npcs.add(flower3);
 
         GenericNPC kid = new GenericNPC(10, getMapTile(98,56).getLocation(), 
             new SpriteSheet(ImageLoader.load("NPCSprites/NPC_2.png", true), 64, 64),
@@ -272,9 +300,6 @@ public class TownMap extends Map {
         triggers.add(new Trigger(startAreaSign.x, startAreaSign.y, 32, 32, new StartAreaSign(),"startAreaSign"));
         triggers.add(new Trigger(house0112Sign.x, house0112Sign.y, 32, 32, new House0112Sign(),"house0112Sign"));
 
-        //Old Men triggers 
-        //triggers.add(new Trigger(getMapTile(40,102).getX(),getMapTile(40,102).getY(), 32, 32, new OldMan2Script(), "talkedToOldMan2"));
-        //triggers.add(new Trigger(getMapTile(66,103).getX(),getMapTile(66,103).getY(), 32, 32, new OldMan3Script(), "talkedToOldMan3"));
 
         //Other Triggers
         triggers.add(new Trigger(getMapTile(89,100).getX(),getMapTile(89,100).getY(), 20, 900, new EnterForestScript(), "foughtEnemiesToEnterForest"));
