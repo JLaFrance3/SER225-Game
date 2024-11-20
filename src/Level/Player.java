@@ -154,8 +154,9 @@ public abstract class Player extends GameObject {
                 handleMagicAttack(); // Magic attack
             }
             // update player's animation
-            super.update();
         }
+        super.update();
+
     }
 
     // based on player's current state, call appropriate player state handling

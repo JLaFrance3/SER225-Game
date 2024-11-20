@@ -32,6 +32,8 @@ public class OldMan2Script extends Script{
                 addScriptAction(new TextboxScriptAction () {{
                     addText("Good day. I am selling many goods if you are interested.");
                 }});
+
+                addScriptAction(new PlayerWalkScriptAction(Direction.RIGHT, 10, 1));
             }});
 
             // old man send player to investigate suspicious guy
