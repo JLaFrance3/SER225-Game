@@ -10,16 +10,34 @@ public class CombatAnimation extends ScriptAction {
 
     
     public CombatAnimation(String text) {
-        
+        weaponName = text;
     }
 
 
     @Override
     public ScriptState execute() {
-        player.handleSwordAttack();
+        switch (weaponName) {
+            case "SWORD":
+                player.handleSwordAttack();
+                break;
+            case "BOW":
+                player.handleArrowAttack();
+                break;
+            case "MAGIC":
+                player.handleMagicAttack();
+                break;
+            case "DEATH":
+                player.handleDeathAttack();
+                break;
+        
+            default:
+                break;
+        }
         if (player.getAnimationLooped() == false) {
             return ScriptState.RUNNING;
-        } 
+        } else {
+            player.stand(player.getFacingDirection());
+        }
         return ScriptState.COMPLETED;
     }
 

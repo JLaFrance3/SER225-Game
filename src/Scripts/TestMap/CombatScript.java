@@ -155,7 +155,7 @@ public class CombatScript extends Script {
 
                         addScriptAction(new TextboxScriptAction("Swoosh"));
 
-                        addScriptAction(new CombatAnimation("Packwacth"));
+                        addScriptAction(new CombatAnimation("SWORD"));
 
                         //THE PLACE WHERE MAGIC HAPPENS
                         addScriptAction(new ScriptAction(){
@@ -271,6 +271,8 @@ public class CombatScript extends Script {
                             }
                         });
 
+                        addScriptAction(new CombatAnimation("MAGIC"));
+
                         //THE PLACE WHERE MAGIC HAPPENS
                         addScriptAction(new ScriptAction(){
                             private ArrayList<TextboxItem> textboxItems = new ArrayList<>(Arrays.asList(new TextboxItem(""), new TextboxItem("")));
@@ -367,6 +369,8 @@ public class CombatScript extends Script {
                         });
 
                         addScriptAction(new TextboxScriptAction("you are dead, try again?"));
+
+                        addScriptAction(new CombatAnimation("DEATH"));
 
                         scriptActions.add(new ChangeFlagScriptAction("hasDied", true));
                     }});
