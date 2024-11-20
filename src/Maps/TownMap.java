@@ -43,7 +43,9 @@ import Scripts.TestMap.Chest2Script;
 import Scripts.TestMap.GreatSwordScript;
 import Scripts.TestMap.Key2Script;
 import Scripts.TestMap.OldMan1Script;
+import Scripts.TestMap.StartToDungeonScript;
 import Scripts.TestMap.ThunderSpellScript;
+import Scripts.TestMap.TownToForestScript;
 import Scripts.TownMap.*;
 import Tilesets.TownTileset;
 import Utils.Direction;
@@ -289,6 +291,8 @@ public class TownMap extends Map {
         triggers.add(new Trigger(manorDoorTrigger.x, manorDoorTrigger.y + 24, 32, 10, new TownToManorScript(), "townToManorDoor"));
         triggers.add(new Trigger(smithDoorTrigger.x, smithDoorTrigger.y + 24, 32, 10, new TownToSmithScript(), "townToSmithDoor"));
         triggers.add(new Trigger(townHallDoorTrigger.x, townHallDoorTrigger.y + 24, 64, 10, new TownToHallScript(), "townToHallDoor"));
+        triggers.add(new Trigger(getMapTile(119,114).getX(),getMapTile(119,114).getY(), width, height, new TownToForestScript(), "townToForest"));
+
 
         //Sign triggers
         Point townHallSign = getMapTile(76, 77).getLocation();
