@@ -339,7 +339,6 @@ public abstract class Player extends GameObject {
         } else if (Keyboard.isKeyDown(Key.U) || Keyboard.isKeyDown(Key.H) || Keyboard.isKeyDown(Key.J)
                 || Keyboard.isKeyDown(Key.K)) {
             playerState = PlayerState.ATTACK;
-            attackisPlaying = true;
 
         } else {
             // If no keys are pressed, set player to STANDING state
