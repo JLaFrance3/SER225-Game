@@ -41,6 +41,7 @@ public class QuestLogScreen extends Screen {
             "Find house 0112 in the town for \n another clue.",
             "Go down to the southeast outskirts \nof town to find the forest of the Uncanny.",
             "Kill the Goblins to enter the forest.",
+            "Search the forest to find the \nForseeable Eye!"
         };
 
         currentQuest = questList[1];

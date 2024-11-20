@@ -2,6 +2,7 @@ package Scripts.TownMap;
 import java.util.ArrayList;
 import Level.Script;
 import ScriptActions.*;
+import Utils.Direction;
 
 // This will be the third Old Man that the player encounters by the Town Hall
 // He will direct the player to the forest at the bottom right edge of town
@@ -20,6 +21,8 @@ public class OldMan3Script extends Script {
                 addScriptAction(new TextboxScriptAction () {{
                     addText("Be careful who you trust.... It is a dangerous world out there.");
                 }});
+
+                addScriptAction(new PlayerWalkScriptAction(Direction.RIGHT, 10, 1));
             }});
             
             // if the player has talked to Old Man 2

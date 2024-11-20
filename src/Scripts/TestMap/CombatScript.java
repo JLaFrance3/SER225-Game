@@ -144,7 +144,7 @@ public class CombatScript extends Script {
                             @Override
                             public ScriptState execute() {
                                 int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
-                                lastHit = (int)((Math.random() * Avatar.meleeAction.getAction(answer).getValue()) + Avatar.strength);
+                                lastHit = (int)((Math.random() * Avatar.meleeAction.getAction(answer).getValue()) + Avatar.strength + Avatar.meleeMod);
                                 npcHealth = npcHealth - lastHit;
                                 if (godMode) {npcHealth = 0;}
                                 playerAttackSCString = Avatar.meleeAction.getAction(answer).getDescription();
@@ -152,6 +152,10 @@ public class CombatScript extends Script {
                                 return ScriptState.COMPLETED;
                             }
                         });
+
+                        addScriptAction(new TextboxScriptAction("Swoosh"));
+
+                        addScriptAction(new CombatAnimation("SWORD"));
 
                         //THE PLACE WHERE MAGIC HAPPENS
                         addScriptAction(new ScriptAction(){
@@ -267,6 +271,8 @@ public class CombatScript extends Script {
                             }
                         });
 
+                        addScriptAction(new CombatAnimation("MAGIC"));
+
                         //THE PLACE WHERE MAGIC HAPPENS
                         addScriptAction(new ScriptAction(){
                             private ArrayList<TextboxItem> textboxItems = new ArrayList<>(Arrays.asList(new TextboxItem(""), new TextboxItem("")));
@@ -363,6 +369,8 @@ public class CombatScript extends Script {
                         });
 
                         addScriptAction(new TextboxScriptAction("you are dead, try again?"));
+
+                        addScriptAction(new CombatAnimation("DEATH"));
 
                         scriptActions.add(new ChangeFlagScriptAction("hasDied", true));
                     }});
