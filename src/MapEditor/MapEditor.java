@@ -5,3 +5,5 @@ public class MapEditor {
         new EditorWindow();
     }
 }
+
+//2,8/ 7,7/ 4,6/ 9,5
