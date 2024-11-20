@@ -235,7 +235,7 @@ public abstract class Player extends GameObject {
         }
     }
 
-    private void handleSwordAttack() {
+    public void handleSwordAttack() {
         if (swordClip == null || !swordClip.isActive()) {
             swordClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Sword.wav");
             isSwordSoundPlayed = false;
