@@ -2,9 +2,13 @@ package Scripts.TownMap;
 import java.util.ArrayList;
 import Level.Script;
 import ScriptActions.*;
+import Utils.*;
+import ScriptActions.PlayerWalkScriptAction;
+import Level.Player;
 
 // this script sends the player to one of the houses (house 3) 
 public class SeenMapsScript extends Script{
+    protected Player player;
     @Override
     public ArrayList<ScriptAction> loadScriptActions() {
         ArrayList<ScriptAction> scriptActions = new ArrayList<>();
@@ -19,6 +23,9 @@ public class SeenMapsScript extends Script{
                 addScriptAction(new TextboxScriptAction () {{
                     addText("These maps look pretty old...");
                 }});
+
+                addScriptAction(new PlayerWalkScriptAction(Direction.DOWN, 20, 1));
+
             }});
             
             // if the player has talked to Old Man 3
