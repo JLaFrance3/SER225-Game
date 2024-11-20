@@ -24,6 +24,8 @@ import Screens.PlayLevelScreen;
 // script for talking to bug npc
 // checkout the documentation website for a detailed guide on how this script works
 public class CombatScript extends Script {
+    public final boolean godMode = false;    //Used for debugging combat and testing quests
+
     private String combatAlertText;
     private int attack = 0;
     private double npcHealth = 0;
@@ -100,6 +102,7 @@ public class CombatScript extends Script {
                                 lastHit = (int)(Math.random() * attack);
                                 lastHit = (int)(lastHit * (1 - playerArmor));
                                 Avatar.health = Avatar.health - lastHit;
+                                if (godMode) {Avatar.health = 1000;}
                                 System.out.println(Avatar.health);
                                 return ScriptState.COMPLETED;
                             }
@@ -143,6 +146,7 @@ public class CombatScript extends Script {
                                 int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
                                 lastHit = (int)((Math.random() * Avatar.meleeAction.getAction(answer).getValue()) + Avatar.strength);
                                 npcHealth = npcHealth - lastHit;
+                                if (godMode) {npcHealth = 0;}
                                 playerAttackSCString = Avatar.meleeAction.getAction(answer).getDescription();
                                 System.out.println(npcHealth);
                                 return ScriptState.COMPLETED;

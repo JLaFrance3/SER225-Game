@@ -7,6 +7,7 @@ import EnhancedMapTiles.InventoryItem;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
 import Level.Player;
+import Screens.QuestLogScreen;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -29,7 +30,7 @@ public class Avatar extends Player {
         private String longWeaponFilePath;      //Larger sprite image loaded separately
         private SpriteSheet slashAnimations;    //Slash animation spritesheet to account for longweapons
         public static int hitDice;
-        public static String playerClass;
+        public static String playerClass;       //"Warrior", "Wizard", "Ranger"
         public static PlayerActionCollection meleeAction = new PlayerActionCollection();
         public static PlayerActionCollection spellAction = new PlayerActionCollection();
         public static double health = 10;
@@ -132,7 +133,7 @@ public class Avatar extends Player {
                 g.drawImage(spriteComponents[2].getImage(), 0, 0, null);
                 g.drawImage(spriteComponents[3].getImage(), 0, 0, null);
                 g.drawImage(spriteComponents[4].getImage(), 0, 0, null);
-                if (armor[0] == null) {
+                if (armor[0] == null || playerClass == "Wizard") {
                         g.drawImage(spriteComponents[5].getImage(), 0, 0, null);
                 }
                 g.drawImage(spriteComponents[6].getImage(), 0, 0, null);
@@ -298,6 +299,10 @@ public class Avatar extends Player {
         public int getIntelligence() {return intelligence;}
         public String getPlayerClass() {return playerClass;}
         public String getPlayerName() {return name;}
+        public String getPlayerGender() {
+                if (isMale) return "male";
+                else return "female";
+        }
 
         public void draw(GraphicsHandler graphicsHandler) {
                 if (currentFrame.getWidth() < 192) {
@@ -316,26 +321,39 @@ public class Avatar extends Player {
 
         //Builds a new slashAnimation SpriteSheet for regular or long weapons
         private void updateSlashAnimation(BufferedImage customSprite) {
+                SpriteSheet customSpriteSheet = new SpriteSheet(customSprite.getSubimage(0, 768, 384, 256), 64, 64);
                 if (!longWeapon) {
                         //When not a longweapon, just re-use normal slash animations
-                        slashAnimations = new SpriteSheet(customSprite.getSubimage(0, 768, 384, 256), 64, 64);
+                        slashAnimations = customSpriteSheet;
                 } else {
                         //Otherwise, create large sprite animations to fit the sword swings
                         BufferedImage largeSpriteSheet = ImageLoader.load(longWeaponFilePath + "bg.png", true);
                         Graphics largeSpriteGraphics = largeSpriteSheet.getGraphics();
 
                         //Add player sprite components on top of slash animation background
-                        for (int i = 0; i < spriteComponents.length; i++) {
-                                if (i == 5 && armor[0] != null) {}
-                                else if (i == 7 && armor[4] != null) {}
-                                else {
-                                        for(int j = 0; j < 4; j++) {
-                                                for(int k = 0; k < 6; k++) {
-                                                        largeSpriteGraphics.drawImage(spriteComponents[i]
-                                                                .getSubImage(j+12, k, false), 64+192*k, 64+192*j, null);
-                                                }
-                                        }
-                                }
+                        // for (int i = 0; i < spriteComponents.length; i++) {
+                        //         if (i == 5 && armor[0] != null) {}
+                        //         else if (i == 7 && armor[4] != null) {}
+                        //         else {
+                        //                 for(int j = 0; j < 4; j++) {
+                        //                         for(int k = 0; k < 6; k++) {
+                        //                                 largeSpriteGraphics.drawImage(spriteComponents[i]
+                        //                                         .getSubImage(j+12, k, false), 64+192*k, 64+192*j, null);
+                        //                         }
+                        //                 }
+                        //         }
+                        // }
+                        for(int i = 0; i < 6; i++) {
+                                largeSpriteGraphics.drawImage(customSpriteSheet.getSubImage(0, i, false), 64+192*i, 64, null);
+                        }
+                        for(int i = 0; i < 6; i++) {
+                                largeSpriteGraphics.drawImage(customSpriteSheet.getSubImage(1, i, false), 64+192*i, 256, null);
+                        }
+                        for(int i = 0; i < 6; i++) {
+                                largeSpriteGraphics.drawImage(customSpriteSheet.getSubImage(2, i, false), 64+192*i, 448, null);
+                        }
+                        for(int i = 0; i < 6; i++) {
+                                largeSpriteGraphics.drawImage(customSpriteSheet.getSubImage(3, i, false), 64+192*i, 640, null);
                         }
 
                         //Add armor components on top of slash animation background
@@ -1004,5 +1022,25 @@ public class Avatar extends Player {
         public void setAmulet(){
                 amuletOfLifeSteal = true;
         }
-        
+
+        @Override
+        public void setQuestLog(QuestLogScreen questLog, HashMap<String, Integer> mainQuestFlags) {
+                this.questLog = questLog; 
+                this.mainQuestFlags = mainQuestFlags;
+        }
+
+        @Override
+        public void setMainQuest(String flag) {
+                questLog.setMainQuest(mainQuestFlags.get(flag));
+        }
+
+        @Override
+        public void setSideQuestNote(String note) {
+                questLog.setSideQuestNote(note);
+        }
+
+        @Override
+        public void removeSideQuestNote(String note) {
+                questLog.removeSideQuestNote(note);
+        }
 }

@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class OldMan2 extends NPC {
 
     public OldMan2(int id, Point location) {
-        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Oldman2.png", true), 64, 64), "STAND_UP");
+        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Oldman2.png", true), 64, 64), "STAND_RIGHT");
     }
 
     @Override
@@ -32,13 +32,18 @@ public class OldMan2 extends NPC {
                            .withScale(1)
                            .withBounds(17, 14, 30, 48)
                            .build()
-           });
-           put("STAND_LEFT", new Frame[] {
+            });
+            put("STAND_LEFT", new Frame[] {
             new FrameBuilder(spriteSheet.getSprite(5, 0))
                     .withScale(1)
                     .withBounds(17, 14, 30, 48)
                     .build()
-    });
+            });
+            put("STAND_DOWN", new Frame[] {
+                new FrameBuilder(spriteSheet.getSubImage(10, 0, false))
+                                .withBounds(17, 14, 30, 48)
+                                .build()
+            });
         }};
     }
 
