@@ -11,7 +11,7 @@ public class WalrusHouseSign extends Script {
 
         scriptActions.add(new ChangeFlagScriptAction("walrusHouseSign", true));
         scriptActions.add(new TextboxScriptAction() {{
-            addText("Priest House");
+            addText("Walrus House");
         }});
 
         return scriptActions;
