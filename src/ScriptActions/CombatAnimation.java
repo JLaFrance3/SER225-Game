@@ -1,5 +1,9 @@
 package ScriptActions;
 
+import Level.Player;
+import Level.ScriptState;
+import Level.TextboxItem;
+
 public class CombatAnimation extends ScriptAction {
 
     private String weaponName;
@@ -12,7 +16,8 @@ public class CombatAnimation extends ScriptAction {
 
     @Override
     public ScriptState execute() {
-        if (Player.) {
+        player.handleSwordAttack();
+        if (player.getAnimationLooped() == false) {
             return ScriptState.RUNNING;
         } 
         return ScriptState.COMPLETED;

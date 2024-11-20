@@ -240,6 +240,7 @@ public abstract class Player extends GameObject {
             swordClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Sword.wav");
             isSwordSoundPlayed = false;
         }
+        playerState = PlayerState.ATTACK;
 
         if (facingDirection == Direction.UP) {
             currentAnimationName = "SWORD_UP";
@@ -247,11 +248,11 @@ public abstract class Player extends GameObject {
             currentAnimationName = "SWORD_DOWN";
         } else if (facingDirection == Direction.LEFT) {
             currentAnimationName = "SWORD_LEFT";
+            System.out.println("test");
         } else if (facingDirection == Direction.RIGHT) {
             currentAnimationName = "SWORD_RIGHT";
-        }
-        if (playerState != PlayerState.ATTACK) {
-            playerState = PlayerState.ATTACK;
+        }else {
+            currentAnimationName = "SWORD_LEFT";
         }
     }
 
