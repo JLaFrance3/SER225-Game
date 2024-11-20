@@ -154,8 +154,9 @@ public abstract class Player extends GameObject {
                 handleMagicAttack(); // Magic attack
             }
             // update player's animation
-            super.update();
         }
+        super.update();
+
     }
 
     // based on player's current state, call appropriate player state handling
@@ -235,11 +236,12 @@ public abstract class Player extends GameObject {
         }
     }
 
-    private void handleSwordAttack() {
+    public void handleSwordAttack() {
         if (swordClip == null || !swordClip.isActive()) {
             swordClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Sword.wav");
             isSwordSoundPlayed = false;
         }
+        playerState = PlayerState.ATTACK;
 
         if (facingDirection == Direction.UP) {
             currentAnimationName = "SWORD_UP";
@@ -247,15 +249,15 @@ public abstract class Player extends GameObject {
             currentAnimationName = "SWORD_DOWN";
         } else if (facingDirection == Direction.LEFT) {
             currentAnimationName = "SWORD_LEFT";
+            System.out.println("test");
         } else if (facingDirection == Direction.RIGHT) {
             currentAnimationName = "SWORD_RIGHT";
-        }
-        if (playerState != PlayerState.ATTACK) {
-            playerState = PlayerState.ATTACK;
+        }else {
+            currentAnimationName = "SWORD_LEFT";
         }
     }
 
-    private void handleDeathAttack() {
+    public void handleDeathAttack() {
         if (DeathClip == null || !DeathClip.isActive()) {
             DeathClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Player Death.wav");
             isDeathSoundPlayed = false;
@@ -268,7 +270,7 @@ public abstract class Player extends GameObject {
 
     }
 
-    private void handleArrowAttack() {
+    public void handleArrowAttack() {
         if (ArrowClip == null || !ArrowClip.isActive()) {
             ArrowClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Arrow2.wav");
             isArrowSoundPlayed = false;
@@ -289,7 +291,7 @@ public abstract class Player extends GameObject {
 
     }
 
-    private void handleMagicAttack() {
+    public void handleMagicAttack() {
         if (MagicClip == null || !MagicClip.isActive()) {
             MagicClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Magic.wav");
             isMagicSoundPlayed = false;

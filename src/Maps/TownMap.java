@@ -99,27 +99,26 @@ public class TownMap extends Map {
         Goat goat2 = new Goat(60, getMapTile(24, 66).getLocation(), Direction.DOWN);
         npcs.add(goat2);
 
-        Goblin goblin1 = new Goblin(5, getMapTile(79, 112).getLocation().subtractX(20));
+        Goblin goblin1 = new Goblin(100, getMapTile(79, 112).getLocation().subtractX(20));
         goblin1.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,8,"the goblin slashes at you with its claws",15,"goblin1Flag"));
-
         goblin1.setExistenceFlag("goblin1Flag");
         npcs.add(goblin1);
 
-        Goblin goblin2 = new Goblin(5, getMapTile(86, 109).getLocation().subtractX(20));
+        Goblin goblin2 = new Goblin(101, getMapTile(86, 109).getLocation().subtractX(20));
         goblin2.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,2,"the goblin slashes at you with its claws",15,"goblin2Flag"));
         goblin2.setExistenceFlag("goblin2Flag");
         npcs.add(goblin2);
 
-        Goblin goblin3 = new Goblin(5, getMapTile(71, 102).getLocation().subtractX(20));
+        Goblin goblin3 = new Goblin(102, getMapTile(71, 102).getLocation().subtractX(20));
         goblin3.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,2,"the goblin slashes at you with its claws",15,"goblin3Flag"));
         goblin3.setExistenceFlag("goblin3Flag");
         npcs.add(goblin3);
 
-        Goblin goblin4 = new Goblin(5, getMapTile(66, 112).getLocation().subtractX(20));
+        Goblin goblin4 = new Goblin(103, getMapTile(66, 112).getLocation().subtractX(20));
         goblin4.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,2,"the goblin slashes at you with its claws",50,"goblin4Flag"));
         goblin4.setExistenceFlag("goblin4Flag");
         npcs.add(goblin4);
-
+        
         //GoldDragon goldDragon1 = new GoldDragon(5, getMapTile(5,12).getLocation().subtractX(20));
         //npcs.add(goldDragon1);
 
@@ -158,19 +157,19 @@ public class TownMap extends Map {
        bat3.setExistenceFlag("bat3Flag");
        npcs.add(bat3);
 
-        Pumpkin pumpkin1 = new Pumpkin(17, getMapTile(21,108).getLocation().subtractX(20));
-        pumpkin1.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell",22,59,"the evil pumpkin rolls into you", 150,"pumkin1FLag"));
-        pumpkin1.setExistenceFlag("pumpkin1FLag");
+        Pumpkin pumpkin1 = new Pumpkin(5, getMapTile(21,108).getLocation().subtractX(20));
+        pumpkin1.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell",15,33,"the evil pumpkin rolls into you", 150,"pumkin1FLag"));
+        pumpkin1.setExistenceFlag("pumpkin1Flag");
         npcs.add(pumpkin1);
 
-        Pumpkin pumpkin2 = new Pumpkin(18, getMapTile(2,117).getLocation().subtractX(20));
-        pumpkin2.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell",22,59,"the evil pumpkin rolls into you", 150,"pumpkin2FLag"));
-        pumpkin1.setExistenceFlag("pumpkin2FLag");
+        Pumpkin pumpkin2 = new Pumpkin(5, getMapTile(2,117).getLocation().subtractX(20));
+        pumpkin2.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell",15,33,"the evil pumpkin rolls into you", 150,"pumpkin2FLag"));
+        pumpkin1.setExistenceFlag("pumpkin2Flag");
         npcs.add(pumpkin2);
 
-        Pumpkin pumpkin3 = new Pumpkin(19, getMapTile(36,114).getLocation().subtractX(20));
-        pumpkin3.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell",22,59,"the evil pumpkin rolls into you", 150,"pumpkin3FLag"));
-        pumpkin3.setExistenceFlag("pumpkin3FLag");
+        Pumpkin pumpkin3 = new Pumpkin(5, getMapTile(36,114).getLocation().subtractX(20));
+        pumpkin3.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell",15,33,"the evil pumpkin rolls into you", 150,"pumpkin3FLag"));
+        pumpkin3.setExistenceFlag("pumpkin3Flag");
         npcs.add(pumpkin3);
 
         BadFlower flower1 = new BadFlower(20, getMapTile(78,116).getLocation().subtractX(20));

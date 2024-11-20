@@ -231,6 +231,10 @@ public class AnimatedSprite implements IntersectableRectangle {
 		return currentFrame.getHeight();
 	}
 
+	public boolean getAnimationLooped() {
+		return hasAnimationLooped;
+	}
+
 	public Rectangle getBounds() {
 		return currentFrame.getBounds();
 	}

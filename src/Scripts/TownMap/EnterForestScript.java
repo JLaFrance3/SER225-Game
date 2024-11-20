@@ -2,6 +2,7 @@ package Scripts.TownMap;
 import java.util.ArrayList;
 import Level.Script;
 import ScriptActions.*;
+import Utils.Direction;
 
 public class EnterForestScript extends Script{
     @Override
@@ -19,26 +20,29 @@ public class EnterForestScript extends Script{
                 addScriptAction(new TextboxScriptAction () {{
                     addText("You cannot pass here yet.");
                 }});
+
+                addScriptAction(new PlayerWalkScriptAction(Direction.LEFT, 10, 1));
+                
             }});
 
             // if the player has looked at the ancient script in the house
             addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{
                 addRequirement(new FlagRequirement("seenAncientScript", true));
+                addRequirement(new FlagRequirement("foughtEnemiesToEnterForest", false));
+
 
                 addScriptAction(new TextboxScriptAction () {{
                     addText("There is a barrier around the forest, preventing entry.");
                     addText("The Uncanny placed it to protect themselves from the Goblins!");
                     addText("In order to enter, you must kill all four goblins.");
                 }});
+
+                addScriptAction(new PlayerWalkScriptAction(Direction.LEFT, 10, 1));
                 
             }});
 
             // if the player has killed the goblins and looked at the ancient script in the house
             addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{
-                addRequirement(new FlagRequirement("goblin1Flag", true));
-                addRequirement(new FlagRequirement("goblin2Flag", true));
-                addRequirement(new FlagRequirement("goblin3Flag", true));
-                addRequirement(new FlagRequirement("goblin4Flag", true));
                 addRequirement(new FlagRequirement("seenAncientScript", true));
 
                 addScriptAction(new TextboxScriptAction () {{

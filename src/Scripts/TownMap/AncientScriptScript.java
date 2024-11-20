@@ -2,6 +2,7 @@ package Scripts.TownMap;
 import java.util.ArrayList;
 import Level.Script;
 import ScriptActions.*;
+import Utils.Direction;
 
 public class AncientScriptScript extends Script{
     @Override
@@ -18,6 +19,8 @@ public class AncientScriptScript extends Script{
                 addScriptAction(new TextboxScriptAction () {{
                     addText("This script looks old, wonder what it's for?");
                 }});
+
+                addScriptAction(new PlayerWalkScriptAction(Direction.DOWN, 10, 1));
             }});
             
             // if the player has looked at the maps in Town Hall
