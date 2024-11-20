@@ -19,9 +19,9 @@ public class Avatar extends Player {
         private String name;
         private boolean isMale;
         private String playerClass;
-        private SpriteSheet[] spriteComponents; //Holds character customization options
-        private BufferedImage[][] weapon;         //Holds both weapon primary and shield
-        private BufferedImage[] armor;            //torso, arms, legs, shoulder, head, feet, hands
+        private SpriteSheet[] spriteComponents; // Holds character customization options
+        private BufferedImage[][] weapon; // Holds both weapon primary and shield
+        private BufferedImage[] armor; // torso, arms, legs, shoulder, head, feet, hands
 
         // Player stats
         private int strength, dexterity, constitution, intelligence;
@@ -42,7 +42,8 @@ public class Avatar extends Player {
                 this.armor = new BufferedImage[7];
         }
 
-        public Avatar(SpriteSheet[] spriteComponents, float x, float y, String name, boolean isMale, String playerClass) {
+        public Avatar(SpriteSheet[] spriteComponents, float x, float y, String name, boolean isMale,
+                        String playerClass) {
                 super(spriteComponents[0], x, y, "STAND_DOWN");
                 this.walkSpeed = 1.9f;
                 this.runSpeed = 3.3f;
@@ -65,11 +66,15 @@ public class Avatar extends Player {
                 BufferedImage customSprite = new BufferedImage(832, 1344, BufferedImage.TYPE_INT_ARGB);
                 Graphics g = customSprite.getGraphics();
 
-                //Add weapon background
-                if (weapon[0] != null) {g.drawImage(weapon[0][1], 0, 0, null);}
-                if (weapon[1] != null) {g.drawImage(weapon[1][1], 0, 0, null);}
+                // Add weapon background
+                if (weapon[0] != null) {
+                        g.drawImage(weapon[0][1], 0, 0, null);
+                }
+                if (weapon[1] != null) {
+                        g.drawImage(weapon[1][1], 0, 0, null);
+                }
 
-                //Add character customization sprite selections
+                // Add character customization sprite selections
                 g.drawImage(spriteComponents[0].getImage(), 0, 0, null);
                 g.drawImage(spriteComponents[1].getImage(), 0, 0, null);
                 g.drawImage(spriteComponents[2].getImage(), 0, 0, null);
@@ -85,19 +90,25 @@ public class Avatar extends Player {
                         g.drawImage(spriteComponents[7].getImage(), 0, 0, null);
                 }
 
-                //Add any weapons/armor
-                for(BufferedImage armorPiece : armor) {
-                        if (armorPiece != null) {g.drawImage(armorPiece, 0, 0, null);}
+                // Add any weapons/armor
+                for (BufferedImage armorPiece : armor) {
+                        if (armorPiece != null) {
+                                g.drawImage(armorPiece, 0, 0, null);
+                        }
                 }
-                if (weapon[0] != null) {g.drawImage(weapon[1][0], 0, 0, null);}
-                if (weapon[1] != null) {g.drawImage(weapon[0][0], 0, 0, null);}
-                
+                if (weapon[0] != null) {
+                        g.drawImage(weapon[1][0], 0, 0, null);
+                }
+                if (weapon[1] != null) {
+                        g.drawImage(weapon[0][0], 0, 0, null);
+                }
+
                 g.dispose();
-                
+
                 setSpriteSheet(new SpriteSheet(customSprite, 64, 64));
         }
 
-        //Adds equipment to character, the bg parameter is optional
+        // Adds equipment to character, the bg parameter is optional
         public void equip(InventoryItem item) {
                 String filePath = item.getFilePath();
                 InventoryItem.EQUIP_TYPE equipType = item.getType();
@@ -115,13 +126,13 @@ public class Avatar extends Player {
                                 fg = ImageLoader.load(filePath + "fg.png", true);
                                 bg = ImageLoader.load(filePath + "bg.png", true);
 
-                                //Add arrow sprites and bow to fg
+                                // Add arrow sprites and bow to fg
                                 Graphics fgGraphics = fg.getGraphics();
                                 String arrowPath = "Equipment/weapon/bow/accessory/arrow.png";
                                 fgGraphics.drawImage(ImageLoader.load(arrowPath, true), 0, 0, null);
                                 fgGraphics.dispose();
 
-                                //Add quiver to bg
+                                // Add quiver to bg
                                 Graphics bgGraphics = bg.getGraphics();
                                 String quiverPath = "Equipment/weapon/bow/accessory/quiver.png";
                                 bgGraphics.drawImage(ImageLoader.load(quiverPath, true), 0, 0, null);
@@ -130,9 +141,11 @@ public class Avatar extends Player {
                                 weapon[0][0] = fg;
                                 weapon[0][1] = bg;
                                 break;
-                        case SHIELD: 
-                                if (equipType != InventoryItem.EQUIP_TYPE.STAFF || equipType != InventoryItem.EQUIP_TYPE.BOW) {
-                                        fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "fg.png", true);
+                        case SHIELD:
+                                if (equipType != InventoryItem.EQUIP_TYPE.STAFF
+                                                || equipType != InventoryItem.EQUIP_TYPE.BOW) {
+                                        fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "fg.png",
+                                                        true);
                                         weapon[1][0] = fg;
                                 }
                                 break;
@@ -151,7 +164,8 @@ public class Avatar extends Player {
                                 armor[2] = fg;
                                 break;
                         case SHOULDER:
-                                fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "shoulder.png", true);
+                                fg = ImageLoader.load(filePath + ((isMale) ? "male/" : "female/") + "shoulder.png",
+                                                true);
                                 armor[3] = fg;
                                 break;
                         case HEAD:
@@ -203,12 +217,14 @@ public class Avatar extends Player {
                                 armor[6] = null;
                                 break;
                         default:
-                                //Unequip all
+                                // Unequip all
                                 weapon[0][0] = null;
                                 weapon[0][1] = null;
                                 weapon[1][0] = null;
                                 weapon[1][1] = null;
-                                for(BufferedImage armorPiece : armor) {armorPiece = null;}
+                                for (BufferedImage armorPiece : armor) {
+                                        armorPiece = null;
+                                }
                                 break;
                 }
         }
@@ -219,21 +235,51 @@ public class Avatar extends Player {
 
         // Player stats
         protected void setStats(int strength, int dexterity, int constitution, int intelligence) {
-            setStrength(strength);
-            setDexterity(dexterity);
-            setConstitution(constitution);
-            setIntelligence(intelligence);
+                setStrength(strength);
+                setDexterity(dexterity);
+                setConstitution(constitution);
+                setIntelligence(intelligence);
         }
-        public void setStrength(int strength) {this.strength = strength;}
-        public void setDexterity(int dexterity) {this.dexterity = dexterity;}
-        public void setConstitution(int constitution) {this.constitution = constitution;}
-        public void setIntelligence(int intelligence) {this.intelligence = intelligence;}
-        public int getStrength() {return strength;}
-        public int getDexterity() {return dexterity;}
-        public int getConstitution() {return constitution;}
-        public int getIntelligence() {return intelligence;}
-        public String getPlayerClass() {return playerClass;}
-        public String getPlayerName() {return name;}
+
+        public void setStrength(int strength) {
+                this.strength = strength;
+        }
+
+        public void setDexterity(int dexterity) {
+                this.dexterity = dexterity;
+        }
+
+        public void setConstitution(int constitution) {
+                this.constitution = constitution;
+        }
+
+        public void setIntelligence(int intelligence) {
+                this.intelligence = intelligence;
+        }
+
+        public int getStrength() {
+                return strength;
+        }
+
+        public int getDexterity() {
+                return dexterity;
+        }
+
+        public int getConstitution() {
+                return constitution;
+        }
+
+        public int getIntelligence() {
+                return intelligence;
+        }
+
+        public String getPlayerClass() {
+                return playerClass;
+        }
+
+        public String getPlayerName() {
+                return name;
+        }
 
         public void draw(GraphicsHandler graphicsHandler) {
                 super.draw(graphicsHandler);
@@ -404,7 +450,7 @@ public class Avatar extends Player {
                                                                 .build(),
                                                 new FrameBuilder(spriteSheet.getSubImage(12, 5, false), 14)
                                                                 .withBounds(17, 14, 30, 48)
-                                                                .build()
+                                                                .build(),
 
                                 });
                                 put("SWORD_DOWN", new Frame[] {

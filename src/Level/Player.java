@@ -2,6 +2,8 @@ package Level;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import Engine.Key;
 import Engine.KeyLocker;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.Timer;
 import javax.sound.sampled.AudioInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -51,25 +54,33 @@ public abstract class Player extends GameObject {
 
     // attack mode for Sprite
     private static Key ATTACK_UP_KEY = Key.U; // SWORD MOTION
-    private boolean isSwordSoundPlayed = false;
-    private boolean isDeathSoundPlayed = false;
-    private boolean isArrowSoundPlayed = false;
-    private boolean isMagicSoundPlayed = false;
 
     private boolean isActive = false;
     private Clip swordClip;// checking if sword clip is played
     private Clip DeathClip;// checking if death clip is played
     private Clip ArrowClip; // checking if Arrow clip is played
     private Clip MagicClip;// checking if MAgic clip is played
-    private static Key ATTACK_DOWN_KEY = Key.J; // DEATH
-    private static Key ATTACK_RIGHT_KEY = Key.K; // MAGIC MOTION
-    private static Key ATTACK_LEFT_KEY = Key.H; // ARROW MOTION
+    protected KeyLocker kl = new KeyLocker();// fpr swprd
+    protected KeyLocker kh = new KeyLocker(); // for magic
+    protected KeyLocker kp = new KeyLocker();// for arrow
+    protected KeyLocker kd = new KeyLocker(); // for death
 
-    private boolean isKeyPressed = false;
-    // private SpriteSheet swordSprite;// reference for sword sprite
-    // private boolean isWieldingSword = false;// tracking if weapon is there
-    /* private boolean isMovingLeft = false; */
-    /* private boolean isMovingRight = false; */
+    private int Sframecounter = 6;// sword frames
+    private int Aframecounter = 13; // arrow frames
+    private int Mframecounter = 7;// magic frame
+    private int Dframecounter = 6; // death frame
+
+    private boolean attackisPlaying = false; // sword flag
+    private boolean ArrowattackisPlaying = false; // arrow falg
+    private boolean MagicattackisPlaying = false; // magic flag
+    private boolean DeathAttackisPlaying = false;// death flag
+
+    private Timer timer;// sword
+    private Timer Atimer;// arrow
+    private Timer Mtimer; // death
+    private Timer Dtimer; // death
+    private boolean attackKeyHeld;
+
     boolean[] attackkeysPressed = new boolean[4];
     protected boolean isLocked = false;
     private ArrayList<InventoryItem> inventoryArrayList = new ArrayList<>();
@@ -84,6 +95,69 @@ public abstract class Player extends GameObject {
         playerState = PlayerState.STANDING;
         previousPlayerState = playerState;
         this.affectedByTriggers = true;
+        initializeTimers();
+    }
+
+    public void initializeTimers() {
+        // setupAttackTimer(); // Set up timer in a consturctor
+        setupArrowTimer();
+    }
+
+    private void setupAttackTimer() {// timer for Sword attack
+        // if (timer == null || !timer.isRunning()) {
+        System.out.println("Setting up the attack timer...");
+        int delay = 300; // how many milliseconds the timer will be
+        ActionListener listener = new ActionListener() {// setts what will happen when timer goes off
+            public void actionPerformed(ActionEvent e) {// anything in ActionPerfored will happen when timer starts
+
+                if (Sframecounter > 0) {
+                    Sframecounter--;
+                    // kl.lockKey(Key.U);
+                }
+                if (Sframecounter == 0) {
+                    attackisPlaying = false; // goes off
+                    kl.unlockKey(Key.U);
+                    System.out.println("Sword attack is Complete");
+                    resetAttackState();
+                    timer.stop();
+                    // playerState = PlayerState.STANDING;
+                }
+                System.out.println("Sword frames left:" + Sframecounter);
+
+            }
+
+        };
+        if (timer != null) {
+            timer.stop();
+        }
+
+        timer = new Timer(delay, listener); // creating new timer object, using the d
+        timer.setRepeats(true);// repeats till counter is zero
+        System.out.println("Timer initialized: " + (timer != null));
+        timer.start();
+
+        // }
+    }
+
+    // this method is for Magic
+    private void setupArrowTimer() {// timer for Arrow attack
+        int delay = 400; // how many milliseconds the timer will be
+        ActionListener listener = new ActionListener() {// setts what will happen when timer goes off
+            public void actionPerformed(ActionEvent e) {// anything in ActionPerfored will happen when
+                if (Aframecounter > 0) {
+                    Aframecounter--;
+                    System.out.println("Arrow frames left:" + Aframecounter);
+                } else {
+                    ArrowattackisPlaying = false; // goes off
+                    Atimer.stop();
+                    kp.unlockKey(Key.H);
+                    System.out.println("Arrow attack is Complete");
+
+                }
+            }
+        };
+        Atimer = new Timer(delay, listener); // creating new timer object, using the d
+        Atimer.setRepeats(true);// tell timer to only happen onnce
     }
 
     public ArrayList<InventoryItem> getInventoryArrayList() {
@@ -127,49 +201,165 @@ public abstract class Player extends GameObject {
             }
 
             handlePlayerAnimation();
+
             // playSoundEffect(currentAnimationName);
 
             updateLockedKeys();
 
-            if (Keyboard.isKeyDown(Key.U)) {
-                handleSwordAttack(); // Sword attack motion if hold down U key
-            } else if (Keyboard.isKeyDown(Key.H)) {
+            // if (Keyboard.isKeyDown(Key.U) && !attackisPlaying){
+
+            if (Keyboard.isKeyDown(Key.U) && !attackisPlaying) { // ----> this if Statement is WORKING
+                handleSwordAttack(); // start sword attack
+            }
+
+            if (Keyboard.isKeyDown(Key.H) && !ArrowattackisPlaying) {
                 handleArrowAttack(); // Arrow attack
-            } else if (Keyboard.isKeyDown(Key.J)) {
+                // System.out.println("H haas been pressed, ARROW STATE")
+            } // else {
+              // Atimer.start();
+              // System.out.println("Atimer is not initialized ");
+
+            // }
+            // }
+            // if (ArrowattackisPlaying && Aframecounter > 0) {
+            // Aframecounter--;
+            // System.out.println("Arrow frames left:" + Aframecounter);
+            // } else {
+            // ArrowattackisPlaying = false;
+            // kp.unlockKey(Key.H);
+            // System.out.println(" Arrow attack animation complete ");
+            // }
+
+            // if (!ArrowattackisPlaying && ArrowClip != null && !ArrowClip.isRunning()) {
+            // ArrowReset();
+            // System.out.println("ArrowClip is null and not running");
+            // }
+
+            // death
+            if (Keyboard.isKeyDown(Key.J)) {
                 handleDeathAttack(); // Death attack
+                System.out.println("Death State is Played");
+
+                // magic
             } else if (Keyboard.isKeyDown(Key.K)) {
                 handleMagicAttack(); // Magic attack
+                System.out.println("Magic State is Played");
+
             }
             // update player's animation
             super.update();
         }
     }
 
+    // private void playSoundandStartAnimation(String attackType) {
+    // if (attackisPlaying) {
+    // if (!isSwordSoundPlayed) {
+    // swordClip =playSoundEffect("Resources/SoundEffects_AttackMotions/Sword.wav");
+
+    // }
+    // attackisPlaying = true;
+    // startAttackAnimation();
+    // timer.start();
+
+    // }
+    // }
+
+    // public void lockKey() {
+    // attackisPlaying = true;
+    // System.out.println("Keys are locked during attack");
+    // Attack keys
+    // kl.lockKey(Key.U);
+    // kl.lockKey(Key.H);
+    // kl.lockKey(Key.J);
+    // kl.lockKey(Key.K);
+    // WASD Movement + Shift(Sprint Key)
+    // kl.lockKey(Key.W);
+    // kl.lockKey(Key.A);
+    // kl.lockKey(Key.S);
+    // kl.lockKey(Key.D);
+    // kl.lockKey(Key.SHIFT);
+    // }
+
+    // public void unlockKey() {
+    // attackisPlaying = false;
+    // System.out.println(" Keys are unlocked after attack ");
+    // Attack keys
+    // kl.unlockKey(Key.U);
+    // kl.unlockKey(Key.H);
+    // kl.unlockKey(Key.J);
+    // kl.unlockKey(Key.K);
+    // WASD Movement + Shift (Sprinnt Key)
+    // kl.unlockKey(Key.W);
+    // kl.unlockKey(Key.A);
+    // kl.lockKey(Key.S);
+    // kl.unlockKey(Key.D);
+    // kl.unlockKey(Key.SHIFT);
+    // }
+
+    private void resetAttackState() {
+
+        if (!attackisPlaying) {
+            if (swordClip != null && swordClip.isRunning()) {
+                swordClip.stop();
+                System.out.println("Sword clip has stopped ");
+            }
+
+            Sframecounter = 0;
+            attackisPlaying = false;
+            // playerState = PlayerState.WALKING;
+            // kl.unlockKey(Key.U);
+            System.out.println("Sword state reset");
+            // playerState = PlayerState.WALKING;
+        }
+    }
+
+    public void ArrowReset() {
+        if (!ArrowattackisPlaying) {
+            if (ArrowClip != null && ArrowClip.isRunning()) {
+                ArrowClip.stop(); // Stop arrow animation if needed
+                System.out.println("Arrow state reset");
+            }
+            Aframecounter = 0;
+            System.out.println("Arrow state reset");
+
+        }
+    }
+
     // based on player's current state, call appropriate player state handling
     // method
     protected void handlePlayerState() {
+        if (attackisPlaying) {
+            playerState = PlayerState.ATTACK;
+        }
         if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY)
                 || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY) || Keyboard.isKeyDown(Key.UP)
                 || Keyboard.isKeyDown(Key.DOWN) || Keyboard.isKeyDown(Key.LEFT) || Keyboard.isKeyDown(Key.RIGHT)) {
             // If movement keys are pressed, set player to WALKING state
             playerState = PlayerState.WALKING;
+        } else if (Keyboard.isKeyDown(Key.U) || Keyboard.isKeyDown(Key.H) || Keyboard.isKeyDown(Key.J)
+                || Keyboard.isKeyDown(Key.K)) {
+            playerState = PlayerState.ATTACK;
+            attackisPlaying = true;
+
         } else {
             // If no keys are pressed, set player to STANDING state
             playerState = PlayerState.STANDING;
         }
+        System.out.println("Current Player State:" + playerState);
 
         switch (playerState) {
             case STANDING:
-
                 playerStanding();
+                System.out.println(" Player in Standing ");
                 break;
             case WALKING:
-
                 playerWalking();
+                System.out.println("Playing in Walking ");
                 break;
 
             case ATTACK:
                 playerAttack();
+                System.out.println("Player in Attack");
                 break;
         }
     }
@@ -181,37 +371,37 @@ public abstract class Player extends GameObject {
         }
         moveAmountX = 0;
         moveAmountY = 0;
-        // if attack key is pressed, player enter ATTACK STATE
-        if (Keyboard.isKeyDown(ATTACK_LEFT_KEY) || Keyboard.isKeyDown(ATTACK_RIGHT_KEY)
-                || Keyboard.isKeyDown(ATTACK_UP_KEY) || Keyboard.isKeyDown(ATTACK_DOWN_KEY)) {
-            playerState = PlayerState.ATTACK;
-        }
+        // move to do ()
+        // boolean hasAnimationLooped
+        startAttackAnimation();
+        // if (!attackisPlaying) {
 
-        if (Keyboard.isKeyDown(ATTACK_UP_KEY)) {
-            handleSwordAttack();
+        // timer.start();
+        // attackisPlaying = true; // setting flag back b/c animation started here
+        // }
+    }
 
-        } else if (Keyboard.isKeyDown(ATTACK_DOWN_KEY)) {
-            handleDeathAttack();
-
-        } else if (Keyboard.isKeyDown(ATTACK_LEFT_KEY)) {
-            handleArrowAttack();
-
-        } else if (Keyboard.isKeyDown(ATTACK_RIGHT_KEY)) {
-            handleMagicAttack();
-        } else {
-            playerState = PlayerState.STANDING;// Returning to standing if no attack keys are pressed
-        }
-
-        if (!Keyboard.isKeyDown(ATTACK_UP_KEY)) {
-            swordClip.stop();
+    private void startAttackAnimation() {
+        // System.out.println("Player State:" + playerState);
+        if (playerState == PlayerState.ATTACK) {
+            handlePlayerAnimation();
         }
     }
 
     protected Clip playSoundEffect(String sounndFilePath) {
         try {
             AudioInputStream AIS = AudioSystem.getAudioInputStream(new File(sounndFilePath));
-
+            System.out.println("Sound has been played:" + sounndFilePath);
+            File soundFile = new File(sounndFilePath);
+            if (!soundFile.exists()) {
+                System.out.println("Sound File not Found: " + sounndFilePath);
+                return null;
+            }
             Clip clip = AudioSystem.getClip();
+            if (clip == null) {
+                System.out.println("Failed to Load clip.");
+
+            }
             clip.open(AIS);
             clip.setFramePosition(0);
             clip.start();
@@ -220,32 +410,68 @@ public abstract class Player extends GameObject {
             e.printStackTrace();
             return null;// couldn't find clip
         }
+
     }
 
     private void handleSwordAttack() {
-        if (swordClip == null || !swordClip.isActive()) {
-            swordClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Sword.wav");
-            isSwordSoundPlayed = false;
+        if (!attackisPlaying) {
+            attackisPlaying = true;// attack state is active
+            Sframecounter = 5;// sword framecounter, number of frames for sword
+            kl.lockKey(Key.U);// lock key to prevent repeated triggers
+            // handlePlayerAnimation();
+            System.out.println("Sword attack has been triggered");
+
+            // System.out.println(" Sword key has been pressed");
+            if (swordClip == null || !swordClip.isActive()) {
+                swordClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Sword.wav");
+                // System.out.println("Failed to play sword sound , swordClip is null");
+                System.out.println(" Sword sound played ");
+            }
         }
 
-        if (facingDirection == Direction.UP) {
-            currentAnimationName = "SWORD_UP";
-        } else if (facingDirection == Direction.DOWN) {
-            currentAnimationName = "SWORD_DOWN";
-        } else if (facingDirection == Direction.LEFT) {
-            currentAnimationName = "SWORD_LEFT";
-        } else if (facingDirection == Direction.RIGHT) {
-            currentAnimationName = "SWORD_RIGHT";
+        if (swordClip != null && !swordClip.isActive()) {
+            swordClip.setFramePosition(0);
+            swordClip.start();
+            System.out.println("Sword sound has started");
+
         }
+
+        if (timer == null || !timer.isRunning()) {
+            // System.out.println("Initializing the timer for swod animation");
+            setupAttackTimer();
+
+            System.out.println(" Sword Timer has Started  ");
+        }
+        // System.out.println("Timer state before checking:" + (timer != null ?
+        // "Initialized" : "null"));
+        // if (timer != null && !timer.isRunning()) {
+        // timer.start();
+        // System.out.println(" Sword animation timer has started");
+        // }
+
         if (playerState != PlayerState.ATTACK) {
             playerState = PlayerState.ATTACK;
+
         }
+        // if (Sframecounter == 0) { // Sframecounter represents the number of frames
+        // left for the sword animation
+        // kl.unlockKey(Key.U); // Unlock key after the sword attack is complete
+        // System.out.println("Sword attack complete, key unlocked");
+        // attackisPlaying = false; // End attack state
+        // }
+        //
+        // handlePlayerAnimation();
+        // attackisPlaying = true;
+        // timer.restart();
+        // System.out.println(" Sword key has been pressed once");
+
     }
+    // attackisPlaying = true;
 
     private void handleDeathAttack() {
         if (DeathClip == null || !DeathClip.isActive()) {
             DeathClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Player Death.wav");
-            isDeathSoundPlayed = false;
+            // isDeathSoundPlayed = false;
         }
         facingDirection = Direction.DOWN;
         currentAnimationName = "FALL_DOWN";
@@ -256,44 +482,48 @@ public abstract class Player extends GameObject {
     }
 
     private void handleArrowAttack() {
-        if (ArrowClip == null || !ArrowClip.isActive()) {
-            ArrowClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Arrow2.wav");
-            isArrowSoundPlayed = false;
-        }
+        if (!ArrowattackisPlaying) {
+            ArrowattackisPlaying = true;
+            Aframecounter = 13;
+            kp.lockKey(Key.H);
 
-        if (facingDirection == Direction.UP) {
-            currentAnimationName = "ARROW_UP";
-        } else if (facingDirection == Direction.DOWN) {
-            currentAnimationName = "ARROW_DOWN";
-        } else if (facingDirection == Direction.LEFT) {
-            currentAnimationName = "ARROW_LEFT";
-        } else if (facingDirection == Direction.RIGHT) {
-            currentAnimationName = "ARROW_RIGHT";
-        }
-        if (playerState != PlayerState.ATTACK) {
-            playerState = PlayerState.ATTACK;
-        }
+            if (ArrowClip == null || !ArrowClip.isActive()) {
+                ArrowClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Arrow2.wav");
+            }
+            if (Atimer == null) {
+                setupArrowTimer();
+            }
+            if (!Atimer.isRunning()) {
+                Atimer.start();
+                System.out.println(" Arrow animation timer has started");
+            }
+            if (playerState != PlayerState.ATTACK) {
+                playerState = PlayerState.ATTACK;
+            }
 
+        }
     }
 
     private void handleMagicAttack() {
-        if (MagicClip == null || !MagicClip.isActive()) {
-            MagicClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Magic.wav");
-            isMagicSoundPlayed = false;
-        }
-        if (facingDirection == Direction.UP) {
-            currentAnimationName = "MAGIC_UP";
-        } else if (facingDirection == Direction.DOWN) {
-            currentAnimationName = "MAGIC_DOWN";
-        } else if (facingDirection == Direction.LEFT) {
-            currentAnimationName = "MAGIC_LEFT";
-        } else if (facingDirection == Direction.RIGHT) {
-            currentAnimationName = "MAGIC_RIGHT";
-        }
-        if (playerState != PlayerState.ATTACK) {
-            playerState = PlayerState.ATTACK;// shouldnt this is walking?
-        }
+        if (!attackisPlaying) {
+            if (MagicClip == null || !MagicClip.isActive()) {
+                MagicClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Magic.wav");
+                // isMagicSoundPlayed = false;
+            }
+            // if (facingDirection == Direction.UP) {
+            // currentAnimationName = "MAGIC_UP";
+            // } else if (facingDirection == Direction.DOWN) {
+            // currentAnimationName = "MAGIC_DOWN";
+            // } else if (facingDirection == Direction.LEFT) {
+            // currentAnimationName = "MAGIC_LEFT";
+            // } else if (facingDirection == Direction.RIGHT) {
+            // currentAnimationName = "MAGIC_RIGHT";
+            // }
+            if (playerState != PlayerState.ATTACK) {
+                playerState = PlayerState.ATTACK;// shouldnt this is walking?
+            }
 
+        }
     }
 
     // player STANDING state logic
@@ -395,6 +625,7 @@ public abstract class Player extends GameObject {
 
     // anything extra the player should do based on interactions can be handled here
     protected void handlePlayerAnimation() {
+
         if (playerState == PlayerState.STANDING) {
             // sets animation to a STAND animation based on which way player is facing
             switch (this.facingDirection) {
@@ -411,6 +642,39 @@ public abstract class Player extends GameObject {
                 case LEFT -> currentAnimationName = "RUN_LEFT";
                 case DOWN -> currentAnimationName = "RUN_DOWN";
                 case RIGHT -> currentAnimationName = "RUN_RIGHT";
+            }
+        }
+        if (!attackisPlaying) {
+
+            switch (this.facingDirection) {
+                case UP -> currentAnimationName = "SWORD_UP";
+                case LEFT -> currentAnimationName = "SWORD_LEFT";
+                case DOWN -> currentAnimationName = "SWORD_DOWN";
+                case RIGHT -> currentAnimationName = "SWORD_RIGHT";
+            }
+            return;
+        }
+        if (ArrowattackisPlaying) {
+            switch (this.facingDirection) {
+                case UP -> currentAnimationName = "ARROW_UP";
+                case LEFT -> currentAnimationName = "ARROW_LEFT";
+                case DOWN -> currentAnimationName = "ARROW_DOWN";
+                case RIGHT -> currentAnimationName = "ARROW_RIGHT";
+            }
+        } else if (false) { // change tp MagicattackisPlaying and Do the same thing for Death
+
+            switch (this.facingDirection) {
+                case UP -> currentAnimationName = "MAGIC_UP";
+                case LEFT -> currentAnimationName = "MAGIC_LEFT";
+                case DOWN -> currentAnimationName = "MAGIC_DOWN";
+                case RIGHT -> currentAnimationName = "MAGIC_RIGHT";
+            }
+        } else if (false) {
+            switch (this.facingDirection) {
+                case UP -> currentAnimationName = "FALL_DOWN";
+                case LEFT -> currentAnimationName = "FALL_DOWN";
+                case DOWN -> currentAnimationName = "FALL_DOWN";
+                case RIGHT -> currentAnimationName = "FALL_DOWN";
             }
         } else {
             switch (this.facingDirection) {
@@ -533,16 +797,27 @@ public abstract class Player extends GameObject {
     }
 
     public abstract void equip(InventoryItem item);
+
     public abstract void unequip(InventoryItem.EQUIP_TYPE equipType);
+
     public abstract void setStrength(int strength);
+
     public abstract void setDexterity(int dexterity);
+
     public abstract void setConstitution(int constitution);
+
     public abstract void setIntelligence(int intelligence);
+
     public abstract int getStrength();
+
     public abstract int getDexterity();
+
     public abstract int getConstitution();
+
     public abstract int getIntelligence();
+
     public abstract String getPlayerClass();
+
     public abstract String getPlayerName();
 
     // Uncomment this to have game draw player's bounds to make it easier to

@@ -2,10 +2,10 @@ package Engine;
 
 // Used by the Keyboard class to define a key to their key codes
 public enum Key {
-    UP, 
-    DOWN, 
-    RIGHT, 
-    LEFT, 
+    UP,
+    DOWN,
+    RIGHT,
+    LEFT,
     ENTER,
     SHIFT,
     A,
@@ -45,5 +45,10 @@ public enum Key {
     NINE,
     ZERO,
     SPACE,
-    ESC
+    ESC;
+
+    boolean isActive() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isActive'");
+    }
 }
