@@ -235,7 +235,7 @@ public abstract class Player extends GameObject {
         }
     }
 
-    private void handleSwordAttack() {
+    public void handleSwordAttack() {
         if (swordClip == null || !swordClip.isActive()) {
             swordClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Sword.wav");
             isSwordSoundPlayed = false;
@@ -255,7 +255,7 @@ public abstract class Player extends GameObject {
         }
     }
 
-    private void handleDeathAttack() {
+    public void handleDeathAttack() {
         if (DeathClip == null || !DeathClip.isActive()) {
             DeathClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Player Death.wav");
             isDeathSoundPlayed = false;
@@ -268,7 +268,7 @@ public abstract class Player extends GameObject {
 
     }
 
-    private void handleArrowAttack() {
+    public void handleArrowAttack() {
         if (ArrowClip == null || !ArrowClip.isActive()) {
             ArrowClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Arrow2.wav");
             isArrowSoundPlayed = false;
@@ -289,7 +289,7 @@ public abstract class Player extends GameObject {
 
     }
 
-    private void handleMagicAttack() {
+    public void handleMagicAttack() {
         if (MagicClip == null || !MagicClip.isActive()) {
             MagicClip = playSoundEffect("Resources/SoundEffects_AttackMotions/Magic.wav");
             isMagicSoundPlayed = false;
