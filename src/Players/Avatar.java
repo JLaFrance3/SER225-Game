@@ -332,20 +332,6 @@ public class Avatar extends Player {
                         //Otherwise, create large sprite animations to fit the sword swings
                         BufferedImage largeSpriteSheet = ImageLoader.load(longWeaponFilePath + "bg.png", true);
                         Graphics largeSpriteGraphics = largeSpriteSheet.getGraphics();
-
-                        //Add player sprite components on top of slash animation background
-                        // for (int i = 0; i < spriteComponents.length; i++) {
-                        //         if (i == 5 && armor[0] != null) {}
-                        //         else if (i == 7 && armor[4] != null) {}
-                        //         else {
-                        //                 for(int j = 0; j < 4; j++) {
-                        //                         for(int k = 0; k < 6; k++) {
-                        //                                 largeSpriteGraphics.drawImage(spriteComponents[i]
-                        //                                         .getSubImage(j+12, k, false), 64+192*k, 64+192*j, null);
-                        //                         }
-                        //                 }
-                        //         }
-                        // }
                         for(int i = 0; i < 6; i++) {
                                 largeSpriteGraphics.drawImage(customSpriteSheet.getSubImage(0, i, false), 64+192*i, 64, null);
                         }

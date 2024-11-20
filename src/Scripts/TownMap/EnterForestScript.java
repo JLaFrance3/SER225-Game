@@ -24,6 +24,8 @@ public class EnterForestScript extends Script{
             // if the player has looked at the ancient script in the house
             addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{
                 addRequirement(new FlagRequirement("seenAncientScript", true));
+                addRequirement(new FlagRequirement("foughtEnemiesToEnterForest", false));
+
 
                 addScriptAction(new TextboxScriptAction () {{
                     addText("There is a barrier around the forest, preventing entry.");
@@ -35,10 +37,6 @@ public class EnterForestScript extends Script{
 
             // if the player has killed the goblins and looked at the ancient script in the house
             addConditionalScriptActionGroup(new ConditionalScriptActionGroup() {{
-                addRequirement(new FlagRequirement("goblin1Flag", true));
-                addRequirement(new FlagRequirement("goblin2Flag", true));
-                addRequirement(new FlagRequirement("goblin3Flag", true));
-                addRequirement(new FlagRequirement("goblin4Flag", true));
                 addRequirement(new FlagRequirement("seenAncientScript", true));
 
                 addScriptAction(new TextboxScriptAction () {{
