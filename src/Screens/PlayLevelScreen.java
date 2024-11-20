@@ -27,7 +27,7 @@ public class PlayLevelScreen extends Screen {
     protected BufferedImage inventory;
     protected BufferedImage itemDescript;
     protected BufferedImage questLog;
-    protected Map startMap, townMap, generalStoreMap, H1Map, H2Map, H3Map, H3_1Map, dungeonMap;
+    protected Map startMap, townMap, generalStoreMap, H1Map, H2Map, H3Map, H3_1Map, dungeonMap, forestMap;
     protected Map innMap, manorMap, smithMap, townHallMap;
     protected String[] mapChangeFlags;
     protected DungeonScreen dungeon;
@@ -126,6 +126,8 @@ public class PlayLevelScreen extends Screen {
 
 
 
+
+
         //Quest flags
         flagManager.addFlag("readTestQuest", false);
         flagManager.addFlag("readQuestOne", false);
@@ -157,7 +159,9 @@ public class PlayLevelScreen extends Screen {
                 "townToHallDoor",
                 "hallToTownDoor",
                 "startToDungeon",
-                "dungeonToStart"
+                "dungeonToStart",
+                "townToForest",
+                "forestToTown"
         };
 
         // Add all map change flags
@@ -190,6 +194,8 @@ public class PlayLevelScreen extends Screen {
         townHallMap.setFlagManager(flagManager);
         dungeonMap = new DungeonMap();
         dungeonMap.setFlagManager(flagManager);
+        forestMap = new ForestMap();
+        forestMap.setFlagManager(flagManager);
 
         // set current map to startMap
         map = startMap;
@@ -599,6 +605,26 @@ public class PlayLevelScreen extends Screen {
             player.setFacingDirection(Direction.DOWN);
             map.setPlayer(player);
             flagManager.unsetFlag("dungeonToStart");
+        }
+        if (map.getFlagManager().isFlagSet("townToForest")) {
+            Point p;
+            map = forestMap;
+            p = map.getPositionByTileIndex(5, 5);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            map.setPlayer(player);
+            flagManager.unsetFlag("townToForest");
+        }
+        if (map.getFlagManager().isFlagSet("forestToTown")) {
+            Point p;
+            map = townMap;
+            p = map.getPositionByTileIndex(17, 20);
+            player.setMap(map);
+            player.setLocation(p.x, p.y);
+            player.setFacingDirection(Direction.DOWN);
+            map.setPlayer(player);
+            flagManager.unsetFlag("forestToTown");
         }
     }
 

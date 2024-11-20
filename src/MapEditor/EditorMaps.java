@@ -23,6 +23,7 @@ public class EditorMaps {
             add("House1");
             add("House2");
             add("House3");
+            add("Forest");
         }};
     }
 
@@ -42,6 +43,7 @@ public class EditorMaps {
             case "House1" -> map = new House1Map();
             case "House2" -> map = new House2Map();
             case "House3" -> map = new House3Map();
+            case "Forest" -> map = new ForestMap();
             default -> throw new RuntimeException("Unrecognized map name");
         }
 
