@@ -8,6 +8,7 @@ import EnhancedMapTiles.KeyItem;
 import EnhancedMapTiles.Spells.Thunder;
 import EnhancedMapTiles.Swords.GreatSword;
 import Level.*;
+import NPCs.DeadKnights;
 import NPCs.FarmerGirl;
 import NPCs.Knight;
 import NPCs.OldMan1;
@@ -48,10 +49,24 @@ public class ForestMap extends Map {
       eye1.setExistenceFlag("bossDead");
       npcs.add(eye1);
 
+      //2,8/ 7,7/ 4,6/ 9,5
+
 
         Knight knight1 = new Knight(69, getMapTile(7,3).getLocation().subtractX(20));
         knight1.setInteractScript(new DeadKnightScript());
         npcs.add(knight1);
+
+        DeadKnights knight2 = new DeadKnights(69, getMapTile(2,8).getLocation().subtractX(20));
+        npcs.add(knight2);
+
+        DeadKnights knight3 = new DeadKnights(69, getMapTile(7,7).getLocation().subtractX(20));
+        npcs.add(knight3);
+
+        DeadKnights knight4 = new DeadKnights(69, getMapTile(4,6).getLocation().subtractX(20));
+        npcs.add(knight4);
+
+        DeadKnights knight5 = new DeadKnights(69, getMapTile(9,5).getLocation().subtractX(20));
+        npcs.add(knight5);
 
 
 
