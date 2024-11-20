@@ -144,7 +144,7 @@ public class CombatScript extends Script {
                             @Override
                             public ScriptState execute() {
                                 int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
-                                lastHit = (int)((Math.random() * Avatar.meleeAction.getAction(answer).getValue()) + Avatar.strength);
+                                lastHit = (int)((Math.random() * Avatar.meleeAction.getAction(answer).getValue()) + Avatar.strength + Avatar.weaponMod);
                                 npcHealth = npcHealth - lastHit;
                                 if (godMode) {npcHealth = 0;}
                                 playerAttackSCString = Avatar.meleeAction.getAction(answer).getDescription();

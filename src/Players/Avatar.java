@@ -35,6 +35,9 @@ public class Avatar extends Player {
         public static PlayerActionCollection spellAction = new PlayerActionCollection();
         public static double health = 10;
         public static int healthInitial = 10;
+        public static int meleeMod = 0;
+        public static int spellMod = 0;
+        public static int rangeMod = 0;
         public static int xp = 0;
         private boolean amuletOfLifeSteal = false;
 

@@ -7,6 +7,8 @@ import EnhancedMapTiles.InventoryItem.EQUIP_TYPE;
 import Level.NPC;
 import Level.Player;
 import Level.Script;
+import Level.ScriptState;
+import Players.Avatar;
 import ScriptActions.*;
 import Utils.Direction;
 
@@ -69,6 +71,13 @@ public class OldMan1Script extends Script{
                     "Equipment/weapon/magic/simple/", EQUIP_TYPE.STAFF);
                     addScriptAction(new AddInventory(weapon));
                     addScriptAction(new Equip(weapon));
+                    addScriptAction(new ScriptAction() {
+                        @Override
+                        public ScriptState execute() {
+                            Avatar.spellMod++;
+                            return ScriptState.COMPLETED;
+                        }
+                    });
                 }
                 else {
                     weaponName = "bow";
@@ -79,6 +88,13 @@ public class OldMan1Script extends Script{
                     "Equipment/weapon/bow/normal/", EQUIP_TYPE.BOW);
                     addScriptAction(new AddInventory(weapon));
                     addScriptAction(new Equip(weapon));
+                    addScriptAction(new ScriptAction() {
+                        @Override
+                        public ScriptState execute() {
+                            Avatar.rangeMod++;
+                            return ScriptState.COMPLETED;
+                        }
+                    });
                 }
 
                 addScriptAction(new TextboxScriptAction() {{
@@ -117,6 +133,13 @@ public class OldMan1Script extends Script{
                 addScriptAction(new ToggleQuestIcon(npc));
                 addScriptAction(new SetMainQuest("returnedSword"));
                 addScriptAction(new ChangeFlagScriptAction("returnedSword", true));
+                addScriptAction(new ScriptAction() {
+                    @Override
+                    public ScriptState execute() {
+                        Avatar.meleeMod++;
+                        return ScriptState.COMPLETED;
+                    }
+                });
             }});
             
             // Bug slayer quest
@@ -131,7 +154,15 @@ public class OldMan1Script extends Script{
                     addText("You seem pretty strong " + playerName + ", you might be interested in a bounty\nthe King put out for a stolen artifact.");
                     addText("There have been some rumors around the kingdom about the group who stole it.\nTry talking to one of the merchants in the market.");;
                 }});
-        
+                
+                addScriptAction(new ScriptAction() {
+                    @Override
+                    public ScriptState execute() {
+                        System.out.println(Avatar.meleeMod);
+                        return ScriptState.COMPLETED;
+                    }
+                });
+
                 addScriptAction(new ChangeFlagScriptAction("talkedToOldMan1", true));
                 addScriptAction(new SetMainQuest("talkedToOldMan1"));
             }});
