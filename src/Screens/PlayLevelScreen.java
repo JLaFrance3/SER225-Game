@@ -157,6 +157,7 @@ public class PlayLevelScreen extends Screen {
         mainQuestFlags.put("seenMaps", 11);
         mainQuestFlags.put("seenAncientScript", 12);
         mainQuestFlags.put("foughtEnemiesToEnterForest", 13);
+        mainQuestFlags.put("knightInteract",14);
         for (String mainQuestFlag : mainQuestFlags.keySet()) {
             flagManager.addFlag(mainQuestFlag, false);
         }
