@@ -38,6 +38,7 @@ import Scripts.LockedDoorScript;
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.CombatScript;
 import Scripts.TestMap.FireSpellScript;
+import Scripts.TestMap.GateScript;
 import Scripts.TestMap.GoldScript;
 import Scripts.TestMap.Chest2Script;
 import Scripts.TestMap.GreatSwordScript;
@@ -239,6 +240,10 @@ public class TownMap extends Map {
         gold1.setInteractScript(new GoldScript());
        enhancedMapTiles.add(gold1);
 
+        Gate gate = new Gate(getMapTile(107, 110).getLocation());
+        // gate.setInteractScript(new TownToForestScript());
+        enhancedMapTiles.add(gate);
+
         Fire fireSpell1 = new Fire(getMapTile(64,61).getLocation());
         fireSpell1.setExistenceFlag("gotFire");
         fireSpell1.setInteractScript(new FireSpellScript());
@@ -249,6 +254,7 @@ public class TownMap extends Map {
 
     @Override
     public ArrayList<Trigger> loadTriggers() {
+        
         ArrayList<Trigger> triggers = new ArrayList<>();
         Point startMapTrigger = getPositionByTileIndex(32, 127);
         Point storeDoorTrigger = getPositionByTileIndex(38, 56);
@@ -269,6 +275,9 @@ public class TownMap extends Map {
             getPositionByTileIndex(14, 49),
             getPositionByTileIndex(22, 92),
         };
+
+       // Point tileLocation1 = getMapTile(119, 114).getLocation();//getting location of certain tile needed for gate
+
 
         //Locked door triggers
         Script lockedDoorScript = new LockedDoorScript();
@@ -291,8 +300,11 @@ public class TownMap extends Map {
         triggers.add(new Trigger(manorDoorTrigger.x, manorDoorTrigger.y + 24, 32, 10, new TownToManorScript(), "townToManorDoor"));
         triggers.add(new Trigger(smithDoorTrigger.x, smithDoorTrigger.y + 24, 32, 10, new TownToSmithScript(), "townToSmithDoor"));
         triggers.add(new Trigger(townHallDoorTrigger.x, townHallDoorTrigger.y + 24, 64, 10, new TownToHallScript(), "townToHallDoor"));
-        triggers.add(new Trigger(getMapTile(119,114).getX(),getMapTile(119,114).getY(), width, height, new TownToForestScript(), "townToForest"));
+        triggers.add(new Trigger(getMapTile(106,114).getX(),getMapTile(106,114).getY(), width, height, new TownToForestScript(), "townToForest"));
 
+        triggers.add(new Trigger(getMapTile(106,114).getX(),getMapTile(106,114).getY(), width, height, new TownToForestScript(), "gateInteract"));
+
+        
 
         //Sign triggers
         Point townHallSign = getMapTile(76, 77).getLocation();
@@ -304,9 +316,10 @@ public class TownMap extends Map {
         triggers.add(new Trigger(startAreaSign.x, startAreaSign.y, 32, 32, new StartAreaSign(),"startAreaSign"));
         triggers.add(new Trigger(house0112Sign.x, house0112Sign.y, 32, 32, new House0112Sign(),"house0112Sign"));
 
+       
 
         //Other Triggers
-        triggers.add(new Trigger(getMapTile(89,100).getX(),getMapTile(89,100).getY(), 20, 900, new EnterForestScript(), "foughtEnemiesToEnterForest"));
+       // triggers.add(new Trigger(getMapTile(89,100).getX(),getMapTile(89,100).getY(), 20, 900, new EnterForestScript(), "foughtEnemiesToEnterForest"));
 
         return triggers;
     }

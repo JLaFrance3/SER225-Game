@@ -128,6 +128,8 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("notStealCorn", false);
         flagManager.addFlag("gotGold1", false);
         flagManager.addFlag("gotFire", false);
+        flagManager.addFlag("bossDead", false);
+        flagManager.addFlag("knightInteract", false);
 
 
         flagManager.addFlag("readTestQuest", false);
@@ -367,6 +369,10 @@ public class PlayLevelScreen extends Screen {
         }
         if (map.getFlagManager().isFlagSet("hasDied")) {
             playLevelScreenState = PlayLevelScreenState.GAME_OVER;
+        }
+
+        if(map.getFlagManager().isFlagSet("bossDead")){
+            playLevelScreenState = PlayLevelScreenState.LEVEL_COMPLETED;
         }
 
         if (map.getFlagManager().isFlagSet("lockedDoor")) {
@@ -685,7 +691,7 @@ public class PlayLevelScreen extends Screen {
         if (map.getFlagManager().isFlagSet("forestToTown")) {
             Point p;
             map = townMap;
-            p = map.getPositionByTileIndex(17, 20);
+            p = map.getPositionByTileIndex(102, 113);
             player.setMap(map);
             player.setLocation(p.x, p.y);
             player.setFacingDirection(Direction.DOWN);

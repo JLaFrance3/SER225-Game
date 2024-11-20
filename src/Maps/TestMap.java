@@ -13,6 +13,7 @@ import EnhancedMapTiles.Spells.Thunder;
 import Level.*;
 import NPCs.Bug;
 import NPCs.FarmerGirl;
+import NPCs.Knight;
 import NPCs.OldMan1;
 import NPCs.OldMan2;
 import NPCs.OldMan3;
@@ -137,8 +138,11 @@ public class TestMap extends Map {
 
       Eye eye1 = new Eye(5, getMapTile(5,12).getLocation().subtractX(20));
       //npcs.add(eye1);
-        return npcs;
+        
 
+        
+        
+        return npcs;
 
     }
 

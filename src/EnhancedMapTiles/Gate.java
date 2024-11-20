@@ -17,7 +17,7 @@ import Utils.Point;
 public class Gate extends EnhancedMapTile {
     
     public Gate(Point location) {
-        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Gate.png"), 250, 254), TileType.NOT_PASSABLE);
+        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Gate.png"), 171, 204), TileType.NOT_PASSABLE);
     }
 
     @Override

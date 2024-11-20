@@ -30,21 +30,6 @@ public class Eye extends NPC {
 
     }
 
-    public int getSkeletonHealth() {
-        return health;
-    }
-
-    public int getSkeletonAttackpower(){
-        return attackPower;
-    }
-
-    public void setSkeletonAttackPower(int attackPower){
-        this.attackPower = attackPower;
-    }
-
-    public void setSkeletonHealth(int health){
-        this.health = health;
-    }
 
     @Override
     public void performAction(Player player) {
@@ -77,96 +62,96 @@ public class Eye extends NPC {
         return new HashMap<String, Frame[]>() {{
             put("STAND_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(1, 0,false))
-                            .withBounds(40,30, 52, 78)
-                            .withScale(2)
+                            .withBounds(20,12,25,33)
+                            .withScale(3)
                             .build(),
             });
             put("STAND_RIGHT", new Frame[] {
                    new FrameBuilder(spriteSheet.getSprite(3, 0, false))
-                            .withBounds(40,30, 52, 78)
-                            .withScale(2)
+                            .withBounds(20,12,25,33)
+                            .withScale(3)
                             .build(),
            });
 
             put("WALK_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(1, 0, false), 14)
-                            .withBounds(40,30, 52, 78)
-                            .withScale(2)
+                            .withBounds(20,12,25,33)
+                            .withScale(3)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 1, false), 14)
-                            .withBounds(40,30, 52, 78)
-                            .withScale(2)
+                            .withBounds(20,12,25,33)
+                            .withScale(3)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 2, false), 14)
-                            .withBounds(40,30, 52, 78)
-                            .withScale(2)
+                            .withBounds(20,12,25,33)
+                            .withScale(3)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 3, false), 14)
-                            .withBounds(40,30, 52, 78)
-                            .withScale(2)
+                            .withBounds(20,12,25,33)
+                            .withScale(3)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 4, false), 14)
-                            .withBounds(40,30, 52, 78)
-                            .withScale(2)
+                            .withBounds(20,12,25,33)
+                            .withScale(3)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 5, false), 14)
-                            .withBounds(40,30, 52, 78)
-                            .withScale(2)
+                            .withBounds(20,12,25,33)
+                            .withScale(3)
                             .build(),
             });
 
             put("WALK_RIGHT", new Frame[] {
                 new FrameBuilder(spriteSheet.getSprite(3, 0, false), 14)
-                        .withBounds(40,30, 52, 78)
-                        .withScale(2)
+                        .withBounds(20,12,25,33)
+                        .withScale(3)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(3, 1, false), 14)
-                        .withBounds(40,30, 52, 78)
-                        .withScale(2)
+                        .withBounds(20,12,25,33)
+                        .withScale(3)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(3, 2, false), 14)
-                        .withBounds(40,30, 52, 78)
-                        .withScale(2)
+                        .withBounds(20,12,25,33)
+                        .withScale(3)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(3, 3, false), 14)
-                        .withBounds(40,30, 52, 78)
-                        .withScale(2)
+                        .withBounds(20,12,25,33)
+                        .withScale(3)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(3, 4, false), 14)
-                        .withBounds(40,30, 52, 78)
-                        .withScale(2)
+                        .withBounds(20,12,25,33)
+                        .withScale(3)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(3, 5, false), 14)
-                        .withBounds(40,30, 52, 78)
-                        .withScale(2)
+                        .withBounds(20,12,25,33)
+                        .withScale(3)
                         .build(),
             });
             put("WALK_UP", new Frame[] {
                 new FrameBuilder(spriteSheet.getSprite(0, 1, false), 14)
-                        .withBounds(40,30, 52, 78)
-                        .withScale(1)
+                        .withBounds(20,12,25,33)
+                        .withScale(3)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(0, 1, false), 14)
-                        .withBounds(40,30, 52, 78)
-                        .withScale(1)
+                        .withBounds(20,12,25,33)
+                        .withScale(3)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(0, 2, false), 14)
-                        .withBounds(40,30, 52, 78)
+                        .withBounds(20,12,25,33)
                         .withScale(3)
                         .build(),
             });
             put("WALK_DOWN", new Frame[] {
                 new FrameBuilder(spriteSheet.getSprite(2, 0, false), 14)
-                        .withBounds(40,30, 52, 78)
-                        .withScale(1)
+                        .withBounds(20,12,25,33)
+                        .withScale(3)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(2, 1, false), 14)
-                        .withBounds(40,30, 52, 78)
-                        .withScale(1)
+                        .withBounds(20,12,25,33)
+                        .withScale(3)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(2, 2, false), 14)
-                        .withBounds(40,30, 52, 78)
-                        .withScale(1)
+                        .withBounds(20,12,25,33)
+                        .withScale(3)
                         .build(),
             });
         }};
