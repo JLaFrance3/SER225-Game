@@ -28,6 +28,7 @@ public class DeadKnightScript extends Script{
         
 
         scriptActions.add(new ChangeFlagScriptAction("knightInteract", true));
+        scriptActions.add(new SetMainQuest("knightInteract"));
 
         scriptActions.add(new UnlockPlayerScriptAction());
 

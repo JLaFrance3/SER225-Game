@@ -318,7 +318,7 @@ public class TownMap extends Map {
        
 
         //Other Triggers
-       // triggers.add(new Trigger(getMapTile(89,100).getX(),getMapTile(89,100).getY(), 20, 900, new EnterForestScript(), "foughtEnemiesToEnterForest"));
+       triggers.add(new Trigger(getMapTile(89,100).getX(),getMapTile(89,100).getY(), 20, 900, new EnterForestScript(), "foughtEnemiesToEnterForest"));
 
         return triggers;
     }
