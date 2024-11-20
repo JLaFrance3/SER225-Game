@@ -14,7 +14,6 @@ public class EnhancedMapTile extends MapTile {
     public EnhancedMapTile(float x, float y, SpriteSheet spriteSheet, TileType tileType) {
         super(x, y, spriteSheet, tileType);
     }
-    
 
     public void update(Player player) {
         super.update();
