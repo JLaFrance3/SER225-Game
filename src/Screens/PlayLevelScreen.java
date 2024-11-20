@@ -428,6 +428,17 @@ public class PlayLevelScreen extends Screen {
                 townMap.getNPCById(43).toggleQuestIndicator();
             }
         }
+        if (!flagManager.isFlagSet("foughtEnemiesToEnterForest") && flagManager.isFlagSet("seenAncientScript")){
+            int enemyAlive2 = 0;
+            for (int i = 100; i <= 103; i++) {
+                if (townMap.getNPCById(i).exists() == true) {
+                    enemyAlive2++;
+                }
+            }
+            if (enemyAlive2 == 0) {
+                flagManager.setFlag("foughtEnemiesToEnterForest");
+            }
+        }
         if (flagManager.isFlagSet("sickDogInitiate") && !flagManager.isFlagSet("foundHealthPotion")) {
             if (player.inventoryContains("Health Potion")) {
                 townMap.getNPCById(46).setQuestIndicator(true);
