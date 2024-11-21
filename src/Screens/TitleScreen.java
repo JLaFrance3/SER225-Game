@@ -34,7 +34,7 @@ public class TitleScreen extends Screen {
 
     @Override
     public void initialize() {
-        LoadingTitle = new SpriteFont("THE THEIF OF VISIONS ", 170, 100, "Algerian", 50, Color.white);
+        LoadingTitle = new SpriteFont("THE THIEF OF VISIONS ", 170, 100, "Algerian", 50, Color.white);
         kl.lockKey(Key.SPACE); // locks key when loading screen pops up
 
         try {
