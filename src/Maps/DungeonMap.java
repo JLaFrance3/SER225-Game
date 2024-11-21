@@ -36,7 +36,7 @@ public class DungeonMap extends Map {
         ArrayList<NPC> npcs = new ArrayList<>();
         
        GoldDragon goldDragon1 = new GoldDragon(5, getMapTile(10,3).getLocation().subtractX(20));
-       goldDragon1.setInteractScript(new CombatScript("This looks like a Boss Battle!", 25, 110, "The dragon breaths fire on you", 500, "BossAlive","Nothing"));
+       goldDragon1.setInteractScript(new CombatScript("This looks like a Boss Battle!", 25, 110, "The dragon breaths fire on you", 500, "BossAlive","dragon"));
        goldDragon1.setExistenceFlag("BossAlive");
        npcs.add(goldDragon1);
 
