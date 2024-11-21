@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import Level.Script;
 import ScriptActions.*;
 
-public class WalrusHouseSign extends Script {
+public class ForestToTownScript extends Script {
     @Override
     public ArrayList<ScriptAction> loadScriptActions() {
         ArrayList<ScriptAction> scriptActions = new ArrayList<>();
 
-        scriptActions.add(new ChangeFlagScriptAction("walrusHouseSign", true));
-        scriptActions.add(new TextboxScriptAction() {{
-            addText("Walrus House");
-        }});
+        scriptActions.add(new ChangeFlagScriptAction("forestToTown", true));
 
         return scriptActions;
     }   
 }
+
+  

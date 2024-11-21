@@ -7,7 +7,6 @@ import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-
 public class GraphicsHandler {
     private Graphics2D g;
 
@@ -22,8 +21,6 @@ public class GraphicsHandler {
     public void drawImage(BufferedImage image, int x, int y) {
         g.drawImage(image, x, y, null);
     }
-    
-
 
     public void drawImage(BufferedImage image, int x, int y, int width, int height) {
         g.drawImage(image, x, y, width, height, null);
@@ -62,11 +59,15 @@ public class GraphicsHandler {
         g.fillRect(x, y, width, height);
     }
 
-    public void drawFilledRectangleWithBorder(int x, int y, int width, int height, Color fillColor, Color borderColor, int borderThickness) {
+    public void drawFilledRectangleWithBorder(int x, int y, int width, int height, Color fillColor, Color borderColor,
+            int borderThickness) {
         drawFilledRectangle(x, y, width, height, fillColor);
         drawRectangle(x, y, width, height, borderColor, borderThickness);
     }
 
+    // public void drawString(String text, int x, int y, String font, Color color){
+    // g.setFont();
+    // }
     public void drawString(String text, int x, int y, Font font, Color color) {
         g.setFont(font);
         g.setColor(color);
@@ -74,7 +75,8 @@ public class GraphicsHandler {
     }
 
     // https://stackoverflow.com/a/35222059 and https://stackoverflow.com/a/31831120
-    public void drawStringWithOutline(String text, int x, int y, Font font, Color textColor, Color outlineColor, float outlineThickness) {
+    public void drawStringWithOutline(String text, int x, int y, Font font, Color textColor, Color outlineColor,
+            float outlineThickness) {
         // remember original settings
         Color originalColor = g.getColor();
         Stroke originalStroke = g.getStroke();
@@ -106,5 +108,4 @@ public class GraphicsHandler {
         g.setRenderingHints(originalHints);
     }
 
-    
 }
