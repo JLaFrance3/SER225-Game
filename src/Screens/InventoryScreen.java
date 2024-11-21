@@ -71,14 +71,25 @@ public class InventoryScreen extends Screen {
             }
         }
         if (Keyboard.isKeyDown(Key.D) && keyPressTimer == 0 && counter < player.getInventoryArrayList().size() - 1 && pointerLocationX > 0){
+            if (pointerLocationX < 650){
             pointerLocationX += 75;
+            } else{
+                pointerLocationX = 400;
+                pointerLocationY +=90;
+            }
             keyPressTimer = 14;
             counter++;
             itemName = new SpriteFont(player.getInventoryArrayList().get(counter).getItemName(), 340, 409,"Arial", 20, Color.black);
-            itemDescription = new SpriteFont(player.getInventoryArrayList().get(counter).getItemDescription(), 340, 450,"Arial", 15, Color.black);            
+            itemDescription = new SpriteFont(player.getInventoryArrayList().get(counter).getItemDescription(), 340, 450,"Arial", 15, Color.black);
+                        
         }
         if (Keyboard.isKeyDown(Key.A) && keyPressTimer == 0 && counter > 0 && pointerLocationX > 0){
-            pointerLocationX -= 75;
+            if(pointerLocationX > 400){
+                pointerLocationX -= 75;
+            } else{
+                pointerLocationY -= 90;
+                pointerLocationX += 295;
+            }
             keyPressTimer = 14;
             counter--;
             itemName = new SpriteFont(player.getInventoryArrayList().get(counter).getItemName(), 340, 409,"Arial", 20, Color.black);
