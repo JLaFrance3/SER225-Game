@@ -7,6 +7,7 @@ import EnhancedMapTiles.InventoryItem.EQUIP_TYPE;
 import Level.NPC;
 import Level.Player;
 import Level.Script;
+import Players.Avatar;
 import ScriptActions.*;
 import Utils.Direction;
 
@@ -63,15 +64,19 @@ public class FisherGuyScript extends Script{
                     armor = new InventoryItem(ImageLoader.loadSubImage("IndoorTileset.png", 288, 768, 32, 32, true), 
                     "Wizard Hat", 3, "A hat that looks magical",
                     "Equipment/armor/magic/", EQUIP_TYPE.HEAD);
+
                 }
                 else if (playerClass == "Ranger") {
                     armor = new InventoryItem(ImageLoader.loadSubImage("items.png", 32, 374, 37, 37), 
                     "Kettle Helm", 6, "A disk hat to protect your noggin",
                     "Equipment/armor/leatherarmor/", EQUIP_TYPE.HEAD);
+                    Avatar.armorVal += 0.05;
+
                 } else {
                     armor = new InventoryItem(ImageLoader.loadSubImage("IndoorTileset.png", 32, 832, 32, 32, true), 
                     "Plate Helm", 10, "A full plate helm",
                     "Equipment/armor/platearmor/", EQUIP_TYPE.HEAD);
+                    Avatar.armorVal += 0.05;
                 }
                 addScriptAction(new AddInventory(armor));
                 addScriptAction(new Equip(armor));

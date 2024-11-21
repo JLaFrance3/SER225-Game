@@ -33,13 +33,16 @@ public class Avatar extends Player {
         public static String playerClass;       //"Warrior", "Wizard", "Ranger"
         public static PlayerActionCollection meleeAction = new PlayerActionCollection();
         public static PlayerActionCollection spellAction = new PlayerActionCollection();
+        public static PlayerActionCollection itemAction = new PlayerActionCollection();
         public static double health = 10;
         public static int healthInitial = 10;
         public static int meleeMod = 0;
         public static int spellMod = 0;
         public static int rangeMod = 0;
         public static int xp = 0;
+        public static double armorVal = 0;
         private boolean amuletOfLifeSteal = false;
+        public static int level = 1;
 
         // Player stats
         public static int strength, dexterity, constitution, intelligence;
@@ -92,6 +95,7 @@ public class Avatar extends Player {
                 playerClass = null;
                 meleeAction = new PlayerActionCollection();
                 spellAction = new PlayerActionCollection();
+                itemAction = new PlayerActionCollection();
                 health = 10;
                 healthInitial = 10;
                 strength = 0;
@@ -108,6 +112,30 @@ public class Avatar extends Player {
                         intelligence ++;
                         healthInitial += 7;
                         health = healthInitial;
+                        if (level == 3){
+                                Avatar.meleeAction.addAction(new PlayerAction("Run Through", 10, "you stab your sword through your foe ","piercing"){
+                                        @Override
+                                        public double attack(){
+                                            return 1;
+                                        }
+                                    });
+                        }
+                        if (level == 5){
+                                Avatar.meleeAction.setAction(1,new PlayerAction("S. Kick", 8, "you kick your foe with a steel boot","bludgeoning"){
+                                        @Override
+                                        public double attack(){
+                                            return 1;
+                                        }
+                                    });
+                        }
+                        if (level == 7){
+                                Avatar.meleeAction.setAction(0,new PlayerAction("D. Cleave", 15, "you crush your foe with the fury of a dragon","dragon"){
+                                        @Override
+                                        public double attack(){
+                                            return 1;
+                                        }
+                                    });
+                        }
                 } else if (playerClass.equals("Wizard")){
                         strength += 1;
                         dexterity ++;
@@ -115,7 +143,72 @@ public class Avatar extends Player {
                         intelligence += 2;
                         healthInitial += 4;
                         health = healthInitial;
+                        if (level == 3){
+                                Avatar.spellAction.addAction(new PlayerAction("Sheild", 0, "you ward yourself, reducing incoming damage ","piercing"){
+                                        @Override
+                                        public double attack(){
+                                            return 0.1;
+                                        }
+                                    });
+                        }
+                        if (level == 5){
+                                Avatar.spellAction.setAction(1,new PlayerAction("G. Heal", -12, "you mutter a holy prayer, filling your veins with healing magic ","piercing"){
+                                        @Override
+                                        public double attack(){
+                                            return 1;
+                                        }
+                                    });
+                        }
+                        if (level == 7){
+                                Avatar.spellAction.setAction(0,new PlayerAction("D. Fire", 15, "you scorch your foe with the fury of a dragon","dragon"){
+                                        @Override
+                                        public double attack(){
+                                            return 1;
+                                        }
+                                    });
+                        }
                 }
+                else if (playerClass.equals("Ranger")){
+                        strength += 1;
+                        dexterity +=2;
+                        constitution += 1;
+                        intelligence ++;
+                        healthInitial += 5;
+                        health = healthInitial;
+                        if (level == 3){
+                                Avatar.meleeAction.addAction(new PlayerAction("Punch", 8, "you punch your foe ","bludgeoning"){
+                                        @Override
+                                        public double attack(){
+                                            return 1;
+                                        }
+                                    });
+                        }
+                        if (level == 5){
+                                Avatar.spellAction.setAction(0,new PlayerAction("Fire", 8, "waving your hands you cast Fire, burning your foe", "magic"){
+                                        @Override
+                                        public double attack(){
+                                            this.setLastAttack(this.getValue());
+                                            return this.getLastAttack();
+                                        }
+                                    });
+                                    Avatar.spellAction.setAction(1,new PlayerAction("Heal", -8, "you mend your wounds with blessed words"){
+                                        @Override
+                                        public double attack(){
+                                            this.setLastAttack(this.getValue());
+                                            return this.getLastAttack();
+                                        }
+                                    });
+                        }
+                        if (level == 7){
+                                Avatar.meleeAction.setAction(0,new PlayerAction("D. Arrow", 15, "you loose an arrow at your foe with the fury of a dragon","dragon"){
+                                        @Override
+                                        public double attack(){
+                                            return 1;
+                                        }
+                                    });
+                        }
+                }
+                level ++;
                 System.out.println("stenght: " + strength);
                 System.out.println("int: " + intelligence);
                 System.out.println("health: " + health);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import Engine.ImageLoader;
 import EnhancedMapTiles.InventoryItem;
 import Level.*;
+import Players.Avatar;
 import ScriptActions.*;
 
 // script for talking to dino npc
@@ -25,12 +26,20 @@ public class FireSpellScript extends Script {
                 
 
               //  addScriptAction(new WaitScriptAction(70));
-
+                addScriptAction(new ScriptAction() {
+                    @Override
+                    public ScriptState execute() {
+                        if (Avatar.class.equals("Wizard") || Avatar.class.equals("Ranger")){
+                            Avatar.spellAction.getAction(0).setValue(Avatar.spellAction.getAction(0).getValue() + 1);   
+                        }
+                        return ScriptState.COMPLETED;
+                    }
+                });
                 addScriptAction(new ChangeFlagScriptAction("gotFire", true));
             }});
         }});
 
-        scriptActions.add(new AddInventory(new InventoryItem(ImageLoader.loadSubImage("items.png", 239, 443, 33, 33), "Fire-Ball", 12, "A powerful spell that deals massive Fire damage")));
+        scriptActions.add(new AddInventory(new InventoryItem(ImageLoader.loadSubImage("items.png", 239, 443, 33, 33), "Fire Scroll", 12, "A powerful that increases Fire damage")));
 
         
 

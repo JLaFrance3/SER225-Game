@@ -8,6 +8,7 @@ import Level.NPC;
 import Level.Player;
 import Level.Script;
 import NPCs.Dog;
+import Players.Avatar;
 import ScriptActions.*;
 import Utils.Direction;
 import Utils.Visibility;
@@ -72,12 +73,15 @@ public class DogOwnerScript extends Script{
                     armor = new InventoryItem(ImageLoader.loadSubImage("IndoorTileset.png", 416, 832, 32, 32, true), 
                     "Wizard Boots", 4, "These look a lot like regular boots",
                     "Equipment/armor/magic/", EQUIP_TYPE.FEET);
+                    Avatar.armorVal += 0.05;
+
                 }
                 else if (playerClass == "Ranger") {
                     reward = "pair of boots";
                     armor = new InventoryItem(ImageLoader.loadSubImage("IndoorTileset.png", 416, 832, 32, 32, true), 
                     "Leather Boots", 4, "Some nice leather boots",
                     "Equipment/armor/leatherarmor/", EQUIP_TYPE.FEET);
+                    Avatar.armorVal += 0.1;
                 } else {
                     reward = "pair of armor pants";
                     armor = new InventoryItem(ImageLoader.loadSubImage("IndoorTileset.png", 288, 928, 32, 32, true), 
@@ -86,6 +90,7 @@ public class DogOwnerScript extends Script{
 
                     addScriptAction(new Equip(new InventoryItem(ImageLoader.loadSubImage("items.png", 0, 0, 32, 32), 
                     "", 0, "", "Equipment/armor/platearmor/", EQUIP_TYPE.FEET)));
+                    Avatar.armorVal += 0.15;
                 }
                 addScriptAction(new AddInventory(armor));
                 addScriptAction(new Equip(armor));
