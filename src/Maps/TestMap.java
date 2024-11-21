@@ -24,6 +24,7 @@ import NPCs.Monsters.Goblin;
 import NPCs.Monsters.GoldDragon;
 import NPCs.Monsters.Pumpkin;
 import NPCs.Monsters.Skeleton;
+import Players.Avatar;
 import Scripts.TestMap.*;
 import Scripts.TownMap.OldMan2Script;
 import Scripts.TownMap.OldMan3Script;
@@ -93,9 +94,16 @@ public class TestMap extends Map {
 
 
         TestDummy dummy = new TestDummy(4, getMapTile(5, 17).getLocation().subtractX(20)); 
-        dummy.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell", 4, 5, "CHOMP!!! you are bit by the bug", 100, "dummyAlive"));
+        dummy.setInteractScript(new CombatScript("Uh oh, this bug is evil as hell", 4, 5, "CHOMP!!! you are bit by the bug", 100, "dummyAlive","slashing"){
+            @Override
+            public String getDrop(){
+                Avatar.intelligence++;
+                return "The bug drops a piece of paper?...\n huh? why does he... nevrmind\n it seems to be a fragment of the Scroll of Thunder";
+            }
+        });
        // npcs.add(dummy);
         dummy.setExistenceFlag("dummyAlive");
+        
         npcs.add(dummy);
 
     //     Goblin goblin1 = new Goblin(5, getMapTile(5, 15).getLocation().subtractX(20));

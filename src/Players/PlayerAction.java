@@ -5,6 +5,7 @@ public abstract class PlayerAction {
     private int value;
     private int lastAttack;
     private String description;
+    private String type = "";
 
     public PlayerAction(){
         name = null;
@@ -16,6 +17,13 @@ public abstract class PlayerAction {
         name = n;
         value = v;
         description = d;
+    }
+
+    public PlayerAction(String n, int v, String d, String t){
+        name = n;
+        value = v;
+        description = d;
+        type = t;
     }
 
     public String getName(){
@@ -38,5 +46,17 @@ public abstract class PlayerAction {
 
     public void setLastAttack(int la){
         lastAttack = la;
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public void setType(String type){
+        this.type = type.toLowerCase();
+    }
+
+    public void setValue(int v){
+        value = v;
     }
 }

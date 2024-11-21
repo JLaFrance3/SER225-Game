@@ -33,6 +33,7 @@ public class Avatar extends Player {
         public static String playerClass;       //"Warrior", "Wizard", "Ranger"
         public static PlayerActionCollection meleeAction = new PlayerActionCollection();
         public static PlayerActionCollection spellAction = new PlayerActionCollection();
+        public static PlayerActionCollection itemAction = new PlayerActionCollection();
         public static double health = 10;
         public static int healthInitial = 10;
         public static int meleeMod = 0;

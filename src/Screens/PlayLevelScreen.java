@@ -243,7 +243,7 @@ public class PlayLevelScreen extends Screen {
         }
         switch (playerClass) {
             case "Warrior":
-                Avatar.meleeAction.addAction(new PlayerAction("Cleave", 10, "you cleave your foe") {
+                Avatar.meleeAction.addAction(new PlayerAction("Cleave", 10, "you cleave your foe", "slashing") {
                     @Override
                     public double attack(){
                         this.setLastAttack(this.getValue());
@@ -272,14 +272,14 @@ public class PlayLevelScreen extends Screen {
                         return this.getLastAttack();
                     }
                 });
-                Avatar.spellAction.addAction(new PlayerAction("Harm", 8, "waving your hands you cast harm, battering your foe"){
+                Avatar.spellAction.addAction(new PlayerAction("Fire", 8, "waving your hands you cast Fire, burning your foe", "magic"){
                     @Override
                     public double attack(){
                         this.setLastAttack(this.getValue());
                         return this.getLastAttack();
                     }
                 });
-                Avatar.spellAction.addAction(new PlayerAction("Heal", -6, "you mend your wounds with blessed words"){
+                Avatar.spellAction.addAction(new PlayerAction("Heal", -8, "you mend your wounds with blessed words"){
                     @Override
                     public double attack(){
                         this.setLastAttack(this.getValue());
@@ -288,12 +288,52 @@ public class PlayLevelScreen extends Screen {
                 });
                 break;
             case "Ranger":
-                
+                Avatar.meleeAction.addAction(new PlayerAction("Dagger", 8, "you slash your foe"){
+                    @Override
+                    public double attack(){
+                        this.setLastAttack(this.getValue());
+                        return this.getLastAttack();
+                    }
+                });
+                Avatar.meleeAction.addAction(new PlayerAction("Bow", 8, "you loose an arrow at your foe"){
+                    @Override
+                    public double attack(){
+                        this.setLastAttack(this.getValue());
+                        return this.getLastAttack();
+                    }
+                });
+                Avatar.spellAction.addAction(new PlayerAction("L-Fire", 8, "waving your hands you cast L-Fire, Burning your foe"){
+                    @Override
+                    public double attack(){
+                        this.setLastAttack(this.getValue());
+                        return this.getLastAttack();
+                    }
+                });
+                Avatar.spellAction.addAction(new PlayerAction("L-Heal", -6, "you mend your wounds with blessed words"){
+                    @Override
+                    public double attack(){
+                        this.setLastAttack(this.getValue());
+                        return this.getLastAttack();
+                    }
+                });
+                Avatar.spellAction.addAction(new PlayerAction("Identify Weakness", 0, "you mend your wounds with blessed words"){
+                    @Override
+                    public double attack(){
+                        return 0;
+                    }
+                });
                 break;
         
             default:
                 break;
         }
+        Avatar.itemAction.addAction(new PlayerAction("Potion", -4, "You sip from your potion healing ", "magic"){
+            @Override
+            public double attack() {
+                // TODO Auto-generated method stub
+                return -4;
+            }
+        });
         player.setMap(map);
         playLevelScreenState = PlayLevelScreenState.RUNNING;
         player.setFacingDirection(Direction.DOWN);

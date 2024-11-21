@@ -6,6 +6,8 @@ import Engine.ImageLoader;
 import EnhancedMapTiles.Chest;
 import EnhancedMapTiles.Gate;
 import EnhancedMapTiles.Gold;
+import EnhancedMapTiles.InventoryItem;
+import EnhancedMapTiles.InventoryItem.EQUIP_TYPE;
 import EnhancedMapTiles.KeyItem;
 import EnhancedMapTiles.Armor.DemoLeatherarmour;
 import EnhancedMapTiles.Armor.DemoMagicarmour;
@@ -33,6 +35,8 @@ import NPCs.Monsters.Goblin;
 import NPCs.Monsters.GoldDragon;
 import NPCs.Monsters.Pumpkin;
 import NPCs.Monsters.Skeleton;
+import Players.Avatar;
+import Players.PlayerAction;
 import Level.Script;
 import Scripts.LockedDoorScript;
 import Scripts.SimpleTextScript;
@@ -114,7 +118,22 @@ public class TownMap extends Map {
         npcs.add(goblin3);
 
         Goblin goblin4 = new Goblin(103, getMapTile(66, 112).getLocation().subtractX(20));
-        goblin4.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,2,"the goblin slashes at you with its claws",50,"goblin4Flag"));
+        goblin4.setInteractScript(new CombatScript("Uh oh, this goblin is evil as hell",4,2,"the goblin slashes at you with its claws",50,"goblin4Flag"){
+            @Override
+            public String getDrop(){
+                Avatar.itemAction.addAction(new PlayerAction("M Sword", 8, "You hack at your enemy with a magic sword", "magic"){
+                    @Override
+                    public double attack() {
+                        // TODO Auto-generated method stub
+                        return 8;
+                    }
+                });
+                player.getInventoryArrayList().add((new InventoryItem(ImageLoader.loadSubImage("items.png", 135, 100, 37, 38), 
+                "Magic Shortsword", 10, "A shortsword made with fire magic",
+                "Equipment/weapon/sword/longsword/", EQUIP_TYPE.SWORD)));
+                return "The goblin drops a Magic Shortsword";
+            }
+        });
         goblin4.setExistenceFlag("goblin4Flag");
         npcs.add(goblin4);
         
@@ -122,22 +141,28 @@ public class TownMap extends Map {
         //npcs.add(goldDragon1);
 
         Skeleton skeleton1 = new Skeleton(10, getMapTile(2, 110).getLocation().subtractX(20));
-        skeleton1.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell",6,13,"the skeleton hacks at you with his shortsword",50,"skeleton1Flag"));
+        skeleton1.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell",6,13,"the skeleton hacks at you with his shortsword",50,"skeleton1Flag", "magic"));
         skeleton1.setExistenceFlag("skeleton1Flag");
         npcs.add(skeleton1);
 
         Skeleton skeleton2 = new Skeleton(11, getMapTile(11, 115).getLocation().subtractX(20));
-        skeleton2.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell",6,13,"the skeleton hacks at you with his shortsword",50,"skeleton2Flag"));
+        skeleton2.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell",6,13,"the skeleton hacks at you with his shortsword",50,"skeleton2Flag", "magic"));
         skeleton2.setExistenceFlag("skeleton2Flag");
         npcs.add(skeleton2);
 
         Skeleton skeleton3 = new Skeleton(12, getMapTile(32, 107).getLocation().subtractX(20));
-        skeleton3.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell",6,13,"the skeleton hacks at you with his shortsword",50,"skeleton3Flag"));
+        skeleton3.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell",6,13,"the skeleton hacks at you with his shortsword",50,"skeleton3Flag", "magic"){
+            @Override
+            public String getDrop(){
+                Avatar.intelligence++;
+                return "The skeleton drops a piece of paper?...\n hmm this appears to be a fragment of the Scroll of Thunder";
+            }
+        });
         skeleton3.setExistenceFlag("skeleton3Flag");
         npcs.add(skeleton3);
 
         Skeleton skeleton4 = new Skeleton(13, getMapTile(30, 111).getLocation().subtractX(20));
-        skeleton4.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell",6,13,"the skeleton hacks at you with his shortsword",50,"skeleton4Flag"));
+        skeleton4.setInteractScript(new CombatScript("Uh oh, this skeleton is evil as hell",6,13,"the skeleton hacks at you with his shortsword",50,"skeleton4Flag", "magic"));
         skeleton4.setExistenceFlag("skeleton4Flag");
         npcs.add(skeleton4);
 
