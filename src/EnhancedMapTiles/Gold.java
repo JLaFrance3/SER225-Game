@@ -23,7 +23,7 @@ public class Gold extends EnhancedMapTile {
 
     @Override
     protected GameObject loadBottomLayer(SpriteSheet spriteSheet) {
-        Frame frame = new FrameBuilder(spriteSheet.getSubImage(12, 7))
+        Frame frame = new FrameBuilder(spriteSheet.getSubImage(7, 7))
                 .withScale(1)
                 .build();
         return new GameObject(x, y, frame);
