@@ -73,6 +73,11 @@ public class TestMap extends Map {
         thunderSpell.setInteractScript(new ThunderSpellScript());
         enhancedMapTiles.add(thunderSpell);
 
+    //     Thunder thunderSpell2 = new Thunder(getMapTile(10,11).getLocation());
+    //    // thunderSpell2.setExistenceFlag("hasInteractedThunder");
+    //     thunderSpell2.setInteractScript(new ThunderSpellScript());
+    //     enhancedMapTiles.add(thunderSpell2);
+
         GreatSword greatsword = new GreatSword(getMapTile(11,20).getLocation());
         greatsword.setExistenceFlag("hasInteractedGreatSword");
         greatsword.setInteractScript(new GreatSwordScript());
