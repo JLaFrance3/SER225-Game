@@ -354,17 +354,17 @@ public class PlayLevelScreen extends Screen {
         //Give player the quest log so scripts can update
         player.setQuestLog(questLogScreen, mainQuestFlags);
 
-        try {
-            AudioInputStream AIS = AudioSystem
-                    .getAudioInputStream(new File("Resources/SoundEffects_AttackMotions/intro to rpg2.wav"));
-            Clip clip = AudioSystem.getClip();
-            clip.open(AIS);
-            clip.setFramePosition(0);
-            clip.loop(Clip.LOOP_CONTINUOUSLY);// intro sound would be continously
-            clip.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // try {
+        //     AudioInputStream AIS = AudioSystem
+        //             .getAudioInputStream(new File("Resources/SoundEffects_AttackMotions/intro to rpg2.wav"));
+        //     Clip clip = AudioSystem.getClip();
+        //     clip.open(AIS);
+        //     clip.setFramePosition(0);
+        //     clip.loop(Clip.LOOP_CONTINUOUSLY);// intro sound would be continously
+        //     clip.start();
+        // } catch (Exception e) {
+        //     e.printStackTrace();
+        // }
     }
 
     public void update() {
