@@ -4,6 +4,7 @@ import Engine.DefaultScreen;
 import Engine.GraphicsHandler;
 import Engine.Screen;
 import Screens.CharacterScreen;
+import Screens.ControlScreen;
 import Screens.CreditsScreen;
 import Screens.LoadingScreen1;
 import Screens.LoadingScreen2;
@@ -60,11 +61,11 @@ public class ScreenCoordinator extends Screen {
 				switch (gameState) {
 					case TITLE:
 						currentScreen = new TitleScreen(this);
-						System.out.println(" Title Screen Open");
+						// System.out.println(" Title Screen Open");
 						break;
 					case MENU:
 						currentScreen = new MenuScreen(this);
-						System.out.println("Menu Screen Open ");
+						// System.out.println("Menu Screen Open ");
 						break;
 					case LOADING:
 						currentScreen = new LoadingScreen1(this);
@@ -90,6 +91,9 @@ public class ScreenCoordinator extends Screen {
 						break;
 					case CREDITS:
 						currentScreen = new CreditsScreen(this);
+						break;
+					case CONTROL:
+						currentScreen = new ControlScreen(this);
 						break;
 				}
 				currentScreen.initialize();
