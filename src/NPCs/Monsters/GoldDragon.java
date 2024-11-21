@@ -73,44 +73,44 @@ public class GoldDragon extends NPC {
         return new HashMap<String, Frame[]>() {{
             put("STAND_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(3, 1, false))
-                            .withBounds(24, 26, 16, 32)
+                            .withBounds(24, 26, 32, 32)
                             .withScale(2)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(3, 2, false))
-                            .withBounds(24, 26, 16, 32)
+                            .withBounds(24, 26, 32, 32)
                             .withScale(2)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(3, 0, false))
-                            .withBounds(24, 26, 16, 32)
+                            .withBounds(24, 26, 32, 32)
                             .withScale(2)
                             .build(),
             });
             put("STAND_RIGHT", new Frame[] {
                    new FrameBuilder(spriteSheet.getSprite(1, 1, false))
-                            .withBounds(24, 26, 16, 32)
+                            .withBounds(24, 26, 32, 32)
                             .withScale(2)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 2, false))
-                            .withBounds(24, 26, 16, 32)
+                            .withBounds(24, 26, 32, 16)
                             .withScale(2)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 0, false))
-                            .withBounds(24, 26, 16, 32)
+                            .withBounds(24, 26, 32, 32)
                             .withScale(2)
                             .build(),
            });
 
             put("WALK_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(3, 2, false), 14)
-                            .withBounds(24, 26, 16, 32)
+                            .withBounds(24, 26, 32, 32)
                             .withScale(2)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(3, 1, false), 14)
-                            .withBounds(24, 26, 16, 32)
+                            .withBounds(24, 26, 32, 32)
                             .withScale(2)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(3, 0, false), 14)
-                            .withBounds(24, 26, 16, 32)
+                            .withBounds(24, 26, 32, 32)
                             .withScale(2)
                             .build(),
                     
@@ -118,43 +118,43 @@ public class GoldDragon extends NPC {
 
             put("WALK_RIGHT", new Frame[] {
                 new FrameBuilder(spriteSheet.getSprite(1, 0, false), 14)
-                        .withBounds(24, 26, 16, 32)
+                        .withBounds(24, 26, 32, 32)
                         .withScale(2)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(1, 1, false), 14)
-                        .withBounds(24, 26, 16, 32)
+                        .withBounds(24, 26, 32, 32)
                         .withScale(2)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(1, 2, false), 14)
-                        .withBounds(24, 26, 16, 32)
+                        .withBounds(24, 26, 32, 32)
                         .withScale(2)
                         .build(),
             });
             put("WALK_UP", new Frame[] {
                 new FrameBuilder(spriteSheet.getSprite(0, 1, false), 14)
-                        .withBounds(24, 26, 16, 32)
+                        .withBounds(24, 26, 32, 32)
                         .withScale(2)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(0, 1, false), 14)
-                        .withBounds(24, 26, 16, 32)
+                        .withBounds(24, 26, 32, 32)
                         .withScale(2)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(0, 2, false), 14)
-                        .withBounds(24, 26, 16, 32)
+                        .withBounds(24, 26, 32, 32)
                         .withScale(2)
                         .build(),
             });
             put("WALK_DOWN", new Frame[] {
                 new FrameBuilder(spriteSheet.getSprite(2, 0, false), 14)
-                        .withBounds(24, 26, 16, 32)
+                        .withBounds(24, 26, 32, 32)
                         .withScale(2)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(2, 1, false), 14)
-                        .withBounds(24, 26, 16, 32)
+                        .withBounds(24, 26, 32, 32)
                         .withScale(2)
                         .build(),
                 new FrameBuilder(spriteSheet.getSprite(2, 2, false), 14)
-                        .withBounds(24, 26, 16, 32)
+                        .withBounds(24, 26, 32, 32)
                         .withScale(2)
                         .build(),
             });
