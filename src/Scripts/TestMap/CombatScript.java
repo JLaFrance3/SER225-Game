@@ -180,7 +180,7 @@ public class CombatScript extends Script {
                             @Override
                             public ScriptState execute() {
                                 lastHit = (int)(Math.random() * attack);
-                                lastHit = (int)(lastHit * (1 - playerArmor));
+                                 lastHit = (int)(lastHit * (1 - (playerArmor + Avatar.armorVal)));
                                 Avatar.health = Avatar.health - lastHit;
                                 if (godMode) {Avatar.health = 1000;}
                                 System.out.println(Avatar.health);
@@ -310,7 +310,7 @@ public class CombatScript extends Script {
                             @Override
                             public ScriptState execute() {
                                 lastHit = (int)(Math.random() * attack);
-                                lastHit = (int)(lastHit * (1 - playerArmor));
+                                 lastHit = (int)(lastHit * (1 - (playerArmor + Avatar.armorVal)));
                                 Avatar.health = Avatar.health - lastHit;
                                 System.out.println(Avatar.health);
                                 return ScriptState.COMPLETED;
@@ -438,7 +438,7 @@ public class CombatScript extends Script {
                             @Override
                             public ScriptState execute() {
                                 lastHit = (int)(Math.random() * attack);
-                                lastHit = (int)(lastHit * (1 - playerArmor));
+                                 lastHit = (int)(lastHit * (1 - (playerArmor + Avatar.armorVal)));
                                 Avatar.health = Avatar.health - lastHit;
                                 System.out.println(Avatar.health);
                                 return ScriptState.COMPLETED;
