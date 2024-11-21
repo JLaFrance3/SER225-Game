@@ -52,7 +52,7 @@ public class InventoryScreen extends Screen {
     public void initialize() {
         playerAp = new SpriteFont("Attack Power", 50, 435, "Arial",20, Color.black);
         playerHealth = new SpriteFont("Health", 50, 409, "Arial",20, Color.black);
-        playerName = new SpriteFont("Doug", 175, 90, "Arial",20, Color.black);
+        playerName = new SpriteFont(player.getPlayerName(), 175, 90, "Arial",20, Color.black);
     }
 
 
