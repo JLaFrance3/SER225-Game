@@ -2,6 +2,7 @@ package Screens;
 
 import Engine.*;
 import GameObject.Sprite;
+import Players.Avatar;
 import SpriteFont.SpriteFont;
 import Game.ScreenCoordinator;
 import GameObject.Sprite;

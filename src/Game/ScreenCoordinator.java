@@ -4,11 +4,14 @@ import Engine.DefaultScreen;
 import Engine.GraphicsHandler;
 import Engine.Screen;
 import Screens.CharacterScreen;
+import Screens.ControlScreen;
 import Screens.CreditsScreen;
 import Screens.LoadingScreen1;
 import Screens.LoadingScreen2;
 import Screens.MenuScreen;
 import Screens.PlayLevelScreen;
+import Screens.TitleScreen;
+
 import javax.swing.JPanel;
 import GameObject.SpriteSheet;
 
@@ -43,8 +46,8 @@ public class ScreenCoordinator extends Screen {
 
 	@Override
 	public void initialize() {
-		// start game off with Menu Screen
-		gameState = GameState.MENU;
+		// start game off with Title Screen
+		gameState = GameState.TITLE;
 	}
 
 	@Override
@@ -56,8 +59,13 @@ public class ScreenCoordinator extends Screen {
 			// gameState is
 			if (previousGameState != gameState) {
 				switch (gameState) {
+					case TITLE:
+						currentScreen = new TitleScreen(this);
+						// System.out.println(" Title Screen Open");
+						break;
 					case MENU:
 						currentScreen = new MenuScreen(this);
+						// System.out.println("Menu Screen Open ");
 						break;
 					case LOADING:
 						currentScreen = new LoadingScreen1(this);
@@ -83,6 +91,9 @@ public class ScreenCoordinator extends Screen {
 						break;
 					case CREDITS:
 						currentScreen = new CreditsScreen(this);
+						break;
+					case CONTROL:
+						currentScreen = new ControlScreen(this);
 						break;
 				}
 				currentScreen.initialize();

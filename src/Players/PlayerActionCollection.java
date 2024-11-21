@@ -28,4 +28,8 @@ public class PlayerActionCollection {
     public PlayerAction getAction(int x){
         return actions.get(x);
     }
+
+    public PlayerAction setAction(int x, PlayerAction action){
+        return actions.set(x,action);
+    }
 }

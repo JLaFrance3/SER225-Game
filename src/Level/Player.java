@@ -249,7 +249,6 @@ public abstract class Player extends GameObject {
             currentAnimationName = "SWORD_DOWN";
         } else if (facingDirection == Direction.LEFT) {
             currentAnimationName = "SWORD_LEFT";
-            System.out.println("test");
         } else if (facingDirection == Direction.RIGHT) {
             currentAnimationName = "SWORD_RIGHT";
         }else {

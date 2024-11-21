@@ -8,6 +8,7 @@ import Level.NPC;
 import Level.Script;
 import ScriptActions.*;
 import Utils.Direction;
+import Players.Avatar;
 
 // This will be the second Old Man (the merchant) that the player encounters in the market
 // He will direct the player to the Town Hall to talk to the last Old Man (Old Man 3)
@@ -65,8 +66,9 @@ public class OldMan2Script extends Script{
                 InventoryItem armor;
                 if(playerClass == "Wizard") {
                     armor = new InventoryItem(ImageLoader.loadSubImage("IndoorTileset.png", 384, 768, 32, 32, true), 
-                    "Wizard Cape", 4, "A cape that looks magical",
+                    "Wizard Cape", 4, "A cape that looks magical, adds +1 intelligence",
                     "Equipment/armor/magic/", EQUIP_TYPE.TORSO);
+                    Avatar.intelligence++;
                     addScriptAction(new AddInventory(armor));
                     addScriptAction(new Equip(armor));
                 }
@@ -74,6 +76,7 @@ public class OldMan2Script extends Script{
                     armor = new InventoryItem(ImageLoader.loadSubImage("IndoorTileset.png", 192, 800, 32, 32, true), 
                     "Leather Chest", 6, "Leather armor that offers some protection",
                     "Equipment/armor/leatherarmor/", EQUIP_TYPE.TORSO);
+                    Avatar.armorVal += 0.05;
                     addScriptAction(new AddInventory(armor));
                     addScriptAction(new Equip(armor));
 
@@ -85,6 +88,7 @@ public class OldMan2Script extends Script{
                     armor = new InventoryItem(ImageLoader.loadSubImage("IndoorTileset.png", 0, 832, 32, 32, true), 
                     "Plate Chest", 10, "Plate armor that offers a lot of protection",
                     "Equipment/armor/platearmor/", EQUIP_TYPE.TORSO);
+                    Avatar.armorVal += 0.1;
                     addScriptAction(new AddInventory(armor));
                     addScriptAction(new Equip(armor));
 
