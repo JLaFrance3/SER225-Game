@@ -69,10 +69,10 @@ public class NPC extends MapEntity {
         }
         else {
             if (centerPointY < playerCenterPointY) {
-                this.currentAnimationName = "STAND_RIGHT";
+                this.currentAnimationName = "STAND_UP";
             }
             else if (centerPointY >= playerCenterPointY) {
-                this.currentAnimationName = "STAND_LEFT";
+                this.currentAnimationName = "STAND_DOWN";
             }
         }
     }
