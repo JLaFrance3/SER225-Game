@@ -7,6 +7,9 @@ Embark on an epic quest to find the King's missing artifact! Battle enemies, com
 ## How to run this project?
 There are no external libraries, so this can be cloned and ran from any IDE.
 
+## Downloads
+Jar file for our game: 
+
 The main method for the game is in the `Game` package > `Game.java` file.<br>
 The main method for the map editor is in the `MapEditor` package > `MapEditor.java` file.
 
