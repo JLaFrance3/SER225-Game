@@ -125,7 +125,6 @@ public class InventoryScreen extends Screen {
 
 
        
-        // System.out.println(player.getInventoryArrayList().get(0).getItemDescription())
         // winMessage.draw(graphicsHandler);
         // instructions.draw(graphicsHandler);
     }

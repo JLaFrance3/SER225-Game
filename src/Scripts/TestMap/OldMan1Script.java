@@ -158,7 +158,6 @@ public class OldMan1Script extends Script{
                 addScriptAction(new ScriptAction() {
                     @Override
                     public ScriptState execute() {
-                        System.out.println(Avatar.meleeMod);
                         return ScriptState.COMPLETED;
                     }
                 });

@@ -55,7 +55,6 @@ public class BugScript2 extends Script {
                     @Override
                     public boolean isRequirementMet() {
                         int answer = outputManager.getFlagData("TEXTBOX_OPTION_SELECTION");
-                        System.out.println(answer);
                         return answer == 1;
                     }
                 });
