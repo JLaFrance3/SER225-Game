@@ -209,9 +209,6 @@ public class Avatar extends Player {
                         }
                 }
                 level ++;
-                System.out.println("stenght: " + strength);
-                System.out.println("int: " + intelligence);
-                System.out.println("health: " + health);
         }
 
         // Create new spritesheet by combing component layers onto one buffered image
