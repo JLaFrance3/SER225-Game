@@ -61,11 +61,9 @@ public class ScreenCoordinator extends Screen {
 				switch (gameState) {
 					case TITLE:
 						currentScreen = new TitleScreen(this);
-						// System.out.println(" Title Screen Open");
 						break;
 					case MENU:
 						currentScreen = new MenuScreen(this);
-						// System.out.println("Menu Screen Open ");
 						break;
 					case LOADING:
 						currentScreen = new LoadingScreen1(this);
@@ -108,7 +106,6 @@ public class ScreenCoordinator extends Screen {
 	private void printMemoryUsage() {
 		Runtime runtime = Runtime.getRuntime();
 		long usedMemory = runtime.totalMemory() - runtime.freeMemory();
-		System.out.println("Used memory: " + usedMemory / 1024 / 1024 + " MB");
 	}
 
 	@Override

@@ -101,6 +101,7 @@ public class PlayLevelScreen extends Screen {
         flagManager.addFlag("pumpkin1Flag", false);
         flagManager.addFlag("pumpkin2Flag", false);
         flagManager.addFlag("pumpkin3Flag", false);
+        flagManager.addFlag("pumpkin4Flag", false);
         flagManager.addFlag("bat1Flag", false);
         flagManager.addFlag("bat2Flag", false);
         flagManager.addFlag("bat3Flag", false);
@@ -782,7 +783,6 @@ public class PlayLevelScreen extends Screen {
     private void printMemoryUsage() {
 		Runtime runtime = Runtime.getRuntime();
 		long usedMemory = runtime.totalMemory() - runtime.freeMemory();
-		System.out.println("Used memory: " + usedMemory / 1024 / 1024 + " MB");
 	}
 
     public void resetLevel() {

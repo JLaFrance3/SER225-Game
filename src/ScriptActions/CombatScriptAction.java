@@ -38,9 +38,6 @@ public class CombatScriptAction extends ScriptAction {
         }
     }
 
-    public void test(){
-        System.out.println((int) outputManager.getFlagData("TEXTBOX_OPTION_SELECTION"));
-    }
 
     public void addText(String text) {
         this.textboxItems.add(new TextboxItem(text));
@@ -66,7 +63,6 @@ public class CombatScriptAction extends ScriptAction {
         TextboxItem[] textboxItemsArray = textboxItems.toArray(new TextboxItem[0]);
         if (!this.map.getTextbox().isTextQueueEmpty()) {
             if (this.map.getTextbox().getSelectedOption() != -1){
-                System.out.println(this.map.getTextbox().getSelectedOption());
                 if (this.map.getTextbox().getSelectedOption() == 0){
                     this.map.getTextbox().addText(textboxItemsArray[1]);
                     this.map.getTextbox().addText(textboxItemsArray[0]); 

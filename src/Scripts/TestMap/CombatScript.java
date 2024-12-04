@@ -131,13 +131,12 @@ public class CombatScript extends Script {
                                 npcHealth = npcHealth - lastHit;
                                 if (godMode) {npcHealth = 0;}
                                 playerAttackSCString = Avatar.meleeAction.getAction(answer).getDescription();
-                                System.out.println(npcHealth);
                                 return ScriptState.COMPLETED;
                             }
                         });
 
                         //addScriptAction(new TextboxScriptAction("Swoosh"));
-
+                        
                         addScriptAction(new CombatAnimation("SWORD"));
 
                         //THE PLACE WHERE MAGIC HAPPENS
@@ -183,7 +182,6 @@ public class CombatScript extends Script {
                                  lastHit = (int)(lastHit * (1 - (playerArmor + Avatar.armorVal)));
                                 Avatar.health = Avatar.health - lastHit;
                                 if (godMode) {Avatar.health = 1000;}
-                                System.out.println(Avatar.health);
                                 return ScriptState.COMPLETED;
                             }
                         });
@@ -261,7 +259,6 @@ public class CombatScript extends Script {
                                 if (Avatar.spellAction.getAction(answer).attack() == 0){
                                     playerAttackSCString = "Your foe is weak to ";
                                 }
-                                System.out.println(npcHealth);
                                 return ScriptState.COMPLETED;
                             }
                         });
@@ -312,7 +309,6 @@ public class CombatScript extends Script {
                                 lastHit = (int)(Math.random() * attack);
                                  lastHit = (int)(lastHit * (1 - (playerArmor + Avatar.armorVal)));
                                 Avatar.health = Avatar.health - lastHit;
-                                System.out.println(Avatar.health);
                                 return ScriptState.COMPLETED;
                             }
                         });
@@ -389,7 +385,6 @@ public class CombatScript extends Script {
                                 if (Avatar.itemAction.getAction(answer).attack() == 0){
                                     playerAttackSCString = "Your foe is weak to ";
                                 }
-                                System.out.println(npcHealth);
                                 return ScriptState.COMPLETED;
                             }
                         });
@@ -440,7 +435,6 @@ public class CombatScript extends Script {
                                 lastHit = (int)(Math.random() * attack);
                                  lastHit = (int)(lastHit * (1 - (playerArmor + Avatar.armorVal)));
                                 Avatar.health = Avatar.health - lastHit;
-                                System.out.println(Avatar.health);
                                 return ScriptState.COMPLETED;
                             }
                         });
