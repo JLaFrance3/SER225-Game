@@ -62,7 +62,8 @@ public class ControlScreen extends Screen {
                 "Times New Roman", 20, Color.white); // Inventory description keys
 
         C = new SpriteFont("In Combat:", 130, 440, "ALGERIAN", 20, Color.white); // Combat
-        cc = new SpriteFont("WASD to switch between options: items, spell or attack", 130, 460, "Times New Roman", 20,
+        cc = new SpriteFont("Arrow Keys to switch between options: items, spell or attack", 130, 460, "Times New Roman",
+                20,
                 Color.white); // navigation
         FightorRun = new SpriteFont("Use Space to select an option (Fight or Run)", 130, 500, "Times New Roman", 20,
                 Color.white); // Fight/Run select option
