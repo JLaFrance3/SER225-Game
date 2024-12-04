@@ -189,7 +189,7 @@ public class TownMap extends Map {
 
         Pumpkin pumpkin2 = new Pumpkin(5, getMapTile(2,117).getLocation().subtractX(20));
         pumpkin2.setInteractScript(new CombatScript("Uh oh, this Pumpkin is evil as hell",15,57,"the evil pumpkin rolls into you", 150,"pumpkin2Flag","bludgeoning"));
-        pumpkin1.setExistenceFlag("pumpkin2Flag");
+        pumpkin2.setExistenceFlag("pumpkin2Flag");
         npcs.add(pumpkin2);
 
         Pumpkin pumpkin3 = new Pumpkin(5, getMapTile(36,114).getLocation().subtractX(20));
