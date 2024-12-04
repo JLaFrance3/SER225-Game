@@ -22,23 +22,25 @@ public class FarmerGirl extends NPC {
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
         return new HashMap<String, Frame[]>() {{
             put("STAND_UP", new Frame[] {
-                    new FrameBuilder(spriteSheet.getSprite(10, 0))
-                            .withScale(1)
-                            .withBounds(17, 14, 30, 48)
-                            .build()
-            });
-            put("STAND_RIGHT", new Frame[] {
-                   new FrameBuilder(spriteSheet.getSprite(3, 0))
-                           .withScale(1)
-                           .withBounds(17, 14, 30, 48)
-                           .build()
-           });
-           put("STAND_LEFT", new Frame[] {
-            new FrameBuilder(spriteSheet.getSprite(5, 0))
-                    .withScale(1)
+                new FrameBuilder(spriteSheet.getSubImage(8, 0, false))
                     .withBounds(17, 14, 30, 48)
                     .build()
-    });
+            });
+            put("STAND_LEFT", new Frame[] {
+                new FrameBuilder(spriteSheet.getSubImage(9, 0, false))
+                    .withBounds(17, 14, 30, 48)
+                    .build()
+            });
+            put("STAND_DOWN", new Frame[] {
+                new FrameBuilder(spriteSheet.getSubImage(10, 0, false))
+                    .withBounds(17, 14, 30, 48)
+                    .build()
+            });
+            put("STAND_RIGHT", new Frame[] {
+                new FrameBuilder(spriteSheet.getSubImage(11, 0, false))
+                    .withBounds(17, 14, 30, 48)
+                    .build()
+            });
         }};
     }
 

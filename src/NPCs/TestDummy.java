@@ -85,49 +85,6 @@ public class TestDummy extends NPC {
             currentAnimationName = "WALK_LEFT";
         }
     }
-    // // this code makes the bug npc walk back and forth (left to right)
-    // @Override
-    // public void performAction(Player player) {
-    //     // if bug has not yet moved 135 pixels in one direction, move bug forward
-    //     if (super.x < upperX && super.y < upperY && super.x > lowerX && super.y > lowerY && totalAmountMoved < random) {
-
-    //         float amountMoved;
-    //         //moves either up or down
-    //         if (direction == Direction.UP || direction == Direction.DOWN){
-    //             amountMoved = moveYHandleCollision(speed * direction.getVelocity());
-    //         }
-    //         //moves either left or right
-    //         else{
-    //             amountMoved = moveXHandleCollision(speed * direction.getVelocity());
-    //         }
-
-    //         totalAmountMoved += Math.abs(amountMoved);
-    //         System.out.println(random);
-    //     }
-
-    //     // else if bug has already moved 90 pixels in one direction, flip the bug's direction
-    //     else {
-    //         totalAmountMoved = 135-totalAmountMoved;
-
-    //         random = 90 + (int)(Math.random()*45);
-
-    //         /*if (direction == Direction.DOWN) {
-    //             direction = Direction.UP;
-    //         }
-    //         else {
-    //             direction = Direction.DOWN;
-    //         }*/
-    //         direction = direction.random();
-    //     }
-
-    //     // based off of the bugs current walking direction, set its animation to match
-    //     if (direction == Direction.UP) {
-    //         currentAnimationName = "WALK_RIGHT";
-    //     }
-    //     else {
-    //         currentAnimationName = "WALK_LEFT";
-    //     }
-    // }
 
     @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
@@ -144,7 +101,21 @@ public class TestDummy extends NPC {
                     .withBounds(3, 5, 18, 7)
                     .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                     .build()
-           });
+            });
+            put("STAND_UP", new Frame[] {
+                new FrameBuilder(spriteSheet.getSprite(0, 0))
+                    .withScale(2)
+                    .withBounds(3, 5, 18, 7)
+                    .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                    .build()
+            });
+            put("STAND_DOWN", new Frame[] {
+                new FrameBuilder(spriteSheet.getSprite(0, 0))
+                    .withScale(2)
+                    .withBounds(3, 5, 18, 7)
+                    .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                    .build()
+            });
            put("WALK_LEFT", new Frame[] {
                 new FrameBuilder(spriteSheet.getSprite(0, 0), 8)
                         .withScale(2)

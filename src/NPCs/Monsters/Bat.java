@@ -59,18 +59,30 @@ public class Bat extends NPC {
     @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
         return new HashMap<String, Frame[]>() {{
-            put("STAND_LEFT", new Frame[] {
-                    new FrameBuilder(spriteSheet.getSprite(1, 1,false))
-                            .withBounds(19,33,27,15)
-                            .withScale(2)
-                            .build(),
-            });
-            put("STAND_RIGHT", new Frame[] {
-                   new FrameBuilder(spriteSheet.getSprite(3, 1, false))
-                            .withBounds(19,33,27,15)
-                            .withScale(2)
-                            .build(),
-           });
+                put("STAND_UP", new Frame[] {
+                        new FrameBuilder(spriteSheet.getSprite(0, 1,false))
+                                .withBounds(19,33,27,15)
+                                .withScale(2)
+                                .build(),
+                });
+                put("STAND_LEFT", new Frame[] {
+                        new FrameBuilder(spriteSheet.getSprite(1, 1,false))
+                                .withBounds(19,33,27,15)
+                                .withScale(2)
+                                .build(),
+                });
+                put("STAND_DOWN", new Frame[] {
+                        new FrameBuilder(spriteSheet.getSprite(2, 1,false))
+                                .withBounds(19,33,27,15)
+                                .withScale(2)
+                                .build(),
+                });
+                put("STAND_RIGHT", new Frame[] {
+                        new FrameBuilder(spriteSheet.getSprite(3, 1, false))
+                                .withBounds(19,33,27,15)
+                                .withScale(2)
+                                .build(),
+                });
 
             put("WALK_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(1, 0, false), 14)
