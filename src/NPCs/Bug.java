@@ -67,7 +67,21 @@ public class Bug extends NPC {
                     .withBounds(3, 5, 18, 7)
                     .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                     .build()
-           });
+            });
+            put("STAND_UP", new Frame[] {
+                new FrameBuilder(spriteSheet.getSprite(0, 0))
+                    .withScale(2)
+                    .withBounds(3, 5, 18, 7)
+                    .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                    .build()
+            });
+            put("STAND_DOWN", new Frame[] {
+                new FrameBuilder(spriteSheet.getSprite(0, 0))
+                    .withScale(2)
+                    .withBounds(3, 5, 18, 7)
+                    .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                    .build()
+            });
            put("WALK_LEFT", new Frame[] {
                 new FrameBuilder(spriteSheet.getSprite(0, 0), 8)
                         .withScale(2)

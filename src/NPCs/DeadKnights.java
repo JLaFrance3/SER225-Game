@@ -32,8 +32,8 @@ public class DeadKnights extends NPC {
                            .withScale(1)
                            .withBounds(17, 14, 30, 48)
                            .build()
-           });
-           put("STAND_LEFT", new Frame[] {
+            });
+            put("STAND_LEFT", new Frame[] {
             new FrameBuilder(spriteSheet.getSprite(5, 0))
                     .withScale(1)
                     .withBounds(17, 14, 30, 48)

@@ -60,18 +60,30 @@ public class Eye extends NPC {
     @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
         return new HashMap<String, Frame[]>() {{
-            put("STAND_LEFT", new Frame[] {
-                    new FrameBuilder(spriteSheet.getSprite(1, 0,false))
-                            .withBounds(20,12,25,33)
-                            .withScale(3)
-                            .build(),
-            });
-            put("STAND_RIGHT", new Frame[] {
-                   new FrameBuilder(spriteSheet.getSprite(3, 0, false))
-                            .withBounds(20,12,25,33)
-                            .withScale(3)
-                            .build(),
-           });
+                put("STAND_UP", new Frame[] {
+                        new FrameBuilder(spriteSheet.getSprite(0, 0,false))
+                                .withBounds(20,12,25,33)
+                                .withScale(3)
+                                .build(),
+                });
+                put("STAND_LEFT", new Frame[] {
+                        new FrameBuilder(spriteSheet.getSprite(1, 0,false))
+                                .withBounds(20,12,25,33)
+                                .withScale(3)
+                                .build(),
+                });
+                put("STAND_DOWN", new Frame[] {
+                        new FrameBuilder(spriteSheet.getSprite(2, 0,false))
+                                .withBounds(20,12,25,33)
+                                .withScale(3)
+                                .build(),
+                });
+                put("STAND_RIGHT", new Frame[] {
+                        new FrameBuilder(spriteSheet.getSprite(3, 0, false))
+                                .withBounds(20,12,25,33)
+                                .withScale(3)
+                                .build(),
+                });
 
             put("WALK_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(1, 0, false), 14)

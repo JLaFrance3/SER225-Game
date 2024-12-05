@@ -74,16 +74,26 @@ public class Skeleton extends NPC {
     @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
         return new HashMap<String, Frame[]>() {{
-            put("STAND_LEFT", new Frame[] {
-                    new FrameBuilder(spriteSheet.getSprite(1, 0, false))
-                            .withBounds(24, 26, 16, 32)
-                            .build()
-            });
-            put("STAND_RIGHT", new Frame[] {
-                   new FrameBuilder(spriteSheet.getSprite(3, 0, false))
-                            .withBounds(24, 26, 16, 32)
-                            .build()
-           });
+                put("STAND_UP", new Frame[] {
+                        new FrameBuilder(spriteSheet.getSprite(0, 0, false))
+                                .withBounds(24, 26, 16, 32)
+                                .build()
+                });
+                put("STAND_LEFT", new Frame[] {
+                        new FrameBuilder(spriteSheet.getSprite(1, 0, false))
+                                .withBounds(24, 26, 16, 32)
+                                .build()
+                });
+                put("STAND_DOWN", new Frame[] {
+                        new FrameBuilder(spriteSheet.getSprite(2, 0, false))
+                                .withBounds(24, 26, 16, 32)
+                                .build()
+                });
+                put("STAND_RIGHT", new Frame[] {
+                        new FrameBuilder(spriteSheet.getSprite(3, 0, false))
+                                .withBounds(24, 26, 16, 32)
+                                .build()
+                });
 
             put("WALK_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(9, 0, false), 14)
